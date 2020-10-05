@@ -35,5 +35,3 @@ gradle-app.setting
 .classpath
 .project
 
-#tmp folder to save recordings 
-src/main/resources/ch/zhaw/it/pm2/Soundboard/temp/*.wav
