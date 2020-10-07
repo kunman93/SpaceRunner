@@ -1,13 +1,35 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+import ch.zhaw.it.pm3.spacerunner.SpaceRunnerGame;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 
-public class MenuController extends Application {
+public class MenuController extends Controller implements EventHandler<KeyEvent> {
 
+    @FXML public Button settingsButton;
+
+    /**
+     * sets main
+     * */
+    @Override
+    public void setMain(SpaceRunnerGame main) {
+        this.main = main;
+    }
+
+    @FXML
+    public void showSettings() {
+        main.setView("settings.fxml");
+    }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void initialize() {
+
+    }
+
+    @Override
+    public void handle(KeyEvent keyEvent) {
 
     }
 }
