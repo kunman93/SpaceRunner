@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.model;
 
+import ch.zhaw.it.pm3.spacerunner.model.element.*;
 import javafx.scene.input.KeyCode;
 
 import java.awt.*;
