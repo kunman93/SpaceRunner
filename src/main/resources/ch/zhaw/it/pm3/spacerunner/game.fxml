@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane prefHeight="400.0" prefWidth="600.0" stylesheets="style.css"
+          xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.it.pm3.spacerunner.controller.GameController">
+   <children>
+      <Canvas fx:id="gameCanvas" style="-fx-background-color: blue;" height="400.0" width="600.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+   </children>
+   <columnConstraints>
+      <ColumnConstraints percentWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints percentHeight="100.0" />
+   </rowConstraints>
+</GridPane>
