@@ -14,6 +14,7 @@ public class GameController extends Controller implements EventHandler<KeyEvent>
 
     @FXML public Canvas gameCanvas;
     private Game game;
+    private GraphicsContext graphicsContext;
 
     /**
      * sets main
@@ -21,19 +22,35 @@ public class GameController extends Controller implements EventHandler<KeyEvent>
     @Override
     public void setMain(SpaceRunnerGame main) {
         this.main = main;
+        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
+        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
+        main.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
+
+            graphicsContext.fillRect(0,0,10000,10000);
+            gameCanvas.setHeight((Double) newVal);
+        });
+        main.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
+            gameCanvas.setWidth((Double) newVal);
+        });
     }
 
     @Override
     public void initialize() {
         game = new Game();
-        GraphicsContext gc = gameCanvas.getGraphicsContext2D();
+        graphicsContext = gameCanvas.getGraphicsContext2D();
 
-        gc.setFill(Color.BLUE);
-        gc.fillRect(0,0,10000,10000);
+        graphicsContext.setFill(Color.BLUE);
+        graphicsContext.fillRect(0,0,10000,10000);
+
+
     }
 
     @Override
     public void handle(KeyEvent keyEvent) {
         game.moveSpaceShip(keyEvent.getCode());
+    }
+
+    public double canvasHeight() {
+        return gameCanvas.getHeight();
     }
 }
