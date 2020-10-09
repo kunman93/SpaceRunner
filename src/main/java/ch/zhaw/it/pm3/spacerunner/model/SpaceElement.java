@@ -8,11 +8,13 @@ public abstract class SpaceElement {
     private Point position;
     private int width;
     private int length;
+    private Image visuals;
 
-    public SpaceElement(Point startPosition, int width, int length) {
+    public SpaceElement(Point startPosition, int width, int length, Image visuals) {
         this.width = width;
         this.length = length;
         this.position = startPosition;
+        this.visuals = visuals;
     }
 
     public Point getPosition() {
@@ -29,5 +31,9 @@ public abstract class SpaceElement {
 
     public boolean move(int gameSpeed) {
         return false;
+    }
+
+    public Image getVisuals() {
+        return visuals;
     }
 }
