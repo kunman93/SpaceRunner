@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 public class GameController extends Controller {
 
 
+    //TODO: Canvas has to be a fixed height and width so we dont have to deal with scaling
     @FXML public Canvas gameCanvas;
     private Game game;
     private GraphicsContext graphicsContext;
@@ -69,6 +70,8 @@ public class GameController extends Controller {
             }
             //TODO: Draw Elements to canvas
             game.collisonDetector();
+
+            game.generateObstacles();
 
         }
 

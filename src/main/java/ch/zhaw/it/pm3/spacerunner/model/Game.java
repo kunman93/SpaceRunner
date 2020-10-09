@@ -28,13 +28,17 @@ public class Game {
      * */
     public Game() {
         playerProfile = FileUtil.loadProfile();
-
         try {
-            spaceShip = new SpaceShip(new Point(20, 100), 50, 200, FileUtil.loadImage(playerProfile.getPlayerImageId() + ".svg"));
+            //TODO: SetVisuals for Coins, UFO, Powerups etc.
+            SpaceShip.setVisual(FileUtil.loadImage(playerProfile.getPlayerImageId() + ".svg"));
+            spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
         } catch (IOException e) {
             //TODO: Handle: Should never happen unless theres a model which doesnt have an corresponding image in resources
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         distance = 0;
         collectedCoins = 0;
         elementMap = new HashSet<>();
@@ -80,6 +84,25 @@ public class Game {
                 //spaceShip.move(-1);
         }
         System.out.println(input.toString());
+    }
+
+
+    public void generateObstacles(){
+
+        //TODO: This is not how it should be => Generate from presets and only randomly
+        try {
+            elementMap.add(new Coin(new Point(20, 100), 20, 20));
+            elementMap.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
+            elementMap.add(new PowerUp(new Point(20, 100), 20, 20));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void moveElements(){
+        //TODO: move all movable elements
+        //TODO: delete alls with x < 0
     }
 
     /**

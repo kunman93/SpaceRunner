@@ -8,13 +8,20 @@ public abstract class SpaceElement {
     private Point position;
     private int width;
     private int length;
-    private Image visuals;
+    private static Image visual;
 
-    public SpaceElement(Point startPosition, int width, int length, Image visuals) {
+    public SpaceElement(Point startPosition, int width, int length) throws Exception {
+        if(visual == null){
+            //TODO: handle
+            throw new Exception();
+        }
         this.width = width;
         this.length = length;
         this.position = startPosition;
-        this.visuals = visuals;
+    }
+
+    public static void setVisual(Image visual){
+        SpaceElement.visual = visual;
     }
 
     public Point getPosition() {
@@ -34,6 +41,6 @@ public abstract class SpaceElement {
     }
 
     public Image getVisuals() {
-        return visuals;
+        return visual;
     }
 }

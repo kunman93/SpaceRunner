@@ -7,8 +7,8 @@ public class SpaceShip extends SpaceElement {
     private int verticalMovementSpeed;
     private boolean hasPowerUp;
 
-    public SpaceShip(Point startPosition, int width, int length, Image visuals) {
-        super(startPosition, width, length, visuals);
+    public SpaceShip(Point startPosition, int width, int length) throws Exception {
+        super(startPosition, width, length);
     }
 
     public boolean getHasCrashed() {
