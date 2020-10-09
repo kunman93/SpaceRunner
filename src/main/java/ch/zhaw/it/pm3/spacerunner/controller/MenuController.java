@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 public class MenuController extends Controller implements EventHandler<KeyEvent> {
 
     @FXML public Button settingsButton;
+    @FXML public Button startGameButton;
 
     /**
      * sets main
@@ -16,6 +17,11 @@ public class MenuController extends Controller implements EventHandler<KeyEvent>
     @Override
     public void setMain(SpaceRunnerGame main) {
         this.main = main;
+    }
+
+    @FXML
+    public void showGame() {
+        main.setView("game.fxml");
     }
 
     @FXML

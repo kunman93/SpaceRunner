@@ -33,7 +33,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" text="START" GridPane.vgrow="ALWAYS" />
+                <Button id="home" fx:id="startGameButton" onAction="#showGame"
+                        mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" text="START" GridPane.vgrow="ALWAYS" />
                 <Button mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" text="SHOP" GridPane.columnIndex="2" GridPane.vgrow="ALWAYS" />
                 <Button id="home" fx:id="settingsButton" onAction="#showSettings" text="SETTINGS"
                          mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" GridPane.columnIndex="4" GridPane.vgrow="ALWAYS" />
