@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.enumerable;
 
 public enum GameFile {
-    SETTINGS("settings.json"),
+    PROFILE("profile.json"),
     SHOP_CONTENT("shop_content.json");
 
     
@@ -11,6 +11,4 @@ public enum GameFile {
     private GameFile(String file){
         this.file = file;
     }
-
-
 }

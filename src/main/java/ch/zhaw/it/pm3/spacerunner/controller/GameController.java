@@ -72,7 +72,7 @@ public class GameController extends Controller {
             game.collisonDetector();
 
             game.generateObstacles();
-
+            game.moveElements();
         }
 
         //TODO: Add collected coins to playerProfile and save it!
