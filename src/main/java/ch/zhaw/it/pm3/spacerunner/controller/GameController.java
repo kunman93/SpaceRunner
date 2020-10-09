@@ -1,21 +1,19 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerGame;
-import javafx.application.Application;
+import ch.zhaw.it.pm3.spacerunner.model.Game;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 public class GameController extends Controller implements EventHandler<KeyEvent> {
 
 
-    @FXML
-    public Canvas gameCanvas;
+    @FXML public Canvas gameCanvas;
+    private Game game;
 
     /**
      * sets main
@@ -25,14 +23,9 @@ public class GameController extends Controller implements EventHandler<KeyEvent>
         this.main = main;
     }
 
-    @FXML
-    public void showSettings() {
-        main.setView("settings.fxml");
-    }
-
     @Override
     public void initialize() {
-
+        game = new Game();
         GraphicsContext gc = gameCanvas.getGraphicsContext2D();
 
         gc.setFill(Color.BLUE);
@@ -41,6 +34,6 @@ public class GameController extends Controller implements EventHandler<KeyEvent>
 
     @Override
     public void handle(KeyEvent keyEvent) {
-
+        game.moveSpaceShip(keyEvent.getCode());
     }
 }
