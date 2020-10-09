@@ -1,32 +1,43 @@
 package ch.zhaw.it.pm3.spacerunner.util;
 
-import ch.zhaw.it.pm3.spacerunner.model.data.PurchasedShopContent;
-import ch.zhaw.it.pm3.spacerunner.model.data.Settings;
+import ch.zhaw.it.pm3.spacerunner.model.data.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.model.data.ShopContent;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FileUtil {
 
 
-    public static Settings loadSettings(){
-        return new Settings();
+    public static PlayerProfile loadProfile(){
+
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.setPurchasedContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
+        return playerProfile;
+    }
+
+
+    //TODO: Maybe move this to FileUtil
+    private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds){
+        return new HashSet<>();
     }
 
     public static List<ShopContent> loadShopContent(){
         return null;
     }
 
-    //Maybe load shop content model directly....
-    public static List<PurchasedShopContent> loadPurchasedShopContent(){
-        return null;
+    public static Image loadImage(String imageName) throws IOException {
+        BufferedImage image = ImageIO.read(new File("resources/images", imageName));
+        return image;
     }
 
-    public static void saveSettings(Settings settings){
-
-    }
-
-    public static void savePurchaseShopContent(PurchasedShopContent purchasedShopContent){
+    public static void saveSettings(PlayerProfile playerProfile){
 
     }
 

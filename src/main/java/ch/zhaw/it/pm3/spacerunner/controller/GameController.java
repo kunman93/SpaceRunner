@@ -9,13 +9,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
-public class GameController extends Controller implements EventHandler<KeyEvent> {
+public class GameController extends Controller {
 
 
     @FXML public Canvas gameCanvas;
     private Game game;
     private GraphicsContext graphicsContext;
 
+    private boolean isRunning = false;
+    private boolean isPaused = false;
     /**
      * sets main
      * */
@@ -45,10 +47,40 @@ public class GameController extends Controller implements EventHandler<KeyEvent>
 
     }
 
-    @Override
+    /**
+     * continues or stops game logic according to clicking pause/resume button
+     * */
+    public void togglePause() {
+        isPaused = !isPaused;
+    }
+
+
+
+
+
+    public void startGame(){
+        isRunning = true;
+        while(isRunning && isPaused == false){
+
+            //TODO: Get KeyEvent and
+            boolean keypressed = false;
+            if(keypressed){
+                game.moveSpaceShip(null);
+            }
+            //TODO: Draw Elements to canvas
+            game.collisonDetector();
+
+        }
+
+        //TODO: Add collected coins to playerProfile and save it!
+
+    }
+
+
+    /*@Override
     public void handle(KeyEvent keyEvent) {
         game.moveSpaceShip(keyEvent.getCode());
-    }
+    }*/
 
     public double canvasHeight() {
         return gameCanvas.getHeight();
