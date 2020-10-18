@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.model.data;
+package ch.zhaw.it.pm3.spacerunner.model.gamedata;
 
 import java.util.HashSet;
 import java.util.Set;

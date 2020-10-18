@@ -1,7 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.model.data;
-
-import ch.zhaw.it.pm3.spacerunner.enumerable.ContentId;
-import ch.zhaw.it.pm3.spacerunner.enumerable.ItemType;
+package ch.zhaw.it.pm3.spacerunner.model.gamedata;
 
 public class ShopContent {
 

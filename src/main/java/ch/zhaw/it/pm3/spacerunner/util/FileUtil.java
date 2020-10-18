@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.util;
 
-import ch.zhaw.it.pm3.spacerunner.model.data.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.model.data.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.model.gamedata.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.model.gamedata.ShopContent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

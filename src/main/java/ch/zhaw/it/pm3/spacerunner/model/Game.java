@@ -1,7 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.model;
 
-import ch.zhaw.it.pm3.spacerunner.model.data.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.model.data.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.model.gamedata.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.model.element.*;
 import ch.zhaw.it.pm3.spacerunner.util.FileUtil;
 import javafx.scene.input.KeyCode;
@@ -55,7 +54,7 @@ public class Game {
     }
 
 
-    private Set<SpaceElement> getDrawables(){
+    public Set<SpaceElement> getDrawables(){
         Set<SpaceElement> spaceElements = new HashSet<>(elementMap);
         spaceElements.add(spaceShip);
 

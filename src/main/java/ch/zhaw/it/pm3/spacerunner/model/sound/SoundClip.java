@@ -1,7 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.model.sound;
 
-import ch.zhaw.it.pm3.spacerunner.enumerable.PlayStates;
-
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import java.util.HashSet;

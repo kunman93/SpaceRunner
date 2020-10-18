@@ -33,7 +33,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'ch.zhaw.it.pm3.spacerunner.SpaceRunnerGame'
+    mainClassName = 'ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp'
 }
 
 test {

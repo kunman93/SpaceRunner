@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.enumerable;
+package ch.zhaw.it.pm3.spacerunner.model.sound;
 
 /**
  * The different states a SoundClip can be in.
