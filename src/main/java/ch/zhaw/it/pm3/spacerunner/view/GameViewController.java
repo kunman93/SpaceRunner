@@ -58,8 +58,24 @@ public class GameViewController extends ViewController implements GameView {
         return gameCanvas.getHeight();
     }
 
+
     @Override
-    public void drawSpaceElements(Set<SpaceElement> spaceElements) {
+    public void setSpaceElements(Set<SpaceElement> spaceElements) {
+
+    }
+
+    @Override
+    public void displayUpdatedSpaceElements() {
+
+    }
+
+    @Override
+    public void displayCollectedCoins(int coins) {
+
+    }
+
+    @Override
+    public void displayCurrentScore(int score) {
 
     }
 }

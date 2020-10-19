@@ -36,8 +36,12 @@ public abstract class SpaceElement {
         return width;
     }
 
-    public boolean move(int gameSpeed) {
-        return false;
+    public void move(Point movementPoint) {
+
+    }
+
+    public Point getCurrentPosition() {
+        return null;
     }
 
     public Image getVisuals() {

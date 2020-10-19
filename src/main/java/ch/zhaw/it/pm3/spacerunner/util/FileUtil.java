@@ -22,6 +22,10 @@ public class FileUtil {
         return playerProfile;
     }
 
+    public static void saveProfile(PlayerProfile playerProfile){
+
+    }
+
 
     //TODO: Maybe move this to FileUtil
     private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds){
@@ -37,9 +41,6 @@ public class FileUtil {
         return image;
     }
 
-    public static void saveSettings(PlayerProfile playerProfile){
-
-    }
 
 
 

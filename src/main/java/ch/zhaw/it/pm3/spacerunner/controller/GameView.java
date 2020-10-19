@@ -5,8 +5,12 @@ import java.util.Set;
 
 public interface GameView {
 
-    void drawSpaceElements(Set<SpaceElement> spaceElements);
+    void setSpaceElements(Set<SpaceElement> spaceElements);
 
+    void displayUpdatedSpaceElements();
 
+    void displayCollectedCoins(int coins);
+
+    void displayCurrentScore(int score);
 
 }
