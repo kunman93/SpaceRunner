@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <GridPane xmlns="http://javafx.com/javafx"
           stylesheets="@style.css"
           xmlns:fx="http://javafx.com/fxml"
@@ -34,7 +35,17 @@
             </rowConstraints>
             <children>
                 <Button id="home" fx:id="startGameButton" onAction="#showGame"
-                        mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" text="START" GridPane.vgrow="ALWAYS" />
+                        mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" GridPane.vgrow="ALWAYS" >
+                    <graphic>
+                        <HBox>
+                            <children>
+                                <Label styleClass="icon-start-game">B</Label>
+                                <Label>START</Label>
+                            </children>
+                        </HBox>
+                    </graphic>
+
+                </Button>
                 <Button mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" text="SHOP" GridPane.columnIndex="2" GridPane.vgrow="ALWAYS" />
                 <Button id="home" fx:id="settingsButton" onAction="#showSettings" text="SETTINGS"
                          mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" GridPane.columnIndex="4" GridPane.vgrow="ALWAYS" />

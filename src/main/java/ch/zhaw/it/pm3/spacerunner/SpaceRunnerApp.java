@@ -5,9 +5,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class SpaceRunnerApp extends Application {
 
@@ -27,6 +29,9 @@ public class SpaceRunnerApp extends Application {
     public void setFXMLView(String source){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(source));
+
+            URL a = getClass().getResource("font/video_games.ttf");
+            Font.loadFont(a.toString().replace("%20", " "), 10);
             Pane rootPane = loader.load();
             ViewController windowViewController = loader.getController();
             windowViewController.setMain(this);

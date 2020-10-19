@@ -1,3 +1,7 @@
+.icon-start-game{
+    -fx-font-family: 'video games';
+}
+
 .menu Button {
     -fx-border-radius: 200;
     -fx-border-width: 0;
