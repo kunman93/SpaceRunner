@@ -46,7 +46,6 @@ public class GameController {
         }
 
         initialize();
-        PersistenceUtil.saveProfile(playerProfile);
 
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();

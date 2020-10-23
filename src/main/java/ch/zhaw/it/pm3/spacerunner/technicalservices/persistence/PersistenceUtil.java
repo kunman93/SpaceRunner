@@ -27,18 +27,9 @@ public class PersistenceUtil {
      * @return the player's profile
      */
     public static PlayerProfile loadProfile() {
-        //TODO: Implement
-
-        Path path = null;
+        Path path = Path.of(GameFile.PROFILE.getFileName());
         PlayerProfile playerProfile = null;
-        String[] fileNameSplitted = GameFile.PROFILE.getFileName().split("\\.");
 
-        try {
-            path = Files.createTempFile(fileNameSplitted[0], fileNameSplitted[1]);
-        } catch (IOException e) {
-            //TODO: handle
-            e.printStackTrace();
-        }
 
         if(path != null  && Files.exists(path)){
             try (FileReader reader = new FileReader(GameFile.PROFILE.getFileName())) {
@@ -51,6 +42,7 @@ public class PersistenceUtil {
         }else{
             playerProfile = new PlayerProfile();
         }
+
         //TODO: implement
         playerProfile.setPurchasedContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
 
