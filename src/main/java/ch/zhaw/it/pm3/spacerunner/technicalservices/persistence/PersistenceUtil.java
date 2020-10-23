@@ -7,7 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PersistanceUtil {
+/**
+ * Utility tool to persist data (load / save)
+ */
+public class PersistenceUtil {
 
 
     /**
