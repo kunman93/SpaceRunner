@@ -1,9 +1,16 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
+import com.google.gson.Gson;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +19,7 @@ import java.util.Set;
  * Utility tool to persist data (load / save)
  */
 public class PersistenceUtil {
-
+    private static final Gson gson = new Gson();
 
     /**
      * Load the profile of the player from the disk
@@ -20,10 +27,33 @@ public class PersistenceUtil {
      * @return the player's profile
      */
     public static PlayerProfile loadProfile() {
-
         //TODO: Implement
-        PlayerProfile playerProfile = new PlayerProfile();
+
+        Path path = null;
+        PlayerProfile playerProfile = null;
+        String[] fileNameSplitted = GameFile.PROFILE.getFileName().split("\\.");
+
+        try {
+            path = Files.createTempFile(fileNameSplitted[0], fileNameSplitted[1]);
+        } catch (IOException e) {
+            //TODO: handle
+            e.printStackTrace();
+        }
+
+        if(path != null  && Files.exists(path)){
+            try (FileReader reader = new FileReader(GameFile.PROFILE.getFileName())) {
+                playerProfile = gson.fromJson(reader, PlayerProfile.class);
+            } catch (IOException e) {
+                // TODO handle
+                e.printStackTrace();
+                playerProfile = new PlayerProfile();
+            }
+        }else{
+            playerProfile = new PlayerProfile();
+        }
+        //TODO: implement
         playerProfile.setPurchasedContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
+
         return playerProfile;
     }
 
@@ -33,7 +63,13 @@ public class PersistenceUtil {
      * @param playerProfile player profile to save
      */
     public static void saveProfile(PlayerProfile playerProfile) {
-
+        //gson.toJson(playerProfile, new FileWriter(GameFile.PROFILE.getFileName()));
+        try (FileWriter writer = new FileWriter(GameFile.PROFILE.getFileName())) {
+            gson.toJson(playerProfile, writer);
+        } catch (IOException e) {
+            // TODO handle
+            e.printStackTrace();
+        }
     }
 
     /**
