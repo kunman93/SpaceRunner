@@ -45,6 +45,8 @@ public class GameController {
         elements = new HashSet<>();
         elements.add(spaceShip);
 
+        gameView.setSpaceElements(elements); //TODO: Test with gameView.setSpaceElements(Collections.unmodifiableSet(elements));
+
         isRunning = true;
 
         long gameLoopTime = 0;
@@ -59,8 +61,8 @@ public class GameController {
             }
 
             //TODO: Get KeyEvent and
-            boolean upPressed = false;
-            boolean downPressed = false;
+            boolean upPressed = gameView.isUpPressed();
+            boolean downPressed = gameView.isDownPressed();
             if (upPressed && downPressed) {
                 moveSpaceShip(SpaceShipDirection.NONE);
             } else if (upPressed) {
@@ -103,7 +105,6 @@ public class GameController {
     }
 
     private void displayToUI() {
-        gameView.setSpaceElements(Collections.unmodifiableSet(elements));
         gameView.displayUpdatedSpaceElements();
         gameView.displayCollectedCoins(collectedCoins);
         gameView.displayCurrentScore(score);

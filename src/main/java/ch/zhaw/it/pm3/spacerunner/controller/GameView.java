@@ -13,4 +13,7 @@ public interface GameView {
 
     void displayCurrentScore(int score);
 
+    boolean isUpPressed();
+
+    boolean isDownPressed();
 }

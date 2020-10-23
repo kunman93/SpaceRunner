@@ -3,9 +3,13 @@ package ch.zhaw.it.pm3.spacerunner.view;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import java.util.Set;
@@ -18,6 +22,8 @@ public class GameViewController extends ViewController implements GameView {
     public Canvas gameCanvas;
     private GraphicsContext graphicsContext;
     private GameController gameController = new GameController();
+    private boolean downPressed;
+    private boolean upPressed;
 
 
     @Override
@@ -28,6 +34,28 @@ public class GameViewController extends ViewController implements GameView {
         graphicsContext.fillRect(0, 0, 10000, 10000);
 
         gameController.setView(this);
+
+        Scene scene = this.getMain().getPrimaryStage().getScene();
+
+        EventHandler<KeyEvent> pressedHandler = createPressReleaseKeyHandler(true);
+        EventHandler<KeyEvent> releasedHandler = createPressReleaseKeyHandler(false);
+
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+
+
+        try {
+            gameController.startGame();
+        } catch (Exception e) {
+            //TODO: Handle
+            e.printStackTrace();
+        }
+
+
+        //TODO: Uncomment when Game running
+        //scene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+        //scene.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
 
 //        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
 //        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
@@ -41,6 +69,17 @@ public class GameViewController extends ViewController implements GameView {
 //        });
 
 
+    }
+
+    private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
+        return event -> {
+            if (event.getCode() == KeyCode.UP) {
+                upPressed = isPressedHandler;
+            }
+            if (event.getCode() == KeyCode.DOWN) {
+                downPressed = isPressedHandler;
+            }
+        };
     }
 
 
@@ -77,5 +116,15 @@ public class GameViewController extends ViewController implements GameView {
     @Override
     public void displayCurrentScore(int score) {
 
+    }
+
+    @Override
+    public boolean isUpPressed() {
+        return upPressed;
+    }
+
+    @Override
+    public boolean isDownPressed() {
+        return downPressed;
     }
 }
