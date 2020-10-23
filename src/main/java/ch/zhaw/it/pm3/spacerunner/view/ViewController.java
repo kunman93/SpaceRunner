@@ -7,13 +7,13 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
  * used for methods which are similar in each Controller (e.g. responsive calculations)
  */
 public abstract class ViewController {
-    private SpaceRunnerApp main;
+    private static SpaceRunnerApp main;
 
-    public void setMain(SpaceRunnerApp main) {
-        this.main = main;
+    public static void  setMain(SpaceRunnerApp main) {
+        ViewController.main = main;
     }
 
-    public SpaceRunnerApp getMain() {
+    public static SpaceRunnerApp getMain() {
         return main;
     }
 

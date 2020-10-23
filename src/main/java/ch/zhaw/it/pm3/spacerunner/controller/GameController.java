@@ -1,12 +1,13 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
+import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistanceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Collections;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,8 +20,9 @@ public class GameController {
     private int distance;
     private int score;
     private double gameSpeed;
-    private double gameSpeedIncrease;
     private int fps;
+    private long sleepTime;
+    private double gameSpeedIncrease;
     private double spaceShipMoveSpeed;
 
     private SpaceShip spaceShip;
@@ -42,43 +44,22 @@ public class GameController {
 
         initialize();
 
-        elements = new HashSet<>();
-        elements.add(spaceShip);
-
-        isRunning = true;
-
-        long gameLoopTime = 0;
-        long sleepTime = 1000/fps;
-
         while (isRunning) {
-
-            gameLoopTime = System.currentTimeMillis();
+            long gameLoopTime = System.currentTimeMillis();
 
             if (isPaused) {
-
+                //TODO: Implement pause
             }
 
-            //TODO: Get KeyEvent and
-            boolean upPressed = false;
-            boolean downPressed = false;
-            if (upPressed && downPressed) {
-                moveSpaceShip(SpaceShipDirection.NONE);
-            } else if (upPressed) {
-                moveSpaceShip(SpaceShipDirection.UP);
-            } else if (downPressed) {
-                moveSpaceShip(SpaceShipDirection.DOWN);
-            }
+            checkMovementKeys();
 
             if(detectCollision()) {
                 isRunning = false;
             }
 
             generateObstacles();
-
             moveElements();
-
             removePastDrawables();
-
             displayToUI();
 
             gameSpeed += gameSpeedIncrease/fps;
@@ -91,8 +72,33 @@ public class GameController {
 
 
         updatePlayerProfile();
+        PersistenceUtil.saveProfile(playerProfile);
+        gameView.gameEnded();
+    }
 
-        PersistanceUtil.saveProfile(playerProfile);
+    private void checkMovementKeys() {
+        boolean upPressed = gameView.isUpPressed();
+        boolean downPressed = gameView.isDownPressed();
+        if (upPressed && downPressed) {
+            moveSpaceShip(SpaceShipDirection.NONE);
+        } else if (upPressed) {
+            moveSpaceShip(SpaceShipDirection.UP);
+        } else if (downPressed) {
+            moveSpaceShip(SpaceShipDirection.DOWN);
+        }
+    }
+
+    /**
+     * - starts game, if this is the first movement
+     * --> transmit new position to spaceship
+     */
+    private void moveSpaceShip(SpaceShipDirection direction) {
+        switch (direction) {
+            case UP:
+                spaceShip.move(new Point(0, (int)spaceShipMoveSpeed/fps));
+            case DOWN:
+                spaceShip.move(new Point(0, -(int)spaceShipMoveSpeed/fps));
+        }
     }
 
     private void updatePlayerProfile() {
@@ -103,7 +109,6 @@ public class GameController {
     }
 
     private void displayToUI() {
-        gameView.setSpaceElements(Collections.unmodifiableSet(elements));
         gameView.displayUpdatedSpaceElements();
         gameView.displayCollectedCoins(collectedCoins);
         gameView.displayCurrentScore(score);
@@ -116,26 +121,37 @@ public class GameController {
         isPaused = !isPaused;
     }
 
-    /**
-     * - starts game, if this is the first movement
-     * --> transmit new position to spaceship
-     */
-    public void moveSpaceShip(SpaceShipDirection direction) {
-        switch (direction) {
-            case UP:
-                spaceShip.move(new Point(0, (int)spaceShipMoveSpeed/fps));
-            case DOWN:
-                spaceShip.move(new Point(0, -(int)spaceShipMoveSpeed/fps));
-        }
-    }
+
 
 
 
     private void initialize() {
-        playerProfile = PersistanceUtil.loadProfile();
+        playerProfile = PersistenceUtil.loadProfile();
+
+        elements = new HashSet<>();
+        gameView.setSpaceElements(elements); //TODO: Test with gameView.setSpaceElements(Collections.unmodifiableSet(elements));
+
+        setUpSpaceElementImages();
+
+        elements.add(spaceShip);
+
+        fps = playerProfile.getFps();
+
+        isRunning = true;
+        sleepTime = 1000/fps;
+
+        distance = 0;
+        collectedCoins = 0;
+//        gameSpeed = playerProfile.getStartingGameSpeed;
+//        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
+//        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
+    }
+
+    private void setUpSpaceElementImages() {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
-            SpaceShip.setVisual(PersistanceUtil.loadImage(playerProfile.getPlayerImageId() + ".svg"));
+            URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
+            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
             spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
         } catch (IOException e) {
             //TODO: Handle: Should never happen unless theres a model which doesnt have an corresponding image in resources
@@ -143,18 +159,11 @@ public class GameController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        distance = 0;
-        collectedCoins = 0;
-//        gameSpeed = playerProfile.getStartingGameSpeed;
-//        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
-//        fps = playerProfile.getFPS;
-//        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
     private void removePastDrawables() {
         for(SpaceElement element : elements) {
-            if(element.getCurrentPosition().x + element.getLength() < 0) {
+            if(element.getPosition().x + element.getLength() < 0) {
                 elements.remove(element);
             }
         }
