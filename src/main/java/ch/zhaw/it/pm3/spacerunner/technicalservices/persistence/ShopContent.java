@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.model.gamedata;
+package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 public class ShopContent {
 

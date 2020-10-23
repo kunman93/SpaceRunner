@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.model.element;
+package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 import java.awt.*;
 

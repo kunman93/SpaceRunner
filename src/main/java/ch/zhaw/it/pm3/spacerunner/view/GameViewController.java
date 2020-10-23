@@ -2,7 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
-import ch.zhaw.it.pm3.spacerunner.model.element.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

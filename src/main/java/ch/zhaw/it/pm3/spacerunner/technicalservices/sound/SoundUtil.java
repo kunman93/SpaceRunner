@@ -1,6 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.util;
-
-import ch.zhaw.it.pm3.spacerunner.model.sound.SoundClip;
+package ch.zhaw.it.pm3.spacerunner.technicalservices.sound;
 
 import javax.sound.sampled.*;
 import java.io.File;
