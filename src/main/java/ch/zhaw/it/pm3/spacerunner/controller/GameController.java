@@ -22,6 +22,7 @@ public class GameController {
     private double gameSpeed;
     private double gameSpeedIncrease;
     private int fps;
+    private double spaceShipMoveSpeed;
 
     private SpaceShip spaceShip;
     private Set<SpaceElement> elements;
@@ -38,11 +39,10 @@ public class GameController {
             throw new GameViewNotFoundException("GameController has no GameView");
         }
 
-        elements = new HashSet<>();
         initialize();
-        elements.add(spaceShip);
 
-        gameView.setSpaceElements(Collections.unmodifiableSet(elements));
+        elements = new HashSet<>();
+        elements.add(spaceShip);
 
         isRunning = true;
 
@@ -73,21 +73,29 @@ public class GameController {
 
             removePastDrawables();
 
-            gameView.displayUpdatedSpaceElements();
-            gameView.displayCollectedCoins(collectedCoins);
-            gameView.displayCurrentScore(score);
+            displayToUI();
 
             gameSpeed += gameSpeedIncrease/fps;
         }
 
-        playerProfile.addCoins(collectedCoins);
-        playerProfile.addScore(score);
+        updatePlayerProfile();
 
         FileUtil.saveProfile(playerProfile);
-        //TODO: Add collected coins to playerProfile and save it!
-
     }
 
+    private void updatePlayerProfile() {
+        playerProfile.addCoins(collectedCoins);
+        if(score > playerProfile.getHighScore) {
+            playerProfile.setHighScore();
+        }
+    }
+
+    private void displayToUI() {
+        gameView.setSpaceElements(Collections.unmodifiableSet(elements));
+        gameView.displayUpdatedSpaceElements();
+        gameView.displayCollectedCoins(collectedCoins);
+        gameView.displayCurrentScore(score);
+    }
 
     /**
      * continues or stops game logic according to clicking pause/resume button
@@ -96,14 +104,6 @@ public class GameController {
         isPaused = !isPaused;
     }
 
-
-    /**
-     * TODO: Move or delete
-     * saves collected coins as well as the distance (if it is a new record) to a local file
-     *
-     private void saveState() {}
-     */
-
     /**
      * - starts game, if this is the first movement
      * --> transmit new position to spaceship
@@ -111,9 +111,9 @@ public class GameController {
     public void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                spaceShip.move(SpaceShipDirection.UP);
+                spaceShip.move(new Point(0, (int)spaceShipMoveSpeed/fps));
             case DOWN:
-                spaceShip.move(SpaceShipDirection.DOWN);
+                spaceShip.move(new Point(0, -(int)spaceShipMoveSpeed/fps));
         }
     }
 
@@ -137,6 +137,7 @@ public class GameController {
         gameSpeed = playerProfile.getStartingGameSpeed;
         gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
         fps = playerProfile.getFPS;
+        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
     private void removePastDrawables() {
@@ -151,6 +152,7 @@ public class GameController {
     private void generateObstacles() {
 
         //TODO: This is not how it should be => Generate from presets and only randomly
+
         try {
             elements.add(new Coin(new Point(20, 100), 20, 20));
             elements.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
@@ -163,7 +165,7 @@ public class GameController {
 
     private void moveElements() {
         for(SpaceElement element : elements) {
-            element.move(new Point(-gameSpeed, 0));
+            element.move(new Point(-(int)gameSpeed, 0));
         }
     }
 
