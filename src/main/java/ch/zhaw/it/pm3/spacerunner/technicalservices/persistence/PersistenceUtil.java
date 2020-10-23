@@ -101,12 +101,12 @@ public class PersistenceUtil {
     }
 
     private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {
-        //TODO: Implement
+        //TODO: Implement and JavaDOC
         return new HashSet<>();
     }
 
     public static List<ShopContent> loadShopContent() {
-        //TODO: Implement
+        //TODO: Implement and JavaDOC
         return null;
     }
 
