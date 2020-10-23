@@ -62,7 +62,6 @@ public class GameController {
 
             }
 
-            //TODO: Get KeyEvent and
             boolean upPressed = gameView.isUpPressed();
             boolean downPressed = gameView.isDownPressed();
             if (upPressed && downPressed) {
