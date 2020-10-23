@@ -97,9 +97,9 @@ public class GameController {
 
     private void updatePlayerProfile() {
         playerProfile.addCoins(collectedCoins);
-        if(score > playerProfile.getHighScore()) {
-            playerProfile.setHighScore();
-        }
+//        if(score > playerProfile.getHighScore()) {
+//            playerProfile.setHighScore();
+//        }
     }
 
     private void displayToUI() {
@@ -146,10 +146,10 @@ public class GameController {
 
         distance = 0;
         collectedCoins = 0;
-        gameSpeed = playerProfile.getStartingGameSpeed;
-        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
-        fps = playerProfile.getFPS;
-        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
+//        gameSpeed = playerProfile.getStartingGameSpeed;
+//        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
+//        fps = playerProfile.getFPS;
+//        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
     private void removePastDrawables() {
