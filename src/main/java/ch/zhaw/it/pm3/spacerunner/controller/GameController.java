@@ -29,6 +29,8 @@ public class GameController {
     private PlayerProfile playerProfile;
     private GameView gameView;
 
+
+
     public void setView(GameView gameView) {
         this.gameView = gameView;
     }
@@ -46,7 +48,12 @@ public class GameController {
 
         isRunning = true;
 
+        long gameLoopTime = 0;
+        long sleepTime = 1000/fps;
+
         while (isRunning) {
+
+            gameLoopTime = System.currentTimeMillis();
 
             if (isPaused) {
 
@@ -76,6 +83,11 @@ public class GameController {
             displayToUI();
 
             gameSpeed += gameSpeedIncrease/fps;
+
+            gameLoopTime = System.currentTimeMillis() - gameLoopTime;
+            if (sleepTime - gameLoopTime > 0) {
+                Thread.sleep(sleepTime-gameLoopTime);
+            }
         }
 
         updatePlayerProfile();
