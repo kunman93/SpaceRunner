@@ -8,7 +8,8 @@
           stylesheets="@style.css"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="ch.zhaw.it.pm3.spacerunner.view.MenuViewController"
-          prefHeight="400.0" prefWidth="600.0">
+          prefHeight="400.0" prefWidth="600.0"
+          styleClass="menu">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" percentWidth="10.0" prefWidth="49.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" percentWidth="90.0" prefWidth="351.0" />
@@ -22,7 +23,7 @@
         <RowConstraints maxHeight="33.0" minHeight="10.0" percentHeight="5.0" prefHeight="33.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane styleClass="menu"  GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
@@ -34,13 +35,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button id="home" fx:id="startGameButton" onAction="#showGame"
+                <Button id="home" fx:id="startGameButton" onAction="#showGame" text="START"
                         mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" GridPane.vgrow="ALWAYS" >
                     <graphic>
                         <HBox>
                             <children>
                                 <Label styleClass="icon-start-game">B</Label>
-                                <Label>START</Label>
                             </children>
                         </HBox>
                     </graphic>
@@ -51,6 +51,6 @@
                          mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" GridPane.columnIndex="4" GridPane.vgrow="ALWAYS" />
             </children>
         </GridPane>
-        <Button mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" text="BILD" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+        <Label prefWidth="800" prefHeight="100" text="SPACE RUNNER" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
     </children>
 </GridPane>
