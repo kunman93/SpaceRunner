@@ -18,7 +18,10 @@ public class GameController {
 
     private int collectedCoins;
     private int distance;
-    private int points;
+    private int score;
+    private double gameSpeed;
+    private double gameSpeedIncrease;
+    private int fps;
 
     private SpaceShip spaceShip;
     private Set<SpaceElement> elements;
@@ -32,8 +35,7 @@ public class GameController {
 
     public void startGame() throws Exception {
         if (gameView == null) {
-            //TODO: Make own exception types and handle
-            throw new Exception();
+            throw new GameViewNotFoundException("GameController has no GameView");
         }
 
         elements = new HashSet<>();
@@ -43,6 +45,7 @@ public class GameController {
         gameView.setSpaceElements(Collections.unmodifiableSet(elements));
 
         isRunning = true;
+
         while (isRunning) {
 
             if (isPaused) {
@@ -50,23 +53,35 @@ public class GameController {
             }
 
             //TODO: Get KeyEvent and
-            boolean keypressed = false;
-            if (keypressed) {
-                moveSpaceShip(null);
+            boolean upPressed = false;
+            boolean downPressed = false;
+            if (upPressed && downPressed) {
+                moveSpaceShip(SpaceShipDirection.NONE);
+            } else if (upPressed) {
+                moveSpaceShip(SpaceShipDirection.UP);
+            } else if (downPressed) {
+                moveSpaceShip(SpaceShipDirection.DOWN);
             }
-            //TODO: Draw Elements to canvas
-            detectCollision();
+
+            if(detectCollision()) {
+                isRunning = false;
+            }
 
             generateObstacles();
 
-
             moveElements();
+
             removePastDrawables();
 
             gameView.displayUpdatedSpaceElements();
+            gameView.displayCollectedCoins(collectedCoins);
+            gameView.displayCurrentScore(score);
 
-
+            gameSpeed += gameSpeedIncrease/fps;
         }
+
+        playerProfile.addCoins(collectedCoins);
+        playerProfile.addScore(score);
 
         FileUtil.saveProfile(playerProfile);
         //TODO: Add collected coins to playerProfile and save it!
@@ -96,10 +111,9 @@ public class GameController {
     public void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                //spaceShip.move(1);
-                break;
+                spaceShip.move(SpaceShipDirection.UP);
             case DOWN:
-                //spaceShip.move(-1);
+                spaceShip.move(SpaceShipDirection.DOWN);
         }
     }
 
@@ -120,11 +134,17 @@ public class GameController {
 
         distance = 0;
         collectedCoins = 0;
+        gameSpeed = playerProfile.getStartingGameSpeed;
+        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
+        fps = playerProfile.getFPS;
     }
 
     private void removePastDrawables() {
-        //TODO: removes all drawables with x < 0
-
+        for(SpaceElement element : elements) {
+            if(element.getCurrentPosition().x + element.getLength() < 0) {
+                elements.remove(element);
+            }
+        }
     }
 
 
@@ -142,8 +162,9 @@ public class GameController {
 
 
     private void moveElements() {
-        //TODO: move all movable elements
-        //TODO: delete alls with x < 0
+        for(SpaceElement element : elements) {
+            element.move(new Point(-gameSpeed, 0));
+        }
     }
 
     /**
@@ -151,13 +172,8 @@ public class GameController {
      */
     private boolean detectCollision() {
 
-
         //TODO: Loop over all elements and check for collision
-            /*SpaceElement spaceElement = elementMap.getOrDefault(spaceShip.getPosition(), null);
 
-            if (spaceElement instanceof Coins) coinCollected();
-            if (spaceElement instanceof PowerUp) break; //spaceShip.setPowerUp()
-            if (spaceElement instanceof Obstacle) ended = true;*/
         return false;
     }
 
