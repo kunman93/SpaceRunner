@@ -1,11 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.model.element.*;
-import ch.zhaw.it.pm3.spacerunner.model.gamedata.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.util.FileUtil;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistanceUtil;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -68,7 +67,7 @@ public class GameController {
 
         }
 
-        FileUtil.saveProfile(playerProfile);
+        PersistanceUtil.saveProfile(playerProfile);
         //TODO: Add collected coins to playerProfile and save it!
 
     }
@@ -106,10 +105,10 @@ public class GameController {
 
 
     private void initialize() {
-        playerProfile = FileUtil.loadProfile();
+        playerProfile = PersistanceUtil.loadProfile();
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
-            SpaceShip.setVisual(FileUtil.loadImage(playerProfile.getPlayerImageId() + ".svg"));
+            SpaceShip.setVisual(PersistanceUtil.loadImage(playerProfile.getPlayerImageId() + ".svg"));
             spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
         } catch (IOException e) {
             //TODO: Handle: Should never happen unless theres a model which doesnt have an corresponding image in resources

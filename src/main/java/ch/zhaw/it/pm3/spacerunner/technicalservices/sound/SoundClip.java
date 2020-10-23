@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.model.sound;
+package ch.zhaw.it.pm3.spacerunner.technicalservices.sound;
 
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;

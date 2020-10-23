@@ -1,7 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.util;
-
-import ch.zhaw.it.pm3.spacerunner.model.gamedata.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.model.gamedata.ShopContent;
+package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FileUtil {
+public class PersistanceUtil {
 
 
     public static PlayerProfile loadProfile(){
@@ -26,6 +23,11 @@ public class FileUtil {
 
     }
 
+    public static Image loadImage(String imageName) throws IOException {
+        BufferedImage image = ImageIO.read(new File("resources/images", imageName));
+        return image;
+    }
+
 
     //TODO: Maybe move this to FileUtil
     private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds){
@@ -35,12 +37,6 @@ public class FileUtil {
     public static List<ShopContent> loadShopContent(){
         return null;
     }
-
-    public static Image loadImage(String imageName) throws IOException {
-        BufferedImage image = ImageIO.read(new File("resources/images", imageName));
-        return image;
-    }
-
 
 
 

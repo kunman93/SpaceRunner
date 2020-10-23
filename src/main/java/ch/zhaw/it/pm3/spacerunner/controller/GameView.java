@@ -1,6 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.model.element.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import java.util.Set;
 
 public interface GameView {
