@@ -22,9 +22,10 @@ public class PersistenceUtil {
     private static final Gson gson = new Gson();
 
     /**
-     * Load the profile of the player from the disk
+     * Load the profile of the player from the disk where it is saved in json.
+     * If there is no profile.json found it will return a new default profile!
      *
-     * @return the player's profile
+     * @return the player's profile (or a default profile if it doesn't exist)
      */
     public static PlayerProfile loadProfile() {
         Path path = Path.of(GameFile.PROFILE.getFileName());
@@ -50,7 +51,7 @@ public class PersistenceUtil {
     }
 
     /**
-     * Save the player profile to the disk
+     * Save the player profile in json-format to the disk
      *
      * @param playerProfile player profile to save
      */
@@ -75,6 +76,8 @@ public class PersistenceUtil {
         return toBufferedImage(image);
     }
 
+
+    //TODO: Declare as copied from internet. (Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage)
     /**
      * Converts a given Image into a BufferedImage
      *
