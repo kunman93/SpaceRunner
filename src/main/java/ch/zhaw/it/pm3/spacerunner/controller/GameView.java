@@ -16,4 +16,6 @@ public interface GameView {
     boolean isUpPressed();
 
     boolean isDownPressed();
+
+    void gameEnded();
 }

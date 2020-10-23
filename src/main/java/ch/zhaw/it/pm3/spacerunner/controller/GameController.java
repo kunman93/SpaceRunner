@@ -95,6 +95,8 @@ public class GameController {
         updatePlayerProfile();
 
         PersistanceUtil.saveProfile(playerProfile);
+
+        gameView.gameEnded();
     }
 
     private void updatePlayerProfile() {

@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
+import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
@@ -11,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.Set;
 
@@ -24,6 +26,9 @@ public class GameViewController extends ViewController implements GameView {
     private GameController gameController = new GameController();
     private boolean downPressed;
     private boolean upPressed;
+    private Scene scene;
+    private EventHandler<KeyEvent> pressedHandler;
+    private EventHandler<KeyEvent> releasedHandler;
 
 
     @Override
@@ -35,27 +40,30 @@ public class GameViewController extends ViewController implements GameView {
 
         gameController.setView(this);
 
-        Scene scene = this.getMain().getPrimaryStage().getScene();
+        SpaceRunnerApp main = this.getMain();
+        Stage primaryStage = main.getPrimaryStage();
+        scene = primaryStage.getScene();
 
-        EventHandler<KeyEvent> pressedHandler = createPressReleaseKeyHandler(true);
-        EventHandler<KeyEvent> releasedHandler = createPressReleaseKeyHandler(false);
+        pressedHandler = createPressReleaseKeyHandler(true);
+        releasedHandler = createPressReleaseKeyHandler(false);
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
 
         scene.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
 
+        Thread gameThread = new Thread(() ->{
+            try {
+                gameController.startGame();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
-        try {
-            gameController.startGame();
-        } catch (Exception e) {
-            //TODO: Handle
-            e.printStackTrace();
-        }
+        gameThread.start();
 
 
-        //TODO: Uncomment when Game running
-        //scene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
-        //scene.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+
+
 
 //        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
 //        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
@@ -126,5 +134,11 @@ public class GameViewController extends ViewController implements GameView {
     @Override
     public boolean isDownPressed() {
         return downPressed;
+    }
+
+    @Override
+    public void gameEnded() {
+        scene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+        scene.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
     }
 }

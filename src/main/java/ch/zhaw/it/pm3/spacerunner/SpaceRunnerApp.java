@@ -23,6 +23,7 @@ public class SpaceRunnerApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Space Runner");
+        ViewController.setMain(this);
         setFXMLView("view/menu.fxml");
     }
 
@@ -34,7 +35,6 @@ public class SpaceRunnerApp extends Application {
             Font.loadFont(a.toString().replace("%20", " "), 10);
             Pane rootPane = loader.load();
             ViewController windowViewController = loader.getController();
-            windowViewController.setMain(this);
             Scene scene = new Scene(rootPane);
             primaryStage.setScene(scene);
 
@@ -48,8 +48,10 @@ public class SpaceRunnerApp extends Application {
             //}
         } catch (IOException e) {
             //logger.log(Level.SEVERE, "!!!FILE NOT FOUND, CHECK FILEPATH!!!");
+            e.printStackTrace();
         } catch (Exception e) {
             //logger.log(Level.SEVERE, "!!!INCOMPATIBLE DATE FORMAT!!!");
+            e.printStackTrace();
         }
     }
 
