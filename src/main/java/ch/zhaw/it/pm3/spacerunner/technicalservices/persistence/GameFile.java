@@ -7,8 +7,12 @@ public enum GameFile {
     
 
 
-    private String file;
-    private GameFile(String file){
-        this.file = file;
+    private String fileName;
+    private GameFile(String fileName){
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

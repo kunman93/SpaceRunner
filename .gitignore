@@ -35,3 +35,6 @@ gradle-app.setting
 .classpath
 .project
 
+# Player profile
+profile.json
+

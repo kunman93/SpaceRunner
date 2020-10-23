@@ -5,8 +5,6 @@ import java.util.Set;
 
 public class PlayerProfile {
 
-
-
     private boolean audioEnabled;
     private int volume;
     //Id des gekauften / default player model
