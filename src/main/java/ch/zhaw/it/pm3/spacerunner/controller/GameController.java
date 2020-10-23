@@ -97,7 +97,7 @@ public class GameController {
 
     private void updatePlayerProfile() {
         playerProfile.addCoins(collectedCoins);
-        if(score > playerProfile.getHighScore) {
+        if(score > playerProfile.getHighScore()) {
             playerProfile.setHighScore();
         }
     }
