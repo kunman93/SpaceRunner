@@ -19,11 +19,14 @@ public class GameController {
     private int collectedCoins;
     private int distance;
     private int score;
-    private double gameSpeed;
+
     private int fps;
     private long sleepTime;
-    private double gameSpeedIncrease;
-    private double spaceShipMoveSpeed;
+
+    private double horizontalGameSpeed;
+    private double horizontalGameSpeedIncreasePerSecond;
+    private int spaceShipVerticalMoveSpeed;
+
 
     private SpaceShip spaceShip;
     private Set<SpaceElement> elements;
@@ -62,7 +65,7 @@ public class GameController {
             removePastDrawables();
             displayToUI();
 
-            gameSpeed += gameSpeedIncrease/fps;
+            horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
 
             gameLoopTime = System.currentTimeMillis() - gameLoopTime;
             if (sleepTime - gameLoopTime > 0) {
@@ -95,9 +98,11 @@ public class GameController {
     private void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                spaceShip.move(new Point(0, (int)spaceShipMoveSpeed/fps));
+                spaceShip.move(new Point(0, -spaceShipVerticalMoveSpeed));
+                break;
             case DOWN:
-                spaceShip.move(new Point(0, -(int)spaceShipMoveSpeed/fps));
+                spaceShip.move(new Point(0, spaceShipVerticalMoveSpeed));
+                break;
         }
     }
 
@@ -109,7 +114,11 @@ public class GameController {
     }
 
     private void displayToUI() {
-        gameView.displayUpdatedSpaceElements();
+        Set<SpaceElement> dataToDisplay = new HashSet<SpaceElement>(elements);
+        dataToDisplay.add(spaceShip);
+
+
+        gameView.displayUpdatedSpaceElements(dataToDisplay);
         gameView.displayCollectedCoins(collectedCoins);
         gameView.displayCurrentScore(score);
     }
@@ -129,11 +138,8 @@ public class GameController {
         playerProfile = PersistenceUtil.loadProfile();
 
         elements = new HashSet<>();
-        gameView.setSpaceElements(elements); //TODO: Test with gameView.setSpaceElements(Collections.unmodifiableSet(elements));
-
         setUpSpaceElementImages();
 
-        elements.add(spaceShip);
 
         fps = playerProfile.getFps();
 
@@ -142,6 +148,9 @@ public class GameController {
 
         distance = 0;
         collectedCoins = 0;
+        spaceShipVerticalMoveSpeed = 3;
+        horizontalGameSpeed = 1;
+        horizontalGameSpeedIncreasePerSecond = 0.1;
 //        gameSpeed = playerProfile.getStartingGameSpeed;
 //        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
@@ -163,7 +172,7 @@ public class GameController {
 
     private void removePastDrawables() {
         for(SpaceElement element : elements) {
-            if(element.getPosition().x + element.getLength() < 0) {
+            if(element.getPosition().x + element.getWidth() < 0) {
                 elements.remove(element);
             }
         }
@@ -172,21 +181,21 @@ public class GameController {
 
     private void generateObstacles() {
 
+        return;
         //TODO: This is not how it should be => Generate from presets and only randomly
-
-        try {
+        /*try {
             elements.add(new Coin(new Point(20, 100), 20, 20));
             elements.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
             elements.add(new PowerUp(new Point(20, 100), 20, 20));
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
     private void moveElements() {
         for(SpaceElement element : elements) {
-            element.move(new Point(-(int)gameSpeed, 0));
+            element.move(new Point(-(int) horizontalGameSpeed, 0));
         }
     }
 
