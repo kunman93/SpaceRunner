@@ -8,9 +8,7 @@ import java.util.Set;
  */
 public interface GameView {
 
-    void setSpaceElements(Set<SpaceElement> spaceElements);
-
-    void displayUpdatedSpaceElements();
+    void displayUpdatedSpaceElements(Set<SpaceElement> spaceElements);
 
     void displayCollectedCoins(int coins);
 
