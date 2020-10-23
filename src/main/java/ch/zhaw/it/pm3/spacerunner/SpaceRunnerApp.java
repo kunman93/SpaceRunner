@@ -31,23 +31,10 @@ public class SpaceRunnerApp extends Application {
         ViewController.setMain(this);
         setFXMLView("view/menu.fxml");
 
-        try {
-            URL backgroundMusicURL = getClass().getResource("sound/background.wav");
-            SoundClip backgroundMusic = SoundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
-            backgroundMusic.setLoop(true);
-            backgroundMusic.play();
-        } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            //TODO
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            //TODO
-            e.printStackTrace();
-        }
+        setupBackgroundMusic();
 
     }
+
 
     public void setFXMLView(String source){
         try {
@@ -84,5 +71,24 @@ public class SpaceRunnerApp extends Application {
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+
+    private void setupBackgroundMusic() {
+        try {
+            URL backgroundMusicURL = getClass().getResource("sound/background.wav");
+            SoundClip backgroundMusic = SoundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
+            backgroundMusic.setLoop(true);
+            backgroundMusic.play();
+        } catch (IOException e) {
+            //TODO
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            //TODO
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            //TODO
+            e.printStackTrace();
+        }
+    }
+
 
 }
