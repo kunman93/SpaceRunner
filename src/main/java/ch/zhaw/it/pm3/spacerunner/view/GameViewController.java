@@ -26,7 +26,7 @@ public class GameViewController extends ViewController implements GameView {
     private GameController gameController = new GameController();
     private boolean downPressed;
     private boolean upPressed;
-    private Scene scene;
+    private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
 
@@ -41,15 +41,14 @@ public class GameViewController extends ViewController implements GameView {
         gameController.setView(this);
 
         SpaceRunnerApp main = this.getMain();
-        Stage primaryStage = main.getPrimaryStage();
-        scene = primaryStage.getScene();
+        primaryStage = main.getPrimaryStage();
 
         pressedHandler = createPressReleaseKeyHandler(true);
         releasedHandler = createPressReleaseKeyHandler(false);
 
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
-
-        scene.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+        System.out.println("Adding handlers");
+        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+        primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
 
         Thread gameThread = new Thread(() ->{
             try {
@@ -138,7 +137,7 @@ public class GameViewController extends ViewController implements GameView {
 
     @Override
     public void gameEnded() {
-        scene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
-        scene.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+        primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+        primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
     }
 }

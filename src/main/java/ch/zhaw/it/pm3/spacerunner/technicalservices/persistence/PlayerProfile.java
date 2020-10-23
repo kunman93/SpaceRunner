@@ -14,6 +14,7 @@ public class PlayerProfile {
     private String playerName;
     private int coins;
     private Set<Integer> purchasedContentIds;
+    private int fps;
 
     //TODO: Do not persist
     private Set<ShopContent> purchasedContent;
@@ -25,6 +26,7 @@ public class PlayerProfile {
         playerImageId = -1;
         playerName = "Player1";
         coins = 0;
+        fps = 60;
         purchasedContentIds = new HashSet<>();
     }
 
@@ -90,5 +92,17 @@ public class PlayerProfile {
 
     public void setPurchasedContent(Set<ShopContent> purchasedContent) {
         this.purchasedContent = purchasedContent;
+    }
+
+    public void setPurchasedContentIds(Set<Integer> purchasedContentIds) {
+        this.purchasedContentIds = purchasedContentIds;
+    }
+
+    public int getFps() {
+        return fps;
+    }
+
+    public void setFps(int fps) {
+        this.fps = fps;
     }
 }

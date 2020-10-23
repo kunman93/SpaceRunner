@@ -1,11 +1,13 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
+import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistanceUtil;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,8 +21,8 @@ public class GameController {
     private int distance;
     private int score;
     private double gameSpeed;
-    private double gameSpeedIncrease;
     private int fps;
+    private double gameSpeedIncrease;
     private double spaceShipMoveSpeed;
 
     private SpaceShip spaceShip;
@@ -70,6 +72,7 @@ public class GameController {
             } else if (downPressed) {
                 moveSpaceShip(SpaceShipDirection.DOWN);
             }
+
 
             if(detectCollision()) {
                 isRunning = false;
@@ -138,7 +141,8 @@ public class GameController {
         playerProfile = PersistanceUtil.loadProfile();
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
-            SpaceShip.setVisual(PersistanceUtil.loadImage(playerProfile.getPlayerImageId() + ".svg"));
+            URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
+            SpaceShip.setVisual(PersistanceUtil.loadImage(imageURL));
             spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
         } catch (IOException e) {
             //TODO: Handle: Should never happen unless theres a model which doesnt have an corresponding image in resources
@@ -146,18 +150,18 @@ public class GameController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        fps = playerProfile.getFps();
 
         distance = 0;
         collectedCoins = 0;
 //        gameSpeed = playerProfile.getStartingGameSpeed;
 //        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
-//        fps = playerProfile.getFPS;
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
     private void removePastDrawables() {
         for(SpaceElement element : elements) {
-            if(element.getCurrentPosition().x + element.getLength() < 0) {
+            if(element.getPosition().x + element.getLength() < 0) {
                 elements.remove(element);
             }
         }

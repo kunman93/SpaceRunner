@@ -40,10 +40,6 @@ public abstract class SpaceElement {
 
     }
 
-    public Point getCurrentPosition() {
-        return null;
-    }
-
     public Image getVisuals() {
         return visual;
     }
