@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
@@ -41,9 +42,34 @@ public class PersistenceUtil {
      * @param imageURL URL of the image to load
      * @return loaded image
      */
-    public static Image loadImage(URL imageURL) {
+    public static BufferedImage loadImage(URL imageURL) {
         Image image = new ImageIcon(imageURL).getImage();
-        return image;
+        return toBufferedImage(image);
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage
+     *
+     * @param img The Image to be converted
+     * @return The converted BufferedImage
+     */
+    private static BufferedImage toBufferedImage(Image img)
+    {
+        if (img instanceof BufferedImage)
+        {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // Return the buffered image
+        return bimage;
     }
 
     private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {

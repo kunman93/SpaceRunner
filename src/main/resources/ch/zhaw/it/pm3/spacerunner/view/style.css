@@ -5,7 +5,28 @@
 .menu Button {
     -fx-border-radius: 200;
     -fx-border-width: 0;
-    -fx-background-color: red;
+    -fx-border-color: white;
     -fx-font-size: 30px;
+    -fx-cursor: pointer;
+    -fx-background-color: black;
+    -fx-text-fill: white;
     -fx-font-family: "Bauhaus 93";
+}
+
+.menu {
+    -fx-background-color: black;
+}
+
+.menu Button:hover,
+.menu Button:hover Label{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+
+.menu Label {
+    -fx-text-fill: white;
+    -fx-font-size: 40;
+    -fx-alignment: center;
+    -fx-font-style: bold;
 }
