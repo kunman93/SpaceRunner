@@ -119,7 +119,7 @@ public class GameViewController extends ViewController implements GameView {
             graphicsContext.fillRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
             for(SpaceElement spaceElement : spaceElements){
-                Point position = spaceElement.getPosition();
+                Point position = spaceElement.getCurrentPosition();
                 Image image = SwingFXUtils.toFXImage(spaceElement.getVisual(), null);
                 graphicsContext.drawImage(image, position.x, position.y);
                 //TODO: possible memory leak

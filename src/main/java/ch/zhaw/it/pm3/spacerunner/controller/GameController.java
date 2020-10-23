@@ -98,10 +98,12 @@ public class GameController {
     private void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                spaceShip.move(new Point(0, -spaceShipVerticalMoveSpeed));
+                spaceShip.directMoveUp();
+//                spaceShip.directMove(new Point(0, -spaceShipVerticalMoveSpeed));
                 break;
             case DOWN:
-                spaceShip.move(new Point(0, spaceShipVerticalMoveSpeed));
+                spaceShip.directMoveDown();
+//                spaceShip.directMove(new Point(0, spaceShipVerticalMoveSpeed));
                 break;
         }
     }
@@ -160,8 +162,9 @@ public class GameController {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
-            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
-            spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
+            spaceShip = new SpaceShip(new Point(20, 100), 50, 200, PersistenceUtil.loadImage(imageURL));
+//            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
+//            spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
         } catch (IOException e) {
             //TODO: Handle: Should never happen unless theres a model which doesnt have an corresponding image in resources
             e.printStackTrace();
@@ -172,7 +175,8 @@ public class GameController {
 
     private void removePastDrawables() {
         for(SpaceElement element : elements) {
-            if(element.getPosition().x + element.getWidth() < 0) {
+            if(element.getCurrentPosition().x + element.getWidth() < 0) {
+//                if(element.getPosition().x + element.getWidth() < 0) {
                 elements.remove(element);
             }
         }
@@ -195,7 +199,7 @@ public class GameController {
 
     private void moveElements() {
         for(SpaceElement element : elements) {
-            element.move(new Point(-(int) horizontalGameSpeed, 0));
+//            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
         }
     }
 

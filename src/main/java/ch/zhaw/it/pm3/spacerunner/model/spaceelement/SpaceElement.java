@@ -13,10 +13,10 @@ public abstract class SpaceElement {
     private static BufferedImage visual;
 
 
-    public SpaceElement(Point startPosition, int width, int length, Image visual) throws Exception {
+    public SpaceElement(Point startPosition, int width, int height, BufferedImage visual) throws Exception {
         this.visual = visual;
         this.width = width;
-        this.length = length;
+        this.height = height;
         this.position = startPosition;
     }
 
@@ -24,8 +24,8 @@ public abstract class SpaceElement {
         SpaceElement.visual = visual;
     }
 
-    public int getLength() {
-        return length;
+    public int getHeight() {
+        return height;
     }
 
     public int getWidth() {
@@ -58,6 +58,9 @@ public abstract class SpaceElement {
     }
 
     public BufferedImage getVisual() {
+        return visual;
+    }
+
     public Point getCurrentPosition() {
         return position;
     }

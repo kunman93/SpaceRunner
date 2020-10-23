@@ -1,10 +1,11 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class PowerUp extends SpaceElement {
 
-    public PowerUp(Point startPosition, int width, int length, Image visual) throws Exception {
+    public PowerUp(Point startPosition, int width, int length, BufferedImage visual) throws Exception {
         super(startPosition, width, length, visual);
     }
 }
