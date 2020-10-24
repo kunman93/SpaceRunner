@@ -82,11 +82,10 @@ public class GameController {
     private void checkMovementKeys() {
         boolean upPressed = gameView.isUpPressed();
         boolean downPressed = gameView.isDownPressed();
-        if (upPressed && downPressed) {
-            moveSpaceShip(SpaceShipDirection.NONE);
-        } else if (upPressed) {
+
+        if (upPressed && !downPressed) {
             moveSpaceShip(SpaceShipDirection.UP);
-        } else if (downPressed) {
+        } else if (downPressed && !upPressed) {
             moveSpaceShip(SpaceShipDirection.DOWN);
         }
     }
