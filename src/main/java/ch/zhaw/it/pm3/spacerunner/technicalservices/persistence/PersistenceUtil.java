@@ -56,6 +56,9 @@ public class PersistenceUtil {
      * @param playerProfile player profile to save
      */
     public static void saveProfile(PlayerProfile playerProfile) {
+        if(playerProfile == null){
+            throw new IllegalArgumentException("null is not a legal argument for a player profile!");
+        }
         //gson.toJson(playerProfile, new FileWriter(GameFile.PROFILE.getFileName()));
         try (FileWriter writer = new FileWriter(GameFile.PROFILE.getFileName())) {
             gson.toJson(playerProfile, writer);

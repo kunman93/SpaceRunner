@@ -41,6 +41,16 @@ public class PersistenceUtilTest {
     }
 
     /**
+     *  test save profile with null -> IllegalArgumentException
+     */
+    @Test
+    void testSaveProfileWithNull(){
+        assertThrows(IllegalArgumentException.class, () -> PersistenceUtil.saveProfile(null));
+        Path path = Path.of(GameFile.PROFILE.getFileName());
+        assertFalse(Files.exists(path));
+    }
+
+    /**
      *  test load profile
      */
     @Test
