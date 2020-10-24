@@ -162,6 +162,8 @@ public class GameController {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
+
+            //TODO: islermic ask nachbric we should set the image only once on a space element cause the space element will look the same for the whole game --> no visual in constructor
             spaceShip = new SpaceShip(new Point(20, 100), 50, 200, PersistenceUtil.loadImage(imageURL));
 //            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
 //            spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
@@ -199,6 +201,7 @@ public class GameController {
 
     private void moveElements() {
         for(SpaceElement element : elements) {
+            //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
         }
     }
