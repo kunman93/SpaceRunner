@@ -6,8 +6,9 @@ import java.awt.image.BufferedImage;
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
 
-    private static Point UP = new Point(0,-1);
-    private static Point DOWN = new Point(0,1);
+    private static final int spaceShipSpeed = 3;
+    private static final Point UP = new Point(0,-spaceShipSpeed);
+    private static final Point DOWN = new Point(0,spaceShipSpeed);
 
     public SpaceShip(Point startPosition, int width, int length, BufferedImage visual) throws Exception {
         super(startPosition, width, length, visual);

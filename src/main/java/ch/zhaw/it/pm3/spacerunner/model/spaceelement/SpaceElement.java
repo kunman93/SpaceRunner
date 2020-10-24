@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 public abstract class SpaceElement {
 
     //todo: Idee: Object die alle variablen (position, width, length) umfasst
-    private Point position;
-    private Point velocity;
+    private Point position = new Point(0, 0);
+    private Point velocity = new Point(0, 0);
     private int height;
     private int width;
     private static BufferedImage visual;
