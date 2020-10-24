@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class Coin extends SpaceElement {
 
-    public Coin(Point startPosition, int width, int length, BufferedImage visual) throws Exception {
-        super(startPosition, width, length, visual);
+    public Coin(Point startPosition, int width, int length) {
+        super(startPosition, width, length);
     }
 }

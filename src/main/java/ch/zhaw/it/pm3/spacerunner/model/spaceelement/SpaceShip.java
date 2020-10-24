@@ -10,8 +10,8 @@ public class SpaceShip extends SpaceElement {
     private static Point UP = new Point(0,-spaceShipSpeed);
     private static Point DOWN = new Point(0,spaceShipSpeed);
 
-    public SpaceShip(Point startPosition, int width, int length, BufferedImage visual) throws Exception {
-        super(startPosition, width, length, visual);
+    public SpaceShip(Point startPosition, int width, int length){
+        super(startPosition, width, length);
     }
 
     public boolean getHasCrashed() {

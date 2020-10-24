@@ -142,6 +142,7 @@ public class GameController {
         elements = new HashSet<>();
         setUpSpaceElementImages();
 
+        spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
 
         fps = playerProfile.getFps();
 
@@ -164,12 +165,8 @@ public class GameController {
             URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
 
             //TODO: islermic ask nachbric we should set the image only once on a space element cause the space element will look the same for the whole game --> no visual in constructor
-            spaceShip = new SpaceShip(new Point(20, 100), 50, 200, PersistenceUtil.loadImage(imageURL));
-//            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
-//            spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
-        } catch (IOException e) {
-            //TODO: Handle: Should never happen unless theres a model which doesnt have an corresponding image in resources
-            e.printStackTrace();
+            //TODO: I already changed it back
+            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
         } catch (Exception e) {
             e.printStackTrace();
         }

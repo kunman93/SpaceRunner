@@ -14,8 +14,7 @@ public abstract class SpaceElement {
 
     //TODO: ask nachbric what were the ideas behind these functions? (seems pretty legit tho :D )
 
-    public SpaceElement(Point startPosition, int width, int height, BufferedImage visual) throws Exception {
-        this.visual = visual;
+    public SpaceElement(Point startPosition, int width, int height) {
         this.width = width;
         this.height = height;
         this.position = startPosition;

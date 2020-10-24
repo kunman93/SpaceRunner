@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class UnidentifiedFlightObject extends Obstacle {
 
-    public UnidentifiedFlightObject(Point startPosition, int width, int length, BufferedImage visual) throws Exception {
-        super(startPosition, width, length, visual);
+    public UnidentifiedFlightObject(Point startPosition, int width, int length) {
+        super(startPosition, width, length);
     }
 }
