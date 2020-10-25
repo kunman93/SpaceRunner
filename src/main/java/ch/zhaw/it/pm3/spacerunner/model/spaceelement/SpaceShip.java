@@ -14,7 +14,7 @@ public class SpaceShip extends SpaceElement {
         super(startPosition, width, length);
     }
 
-    public boolean getHasCrashed() {
+    public boolean hasCrashed() {
         return hasCrashed;
     }
 
