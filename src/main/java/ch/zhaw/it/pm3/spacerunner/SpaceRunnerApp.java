@@ -6,6 +6,7 @@ import ch.zhaw.it.pm3.spacerunner.view.ViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -51,7 +52,7 @@ public class SpaceRunnerApp extends Application {
             primaryStage.setScene(scene);
 
             //if(primaryStage.getIcons().size() == 0) {
-                //primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ch.zhaw.pm2.gui/icons/favicon.png")));
+                primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/icon.png")));
                 primaryStage.show();
                 primaryStage.setHeight(500);
                 primaryStage.setWidth(850);
