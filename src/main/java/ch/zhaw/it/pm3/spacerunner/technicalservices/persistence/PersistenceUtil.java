@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,8 +34,8 @@ public class PersistenceUtil {
 
 
         if(path != null  && Files.exists(path)){
-            try (FileReader reader = new FileReader(GameFile.PROFILE.getFileName())) {
-                playerProfile = gson.fromJson(reader, PlayerProfile.class);
+            try {
+                playerProfile = loadAndDeserializeData(GameFile.PROFILE.getFileName(), PlayerProfile.class);
             } catch (IOException e) {
                 // TODO handle
                 e.printStackTrace();
@@ -50,6 +51,16 @@ public class PersistenceUtil {
         return playerProfile;
     }
 
+    public static <T> T loadAndDeserializeData(String path, Class<T> dataClass) throws IOException {
+        T data = null;
+        try (FileReader reader = new FileReader(path)) {
+            data = gson.fromJson(reader, dataClass);
+        } catch (IOException e) {
+            throw e;
+        }
+        return data;
+    }
+
     /**
      * Save the player profile in json-format to the disk
      *
@@ -60,11 +71,20 @@ public class PersistenceUtil {
             throw new IllegalArgumentException("null is not a legal argument for a player profile!");
         }
         //gson.toJson(playerProfile, new FileWriter(GameFile.PROFILE.getFileName()));
-        try (FileWriter writer = new FileWriter(GameFile.PROFILE.getFileName())) {
-            gson.toJson(playerProfile, writer);
+        try {
+            serializeAndSaveData(GameFile.PROFILE.getFileName(), playerProfile);
         } catch (IOException e) {
             // TODO handle
             e.printStackTrace();
+        }
+    }
+
+
+    public static <T> void serializeAndSaveData(String path, T data) throws IOException {
+        try (FileWriter writer = new FileWriter(path)) {
+            gson.toJson(data, writer);
+        } catch (IOException e) {
+            throw e;
         }
     }
 

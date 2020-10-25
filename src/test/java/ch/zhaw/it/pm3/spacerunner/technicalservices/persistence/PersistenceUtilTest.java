@@ -81,6 +81,39 @@ public class PersistenceUtilTest {
         assertEquals(playerProfile, playerProfileLoaded);
     }
 
+    /**
+     * Test saving data with the test model and then loading with extended test model
+     */
+    @Test
+    void testSaveDataAndLoadIntoClassWithMoreFields() throws IOException {
+        Path path = Path.of("testModel.json");
+        TestDataModel testDataModel = new TestDataModel(13);
+        PersistenceUtil.serializeAndSaveData(path.toString(), testDataModel);
+
+        assertTrue(Files.exists(path));
+        TestDataModelExtended testDataModelExtended = PersistenceUtil.loadAndDeserializeData(path.toString(), TestDataModelExtended.class);
+        assertEquals(testDataModel.getTestNumber(), testDataModelExtended.getTestNumber());
+        Files.delete(path);
+    }
+
+    /**
+     * Test saving data with the extended test model and then loading with test model
+     */
+    @Test
+    void testSaveDataAndLoadIntoClassWithLessFields() throws IOException {
+        Path path = Path.of("testModel.json");
+        TestDataModelExtended testDataModelExtended = new TestDataModelExtended(13, "Test", 55);
+        PersistenceUtil.serializeAndSaveData(path.toString(), testDataModelExtended);
+
+        assertTrue(Files.exists(path));
+        TestDataModel testDataModel = PersistenceUtil.loadAndDeserializeData(path.toString(), TestDataModel.class);
+        assertEquals(testDataModelExtended.getTestNumber(), testDataModel.getTestNumber());
+        Files.delete(path);
+    }
+
+
+
+
 
 
 }
