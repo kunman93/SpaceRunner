@@ -33,13 +33,18 @@ public class GameController {
     private PlayerProfile playerProfile;
     private GameView gameView;
 
-
-
+    /**
+     * Initializes gameView
+     * @param gameView
+     */
     public void setView(GameView gameView) {
         this.gameView = gameView;
     }
 
-
+    /**
+     * Initialises, Runs (in a GameLoop) and Ends a Space-Runner game
+     * @throws Exception when GameController doesnt have a gameView
+     */
     public void startGame() throws Exception {
         if (gameView == null) {
             throw new GameViewNotFoundException("GameController has no GameView");
@@ -79,6 +84,9 @@ public class GameController {
         gameView.gameEnded();
     }
 
+    /**
+     * Checks if movement keys are pressed & moves the spaceship accordingly
+     */
     private void checkMovementKeys() {
         boolean upPressed = gameView.isUpPressed();
         boolean downPressed = gameView.isDownPressed();
@@ -91,8 +99,8 @@ public class GameController {
     }
 
     /**
-     * - starts game, if this is the first movement
-     * --> transmit new position to spaceship
+     * Moves the spaceship
+     * @param direction The direction of movement (UP,DOWN or NONE)
      */
     protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
@@ -107,6 +115,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Updates the playerProfile with collected coins and new highscore
+     */
     private void updatePlayerProfile() {
         playerProfile.addCoins(collectedCoins);
 //        if(score > playerProfile.getHighScore()) {
@@ -114,6 +125,9 @@ public class GameController {
 //        }
     }
 
+    /**
+     * Displays the GameElements to UI
+     */
     private void displayToUI() {
         Set<SpaceElement> dataToDisplay = new HashSet<SpaceElement>(elements);
         dataToDisplay.add(spaceShip);
@@ -125,16 +139,15 @@ public class GameController {
     }
 
     /**
-     * continues or stops game logic according to clicking pause/resume button
+     * Continues or stops game logic according to clicking pause/resume button
      */
     public void togglePause() {
         isPaused = !isPaused;
     }
 
-
-
-
-
+    /**
+     * Initializes the class variables
+     */
     protected void initialize() {
         playerProfile = PersistenceUtil.loadProfile();
 
@@ -158,6 +171,10 @@ public class GameController {
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
+
+    /**
+     * Initializes the SpaceElement classes with their corresponding images
+     */
     protected void setUpSpaceElementImages() {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
@@ -171,6 +188,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
+     */
     private void removePastDrawables() {
         for(SpaceElement element : elements) {
             if(element.getCurrentPosition().x + element.getWidth() < 0) {
@@ -180,7 +200,9 @@ public class GameController {
         }
     }
 
-
+    /**
+     * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
+     */
     private void generateObstacles() {
 
         return;
@@ -194,7 +216,9 @@ public class GameController {
         }*/
     }
 
-
+    /**
+     * Moves all SpaceElements
+     */
     private void moveElements() {
         for(SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
@@ -203,7 +227,7 @@ public class GameController {
     }
 
     /**
-     * checks continuously for a crash with an SpaceElement
+     * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
     private boolean detectCollision() {
 
