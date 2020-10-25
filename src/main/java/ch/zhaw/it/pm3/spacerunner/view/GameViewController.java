@@ -42,7 +42,7 @@ public class GameViewController extends ViewController implements GameView {
 
         gameController.setView(this);
 
-        SpaceRunnerApp main = this.getMain();
+        SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
 
         pressedHandler = createPressReleaseKeyHandler(true);
