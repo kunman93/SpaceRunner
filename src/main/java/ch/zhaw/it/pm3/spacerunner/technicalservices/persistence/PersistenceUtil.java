@@ -51,6 +51,14 @@ public class PersistenceUtil {
         return playerProfile;
     }
 
+    /**
+     * load and deserialize data from path to a data object of class T
+     * @param path path to load data from
+     * @param dataClass Class of data object
+     * @param <T> Type of the data object
+     * @return loaded data as object of class T
+     * @throws IOException
+     */
     public static <T> T loadAndDeserializeData(String path, Class<T> dataClass) throws IOException {
         T data = null;
         try (FileReader reader = new FileReader(path)) {
@@ -80,6 +88,13 @@ public class PersistenceUtil {
     }
 
 
+    /**
+     * Serialize the data object of type T and save it as JSON to the path
+     * @param path path for the file
+     * @param data data to serialize and save
+     * @param <T> type of the data to be saved
+     * @throws IOException
+     */
     public static <T> void serializeAndSaveData(String path, T data) throws IOException {
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(data, writer);
