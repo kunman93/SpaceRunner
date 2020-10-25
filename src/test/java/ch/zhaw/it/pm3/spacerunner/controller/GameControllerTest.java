@@ -1,15 +1,11 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceShip;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 
 public class GameControllerTest {
 
