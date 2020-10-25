@@ -175,7 +175,7 @@ public class GameController {
     /**
      * Initializes the SpaceElement classes with their corresponding images
      */
-    protected void setUpSpaceElementImages() {
+    private void setUpSpaceElementImages() {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
