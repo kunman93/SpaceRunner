@@ -94,7 +94,7 @@ public class GameController {
      * - starts game, if this is the first movement
      * --> transmit new position to spaceship
      */
-    private void moveSpaceShip(SpaceShipDirection direction) {
+    protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
                 spaceShip.directMoveUp();
@@ -135,7 +135,7 @@ public class GameController {
 
 
 
-    private void initialize() {
+    protected void initialize() {
         playerProfile = PersistenceUtil.loadProfile();
 
         elements = new HashSet<>();
@@ -158,7 +158,7 @@ public class GameController {
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
-    private void setUpSpaceElementImages() {
+    protected void setUpSpaceElementImages() {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
@@ -212,5 +212,7 @@ public class GameController {
         return false;
     }
 
-
+    protected SpaceShip getSpaceShip() {
+        return spaceShip;
+    }
 }
