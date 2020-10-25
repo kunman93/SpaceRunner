@@ -27,9 +27,9 @@ Button {
 }
 
 Button:hover,
-Button:hover Label{
+Button:hover Label {
     -fx-background-color: white;
-    -fx-text-fill: black;
+    -fx-text-fill: black !important;
     -fx-cursor: hand;
 }
 
