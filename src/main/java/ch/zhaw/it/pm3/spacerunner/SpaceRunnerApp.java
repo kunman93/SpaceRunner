@@ -57,7 +57,7 @@ public class SpaceRunnerApp extends Application {
                 primaryStage.setHeight(500);
                 primaryStage.setWidth(850);
                 primaryStage.setMinHeight(420);
-                primaryStage.setMinWidth(650);
+                primaryStage.setMinWidth(700);
             //}
         } catch (IOException e) {
             //logger.log(Level.SEVERE, "!!!FILE NOT FOUND, CHECK FILEPATH!!!");

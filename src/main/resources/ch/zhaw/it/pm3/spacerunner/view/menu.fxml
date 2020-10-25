@@ -9,7 +9,7 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="ch.zhaw.it.pm3.spacerunner.view.MenuViewController"
           prefHeight="400.0" prefWidth="600.0"
-          styleClass="menu">
+          styleClass="darkbg">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" percentWidth="10.0" prefWidth="49.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" percentWidth="90.0" prefWidth="351.0" />
@@ -23,7 +23,7 @@
         <RowConstraints maxHeight="33.0" minHeight="10.0" percentHeight="5.0" prefHeight="33.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="menu">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
