@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Asteroid extends Obstacle {
 
-    public Asteroid(Point startPosition, int width, int length) throws Exception {
+    public Asteroid(Point startPosition, int width, int length) {
         super(startPosition, width, length);
     }
 }

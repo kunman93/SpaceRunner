@@ -4,16 +4,19 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.Set;
 
 public class GameViewController extends ViewController implements GameView {
@@ -35,8 +38,7 @@ public class GameViewController extends ViewController implements GameView {
     public void initialize() {
         graphicsContext = gameCanvas.getGraphicsContext2D();
 
-        graphicsContext.setFill(Color.BLUE);
-        graphicsContext.fillRect(0, 0, 10000, 10000);
+
 
         gameController.setView(this);
 
@@ -106,12 +108,25 @@ public class GameViewController extends ViewController implements GameView {
 
 
     @Override
-    public void setSpaceElements(Set<SpaceElement> spaceElements) {
+    public void displayUpdatedSpaceElements(Set<SpaceElement> spaceElements) {
+        //TODO: Should we clear it?
 
-    }
+        Platform.runLater(()->{
+            graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
-    @Override
-    public void displayUpdatedSpaceElements() {
+
+            graphicsContext.setFill(Color.BLACK);
+            graphicsContext.fillRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+
+            for(SpaceElement spaceElement : spaceElements){
+                Point position = spaceElement.getCurrentPosition();
+                Image image = SwingFXUtils.toFXImage(spaceElement.getVisual(), null);
+                graphicsContext.drawImage(image, position.x, position.y);
+                //TODO: possible memory leak
+            }
+
+
+        });
 
     }
 

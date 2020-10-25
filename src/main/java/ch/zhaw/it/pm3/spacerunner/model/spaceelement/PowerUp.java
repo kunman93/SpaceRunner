@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class PowerUp extends SpaceElement {
 
-    public PowerUp(Point startPosition, int width, int length) throws Exception {
+    public PowerUp(Point startPosition, int width, int length) {
         super(startPosition, width, length);
     }
 }

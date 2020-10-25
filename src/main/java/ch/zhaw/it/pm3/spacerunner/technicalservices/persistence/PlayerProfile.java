@@ -1,11 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class PlayerProfile {
-
-
 
     private boolean audioEnabled;
     private int volume;
@@ -19,6 +18,8 @@ public class PlayerProfile {
     //TODO: Do not persist
     private Set<ShopContent> purchasedContent;
 
+    public static boolean TEST = false;
+
 
     public PlayerProfile(){
         audioEnabled = true;
@@ -28,6 +29,7 @@ public class PlayerProfile {
         coins = 0;
         fps = 60;
         purchasedContentIds = new HashSet<>();
+        purchasedContent = new HashSet<>();
     }
 
     public boolean isAudioEnabled() {
@@ -104,5 +106,28 @@ public class PlayerProfile {
 
     public void setFps(int fps) {
         this.fps = fps;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(TEST){
+            if(o instanceof PlayerProfile){
+                PlayerProfile that = (PlayerProfile) o;
+                return audioEnabled == that.audioEnabled &&
+                        volume == that.volume &&
+                        playerImageId == that.playerImageId &&
+                        coins == that.coins &&
+                        fps == that.fps &&
+                        Objects.equals(playerName, that.playerName) &&
+                        Objects.equals(purchasedContentIds, that.purchasedContentIds) &&
+                        purchasedContent.size() == that.purchasedContent.size();
+            }else{
+                return super.equals(o);
+            }
+        }else{
+            return super.equals(o);
+        }
+
+
     }
 }

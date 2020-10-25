@@ -19,11 +19,14 @@ public class GameController {
     private int collectedCoins;
     private int distance;
     private int score;
-    private double gameSpeed;
+
     private int fps;
     private long sleepTime;
-    private double gameSpeedIncrease;
-    private double spaceShipMoveSpeed;
+
+    private double horizontalGameSpeed;
+    private double horizontalGameSpeedIncreasePerSecond;
+    private int spaceShipVerticalMoveSpeed;
+
 
     private SpaceShip spaceShip;
     private Set<SpaceElement> elements;
@@ -67,7 +70,7 @@ public class GameController {
             removePastDrawables();
             displayToUI();
 
-            gameSpeed += gameSpeedIncrease/fps;
+            horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
 
             gameLoopTime = System.currentTimeMillis() - gameLoopTime;
             if (sleepTime - gameLoopTime > 0) {
@@ -87,11 +90,10 @@ public class GameController {
     private void checkMovementKeys() {
         boolean upPressed = gameView.isUpPressed();
         boolean downPressed = gameView.isDownPressed();
-        if (upPressed && downPressed) {
-            moveSpaceShip(SpaceShipDirection.NONE);
-        } else if (upPressed) {
+
+        if (upPressed && !downPressed) {
             moveSpaceShip(SpaceShipDirection.UP);
-        } else if (downPressed) {
+        } else if (downPressed && !upPressed) {
             moveSpaceShip(SpaceShipDirection.DOWN);
         }
     }
@@ -100,12 +102,16 @@ public class GameController {
      * Moves the spaceship
      * @param direction The direction of movement (UP,DOWN or NONE)
      */
-    private void moveSpaceShip(SpaceShipDirection direction) {
+    protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                spaceShip.move(new Point(0, (int)spaceShipMoveSpeed/fps));
+                spaceShip.directMoveUp();
+//                spaceShip.directMove(new Point(0, -spaceShipVerticalMoveSpeed));
+                break;
             case DOWN:
-                spaceShip.move(new Point(0, -(int)spaceShipMoveSpeed/fps));
+                spaceShip.directMoveDown();
+//                spaceShip.directMove(new Point(0, spaceShipVerticalMoveSpeed));
+                break;
         }
     }
 
@@ -123,7 +129,11 @@ public class GameController {
      * Displays the GameElements to UI
      */
     private void displayToUI() {
-        gameView.displayUpdatedSpaceElements();
+        Set<SpaceElement> dataToDisplay = new HashSet<SpaceElement>(elements);
+        dataToDisplay.add(spaceShip);
+
+
+        gameView.displayUpdatedSpaceElements(dataToDisplay);
         gameView.displayCollectedCoins(collectedCoins);
         gameView.displayCurrentScore(score);
     }
@@ -138,15 +148,13 @@ public class GameController {
     /**
      * Initializes the class variables
      */
-    private void initialize() {
+    protected void initialize() {
         playerProfile = PersistenceUtil.loadProfile();
 
         elements = new HashSet<>();
-        gameView.setSpaceElements(elements); //TODO: Test with gameView.setSpaceElements(Collections.unmodifiableSet(elements));
-
         setUpSpaceElementImages();
 
-        elements.add(spaceShip);
+        spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
 
         fps = playerProfile.getFps();
 
@@ -155,23 +163,26 @@ public class GameController {
 
         distance = 0;
         collectedCoins = 0;
+        spaceShipVerticalMoveSpeed = 3;
+        horizontalGameSpeed = 1;
+        horizontalGameSpeedIncreasePerSecond = 0.1;
 //        gameSpeed = playerProfile.getStartingGameSpeed;
 //        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
+
     /**
      * Initializes the SpaceElement classes with their corresponding images
      */
-    private void setUpSpaceElementImages() {
+    protected void setUpSpaceElementImages() {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
+
+            //TODO: islermic ask nachbric we should set the image only once on a space element cause the space element will look the same for the whole game --> no visual in constructor
+            //TODO: I already changed it back
             SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
-            spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
-        } catch (IOException e) {
-            //TODO: Handle: Should never happen unless theres a model which doesnt have an corresponding image in resources
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,7 +193,8 @@ public class GameController {
      */
     private void removePastDrawables() {
         for(SpaceElement element : elements) {
-            if(element.getPosition().x + element.getLength() < 0) {
+            if(element.getCurrentPosition().x + element.getWidth() < 0) {
+//                if(element.getPosition().x + element.getWidth() < 0) {
                 elements.remove(element);
             }
         }
@@ -193,15 +205,15 @@ public class GameController {
      */
     private void generateObstacles() {
 
+        return;
         //TODO: This is not how it should be => Generate from presets and only randomly
-
-        try {
+        /*try {
             elements.add(new Coin(new Point(20, 100), 20, 20));
             elements.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
             elements.add(new PowerUp(new Point(20, 100), 20, 20));
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**
@@ -209,7 +221,8 @@ public class GameController {
      */
     private void moveElements() {
         for(SpaceElement element : elements) {
-            element.move(new Point(-(int)gameSpeed, 0));
+            //TODO: islermic ask nachbric why not?
+//            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
         }
     }
 
@@ -223,5 +236,7 @@ public class GameController {
         return false;
     }
 
-
+    protected SpaceShip getSpaceShip() {
+        return spaceShip;
+    }
 }
