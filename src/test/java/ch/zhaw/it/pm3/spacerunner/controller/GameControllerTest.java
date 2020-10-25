@@ -9,8 +9,12 @@ import java.awt.*;
 
 public class GameControllerTest {
 
-    GameController controller = new GameController();
+    private GameController controller;
 
+    @BeforeEach
+    void setUp() {
+        controller = new GameController();
+    }
     /**
      * Tests that the SpaceShip in the GameController gets initialized and assigned visuals.
      */
@@ -23,17 +27,17 @@ public class GameControllerTest {
 
     @Test
     void moveSpaceShipTestUp() {
-        SpaceShip spaceShip = new SpaceShip(new Point(20, 97), 50, 200);
         controller.initialize();
+        int y = controller.getSpaceShip().getCurrentPosition().y - SpaceShip.getSpaceShipSpeed();
         controller.moveSpaceShip(SpaceShipDirection.UP);
-        assertEquals(spaceShip.getCurrentPosition(), controller.getSpaceShip().getCurrentPosition());
+        assertEquals(y, controller.getSpaceShip().getCurrentPosition().y);
     }
 
     @Test
     void moveSpaceShipTestDown() {
-        SpaceShip spaceShip = new SpaceShip(new Point(20, 103), 50, 200);
         controller.initialize();
+        int y = controller.getSpaceShip().getCurrentPosition().y + SpaceShip.getSpaceShipSpeed();
         controller.moveSpaceShip(SpaceShipDirection.DOWN);
-        assertEquals(spaceShip.getCurrentPosition(), controller.getSpaceShip().getCurrentPosition());
+        assertEquals(y, controller.getSpaceShip().getCurrentPosition().y);
     }
 }

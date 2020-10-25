@@ -41,4 +41,8 @@ public class SpaceShip extends SpaceElement {
         DOWN = new Point(0,spaceShipSpeed);
     }
 
+    public static int getSpaceShipSpeed(){
+        return spaceShipSpeed;
+    }
+
 }
