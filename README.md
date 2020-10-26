@@ -32,7 +32,7 @@ TODO!
 TODO!
 
 ## Pull Request
-TODO!
+Pull requests are merged and discussed together on a voice chat (e.g. Discord). Feedback is directly provided per voice.
 
 ## Testing
 TODO!
