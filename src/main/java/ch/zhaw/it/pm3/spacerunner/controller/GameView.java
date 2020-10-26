@@ -1,6 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -8,7 +11,7 @@ import java.util.Set;
  */
 public interface GameView {
 
-    void displayUpdatedSpaceElements(Set<SpaceElement> spaceElements);
+    void displayUpdatedSpaceElements(ArrayList<SpaceElement> spaceElements);
 
     void displayCollectedCoins(int coins);
 
