@@ -18,9 +18,6 @@ public abstract class SpaceElement {
         this.position = startPosition;
     }
 
-    public static void setVisual(BufferedImage visual){
-        SpaceElement.visual = visual;
-    }
 
     public int getHeight() {
         return height;
@@ -55,12 +52,23 @@ public abstract class SpaceElement {
         }
     }
 
-    public BufferedImage getVisual() {
+    public static void setVisual(BufferedImage visual){
+        SpaceElement.visual = visual;
+    }
+
+    public BufferedImage getVisual() throws VisualNotSetException{
+        if (visual == null) {
+            throw new VisualNotSetException("Visual for SpaceElement was not set!");
+        }
         return visual;
     }
 
     public Point getCurrentPosition() {
         return position;
+    }
+
+    public void setCurrentPosition(Point position) {
+        this.position = position;
     }
 
     public Point getNextPosition(){
@@ -69,9 +77,5 @@ public abstract class SpaceElement {
 
     public Point getVelocity(){
         return velocity;
-    }
-
-    public Image getVisuals() {
-        return visual;
     }
 }

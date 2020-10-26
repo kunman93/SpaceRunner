@@ -4,10 +4,13 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
+import javafx.scene.layout.Background;
 
 import java.awt.*;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +25,8 @@ public class GameController {
 
     private int fps;
     private long sleepTime;
+
+    private SpaceWorld background = null;
 
     private double horizontalGameSpeed;
     private double horizontalGameSpeedIncreasePerSecond;
@@ -50,7 +55,13 @@ public class GameController {
             throw new GameViewNotFoundException("GameController has no GameView");
         }
 
+
         initialize();
+
+        //TODO: remove then generating works
+        elements.add(new Coin(new Point(20,20), 50,50));
+        elements.add(new Coin(new Point(70,20), 50,50));
+        elements.add(new Coin(new Point(120,20), 50,50));
 
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
@@ -64,6 +75,7 @@ public class GameController {
             if(detectCollision()) {
                 isRunning = false;
             }
+            background.move();
 
             generateObstacles();
             moveElements();
@@ -77,6 +89,7 @@ public class GameController {
                 Thread.sleep(sleepTime-gameLoopTime);
             }
         }
+
 
 
         updatePlayerProfile();
@@ -129,8 +142,9 @@ public class GameController {
      * Displays the GameElements to UI
      */
     private void displayToUI() {
-        Set<SpaceElement> dataToDisplay = new HashSet<SpaceElement>(elements);
-        dataToDisplay.add(spaceShip);
+        ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
+        dataToDisplay.add(0, background);
+        dataToDisplay.add(1, spaceShip);
 
 
         gameView.displayUpdatedSpaceElements(dataToDisplay);
@@ -151,9 +165,12 @@ public class GameController {
     protected void initialize() {
         playerProfile = PersistenceUtil.loadProfile();
 
+
+
         elements = new HashSet<>();
         setUpSpaceElementImages();
 
+        background = new SpaceWorld(new Point(0,0),2880,640);
         spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
 
         fps = playerProfile.getFps();
@@ -178,14 +195,41 @@ public class GameController {
     private void setUpSpaceElementImages() {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
-            URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
+            //TODO: Maybe enum for resources strings
+            URL spaceShipImageURL = SpaceRunnerApp.class.getResource("images/space-ship.svg");
+            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 150f);
+            spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
+            SpaceShip.setVisual(spaceShipImage);
 
-            //TODO: islermic ask nachbric we should set the image only once on a space element cause the space element will look the same for the whole game --> no visual in constructor
-            //TODO: I already changed it back
-            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
+            URL backgroundImageURL = SpaceRunnerApp.class.getResource("images/background.jpg");
+            BufferedImage backgroundImage = VisualUtil.loadImage(backgroundImageURL);
+            SpaceWorld.setVisual(backgroundImage);
+
+            setUpCoinWithAnimation();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setUpCoinWithAnimation(){
+        URL coin1ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin1.svg");
+        URL coin2ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin2.svg");
+        URL coin3ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin3.svg");
+        URL coin4ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin4.svg");
+        URL coin5ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin5.svg");
+        URL coin6ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin6.svg");
+        float coinHeight = 50f;
+        BufferedImage coin1Image = VisualUtil.loadSVGImage(coin1ImageURL, coinHeight);
+        BufferedImage coin2Image = VisualUtil.loadSVGImage(coin2ImageURL, coinHeight);
+        BufferedImage coin3Image = VisualUtil.loadSVGImage(coin3ImageURL, coinHeight);
+        BufferedImage coin4Image = VisualUtil.loadSVGImage(coin4ImageURL, coinHeight);
+        BufferedImage coin5Image = VisualUtil.loadSVGImage(coin5ImageURL, coinHeight);
+        BufferedImage coin6Image = VisualUtil.loadSVGImage(coin6ImageURL, coinHeight);
+        Coin.setVisual(coin1Image);
+        BufferedImage[] coinAnimation = new BufferedImage[]{coin1Image, coin2Image, coin3Image, coin4Image, coin5Image, coin6Image};
+        Coin.setCoinAnimationVisuals(coinAnimation, 80);
     }
 
     /**
