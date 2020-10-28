@@ -1,8 +1,22 @@
-.icon-start-game{
-    -fx-font-family: 'video games';
+/* general */
+.darkbg {
+    -fx-background-color: black;
 }
 
-.menu Button {
+.darkbg Label {
+    -fx-text-fill: white;
+}
+
+Label, Button {
+    -fx-font-family: "Bauhaus 93";
+}
+
+.darkbg Label.title {
+    -fx-font-size: 40;
+    -fx-alignment: center;
+}
+
+Button {
     -fx-border-radius: 200;
     -fx-border-width: 0;
     -fx-border-color: white;
@@ -10,23 +24,24 @@
     -fx-cursor: pointer;
     -fx-background-color: black;
     -fx-text-fill: white;
-    -fx-font-family: "Bauhaus 93";
 }
 
-.menu {
-    -fx-background-color: black;
-}
-
-.menu Button:hover,
-.menu Button:hover Label{
+Button:hover,
+Button:hover Label {
     -fx-background-color: white;
-    -fx-text-fill: black;
+    -fx-text-fill: black !important;
     -fx-cursor: hand;
 }
 
-.menu Label {
-    -fx-text-fill: white;
-    -fx-font-size: 40;
-    -fx-alignment: center;
-    -fx-font-style: bold;
+/* menu.fxml */
+.icon-start-game{
+    -fx-font-family: 'video games';
 }
+
+/* settings.fxml */
+.settings Label {
+    -fx-font-size: 20;
+}
+
+
+

@@ -1,13 +1,21 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import com.google.gson.Gson;
+import org.apache.batik.anim.dom.SVGDOMImplementation;
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.TranscodingHints;
+import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.util.SVGConstants;
+import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.file.Files;
@@ -51,6 +59,14 @@ public class PersistenceUtil {
         return playerProfile;
     }
 
+    /**
+     * load and deserialize data from path to a data object of class T
+     * @param path path to load data from
+     * @param dataClass Class of data object
+     * @param <T> Type of the data object
+     * @return loaded data as object of class T
+     * @throws IOException
+     */
     public static <T> T loadAndDeserializeData(String path, Class<T> dataClass) throws IOException {
         T data = null;
         try (FileReader reader = new FileReader(path)) {
@@ -80,6 +96,13 @@ public class PersistenceUtil {
     }
 
 
+    /**
+     * Serialize the data object of type T and save it as JSON to the path
+     * @param path path for the file
+     * @param data data to serialize and save
+     * @param <T> type of the data to be saved
+     * @throws IOException
+     */
     public static <T> void serializeAndSaveData(String path, T data) throws IOException {
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(data, writer);
@@ -88,43 +111,7 @@ public class PersistenceUtil {
         }
     }
 
-    /**
-     * Loads the image from the URL provided
-     *
-     * @param imageURL URL of the image to load
-     * @return loaded image
-     */
-    public static BufferedImage loadImage(URL imageURL) {
-        Image image = new ImageIcon(imageURL).getImage();
-        return toBufferedImage(image);
-    }
 
-
-    //TODO: Declare as copied from internet. (Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage)
-    /**
-     * Converts a given Image into a BufferedImage
-     *
-     * @param img The Image to be converted
-     * @return The converted BufferedImage
-     */
-    private static BufferedImage toBufferedImage(Image img)
-    {
-        if (img instanceof BufferedImage)
-        {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        // Return the buffered image
-        return bimage;
-    }
 
     private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {
         //TODO: Implement and JavaDOC
