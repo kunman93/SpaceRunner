@@ -1,6 +1,7 @@
 /* general */
 .darkbg {
-    -fx-background-color: black;
+    /*-fx-background-color: black;*/
+    -fx-background-image: url("../images/background.jpg");
 }
 
 .darkbg Label {
@@ -11,19 +12,20 @@ Label, Button {
     -fx-font-family: "Bauhaus 93";
 }
 
-.darkbg Label.title {
+.darkbg .title {
     -fx-font-size: 40;
     -fx-alignment: center;
 }
 
 Button {
-    -fx-border-radius: 200;
+    -fx-background-radius: 20;
     -fx-border-width: 0;
     -fx-border-color: white;
     -fx-font-size: 30px;
     -fx-cursor: pointer;
     -fx-background-color: black;
     -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.8), 20, 0, 0, 0);
 }
 
 Button:hover,
@@ -34,6 +36,10 @@ Button:hover Label {
 }
 
 /* menu.fxml */
+.darkbg .menu Label.title {
+    -fx-font-size: 60px !important;
+}
+
 .icon-start-game{
     -fx-font-family: 'video games';
 }
@@ -43,5 +49,22 @@ Button:hover Label {
     -fx-font-size: 20;
 }
 
+Slider .axis {
+    -fx-tick-label-fill: white;
+}
+Slider .axis .axis-tick-mark,
+Slider .axis .axis-minor-tick-mark {
+    -fx-fill: white;
+    -fx-stroke: white;
+}
 
+.settings TextField {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1;
+    -fx-border-color: white;
+    -fx-border-radius: 0;
+    -fx-text-fill: white;
+    -fx-font-family: "Bauhaus 93";
+    -fx-font-size: 18;
+}
 
