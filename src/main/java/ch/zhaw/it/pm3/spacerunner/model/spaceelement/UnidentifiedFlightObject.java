@@ -5,6 +5,11 @@ import java.awt.image.BufferedImage;
 
 public class UnidentifiedFlightObject extends Obstacle {
     private boolean changeDirection = false;
+    //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
+    private int unidentifiedFlightObjectHorizontalSpeed = 5;
+    private int unidentifiedFlightObjectVerticalSpeed = 5;
+    private Point vectorUp = new Point(-unidentifiedFlightObjectHorizontalSpeed,-unidentifiedFlightObjectVerticalSpeed);
+    private Point vectorDown = new Point(-unidentifiedFlightObjectHorizontalSpeed,unidentifiedFlightObjectVerticalSpeed);
 
     public UnidentifiedFlightObject(Point startPosition, int width, int length) {
         super(startPosition, width, length);
@@ -14,31 +19,36 @@ public class UnidentifiedFlightObject extends Obstacle {
     public void move() {
         //TODO: sinus curve for example
         Point currentPosition = getCurrentPosition();
-        //TODO: access Canvas height?
-        int heightLowerLimit = 200;
-        int heightUpperLimit = 20;
+        //TODO: access Canvas height and width? maybe as static variable
+        int bottomBorderLimitOfCanvas = 200;
+        int topBorderLimitOfCanvas = 20;
 
-        if(reachedLowerThreshold(currentPosition, heightLowerLimit) && !changeDirection){
-            //TODO: maybe use move()
-            currentPosition.y++;
+        if(!reachedLowerThreshold(currentPosition, bottomBorderLimitOfCanvas) && !changeDirection){
+            descend(vectorDown);
         }else {
-            changeDirection = true;
-            //TODO: maybe use move()
-            currentPosition.y--;
-            if(!reachedUpperThreshold(currentPosition, heightUpperLimit)){
-                changeDirection = false;
-            }
+            ascend(currentPosition, topBorderLimitOfCanvas);
         }
-
-        currentPosition.x--;
-        setCurrentPosition(currentPosition);
     }
 
-    private boolean reachedUpperThreshold(Point currentPosition, int heightLowerLimit) {
-        return currentPosition.y > heightLowerLimit;
+    private void ascend(Point currentPosition, int topBorderLimitOfCanvas) {
+        changeDirection = true;
+        setVelocity(vectorUp);
+        super.move();
+        if(reachedUpperThreshold(currentPosition, topBorderLimitOfCanvas)){
+            changeDirection = false;
+        }
     }
 
-    private boolean reachedLowerThreshold(Point currentPosition, int heightUpperLimit) {
-        return currentPosition.y < heightUpperLimit;
+    private void descend(Point vectorDown) {
+        setVelocity(vectorDown);
+        super.move();
+    }
+
+    private boolean reachedUpperThreshold(Point currentPosition, int topBorderLimitOfCanvas) {
+        return currentPosition.y < topBorderLimitOfCanvas;
+    }
+
+    private boolean reachedLowerThreshold(Point currentPosition, int bottomBorderLimitOfCanvas) {
+        return currentPosition.y > bottomBorderLimitOfCanvas;
     }
 }
