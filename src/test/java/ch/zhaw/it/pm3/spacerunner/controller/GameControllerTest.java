@@ -1,6 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceShip;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -19,7 +20,7 @@ public class GameControllerTest {
      * Tests that the SpaceShip in the GameController gets initialized and assigned visuals.
      */
     @Test
-    void initializeTest() {
+    void initializeTest() throws VisualNotSetException {
         controller.initialize();
         assertNotEquals(controller.getSpaceShip(), null);
         assertNotEquals(controller.getSpaceShip().getVisual(), null);
