@@ -22,4 +22,8 @@ public interface GameView {
     boolean isDownPressed();
 
     void gameEnded();
+
+    double getCanvasHeight();
+
+    double getCanvasWidth();
 }

@@ -63,6 +63,10 @@ public class GameController {
         elements.add(new Coin(new Point(70,20), 50,50));
         elements.add(new Coin(new Point(120,20), 50,50));
 
+        //elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),20), 100 , 100));
+        elements.add(new UnidentifiedFlightObject(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
+        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth()-100,0), 100, 100));
+
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
 
@@ -201,6 +205,14 @@ public class GameController {
             spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
             SpaceShip.setVisual(spaceShipImage);
 
+            URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource("images/UFO.svg");
+            BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL, 150f);
+            UnidentifiedFlightObject.setVisual(unidentifiedSpaceObjectImage);
+
+            URL asteroidImageURL = SpaceRunnerApp.class.getResource("images/comet-asteroid.svg");
+            BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL, 100f);
+            Asteroid.setVisual(asteroidImage);
+
             URL backgroundImageURL = SpaceRunnerApp.class.getResource("images/background.jpg");
             BufferedImage backgroundImage = VisualUtil.loadImage(backgroundImageURL);
             SpaceWorld.setVisual(backgroundImage);
@@ -239,7 +251,8 @@ public class GameController {
         for(SpaceElement element : elements) {
             if(element.getCurrentPosition().x + element.getWidth() < 0) {
 //                if(element.getPosition().x + element.getWidth() < 0) {
-                elements.remove(element);
+                //TODO doesn't work like this
+                //elements.remove(element);
             }
         }
     }
@@ -267,6 +280,7 @@ public class GameController {
         for(SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
+            element.move();
         }
     }
 

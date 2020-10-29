@@ -10,11 +10,19 @@ public class Asteroid extends Obstacle {
         super(startPosition, width, length);
     }
 
-
+    @Override
+    public void move() {
+        Point currentPosition = getCurrentPosition();
+        currentPosition.x--;
+        currentPosition.y++;
+        setCurrentPosition(currentPosition);
+    }
+    //TODO: ask Rico why
     public static void setVisual(BufferedImage visual){
         Asteroid.visual = visual;
     }
 
+    //TODO: ask Rico why
     @Override
     public BufferedImage getVisual() throws VisualNotSetException{
         if (visual == null) {

@@ -105,9 +105,9 @@ public class GameViewController extends ViewController implements GameView {
         game.moveSpaceShip(keyEvent.getCode());
     }*/
 
-    public double canvasHeight() {
+    /*public double canvasHeight() {
         return gameCanvas.getHeight();
-    }
+    }*/
 
 
     @Override
@@ -161,6 +161,17 @@ public class GameViewController extends ViewController implements GameView {
     public void gameEnded() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+    }
+
+    //TODO: implemented these two methods, ask Isler
+    @Override
+    public double getCanvasHeight() {
+        return gameCanvas.getHeight();
+    }
+
+    @Override
+    public double getCanvasWidth() {
+        return gameCanvas.getWidth();
     }
 
 }
