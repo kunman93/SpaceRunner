@@ -18,9 +18,6 @@ public abstract class SpaceElement {
         this.position = startPosition;
     }
 
-    public static void setVisual(BufferedImage visual){
-        SpaceElement.visual = visual;
-    }
 
     public int getHeight() {
         return height;
@@ -61,12 +58,23 @@ public abstract class SpaceElement {
         }
     }
 
-    public BufferedImage getVisual() {
+    public static void setVisual(BufferedImage visual){
+        SpaceElement.visual = visual;
+    }
+
+    public BufferedImage getVisual() throws VisualNotSetException{
+        if (visual == null) {
+            throw new VisualNotSetException("Visual for SpaceElement was not set!");
+        }
         return visual;
     }
 
     public Point getCurrentPosition() {
         return position;
+    }
+
+    public void setCurrentPosition(Point position) {
+        this.position = position;
     }
 
     public Point getNextPosition(){
@@ -77,7 +85,15 @@ public abstract class SpaceElement {
         return velocity;
     }
 
-    public Image getVisuals() {
-        return visual;
+    public boolean doesCollide(SpaceElement s){
+        return pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y)
+                || pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y + s.getHeight())
+                || pointInObject(s.getCurrentPosition().x +s.getWidth(), s.getCurrentPosition().y)
+                || pointInObject(s.getCurrentPosition().x + s.getWidth(), s.getCurrentPosition().y + s.getHeight());
     }
+
+    private boolean pointInObject(float x, float y){
+        return x > position.x && x < position.x + width && y > position.y && y < position.y + height;
+    }
+
 }

@@ -22,7 +22,6 @@ public class GameControllerTest {
     void initializeTest() {
         controller.initialize();
         assertNotEquals(controller.getSpaceShip(), null);
-        assertNotEquals(controller.getSpaceShip().getVisual(), null);
     }
 
     @Test

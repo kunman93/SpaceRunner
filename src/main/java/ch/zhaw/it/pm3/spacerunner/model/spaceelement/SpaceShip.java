@@ -9,6 +9,7 @@ public class SpaceShip extends SpaceElement {
     private static int spaceShipSpeed = 3;
     private static Point UP = new Point(0,-spaceShipSpeed);
     private static Point DOWN = new Point(0,spaceShipSpeed);
+    private static BufferedImage visual; //TODO: why Rico?
 
     public SpaceShip(Point startPosition, int width, int length){
         super(startPosition, width, length);
@@ -43,6 +44,19 @@ public class SpaceShip extends SpaceElement {
 
     public static int getSpaceShipSpeed(){
         return spaceShipSpeed;
+    }
+
+    public static void setVisual(BufferedImage visual){
+        SpaceShip.visual = visual;
+    }
+
+    //TODO: why Rico?
+    @Override
+    public BufferedImage getVisual() throws VisualNotSetException{
+        if (visual == null) {
+            throw new VisualNotSetException("Visual for SpaceShip was not set!");
+        }
+        return visual;
     }
 
 }

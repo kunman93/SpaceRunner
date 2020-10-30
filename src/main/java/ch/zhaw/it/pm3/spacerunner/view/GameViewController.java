@@ -4,6 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
@@ -17,6 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class GameViewController extends ViewController implements GameView {
@@ -102,25 +105,29 @@ public class GameViewController extends ViewController implements GameView {
         game.moveSpaceShip(keyEvent.getCode());
     }*/
 
-    public double canvasHeight() {
+    /*public double canvasHeight() {
         return gameCanvas.getHeight();
-    }
+    }*/
 
 
     @Override
-    public void displayUpdatedSpaceElements(Set<SpaceElement> spaceElements) {
+    public void displayUpdatedSpaceElements(ArrayList<SpaceElement> spaceElements) {
         //TODO: Should we clear it?
 
         Platform.runLater(()->{
             graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
 
-            graphicsContext.setFill(Color.BLACK);
-            graphicsContext.fillRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
             for(SpaceElement spaceElement : spaceElements){
                 Point position = spaceElement.getCurrentPosition();
-                Image image = SwingFXUtils.toFXImage(spaceElement.getVisual(), null);
+                Image image = null;
+                try {
+                    image = SwingFXUtils.toFXImage(spaceElement.getVisual(), null);
+                } catch (VisualNotSetException e) {
+                    e.printStackTrace();
+                    //TODO: handle
+                }
                 graphicsContext.drawImage(image, position.x, position.y);
                 //TODO: possible memory leak
             }
@@ -155,4 +162,16 @@ public class GameViewController extends ViewController implements GameView {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
     }
+
+    //TODO: implemented these two methods, ask Isler
+    @Override
+    public double getCanvasHeight() {
+        return gameCanvas.getHeight();
+    }
+
+    @Override
+    public double getCanvasWidth() {
+        return gameCanvas.getWidth();
+    }
+
 }

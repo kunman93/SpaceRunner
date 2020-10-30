@@ -4,11 +4,15 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
+import javafx.scene.layout.Background;
 
 import java.awt.*;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class GameController {
@@ -23,6 +27,8 @@ public class GameController {
     private int fps;
     private long sleepTime;
 
+    private SpaceWorld background = null;
+
     private double horizontalGameSpeed;
     private double horizontalGameSpeedIncreasePerSecond;
     private int spaceShipVerticalMoveSpeed;
@@ -32,6 +38,7 @@ public class GameController {
     private Set<SpaceElement> elements;
     private PlayerProfile playerProfile;
     private GameView gameView;
+    private ElementPreset elementPreset;
 
     /**
      * Initializes gameView
@@ -50,7 +57,16 @@ public class GameController {
             throw new GameViewNotFoundException("GameController has no GameView");
         }
 
+
         initialize();
+
+        //TODO: remove then generating works
+        //elements.add(new Coin(new Point(20,20), 50,50));
+        //elements.add(new Coin(new Point(70,20), 50,50));
+        //elements.add(new Coin(new Point(120,20), 50,50));
+
+        elements.add(new UnidentifiedFlightObject(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
+        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth()-100,0), 100, 100));
 
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
@@ -64,6 +80,7 @@ public class GameController {
             if(detectCollision()) {
                 isRunning = false;
             }
+            background.move();
 
             generateObstacles();
             moveElements();
@@ -77,6 +94,7 @@ public class GameController {
                 Thread.sleep(sleepTime-gameLoopTime);
             }
         }
+
 
 
         updatePlayerProfile();
@@ -129,8 +147,9 @@ public class GameController {
      * Displays the GameElements to UI
      */
     private void displayToUI() {
-        Set<SpaceElement> dataToDisplay = new HashSet<SpaceElement>(elements);
-        dataToDisplay.add(spaceShip);
+        ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
+        dataToDisplay.add(0, background);
+        dataToDisplay.add(1, spaceShip);
 
 
         gameView.displayUpdatedSpaceElements(dataToDisplay);
@@ -151,9 +170,12 @@ public class GameController {
     protected void initialize() {
         playerProfile = PersistenceUtil.loadProfile();
 
+        elementPreset = new ElementPreset();
+
         elements = new HashSet<>();
         setUpSpaceElementImages();
-
+        //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
+        background = new SpaceWorld(new Point(0,0),2880,640);
         spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
 
         fps = playerProfile.getFps();
@@ -178,24 +200,60 @@ public class GameController {
     private void setUpSpaceElementImages() {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
-            URL imageURL = SpaceRunnerApp.class.getResource("images/" + playerProfile.getPlayerImageId() + ".png");
+            //TODO: Maybe enum for resources strings
+            URL spaceShipImageURL = SpaceRunnerApp.class.getResource("images/space-ship.svg");
+            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 150f);
+            spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
+            SpaceShip.setVisual(spaceShipImage);
 
-            //TODO: islermic ask nachbric we should set the image only once on a space element cause the space element will look the same for the whole game --> no visual in constructor
-            //TODO: I already changed it back
-            SpaceShip.setVisual(PersistenceUtil.loadImage(imageURL));
+            URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource("images/UFO.svg");
+            BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL, 150f);
+            UnidentifiedFlightObject.setVisual(unidentifiedSpaceObjectImage);
+
+            URL asteroidImageURL = SpaceRunnerApp.class.getResource("images/comet-asteroid.svg");
+            BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL, 100f);
+            Asteroid.setVisual(asteroidImage);
+
+            URL backgroundImageURL = SpaceRunnerApp.class.getResource("images/background.jpg");
+            BufferedImage backgroundImage = VisualUtil.loadImage(backgroundImageURL);
+            SpaceWorld.setVisual(backgroundImage);
+
+            setUpCoinWithAnimation();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setUpCoinWithAnimation(){
+        URL coin1ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin1.svg");
+        URL coin2ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin2.svg");
+        URL coin3ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin3.svg");
+        URL coin4ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin4.svg");
+        URL coin5ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin5.svg");
+        URL coin6ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin6.svg");
+        float coinHeight = 50f;
+        BufferedImage coin1Image = VisualUtil.loadSVGImage(coin1ImageURL, coinHeight);
+        BufferedImage coin2Image = VisualUtil.loadSVGImage(coin2ImageURL, coinHeight);
+        BufferedImage coin3Image = VisualUtil.loadSVGImage(coin3ImageURL, coinHeight);
+        BufferedImage coin4Image = VisualUtil.loadSVGImage(coin4ImageURL, coinHeight);
+        BufferedImage coin5Image = VisualUtil.loadSVGImage(coin5ImageURL, coinHeight);
+        BufferedImage coin6Image = VisualUtil.loadSVGImage(coin6ImageURL, coinHeight);
+        Coin.setVisual(coin1Image);
+        BufferedImage[] coinAnimation = new BufferedImage[]{coin1Image, coin2Image, coin3Image, coin4Image, coin5Image, coin6Image};
+        Coin.setCoinAnimationVisuals(coinAnimation, 80);
     }
 
     /**
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
-        for(SpaceElement element : elements) {
+        for (Iterator<SpaceElement> e = elements.iterator(); e.hasNext();) {
+            SpaceElement element = e.next();
             if(element.getCurrentPosition().x + element.getWidth() < 0) {
 //                if(element.getPosition().x + element.getWidth() < 0) {
-                elements.remove(element);
+                e.remove();
             }
         }
     }
@@ -204,9 +262,11 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
+        SpaceElement[] preset = elementPreset.getRandomPreset();
+        if (preset != null) {
+            generatePreset(preset);
+        }
 
-        return;
-        //TODO: This is not how it should be => Generate from presets and only randomly
         /*try {
             elements.add(new Coin(new Point(20, 100), 20, 20));
             elements.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
@@ -216,6 +276,12 @@ public class GameController {
         }*/
     }
 
+    private void generatePreset(SpaceElement[] preset) {
+        for(SpaceElement element : preset) {
+            elements.add(element);
+        }
+    }
+
     /**
      * Moves all SpaceElements
      */
@@ -223,16 +289,21 @@ public class GameController {
         for(SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
+            element.move();
         }
     }
 
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private boolean detectCollision() {
+    private boolean detectCollision() { // ToDo why boolean not void?
 
-        //TODO: Loop over all elements and check for collision
-
+        for(SpaceElement element : elements) {
+            if (spaceShip.doesCollide(element)){
+                spaceShip.crash(); // ToDo maybe solve diffrently for asteroids / coins etc.
+//                element.collide(); // ToDo not Correct must first be implemented
+            }
+        }
         return false;
     }
 

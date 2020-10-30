@@ -3,7 +3,7 @@ import org.junit.jupiter.api.*;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SpaceElementTest {
     SpaceElement element;
@@ -44,4 +44,11 @@ public class SpaceElementTest {
         assertEquals(new Point(3,0), element.getCurrentPosition());
     }
 
+    @Test
+    void testDoesCollide(){
+        SpaceElement elementInside = new SpaceElement(new Point(1,1), 10, 10){};
+        SpaceElement elementOutside = new SpaceElement(new Point(11,11), 10, 10){};
+        assertTrue(element.doesCollide(elementInside));
+        assertFalse(element.doesCollide(elementOutside));
+    }
 }
