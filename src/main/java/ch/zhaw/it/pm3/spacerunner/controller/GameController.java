@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class GameController {
@@ -247,11 +248,11 @@ public class GameController {
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
-        for(SpaceElement element : elements) {
+        for (Iterator<SpaceElement> e = elements.iterator(); e.hasNext();) {
+            SpaceElement element = e.next();
             if(element.getCurrentPosition().x + element.getWidth() < 0) {
 //                if(element.getPosition().x + element.getWidth() < 0) {
-                //TODO doesn't work like this
-                //elements.remove(element);
+                e.remove();
             }
         }
     }
