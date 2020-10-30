@@ -23,7 +23,6 @@ public class GameControllerTest {
     void initializeTest() throws VisualNotSetException {
         controller.initialize();
         assertNotEquals(controller.getSpaceShip(), null);
-        assertNotEquals(controller.getSpaceShip().getVisual(), null);
     }
 
     @Test

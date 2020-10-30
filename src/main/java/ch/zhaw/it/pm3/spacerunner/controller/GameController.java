@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class GameController {
@@ -37,6 +38,7 @@ public class GameController {
     private Set<SpaceElement> elements;
     private PlayerProfile playerProfile;
     private GameView gameView;
+    private ElementPreset elementPreset;
 
     /**
      * Initializes gameView
@@ -59,9 +61,15 @@ public class GameController {
         initialize();
 
         //TODO: remove then generating works
+
         elements.add(new Coin(new Point(300,20), 50,50));
         elements.add(new Coin(new Point(370,20), 50,50));
         elements.add(new Coin(new Point(420,20), 50,50));
+
+
+        elements.add(new UnidentifiedFlightObject(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
+        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth()-100,0), 100, 100));
+
 
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
@@ -165,11 +173,11 @@ public class GameController {
     protected void initialize() {
         playerProfile = PersistenceUtil.loadProfile();
 
-
+        elementPreset = new ElementPreset();
 
         elements = new HashSet<>();
         setUpSpaceElementImages();
-
+        //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point(0,0),2880,640);
         spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
 
@@ -200,6 +208,14 @@ public class GameController {
             BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 150f);
             spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
             SpaceShip.setVisual(spaceShipImage);
+
+            URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource("images/UFO.svg");
+            BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL, 150f);
+            UnidentifiedFlightObject.setVisual(unidentifiedSpaceObjectImage);
+
+            URL asteroidImageURL = SpaceRunnerApp.class.getResource("images/comet-asteroid.svg");
+            BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL, 100f);
+            Asteroid.setVisual(asteroidImage);
 
             URL backgroundImageURL = SpaceRunnerApp.class.getResource("images/background.jpg");
             BufferedImage backgroundImage = VisualUtil.loadImage(backgroundImageURL);
@@ -244,9 +260,11 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
+        SpaceElement[] preset = elementPreset.getRandomPreset();
+        if (preset != null) {
+            generatePreset(preset);
+        }
 
-        return;
-        //TODO: This is not how it should be => Generate from presets and only randomly
         /*try {
             elements.add(new Coin(new Point(20, 100), 20, 20));
             elements.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
@@ -254,6 +272,12 @@ public class GameController {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
+    }
+
+    private void generatePreset(SpaceElement[] preset) {
+        for(SpaceElement element : preset) {
+            elements.add(element);
+        }
     }
 
     /**
@@ -273,10 +297,14 @@ public class GameController {
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private boolean detectCollision() {
+    private boolean detectCollision() { // ToDo why boolean not void?
 
-        //TODO: Loop over all elements and check for collision
-
+        for(SpaceElement element : elements) {
+            if (spaceShip.doesCollide(element)){
+                spaceShip.crash(); // ToDo maybe solve diffrently for asteroids / coins etc.
+//                element.collide(); // ToDo not Correct must first be implemented
+            }
+        }
         return false;
     }
 
