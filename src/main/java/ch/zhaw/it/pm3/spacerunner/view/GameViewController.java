@@ -39,14 +39,15 @@ public class GameViewController extends ViewController implements GameView {
 
     @Override
     public void initialize() {
-        graphicsContext = gameCanvas.getGraphicsContext2D();
-
-
-
         gameController.setView(this);
 
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
+
+        initializeResponsive(main);
+
+
+        graphicsContext = gameCanvas.getGraphicsContext2D();
 
         pressedHandler = createPressReleaseKeyHandler(true);
         releasedHandler = createPressReleaseKeyHandler(false);
@@ -67,20 +68,20 @@ public class GameViewController extends ViewController implements GameView {
 
 
 
+    }
 
 
-//        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
-//        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
-//        main.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
-//
-//            graphicsContext.fillRect(0,0,10000,10000);
-//            gameCanvas.setHeight((Double) newVal);
-//        });
-//        main.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
-//            gameCanvas.setWidth((Double) newVal);
-//        });
-
-
+    //TODO immer 16:9 verhält
+    private void initializeResponsive(SpaceRunnerApp main) {
+        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
+        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
+        main.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
+            gameCanvas.setHeight((Double) newVal);
+            //todo notify about new scale
+        });
+        main.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
+            gameCanvas.setWidth((Double) newVal);
+        });
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
