@@ -13,7 +13,8 @@ public class ElementPreset {
 
     private static SpaceElement[][] presets = new SpaceElement[][] {
             {new Coin(new Point(500, 100), 50, 50)},
-            {new Coin(new Point(500, 250), 50, 50)}
+            {new Coin(new Point(500, 250), 50, 50), new Coin(new Point(500, 175), 50, 50)},
+            {new Coin(new Point(500, 350), 50, 50)}
     };
 
     public SpaceElement[] getRandomPreset() {
