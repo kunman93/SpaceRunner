@@ -10,10 +10,7 @@ import javafx.scene.layout.Background;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class GameController {
 
@@ -277,9 +274,7 @@ public class GameController {
     }
 
     private void generatePreset(SpaceElement[] preset) {
-        for(SpaceElement element : preset) {
-            elements.add(element);
-        }
+        Collections.addAll(elements, preset);
     }
 
     /**
