@@ -236,14 +236,6 @@ public class GameController {
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
-/*
-        for(SpaceElement element : elements) {
-            if(element.getCurrentPosition().x + element.getWidth() < 0) {
-//                if(element.getPosition().x + element.getWidth() < 0) {
-                elements.remove(element);
-            }
-        }
- */
         elements.removeIf((SpaceElement element) ->
                 element.getCurrentPosition().x + element.getWidth() < 0 );
     }
@@ -271,7 +263,9 @@ public class GameController {
         for(SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
-            element.setVelocity(new Point(~((int)horizontalGameSpeed -1),0));
+            if(element instanceof Coin) {
+                element.setVelocity(new Point(-((int)horizontalGameSpeed),0));
+            }
             element.move();
         }
     }
