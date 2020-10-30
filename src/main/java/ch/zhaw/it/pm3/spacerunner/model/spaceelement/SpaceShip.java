@@ -1,15 +1,17 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
 
-    private static int spaceShipSpeed = 3;
-    private static Point UP = new Point(0,-spaceShipSpeed);
-    private static Point DOWN = new Point(0,spaceShipSpeed);
-    private static BufferedImage visual; //TODO: why Rico?
+    private static Point UP = new Point(HorizontalSpeed.ZERO.getSpeed(), -VerticalSpeed.SPACE_SHIP.getSpeed());
+    private static Point DOWN = new Point(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed());
+    private static BufferedImage visual;
 
     public SpaceShip(Point startPosition, int width, int length){
         super(startPosition, width, length);
@@ -36,21 +38,15 @@ public class SpaceShip extends SpaceElement {
         directMove(DOWN);
     }
 
-    public static void setSpaceShipSpeed(int spaceShipSpeed){
-        SpaceShip.spaceShipSpeed = spaceShipSpeed;
+    public void setSpaceShipSpeed(int spaceShipSpeed){
         UP = new Point(0,-spaceShipSpeed);
         DOWN = new Point(0,spaceShipSpeed);
-    }
-
-    public static int getSpaceShipSpeed(){
-        return spaceShipSpeed;
     }
 
     public static void setVisual(BufferedImage visual){
         SpaceShip.visual = visual;
     }
 
-    //TODO: why Rico?
     @Override
     public BufferedImage getVisual() throws VisualNotSetException{
         if (visual == null) {

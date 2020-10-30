@@ -14,13 +14,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
+
 
 public class GameViewController extends ViewController implements GameView {
 
@@ -112,7 +110,7 @@ public class GameViewController extends ViewController implements GameView {
 
 
     @Override
-    public void displayUpdatedSpaceElements(ArrayList<SpaceElement> spaceElements) {
+    public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         //TODO: Should we clear it?
 
         Platform.runLater(()->{
@@ -137,6 +135,7 @@ public class GameViewController extends ViewController implements GameView {
         });
 
     }
+
 
     @Override
     public void displayCollectedCoins(int coins) {
