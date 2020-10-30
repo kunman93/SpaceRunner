@@ -282,10 +282,14 @@ public class GameController {
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private boolean detectCollision() {
+    private boolean detectCollision() { // ToDo why boolean not void?
 
-        //TODO: Loop over all elements and check for collision
-
+        for(SpaceElement element : elements) {
+            if (spaceShip.doesCollide(element)){
+                spaceShip.crash(); // ToDo maybe solve diffrently for asteroids / coins etc.
+//                element.collide(); // ToDo not Correct must first be implemented
+            }
+        }
         return false;
     }
 
