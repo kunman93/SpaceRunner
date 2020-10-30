@@ -35,6 +35,12 @@ public abstract class SpaceElement {
         position.y += velocity.y;
     }
 
+    public void move(Point direction) {
+        setVelocity(direction);
+        position.x += velocity.x;
+        position.y += velocity.y;
+    }
+
     public void accelerate(Point direction){
         if (direction == null){
             velocity.x += 0;
