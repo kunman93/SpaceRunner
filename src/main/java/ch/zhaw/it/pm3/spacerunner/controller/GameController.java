@@ -81,9 +81,12 @@ public class GameController {
 
             checkMovementKeys();
 
-            if(detectCollision()) {
-                isRunning = false;
+            SpaceElement collidedWith = detectCollision();
+            if(collidedWith != null) {
+                processCollision(collidedWith);
             }
+
+
             background.move();
 
             updateObstacleSpeed();
@@ -223,7 +226,7 @@ public class GameController {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             //TODO: Maybe enum for resources strings
             URL spaceShipImageURL = SpaceRunnerApp.class.getResource("images/space-ship.svg");
-            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 150f);
+            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 100f);
             spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
             SpaceShip.setVisual(spaceShipImage);
 
@@ -311,15 +314,35 @@ public class GameController {
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private boolean detectCollision() { // ToDo why boolean not void?
+    private SpaceElement detectCollision() { // ToDo why boolean not void?
 
-        for(SpaceElement element : elements) {
-            if (spaceShip.doesCollide(element)){
+        for(SpaceElement spaceElement : elements) {
+            if (spaceShip.doesCollide(spaceElement)){
                 spaceShip.crash(); // ToDo maybe solve diffrently for asteroids / coins etc.
 //                element.collide(); // ToDo not Correct must first be implemented
             }
+
+            if(spaceElement instanceof UFO){
+
+            }else if(spaceElement instanceof Asteroid){
+
+            }else if(spaceElement instanceof Coin) {
+
+            }
         }
-        return false;
+        return null;
+    }
+
+    private void processCollision(SpaceElement spaceElement){
+
+        if(spaceElement instanceof UFO){
+
+        }else if(spaceElement instanceof Asteroid){
+
+        }else if(spaceElement instanceof Coin) {
+
+        }
+        isRunning = false;
     }
 
     protected SpaceShip getSpaceShip() {
