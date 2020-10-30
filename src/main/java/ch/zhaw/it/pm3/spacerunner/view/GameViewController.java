@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -49,12 +51,17 @@ public class GameViewController extends ViewController implements GameView {
 
         graphicsContext = gameCanvas.getGraphicsContext2D();
 
+
+
+
         pressedHandler = createPressReleaseKeyHandler(true);
         releasedHandler = createPressReleaseKeyHandler(false);
 
         System.out.println("Adding handlers");
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+
+        showLoadingScreen();
 
         Thread gameThread = new Thread(() ->{
             try {
@@ -95,7 +102,14 @@ public class GameViewController extends ViewController implements GameView {
         };
     }
 
-
+    private void showLoadingScreen() {
+        graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource("images/icon.png"))),
+                (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
+        graphicsContext.setFont(new Font("Bauhaus 93", 40));
+        graphicsContext.setTextAlign(TextAlignment.CENTER);
+        graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
+                (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+    }
 
 
 
