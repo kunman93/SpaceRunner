@@ -51,16 +51,14 @@ public class SpaceRunnerApp extends Application {
             Scene scene = new Scene(rootPane);
             primaryStage.setScene(scene);
 
-            //if(primaryStage.getIcons().size() == 0) {
+            if(primaryStage.getIcons().size() == 0) { // damit breite gleich bleibt beim laden neuer view
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/icon.png")));
                 primaryStage.show();
                 primaryStage.setHeight(500);
                 primaryStage.setWidth(800);
                 primaryStage.setMinHeight(500);
                 primaryStage.setMinWidth(800);
-                primaryStage.setMaxHeight(500);
-                primaryStage.setMaxWidth(800);
-            //}
+            }
         } catch (IOException e) {
             //logger.log(Level.SEVERE, "!!!FILE NOT FOUND, CHECK FILEPATH!!!");
             e.printStackTrace();

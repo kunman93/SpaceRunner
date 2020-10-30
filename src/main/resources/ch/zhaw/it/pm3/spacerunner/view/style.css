@@ -2,6 +2,8 @@
 .darkbg {
     /*-fx-background-color: black;*/
     -fx-background-image: url("../images/background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: auto 100%;
 }
 
 .darkbg Label {

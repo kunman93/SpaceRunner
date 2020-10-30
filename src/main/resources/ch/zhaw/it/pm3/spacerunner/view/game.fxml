@@ -6,7 +6,7 @@
 <GridPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css"
           xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.it.pm3.spacerunner.view.GameViewController">
    <children>
-      <Canvas fx:id="gameCanvas" style="-fx-background-color: blue;" height="500" width="800" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+      <Canvas fx:id="gameCanvas" height="500" width="800" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
    </children>
    <columnConstraints>
       <ColumnConstraints percentWidth="100.0" />
