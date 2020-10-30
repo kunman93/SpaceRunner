@@ -7,8 +7,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ElementPreset {
-    Timer timer = new Timer();
-    boolean canGenerate = true;
+    private Timer timer = new Timer();
+    private boolean canGenerate = true;
+    private int delay = 2500;
 
     private static SpaceElement[][] presets = new SpaceElement[][] {
             {new Coin(new Point(500, 100), 50, 50)},
@@ -20,7 +21,7 @@ public class ElementPreset {
         if(canGenerate) {
             canGenerate = false;
             int index = (int)Math.floor(Math.random() * presets.length);
-            timer.schedule(new setCanGenerateTrue(), 2500);
+            timer.schedule(new setCanGenerateTrue(), delay);
             return presets[index];
         }
         return null;
