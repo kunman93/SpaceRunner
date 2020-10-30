@@ -12,8 +12,8 @@ public class ElementPreset {
     boolean canGenerate = true;
 
     private static SpaceElement[][] presets = new SpaceElement[][] {
-            {new Coin(new Point(961, 100), 50, 50)},
-            {new Coin(new Point(961, 250), 50, 50)}
+            {new Coin(new Point(500, 100), 50, 50)},
+            {new Coin(new Point(500, 250), 50, 50)}
     };
 
     public SpaceElement[] getRandomPreset() {
