@@ -37,6 +37,7 @@ public class GameController {
     private Set<SpaceElement> elements;
     private PlayerProfile playerProfile;
     private GameView gameView;
+    private ElementPreset elementPreset;
 
     /**
      * Initializes gameView
@@ -59,9 +60,9 @@ public class GameController {
         initialize();
 
         //TODO: remove then generating works
-        elements.add(new Coin(new Point(20,20), 50,50));
-        elements.add(new Coin(new Point(70,20), 50,50));
-        elements.add(new Coin(new Point(120,20), 50,50));
+        //elements.add(new Coin(new Point(20,20), 50,50));
+        //elements.add(new Coin(new Point(70,20), 50,50));
+        //elements.add(new Coin(new Point(120,20), 50,50));
 
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
@@ -165,7 +166,7 @@ public class GameController {
     protected void initialize() {
         playerProfile = PersistenceUtil.loadProfile();
 
-
+        elementPreset = new ElementPreset();
 
         elements = new HashSet<>();
         setUpSpaceElementImages();
@@ -248,9 +249,11 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
+        SpaceElement[] preset = elementPreset.getRandomPreset();
+        if (preset != null) {
+            generatePreset(preset);
+        }
 
-        return;
-        //TODO: This is not how it should be => Generate from presets and only randomly
         /*try {
             elements.add(new Coin(new Point(20, 100), 20, 20));
             elements.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
@@ -258,6 +261,12 @@ public class GameController {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
+    }
+
+    private void generatePreset(SpaceElement[] preset) {
+        for(SpaceElement element : preset) {
+            elements.add(element);
+        }
     }
 
     /**
