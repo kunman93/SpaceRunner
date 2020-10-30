@@ -5,12 +5,14 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
-import javafx.scene.layout.Background;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GameController {
 
@@ -58,12 +60,15 @@ public class GameController {
         initialize();
 
         //TODO: remove then generating works
-        //elements.add(new Coin(new Point(20,20), 50,50));
-        //elements.add(new Coin(new Point(70,20), 50,50));
-        //elements.add(new Coin(new Point(120,20), 50,50));
+
+        elements.add(new Coin(new Point(300,20), 50,50));
+        elements.add(new Coin(new Point(370,20), 50,50));
+        elements.add(new Coin(new Point(420,20), 50,50));
+
 
         elements.add(new UnidentifiedFlightObject(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
         elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
+
 
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
@@ -246,13 +251,8 @@ public class GameController {
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
-        for (Iterator<SpaceElement> e = elements.iterator(); e.hasNext();) {
-            SpaceElement element = e.next();
-            if(element.getCurrentPosition().x + element.getWidth() < 0) {
-//                if(element.getPosition().x + element.getWidth() < 0) {
-                e.remove();
-            }
-        }
+        elements.removeIf((SpaceElement element) ->
+                element.getCurrentPosition().x + element.getWidth() < 0 );
     }
 
     /**
@@ -284,6 +284,9 @@ public class GameController {
         for(SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
+            if(element instanceof Coin) {
+                element.setVelocity(new Point(-((int)horizontalGameSpeed),0));
+            }
             element.move();
         }
     }
