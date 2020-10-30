@@ -66,7 +66,7 @@ public class GameController {
         //elements.add(new Coin(new Point(120,20), 50,50));
 
         elements.add(new UnidentifiedFlightObject(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
-        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth()-100,0), 100, 100));
+        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
 
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
