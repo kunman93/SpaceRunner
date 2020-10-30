@@ -1,7 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.Coin;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 
 import java.awt.*;
 import java.util.Timer;
