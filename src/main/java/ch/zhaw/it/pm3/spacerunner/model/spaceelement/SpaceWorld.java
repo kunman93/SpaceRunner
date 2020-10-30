@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SpaceWorld extends SpaceElement{
+    //TODO: visual is already in the superclass
     private static BufferedImage visual;
 
     public SpaceWorld(Point startPosition, int width, int height) {
@@ -22,7 +23,7 @@ public class SpaceWorld extends SpaceElement{
         //TODO: We can make it fixed
         int viewport = 960;
 
-
+        //TODO: why are we not using the setVelocity() and move-method Rico implemented?
         if(position.x + getWidth() - viewport < 0){
             position.x = 0;
         }else{

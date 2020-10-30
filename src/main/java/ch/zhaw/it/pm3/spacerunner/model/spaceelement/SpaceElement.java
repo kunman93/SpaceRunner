@@ -32,6 +32,12 @@ public abstract class SpaceElement {
         position.y += velocity.y;
     }
 
+    public void move(Point direction) {
+        setVelocity(direction);
+        position.x += velocity.x;
+        position.y += velocity.y;
+    }
+
     public void accelerate(Point direction){
         if (direction == null){
             velocity.x += 0;
@@ -78,4 +84,16 @@ public abstract class SpaceElement {
     public Point getVelocity(){
         return velocity;
     }
+
+    public boolean doesCollide(SpaceElement s){
+        return pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y)
+                || pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y + s.getHeight())
+                || pointInObject(s.getCurrentPosition().x +s.getWidth(), s.getCurrentPosition().y)
+                || pointInObject(s.getCurrentPosition().x + s.getWidth(), s.getCurrentPosition().y + s.getHeight());
+    }
+
+    private boolean pointInObject(float x, float y){
+        return x > position.x && x < position.x + width && y > position.y && y < position.y + height;
+    }
+
 }
