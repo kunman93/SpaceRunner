@@ -9,8 +9,10 @@ public enum ImageSVGFile {
     SHINEY_COIN_3("coin/shiny-coin3.svg"),
     SHINEY_COIN_4("coin/shiny-coin4.svg"),
     SHINEY_COIN_5("coin/shiny-coin5.svg"),
-    SHINEY_COIN_6("coin/shiny-coin6.svg");
-
+    SHINEY_COIN_6("coin/shiny-coin6.svg"),
+    SPACE_SHIP_1("space-ship.svg"),
+    UFO_1("UFO.svg"),
+    ASTEROID("comet-asteroid.svg");
 
 
 

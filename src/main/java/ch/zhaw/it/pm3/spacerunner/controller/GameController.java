@@ -226,16 +226,16 @@ public class GameController {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             //TODO: Maybe enum for resources strings
-            URL spaceShipImageURL = SpaceRunnerApp.class.getResource("images/space-ship.svg");
+            URL spaceShipImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.SPACE_SHIP_1.getFileName());
             BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 100f);
             spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
             SpaceShip.setVisual(spaceShipImage);
 
-            URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource("images/UFO.svg");
+            URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.UFO_1.getFileName());
             BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL, 150f);
             UFO.setVisual(unidentifiedSpaceObjectImage);
 
-            URL asteroidImageURL = SpaceRunnerApp.class.getResource("images/comet-asteroid.svg");
+            URL asteroidImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.ASTEROID.getFileName());
             BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL, 100f);
             Asteroid.setVisual(asteroidImage);
 
