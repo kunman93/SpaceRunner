@@ -6,6 +6,7 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.ImageSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 
@@ -239,7 +240,7 @@ public class GameController {
             BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL, 100f);
             Asteroid.setVisual(asteroidImage);
 
-            URL backgroundImageURL = SpaceRunnerApp.class.getResource("images/background.jpg");
+            URL backgroundImageURL = SpaceRunnerApp.class.getResource(VisualFile.BACKGROUND_STARS.getFileName());
             BufferedImage backgroundImage = VisualUtil.loadImage(backgroundImageURL);
             SpaceWorld.setVisual(backgroundImage);
 
