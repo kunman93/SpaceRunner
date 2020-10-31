@@ -19,7 +19,7 @@ public enum VisualSVGFile {
 
     private String fileName;
 
-    private VisualSVGFile(String fileName) {
+    VisualSVGFile(String fileName) {
         this.fileName = "images/" + fileName;
     }
 

@@ -13,7 +13,7 @@ public enum VisualFile {
 
     private String fileName;
 
-    private VisualFile(String fileName) {
+    VisualFile(String fileName) {
         this.fileName = "images/" + fileName;
     }
 
