@@ -3,7 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 /**
  * Enum only for SVG files
  */
-public enum ImageSVGFile {
+public enum VisualSVGFile {
     SHINEY_COIN_1("coin/shiny-coin1.svg"),
     SHINEY_COIN_2("coin/shiny-coin2.svg"),
     SHINEY_COIN_3("coin/shiny-coin3.svg"),
@@ -19,7 +19,7 @@ public enum ImageSVGFile {
 
     private String fileName;
 
-    private ImageSVGFile(String fileName) {
+    private VisualSVGFile(String fileName) {
         this.fileName = "images/" + fileName;
     }
 
