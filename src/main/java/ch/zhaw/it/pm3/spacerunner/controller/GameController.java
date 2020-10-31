@@ -6,6 +6,7 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.ImageSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 
 import java.awt.*;
@@ -251,12 +252,12 @@ public class GameController {
     }
 
     private void setUpCoinWithAnimation(){
-        URL coin1ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin1.svg");
-        URL coin2ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin2.svg");
-        URL coin3ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin3.svg");
-        URL coin4ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin4.svg");
-        URL coin5ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin5.svg");
-        URL coin6ImageURL = SpaceRunnerApp.class.getResource("images/coin/shiny-coin6.svg");
+        URL coin1ImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.SHINEY_COIN_1.getFileName());
+        URL coin2ImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.SHINEY_COIN_2.getFileName());
+        URL coin3ImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.SHINEY_COIN_3.getFileName());
+        URL coin4ImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.SHINEY_COIN_4.getFileName());
+        URL coin5ImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.SHINEY_COIN_5.getFileName());
+        URL coin6ImageURL = SpaceRunnerApp.class.getResource(ImageSVGFile.SHINEY_COIN_6.getFileName());
         float coinHeight = 50f;
         BufferedImage coin1Image = VisualUtil.loadSVGImage(coin1ImageURL, coinHeight);
         BufferedImage coin2Image = VisualUtil.loadSVGImage(coin2ImageURL, coinHeight);
