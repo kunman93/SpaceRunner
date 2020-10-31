@@ -228,16 +228,19 @@ public class GameController {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             //TODO: Maybe enum for resources strings
             URL spaceShipImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SPACE_SHIP_1.getFileName());
-            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 100f);
+            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL,
+                    (float) (gameView.getCanvasHeight() * ElementScaling.SPACE_SHIP_1.getScaling()));
             spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
             SpaceShip.setVisual(spaceShipImage);
 
             URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.UFO_1.getFileName());
-            BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL, 150f);
+            BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL,
+                    (float) (gameView.getCanvasHeight() * ElementScaling.UFO_1.getScaling()));
             UFO.setVisual(unidentifiedSpaceObjectImage);
 
             URL asteroidImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.ASTEROID.getFileName());
-            BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL, 100f);
+            BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL,
+                    (float) (gameView.getCanvasHeight() * ElementScaling.ASTEROID_1.getScaling()));
             Asteroid.setVisual(asteroidImage);
 
             URL backgroundImageURL = SpaceRunnerApp.class.getResource(VisualFile.BACKGROUND_STARS.getFileName());
@@ -252,14 +255,14 @@ public class GameController {
         }
     }
 
-    private void setUpCoinWithAnimation(){
+    private void setUpCoinWithAnimation() {
         URL coin1ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_1.getFileName());
         URL coin2ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_2.getFileName());
         URL coin3ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_3.getFileName());
         URL coin4ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_4.getFileName());
         URL coin5ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_5.getFileName());
         URL coin6ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_6.getFileName());
-        float coinHeight = 50f;
+        float coinHeight = (float) (gameView.getCanvasHeight() * ElementScaling.COIN_1.getScaling());
         BufferedImage coin1Image = VisualUtil.loadSVGImage(coin1ImageURL, coinHeight);
         BufferedImage coin2Image = VisualUtil.loadSVGImage(coin2ImageURL, coinHeight);
         BufferedImage coin3Image = VisualUtil.loadSVGImage(coin3ImageURL, coinHeight);
