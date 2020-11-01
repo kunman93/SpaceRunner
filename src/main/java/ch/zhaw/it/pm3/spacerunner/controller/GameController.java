@@ -149,12 +149,12 @@ public class GameController {
     protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                if(spaceShip.getCurrentPosition().y + (spaceShip.getWidth() * ElementScaling.SPACE_SHIP_1.getScaling()) <= 0.0) return;
+                if(spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * ElementScaling.SPACE_SHIP_1.getScaling()) <= 0.0) return;
                 spaceShip.directMoveUp();
 //                spaceShip.directMove(new Point(0, -spaceShipVerticalMoveSpeed));
                 break;
             case DOWN:
-                if(spaceShip.getCurrentPosition().y - (spaceShip.getWidth() * ElementScaling.SPACE_SHIP_1.getScaling())
+                if(spaceShip.getCurrentPosition().y - (spaceShip.getHeight() * ElementScaling.SPACE_SHIP_1.getScaling())
                         >= gameView.getCanvasHeight()) return; //TODO canvas = 500.0, gameView.getCanvasHeight()
                 spaceShip.directMoveDown();
 //                spaceShip.directMove(new Point(0, spaceShipVerticalMoveSpeed));
@@ -205,7 +205,7 @@ public class GameController {
         setUpSpaceElementImages();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point(0,0),2880,640);
-        spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
+        spaceShip = new SpaceShip(new Point(20, 100), 200, 50);
 
         fps = playerProfile.getFps();
 
