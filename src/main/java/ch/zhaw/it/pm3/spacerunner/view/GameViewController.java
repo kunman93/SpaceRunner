@@ -92,8 +92,10 @@ public class GameViewController extends ViewController {
                             boolean gameOver = gameController.isGameOver();
 
                             if(gameOver){
+                                removeKeyHandlers();
                                 if(gameLoop != null){
                                     gameLoop.stop();
+                                    //TODO: GameOver => Show GameOver Screen
                                 }
                             }
 

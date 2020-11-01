@@ -118,6 +118,7 @@ public class GameController {
             moveElements();
             removePastDrawables();
 
+            //TODO: Dont make this FPS based!!! (imagine FrameDrops, etc!!) => Time based approach
             horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
 
             //TODO: this is to test game over (REMOVE AFTER implemented)
@@ -216,6 +217,8 @@ public class GameController {
      * Initializes the class variables
      */
     public void initialize(int width, int height) {
+
+        //TODO: check if 16:9 view
 
         this.width = width;
         this.height = height;
