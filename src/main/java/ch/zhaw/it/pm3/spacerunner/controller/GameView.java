@@ -22,6 +22,8 @@ public interface GameView {
 
     boolean isDownPressed();
 
+    boolean isWindowClosed();
+
     void gameEnded();
 
     double getCanvasHeight();
