@@ -32,34 +32,28 @@ public class GameController {
 
     private double horizontalGameSpeed;
     private double horizontalGameSpeedIncreasePerSecond;
-    private int spaceShipVerticalMoveSpeed;
 
 
     private SpaceShip spaceShip;
     private Set<SpaceElement> elements;
     private PlayerProfile playerProfile;
-    private GameView gameView;
     private ElementPreset elementPreset;
 
-    /**
-     * Initializes gameView
-     * @param gameView
-     */
-    public void setView(GameView gameView) {
-        this.gameView = gameView;
-    }
+    private boolean gameOver = false;
+
+    private int width = 0;
+    private int height = 0;
+
 
     /**
      * Initialises, Runs (in a GameLoop) and Ends a Space-Runner game
      * @throws Exception when GameController doesnt have a gameView
      */
     public void startGame() throws Exception {
-        if (gameView == null) {
-            throw new GameViewNotFoundException("GameController has no GameView");
-        }
 
 
-        initialize();
+
+        //initialize();
 
         //TODO: remove then generating works
 
@@ -68,8 +62,8 @@ public class GameController {
         elements.add(new Coin(new Point(420,20), 50,50));
 
 
-        elements.add(new UFO(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
-        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
+        elements.add(new UFO(new Point(width-30,0), 100, 100));
+        elements.add(new Asteroid(new Point(width,0), 100, 100));
 
 
         while (isRunning) {
@@ -79,7 +73,7 @@ public class GameController {
                 //TODO: Implement pause
             }
 
-            checkMovementKeys();
+            //checkMovementKeys();
 
             SpaceElement collidedWith = detectCollision();
             if(collidedWith != null) {
@@ -87,13 +81,11 @@ public class GameController {
             }
 
 
-            background.move();
 
             updateObstacleSpeed();
             generateObstacles();
             moveElements();
             removePastDrawables();
-            displayToUI();
 
             horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
 
@@ -105,11 +97,38 @@ public class GameController {
 
 
 
+        //TODO: Add to game ended!!
         updatePlayerProfile();
         PersistenceUtil.saveProfile(playerProfile);
-        gameView.gameEnded();
     }
 
+
+    public void processFrame(boolean upPressed, boolean downPressed){
+
+        if(!isPaused){
+            checkMovementKeys(upPressed, downPressed);
+
+            SpaceElement collidedWith = detectCollision();
+            if(collidedWith != null) {
+                processCollision(collidedWith);
+            }
+
+            updateObstacleSpeed();
+            generateObstacles();
+            moveElements();
+            removePastDrawables();
+
+            horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
+
+            //TODO: this is to test game over (REMOVE AFTER implemented)
+//            if(horizontalGameSpeed > 1.5){
+//                System.out.println("GAME OVER");
+//                gameOver = true;
+//            }
+
+            //displayToUI();
+        }
+    }
 
     private void updateObstacleSpeed(){
         for(SpaceElement spaceElement : elements){
@@ -129,9 +148,7 @@ public class GameController {
     /**
      * Checks if movement keys are pressed & moves the spaceship accordingly
      */
-    private void checkMovementKeys() {
-        boolean upPressed = gameView.isUpPressed();
-        boolean downPressed = gameView.isDownPressed();
+    public void checkMovementKeys(boolean upPressed, boolean downPressed) {
 
         if (upPressed && !downPressed) {
             moveSpaceShip(SpaceShipDirection.UP);
@@ -148,11 +165,9 @@ public class GameController {
         switch (direction) {
             case UP:
                 spaceShip.directMoveUp();
-//                spaceShip.directMove(new Point(0, -spaceShipVerticalMoveSpeed));
                 break;
             case DOWN:
                 spaceShip.directMoveDown();
-//                spaceShip.directMove(new Point(0, spaceShipVerticalMoveSpeed));
                 break;
         }
     }
@@ -167,18 +182,23 @@ public class GameController {
 //        }
     }
 
-    /**
-     * Displays the GameElements to UI
-     */
-    private void displayToUI() {
+    public ArrayList<SpaceElement> getGameElements(){
         ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
         dataToDisplay.add(0, background);
         dataToDisplay.add(1, spaceShip);
+        return dataToDisplay;
+    }
 
+    public int getCollectedCoins(){
+        return collectedCoins;
+    }
 
-        gameView.displayUpdatedSpaceElements(dataToDisplay);
-        gameView.displayCollectedCoins(collectedCoins);
-        gameView.displayCurrentScore(score);
+    public int getScore(){
+        return score;
+    }
+
+    public int getFps(){
+        return fps;
     }
 
     /**
@@ -188,15 +208,33 @@ public class GameController {
         isPaused = !isPaused;
     }
 
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
     /**
      * Initializes the class variables
      */
-    protected void initialize() {
+    public void initialize(int width, int height) {
+
+        this.width = width;
+        this.height = height;
+        gameOver = false;
+
         playerProfile = PersistenceUtil.loadProfile();
 
         elementPreset = new ElementPreset();
 
         elements = new HashSet<>();
+
+        elements.add(new Coin(new Point(300,20), 50,50));
+        elements.add(new Coin(new Point(370,20), 50,50));
+        elements.add(new Coin(new Point(420,20), 50,50));
+
+
+        elements.add(new UFO(new Point((int)width-30,0), 100, 100));
+        elements.add(new Asteroid(new Point((int)width,0), 100, 100));
+
         setUpSpaceElementImages();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point(0,0),2880,640);
@@ -209,9 +247,8 @@ public class GameController {
 
         distance = 0;
         collectedCoins = 0;
-        spaceShipVerticalMoveSpeed = 3;
         horizontalGameSpeed = 1;
-        horizontalGameSpeedIncreasePerSecond = 0.1;
+        horizontalGameSpeedIncreasePerSecond = 0.05;
 //        gameSpeed = playerProfile.getStartingGameSpeed;
 //        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
@@ -302,19 +339,22 @@ public class GameController {
     /**
      * Moves all SpaceElements
      */
-    private void moveElements() {
+    public void moveElements() {
         for(SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
 
             element.move();
         }
+
+        background.move();
+
     }
 
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private SpaceElement detectCollision() { // ToDo why boolean not void?
+    public SpaceElement detectCollision() { // ToDo why boolean not void?
 
         for(SpaceElement spaceElement : elements) {
             if (spaceShip.doesCollide(spaceElement)){
@@ -333,7 +373,7 @@ public class GameController {
         return null;
     }
 
-    private void processCollision(SpaceElement spaceElement){
+    public void processCollision(SpaceElement spaceElement){
 
         if(spaceElement instanceof UFO){
 
