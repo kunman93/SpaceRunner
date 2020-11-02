@@ -5,6 +5,7 @@ import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
 import com.sun.javafx.stage.WindowCloseRequestHandler;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -16,7 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -109,7 +109,7 @@ public class GameViewController extends ViewController implements GameView {
     }
 
     private void showLoadingScreen() {
-        graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource("images/icon.png"))),
+        graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource(VisualFile.ROCKET_ICON.getFileName()))),
                 (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
         graphicsContext.setFont(new Font("Bauhaus 93", 40));
         graphicsContext.setTextAlign(TextAlignment.CENTER);

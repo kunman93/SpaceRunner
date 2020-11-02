@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 public class Asteroid extends Obstacle {
     private static BufferedImage visual;
 
-    public Asteroid(Point startPosition, int width, int length) {
-        super(startPosition, width, length);
+    public Asteroid(Point startPosition, int width, int height) {
+        super(startPosition, width, height);
     }
 
     public static void setVisual(BufferedImage visual){

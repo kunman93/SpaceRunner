@@ -12,8 +12,8 @@ public class UFO extends Obstacle {
     private Point vectorUp = new Point(-HorizontalSpeed.UFO.getSpeed(),-VerticalSpeed.UFO.getSpeed());
     private Point vectorDown = new Point(-HorizontalSpeed.UFO.getSpeed(),VerticalSpeed.UFO.getSpeed());
 
-    public UFO(Point startPosition, int width, int length) {
-        super(startPosition, width, length);
+    public UFO(Point startPosition, int width, int height) {
+        super(startPosition, width, height);
     }
 
     @Override
