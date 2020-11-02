@@ -272,7 +272,7 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
-        SpaceElement[] preset = elementPreset.getRandomPreset();
+        SpaceElement[] preset = elementPreset.getRandomPreset(horizontalGameSpeed);
         if (preset != null) {
             generatePreset(preset);
         }
