@@ -180,13 +180,6 @@ public class GameController {
 
         elements = new HashSet<>();
 
-        //TODO: delete
-        elements.add(new Coin(new Point(300,20), 50,50));
-        elements.add(new Coin(new Point(370,20), 50,50));
-        elements.add(new Coin(new Point(420,20), 50,50));
-        elements.add(new UFO(new Point((int)width-30,0), 100, 100));
-        elements.add(new Asteroid(new Point((int)width,0), 100, 100));
-
         setUpSpaceElementImages();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point(0,0),2880,640);
