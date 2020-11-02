@@ -63,15 +63,6 @@ public class GameController {
 
         //TODO: remove then generating works
 
-        elements.add(new Coin(new Point(300,20), 50,50));
-        elements.add(new Coin(new Point(370,20), 50,50));
-        elements.add(new Coin(new Point(420,20), 50,50));
-
-
-        elements.add(new UFO(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
-        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
-
-
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
 
@@ -287,7 +278,7 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
-        SpaceElement[] preset = elementPreset.getRandomPreset();
+        SpaceElement[] preset = elementPreset.getRandomPreset(horizontalGameSpeed);
         if (preset != null) {
             generatePreset(preset);
         }
