@@ -15,9 +15,9 @@ public class ElementPreset {
 
     private void generatePresets() {
         presets = new SpaceElement[][]{
-        {new Coin(new Point(500,100),50,50)},
-        {new Coin(new Point(500,250),50,50),new Coin(new Point(500,175),50,50)},
-        {new Coin(new Point(500,350),50,50)}
+                {new Coin(new Point(900,200),50,50), new Coin(new Point(900,280),50,50), new Coin(new Point(950,240),50,50), new Coin(new Point(1000,200),50,50), new Coin(new Point(1000,280),50,50)},
+                {new Asteroid(new Point(900,-100), 100, 100), new Asteroid(new Point(950,50), 100, 100)},
+                {new UFO(new Point(900,0), 100, 100), new UFO(new Point(900,100), 100, 100)}
         };
     }
 
@@ -35,4 +35,15 @@ public class ElementPreset {
     class setCanGenerateTrue extends TimerTask {
         public void run() {canGenerate = true;}
     }
+
+    /*
+
+           elements.add(new Coin(new Point(300,20), 50,50));
+        elements.add(new Coin(new Point(370,20), 50,50));
+        elements.add(new Coin(new Point(420,20), 50,50));
+
+
+        elements.add(new UFO(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
+        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
+     */
 }
