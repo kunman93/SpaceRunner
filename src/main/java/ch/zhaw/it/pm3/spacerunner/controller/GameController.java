@@ -18,7 +18,6 @@ import java.util.Set;
 
 public class GameController {
 
-    private boolean isRunning = false;
     private boolean isPaused = false;
 
     private int collectedCoins;
@@ -26,7 +25,6 @@ public class GameController {
     private int score;
 
     private int fps;
-    private long sleepTime;
 
     private SpaceWorld background = null;
 
@@ -44,64 +42,11 @@ public class GameController {
     private int width = 0;
     private int height = 0;
 
-
-    /**
-     * Initialises, Runs (in a GameLoop) and Ends a Space-Runner game
-     * @throws Exception when GameController doesnt have a gameView
-     */
-    public void startGame() throws Exception {
-
-
-
-        //initialize();
-
-        //TODO: remove then generating works
-
-        elements.add(new Coin(new Point(300,20), 50,50));
-        elements.add(new Coin(new Point(370,20), 50,50));
-        elements.add(new Coin(new Point(420,20), 50,50));
-
-
-        elements.add(new UFO(new Point(width-30,0), 100, 100));
-        elements.add(new Asteroid(new Point(width,0), 100, 100));
-
-
-        while (isRunning) {
-            long gameLoopTime = System.currentTimeMillis();
-
-            if (isPaused) {
-                //TODO: Implement pause
-            }
-
-            //checkMovementKeys();
-
-            SpaceElement collidedWith = detectCollision();
-            if(collidedWith != null) {
-                processCollision(collidedWith);
-            }
-
-
-
-            updateObstacleSpeed();
-            generateObstacles();
-            moveElements();
-            removePastDrawables();
-
-            horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
-
-            gameLoopTime = System.currentTimeMillis() - gameLoopTime;
-            if (sleepTime - gameLoopTime > 0) {
-                Thread.sleep(sleepTime-gameLoopTime);
-            }
-        }
-
-
-
-        //TODO: Add to game ended!!
+    public void saveGame(){
+        //TODO: Use and maybe improve
         updatePlayerProfile();
         PersistenceUtil.saveProfile(playerProfile);
     }
-
 
     public void processFrame(boolean upPressed, boolean downPressed){
 
@@ -230,11 +175,10 @@ public class GameController {
 
         elements = new HashSet<>();
 
+        //TODO: delete
         elements.add(new Coin(new Point(300,20), 50,50));
         elements.add(new Coin(new Point(370,20), 50,50));
         elements.add(new Coin(new Point(420,20), 50,50));
-
-
         elements.add(new UFO(new Point((int)width-30,0), 100, 100));
         elements.add(new Asteroid(new Point((int)width,0), 100, 100));
 
@@ -244,9 +188,6 @@ public class GameController {
         spaceShip = new SpaceShip(new Point(20, 100), 50, 200);
 
         fps = playerProfile.getFps();
-
-        isRunning = true;
-        sleepTime = 1000/fps;
 
         distance = 0;
         collectedCoins = 0;
@@ -385,7 +326,6 @@ public class GameController {
         }else if(spaceElement instanceof Coin) {
 
         }
-        isRunning = false;
     }
 
     protected SpaceShip getSpaceShip() {
