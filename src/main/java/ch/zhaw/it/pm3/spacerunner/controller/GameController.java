@@ -95,6 +95,7 @@ public class GameController {
             moveElements();
             removePastDrawables();
             displayToUI();
+            processCollision(detectCollision());
 
             horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
 
@@ -319,35 +320,30 @@ public class GameController {
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private SpaceElement detectCollision() { // ToDo why boolean not void?
-
+    private SpaceElement detectCollision() {
         for(SpaceElement spaceElement : elements) {
             if (spaceShip.doesCollide(spaceElement)){
-                spaceShip.crash(); // ToDo maybe solve diffrently for asteroids / coins etc.
-//                element.collide(); // ToDo not Correct must first be implemented
-            }
-
-            if(spaceElement instanceof UFO){
-
-            }else if(spaceElement instanceof Asteroid){
-
-            }else if(spaceElement instanceof Coin) {
-
+                return spaceElement;
             }
         }
         return null;
     }
 
     private void processCollision(SpaceElement spaceElement){
-
+        if (spaceElement == null) return;
         if(spaceElement instanceof UFO){
-
-        }else if(spaceElement instanceof Asteroid){
-
-        }else if(spaceElement instanceof Coin) {
-
+            spaceShip.crash();
+            isRunning = false;
+        } else if(spaceElement instanceof Asteroid){
+            spaceShip.crash();
+            isRunning = false;
+        } else if(spaceElement instanceof Coin) {
+            collectedCoins++;
+            elements.remove(spaceElement);
+        } else if(spaceElement instanceof PowerUp) {
+            // spaceElement.getEffect(); //ToDo one of the two
+            // handlePowerUp(spaceElement)
         }
-        isRunning = false;
     }
 
     protected SpaceShip getSpaceShip() {
