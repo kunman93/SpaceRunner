@@ -70,3 +70,7 @@ Slider .axis .axis-minor-tick-mark {
     -fx-font-size: 18;
 }
 
+/* game.fxml */
+.gameBG {
+    -fx-background-color: black;
+}

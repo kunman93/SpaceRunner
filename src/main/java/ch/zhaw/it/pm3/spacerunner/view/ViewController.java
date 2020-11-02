@@ -8,6 +8,7 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
  */
 public abstract class ViewController {
     private static SpaceRunnerApp main;
+    protected static String DEFAULT_FONT = "Bauhaus 93";
 
     public static void  setMain(SpaceRunnerApp main) {
         ViewController.main = main;

@@ -14,12 +14,12 @@ public class MenuViewController extends ViewController implements EventHandler<K
 
     @FXML
     public void showGame() {
-        getMain().setFXMLView("view/game.fxml");
+        getMain().setFXMLView(FXMLFile.GAME);
     }
 
     @FXML
     public void showSettings() {
-        getMain().setFXMLView("view/settings.fxml");
+        getMain().setFXMLView(FXMLFile.SETTINGS);
     }
 
     @Override

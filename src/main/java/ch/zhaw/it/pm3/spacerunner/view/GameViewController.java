@@ -5,6 +5,7 @@ import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
@@ -46,7 +47,7 @@ public class GameViewController extends ViewController implements GameView {
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
 
-        initializeResponsive(main);
+        setCanvasScale();
 
 
         graphicsContext = gameCanvas.getGraphicsContext2D();
@@ -77,18 +78,26 @@ public class GameViewController extends ViewController implements GameView {
 
     }
 
+    private void setCanvasScale() {
+        calc16to9Proportions();
+        primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+            calc16to9Proportions();
+        });
+        primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            calc16to9Proportions();
+        });
+    }
 
-    //TODO immer 16:9 verhält
-    private void initializeResponsive(SpaceRunnerApp main) {
-        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
-        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
-        main.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
-            gameCanvas.setHeight((Double) newVal);
-            //todo notify about new scale
-        });
-        main.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
-            gameCanvas.setWidth((Double) newVal);
-        });
+    private void calc16to9Proportions() {
+        double height = primaryStage.getHeight() - 20;
+        double width = primaryStage.getWidth();
+        if (width / 16 < height / 9) {
+            height = width * 9 / 16;
+        } else if (width / 16 > height / 9) {
+            width = height * 16 / 9;
+        }
+        gameCanvas.setWidth(width);
+        gameCanvas.setHeight(height);
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
@@ -105,11 +114,14 @@ public class GameViewController extends ViewController implements GameView {
     private void showLoadingScreen() {
         graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource("images/icon.png"))),
                 (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
-        graphicsContext.setFont(new Font("Bauhaus 93", 40));
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
         graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
                 (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
     }
+
+
 
 
 
@@ -152,10 +164,15 @@ public class GameViewController extends ViewController implements GameView {
 
     }
 
-
+    // todo private, wenn mit AnimationTimer
     @Override
     public void displayCollectedCoins(int coins) {
-
+        //Image image = SwingFXUtils.toFXImage(VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource("images/shiny-coin1.svg"), 40f), null);
+        //graphicsContext.drawImage(image, (gameCanvas.getWidth() - 40), 40, 30, 30);
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.setFont(new Font(DEFAULT_FONT, 30));
+        graphicsContext.setTextAlign(TextAlignment.RIGHT);
+        graphicsContext.fillText(String.valueOf(coins),  (gameCanvas.getWidth() - 80),40, 100);
     }
 
     @Override
