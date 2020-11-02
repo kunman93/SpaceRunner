@@ -44,7 +44,7 @@
                 <Slider fx:id="soundVolume" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <Label text="FRAMERATE (in FPS)" GridPane.rowIndex="3" />
-                <Slider fx:id="framerate" blockIncrement="30.0" majorTickUnit="30.0" max="90.0" min="30.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Slider fx:id="framerate" blockIncrement="30.0" majorTickUnit="30" max="150" min="30" minorTickCount="2" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <!--<Button fx:id="homeButton" onAction="#showMenu" text="< back"
                         mnemonicParsing="false" prefHeight="96.0" prefWidth="236.0" GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.vgrow="ALWAYS" />-->
             </children>
