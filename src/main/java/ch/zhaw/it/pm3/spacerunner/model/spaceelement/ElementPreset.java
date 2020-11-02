@@ -37,15 +37,4 @@ public class ElementPreset {
     class setCanGenerateTrue extends TimerTask {
         public void run() {canGenerate = true;}
     }
-
-    /*
-
-           elements.add(new Coin(new Point(300,20), 50,50));
-        elements.add(new Coin(new Point(370,20), 50,50));
-        elements.add(new Coin(new Point(420,20), 50,50));
-
-
-        elements.add(new UFO(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
-        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
-     */
 }
