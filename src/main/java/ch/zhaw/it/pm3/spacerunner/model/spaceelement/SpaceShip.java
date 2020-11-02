@@ -13,8 +13,8 @@ public class SpaceShip extends SpaceElement {
     private static Point DOWN = new Point(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed());
     private static BufferedImage visual;
 
-    public SpaceShip(Point startPosition, int length, int height){
-        super(startPosition, length, height);
+    public SpaceShip(Point startPosition, int width, int height){
+        super(startPosition, width, height);
     }
 
     public boolean hasCrashed() {

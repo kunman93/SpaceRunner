@@ -1,10 +1,10 @@
-package ch.zhaw.it.pm3.spacerunner.controller;
+package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 public enum ElementScaling {
-    SPACE_SHIP_1(0.3),
-    COIN_1(0.1),
-    UFO_1(0.3),
-    ASTEROID_1(0.2);
+    SPACE_SHIP(0.3),
+    COIN(0.1),
+    UFO(0.3),
+    ASTEROID(0.2);
 
 
 

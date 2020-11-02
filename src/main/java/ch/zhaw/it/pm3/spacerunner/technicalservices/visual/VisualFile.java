@@ -4,8 +4,7 @@ public enum VisualFile {
 
     BACKGROUND_STARS("background.jpg"),
     ROCKET_ICON("icon.png");
-
-    //TODO -1.png never used?
+    
 
 
 

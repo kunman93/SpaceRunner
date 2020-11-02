@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 public class PowerUp extends SpaceElement {
     private static BufferedImage visual;
 
-    public PowerUp(Point startPosition, int width, int length) {
-        super(startPosition, width, length);
+    public PowerUp(Point startPosition, int width, int height) {
+        super(startPosition, width, height);
     }
 
 
