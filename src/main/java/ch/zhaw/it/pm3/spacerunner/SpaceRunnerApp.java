@@ -2,7 +2,9 @@ package ch.zhaw.it.pm3.spacerunner;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
+import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
+
 import ch.zhaw.it.pm3.spacerunner.view.ViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,16 +33,16 @@ public class SpaceRunnerApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Space Runner");
         ViewController.setMain(this);
-        setFXMLView("view/menu.fxml");
+        setFXMLView(FXMLFile.MENU);
 
         setupBackgroundMusic();
 
     }
 
 
-    public void setFXMLView(String source){
+    public void setFXMLView(FXMLFile source){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(source));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFilename()));
 
             URL a = getClass().getResource("font/video_games.ttf");
             Font.loadFont(a.toString().replace("%20", " "), 10);
@@ -55,9 +57,11 @@ public class SpaceRunnerApp extends Application {
             if(primaryStage.getIcons().size() == 0) { // damit breite gleich bleibt beim laden neuer view
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
-                primaryStage.setHeight(500);
+
+                // todo already set to 16:9
+                primaryStage.setHeight(470);
                 primaryStage.setWidth(800);
-                primaryStage.setMinHeight(500);
+                primaryStage.setMinHeight(450);
                 primaryStage.setMinWidth(800);
             }
         } catch (IOException e) {

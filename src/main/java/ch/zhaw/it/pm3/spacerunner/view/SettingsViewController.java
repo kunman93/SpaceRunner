@@ -24,7 +24,7 @@ public class SettingsViewController extends ViewController implements EventHandl
         player.setVolume((int) soundVolume.getValue());
         player.setFps((int) framerate.getValue());
         PersistenceUtil.saveProfile(player);
-        getMain().setFXMLView("view/menu.fxml");
+        getMain().setFXMLView(FXMLFile.MENU);
     }
 
     @Override
