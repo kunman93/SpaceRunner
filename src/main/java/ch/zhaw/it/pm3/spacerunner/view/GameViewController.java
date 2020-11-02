@@ -6,10 +6,14 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.application.Platform;
 
 import javafx.animation.AnimationTimer;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,6 +25,7 @@ import javafx.scene.input.KeyEvent;
 
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -28,6 +33,7 @@ import javafx.scene.paint.Color;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 
 public class GameViewController extends ViewController {
@@ -51,6 +57,8 @@ public class GameViewController extends ViewController {
     private long framesTimestamp = 0;
     private long lastProcessingTime = 0;
 
+    private boolean isLoaded = false;
+
 
     @Override
     public void initialize() {
@@ -58,7 +66,8 @@ public class GameViewController extends ViewController {
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
 
-        setCanvasScale();
+        addWindowSizeListener();
+        calc16to9Proportions();
 
 
         graphicsContext = gameCanvas.getGraphicsContext2D();
@@ -78,8 +87,9 @@ public class GameViewController extends ViewController {
             gameController.initialize((int)gameCanvas.getWidth(), (int)gameCanvas.getHeight());
             int fps = gameController.getFps();
             long timeForFrameNano = 1_000_000_000 / fps;
-
             framesTimestamp = 0;
+
+            isLoaded = true;
 
 
             gameLoop = new AnimationTimer()
@@ -129,8 +139,7 @@ public class GameViewController extends ViewController {
 
     }
 
-    private void setCanvasScale() {
-        calc16to9Proportions();
+    private void addWindowSizeListener() {
         primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
             calc16to9Proportions();
         });
@@ -139,8 +148,18 @@ public class GameViewController extends ViewController {
         });
     }
 
+    private void removeWindowSizeListener() {
+        new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                primaryStage.widthProperty().removeListener(this);
+                primaryStage.heightProperty().removeListener(this);
+            }
+        };
+    }
+
     private void calc16to9Proportions() {
-        double height = primaryStage.getHeight() - 20;
+        double height = primaryStage.getHeight() - 20; // subtract 20 because app-bar overflows game screen
         double width = primaryStage.getWidth();
         if (width / 16 < height / 9) {
             height = width * 9 / 16;
@@ -169,12 +188,26 @@ public class GameViewController extends ViewController {
         };
     }
 
+
+    /*
+    * https://stackoverflow.com/questions/45326525/how-to-show-a-loading-animation-in-javafx-application
+    * */
     private void showLoadingScreen() {
-        graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource(VisualFile.ROCKET_ICON.getFileName()))),
-                (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
+        Image img = SwingFXUtils.toFXImage(Objects.requireNonNull(VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f)), null);
+        new Thread(() -> {
+            int i = 0;
+            while(!isLoaded) {
+                i = i % 3 + 1;
+                String text = "Game is loading";
+                //for (int k = 0; k < i; k++) text. .append(".");
+                graphicsContext.drawImage(img,(gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
+                System.out.println("hi");
+            }
+        }).start();
+
         graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
                 (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
     }
