@@ -5,6 +5,7 @@ import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.controller.GameView;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
+import com.sun.javafx.stage.WindowCloseRequestHandler;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
@@ -19,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.awt.*;
 import java.util.List;
@@ -34,6 +36,7 @@ public class GameViewController extends ViewController implements GameView {
     private GameController gameController = new GameController();
     private boolean downPressed;
     private boolean upPressed;
+    private boolean windowClosed;
     private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
@@ -51,15 +54,13 @@ public class GameViewController extends ViewController implements GameView {
 
         graphicsContext = gameCanvas.getGraphicsContext2D();
 
-
-
-
         pressedHandler = createPressReleaseKeyHandler(true);
         releasedHandler = createPressReleaseKeyHandler(false);
 
         System.out.println("Adding handlers");
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+        primaryStage.setOnCloseRequest(handleCloseWindowEvent());
 
         showLoadingScreen();
 
@@ -72,9 +73,6 @@ public class GameViewController extends ViewController implements GameView {
         });
 
         gameThread.start();
-
-
-
     }
 
 
@@ -99,6 +97,14 @@ public class GameViewController extends ViewController implements GameView {
             if (event.getCode() == KeyCode.DOWN) {
                 downPressed = isPressedHandler;
             }
+        };
+    }
+
+    private EventHandler<WindowEvent> handleCloseWindowEvent(){
+        return event -> {
+            windowClosed = true;
+            Platform.exit();
+            System.exit(0);
         };
     }
 
@@ -173,13 +179,16 @@ public class GameViewController extends ViewController implements GameView {
         return downPressed;
     }
 
+    public boolean isWindowClosed(){
+        return windowClosed;
+    }
+
     @Override
     public void gameEnded() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
     }
 
-    //TODO: implemented these two methods, ask Isler
     @Override
     public double getCanvasHeight() {
         return gameCanvas.getHeight();

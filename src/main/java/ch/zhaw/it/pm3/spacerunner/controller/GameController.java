@@ -80,6 +80,7 @@ public class GameController {
             }
 
             checkMovementKeys();
+            checkIfWindowWasClosed();
 
             SpaceElement collidedWith = detectCollision();
             if(collidedWith != null) {
@@ -108,6 +109,10 @@ public class GameController {
         updatePlayerProfile();
         PersistenceUtil.saveProfile(playerProfile);
         gameView.gameEnded();
+    }
+
+    private void checkIfWindowWasClosed() {
+        isRunning = !gameView.isWindowClosed();
     }
 
 
