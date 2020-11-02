@@ -5,7 +5,6 @@ import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.application.Platform;
@@ -25,15 +24,15 @@ import javafx.scene.input.KeyEvent;
 
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import javafx.scene.paint.Color;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class GameViewController extends ViewController {
@@ -101,6 +100,7 @@ public class GameViewController extends ViewController {
                         try{
                             framesCount++;
                             gameController.processFrame(upPressed, downPressed);
+                            clearCanvas();
                             displayUpdatedSpaceElements(gameController.getGameElements());
                             displayCollectedCoins(gameController.getCollectedCoins());
                             displayCurrentScore(gameController.getScore());
@@ -196,20 +196,27 @@ public class GameViewController extends ViewController {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
-        Image img = SwingFXUtils.toFXImage(Objects.requireNonNull(VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f)), null);
         new Thread(() -> {
             int i = 0;
+            BufferedImage img = VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f);
             while(!isLoaded) {
                 i = i % 3 + 1;
+                clearCanvas();
+                graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
+                        (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
                 String text = "Game is loading";
                 //for (int k = 0; k < i; k++) text. .append(".");
-                graphicsContext.drawImage(img,(gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
-                System.out.println("hi");
+                img = VisualUtil.rotateImage(img, -30);
+                graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null),(gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
 
-        graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
-                (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+
     }
 
 
@@ -227,12 +234,15 @@ public class GameViewController extends ViewController {
         return gameCanvas.getHeight();
     }*/
 
+    private void clearCanvas(){
+        graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+    }
+
 
     public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         //TODO: Should we clear it?
 
         //Platform.runLater(()->{
-            graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
 
 
