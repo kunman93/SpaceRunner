@@ -12,8 +12,8 @@ public class Coin extends SpaceElement {
     private static BufferedImage visual;
 
 
-    public Coin(Point startPosition, int width, int length) {
-        super(startPosition, width, length);
+    public Coin(Point startPosition, int width, int height) {
+        super(startPosition, width, height);
     }
 
     public static void setCoinAnimationVisuals(BufferedImage[] coinVisuals, int animationStepTime){

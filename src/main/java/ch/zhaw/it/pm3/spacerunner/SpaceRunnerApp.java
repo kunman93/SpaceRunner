@@ -3,6 +3,8 @@ package ch.zhaw.it.pm3.spacerunner;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
+
 import ch.zhaw.it.pm3.spacerunner.view.ViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -53,7 +55,7 @@ public class SpaceRunnerApp extends Application {
             primaryStage.setScene(scene);
 
             if(primaryStage.getIcons().size() == 0) { // damit breite gleich bleibt beim laden neuer view
-                primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/icon.png")));
+                primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
 
                 // todo already set to 16:9
