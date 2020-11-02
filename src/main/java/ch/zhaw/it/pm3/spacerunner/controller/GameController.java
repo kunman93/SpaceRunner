@@ -65,15 +65,6 @@ public class GameController {
 
         //TODO: remove then generating works
 
-        elements.add(new Coin(new Point(300,20), 50,50));
-        elements.add(new Coin(new Point(370,20), 50,50));
-        elements.add(new Coin(new Point(420,20), 50,50));
-
-
-        elements.add(new UFO(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
-        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
-
-
         while (isRunning) {
             long gameLoopTime = System.currentTimeMillis();
 
@@ -82,6 +73,7 @@ public class GameController {
             }
 
             checkMovementKeys();
+            checkIfWindowWasClosed();
 
             SpaceElement collidedWith = detectCollision();
             if(collidedWith != null) {
@@ -96,6 +88,7 @@ public class GameController {
             moveElements();
             removePastDrawables();
             displayToUI();
+            processCollision(detectCollision());
 
             horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
 
@@ -110,6 +103,10 @@ public class GameController {
         updatePlayerProfile();
         PersistenceUtil.saveProfile(playerProfile);
         gameView.gameEnded();
+    }
+
+    private void checkIfWindowWasClosed() {
+        isRunning = !gameView.isWindowClosed();
     }
 
 
@@ -289,7 +286,7 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
-        SpaceElement[] preset = elementPreset.getRandomPreset();
+        SpaceElement[] preset = elementPreset.getRandomPreset(horizontalGameSpeed);
         if (preset != null) {
             generatePreset(preset);
         }
@@ -322,35 +319,30 @@ public class GameController {
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private SpaceElement detectCollision() { // ToDo why boolean not void?
-
+    private SpaceElement detectCollision() {
         for(SpaceElement spaceElement : elements) {
             if (spaceShip.doesCollide(spaceElement)){
-                spaceShip.crash(); // ToDo maybe solve diffrently for asteroids / coins etc.
-//                element.collide(); // ToDo not Correct must first be implemented
-            }
-
-            if(spaceElement instanceof UFO){
-
-            }else if(spaceElement instanceof Asteroid){
-
-            }else if(spaceElement instanceof Coin) {
-
+                return spaceElement;
             }
         }
         return null;
     }
 
     private void processCollision(SpaceElement spaceElement){
-
+        if (spaceElement == null) return;
         if(spaceElement instanceof UFO){
-
-        }else if(spaceElement instanceof Asteroid){
-
-        }else if(spaceElement instanceof Coin) {
-
+            spaceShip.crash();
+            isRunning = false;
+        } else if(spaceElement instanceof Asteroid){
+            spaceShip.crash();
+            isRunning = false;
+        } else if(spaceElement instanceof Coin) {
+            collectedCoins++;
+            elements.remove(spaceElement);
+        } else if(spaceElement instanceof PowerUp) {
+            // spaceElement.getEffect(); //ToDo one of the two
+            // handlePowerUp(spaceElement)
         }
-        isRunning = false;
     }
 
     protected SpaceShip getSpaceShip() {
