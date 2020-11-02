@@ -203,6 +203,7 @@ public class GameController {
         this.width = width;
 
         //TODO: Update Images and hitboxes
+        //TODO: UFO, ElementPreset
     }
 
     /**
