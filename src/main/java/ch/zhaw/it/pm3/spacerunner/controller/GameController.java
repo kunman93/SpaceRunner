@@ -2,6 +2,8 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
@@ -9,6 +11,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,8 +68,8 @@ public class GameController {
         elements.add(new Coin(new Point(420,20), 50,50));
 
 
-        elements.add(new UnidentifiedFlightObject(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
-        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth()-100,0), 100, 100));
+        elements.add(new UFO(new Point((int)gameView.getCanvasWidth()-30,0), 100, 100));
+        elements.add(new Asteroid(new Point((int)gameView.getCanvasWidth(),0), 100, 100));
 
 
         while (isRunning) {
@@ -78,11 +81,15 @@ public class GameController {
 
             checkMovementKeys();
 
-            if(detectCollision()) {
-                isRunning = false;
+            SpaceElement collidedWith = detectCollision();
+            if(collidedWith != null) {
+                processCollision(collidedWith);
             }
+
+
             background.move();
 
+            updateObstacleSpeed();
             generateObstacles();
             moveElements();
             removePastDrawables();
@@ -101,6 +108,22 @@ public class GameController {
         updatePlayerProfile();
         PersistenceUtil.saveProfile(playerProfile);
         gameView.gameEnded();
+    }
+
+
+    private void updateObstacleSpeed(){
+        for(SpaceElement spaceElement : elements){
+            if(spaceElement instanceof UFO){
+                spaceElement.setVelocity(new Point((int)(-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
+            }else if(spaceElement instanceof Asteroid){
+                spaceElement.setVelocity(new Point((int)(-HorizontalSpeed.ASTEROID.getSpeed() * horizontalGameSpeed), VerticalSpeed.ASTEROID.getSpeed()));
+            }else if(spaceElement instanceof Coin) {
+                spaceElement.setVelocity(new Point((int)(-HorizontalSpeed.COIN.getSpeed() * horizontalGameSpeed),VerticalSpeed.ZERO.getSpeed()));
+            }
+        }
+
+        spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
+        background.setVelocity(new Point((int)(-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed),VerticalSpeed.ZERO.getSpeed()));
     }
 
     /**
@@ -203,13 +226,13 @@ public class GameController {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             //TODO: Maybe enum for resources strings
             URL spaceShipImageURL = SpaceRunnerApp.class.getResource("images/space-ship.svg");
-            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 150f);
+            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL, 100f);
             spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
             SpaceShip.setVisual(spaceShipImage);
 
             URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource("images/UFO.svg");
             BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL, 150f);
-            UnidentifiedFlightObject.setVisual(unidentifiedSpaceObjectImage);
+            UFO.setVisual(unidentifiedSpaceObjectImage);
 
             URL asteroidImageURL = SpaceRunnerApp.class.getResource("images/comet-asteroid.svg");
             BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL, 100f);
@@ -273,9 +296,7 @@ public class GameController {
     }
 
     private void generatePreset(SpaceElement[] preset) {
-        for(SpaceElement element : preset) {
-            elements.add(element);
-        }
+        Collections.addAll(elements, preset);
     }
 
     /**
@@ -285,9 +306,7 @@ public class GameController {
         for(SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
-            if(element instanceof Coin) {
-                element.setVelocity(new Point(-((int)horizontalGameSpeed),0));
-            }
+
             element.move();
         }
     }
@@ -295,15 +314,35 @@ public class GameController {
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
-    private boolean detectCollision() { // ToDo why boolean not void?
+    private SpaceElement detectCollision() { // ToDo why boolean not void?
 
-        for(SpaceElement element : elements) {
-            if (spaceShip.doesCollide(element)){
+        for(SpaceElement spaceElement : elements) {
+            if (spaceShip.doesCollide(spaceElement)){
                 spaceShip.crash(); // ToDo maybe solve diffrently for asteroids / coins etc.
 //                element.collide(); // ToDo not Correct must first be implemented
             }
+
+            if(spaceElement instanceof UFO){
+
+            }else if(spaceElement instanceof Asteroid){
+
+            }else if(spaceElement instanceof Coin) {
+
+            }
         }
-        return false;
+        return null;
+    }
+
+    private void processCollision(SpaceElement spaceElement){
+
+        if(spaceElement instanceof UFO){
+
+        }else if(spaceElement instanceof Asteroid){
+
+        }else if(spaceElement instanceof Coin) {
+
+        }
+        isRunning = false;
     }
 
     protected SpaceShip getSpaceShip() {

@@ -14,13 +14,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
+
 
 public class GameViewController extends ViewController implements GameView {
 
@@ -39,14 +41,18 @@ public class GameViewController extends ViewController implements GameView {
 
     @Override
     public void initialize() {
-        graphicsContext = gameCanvas.getGraphicsContext2D();
-
-
-
         gameController.setView(this);
 
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
+
+        initializeResponsive(main);
+
+
+        graphicsContext = gameCanvas.getGraphicsContext2D();
+
+
+
 
         pressedHandler = createPressReleaseKeyHandler(true);
         releasedHandler = createPressReleaseKeyHandler(false);
@@ -54,6 +60,8 @@ public class GameViewController extends ViewController implements GameView {
         System.out.println("Adding handlers");
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+
+        showLoadingScreen();
 
         Thread gameThread = new Thread(() ->{
             try {
@@ -67,20 +75,20 @@ public class GameViewController extends ViewController implements GameView {
 
 
 
+    }
 
 
-//        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
-//        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
-//        main.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
-//
-//            graphicsContext.fillRect(0,0,10000,10000);
-//            gameCanvas.setHeight((Double) newVal);
-//        });
-//        main.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
-//            gameCanvas.setWidth((Double) newVal);
-//        });
-
-
+    //TODO immer 16:9 verhält
+    private void initializeResponsive(SpaceRunnerApp main) {
+        gameCanvas.setHeight(main.getPrimaryStage().getHeight());
+        gameCanvas.setWidth(main.getPrimaryStage().getWidth());
+        main.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
+            gameCanvas.setHeight((Double) newVal);
+            //todo notify about new scale
+        });
+        main.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
+            gameCanvas.setWidth((Double) newVal);
+        });
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
@@ -94,7 +102,14 @@ public class GameViewController extends ViewController implements GameView {
         };
     }
 
-
+    private void showLoadingScreen() {
+        graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource("images/icon.png"))),
+                (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
+        graphicsContext.setFont(new Font("Bauhaus 93", 40));
+        graphicsContext.setTextAlign(TextAlignment.CENTER);
+        graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
+                (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+    }
 
 
 
@@ -111,7 +126,7 @@ public class GameViewController extends ViewController implements GameView {
 
 
     @Override
-    public void displayUpdatedSpaceElements(ArrayList<SpaceElement> spaceElements) {
+    public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         //TODO: Should we clear it?
 
         Platform.runLater(()->{
@@ -136,6 +151,7 @@ public class GameViewController extends ViewController implements GameView {
         });
 
     }
+
 
     @Override
     public void displayCollectedCoins(int coins) {
