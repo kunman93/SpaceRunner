@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public class ElementPreset {
     private Timer timer = new Timer();
     private boolean canGenerate = true;
-    private int delay = 2500;
+    private int delay = 5000;
 
     private static SpaceElement[][] presets;
 
