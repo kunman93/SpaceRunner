@@ -4,13 +4,10 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
-
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
-import javafx.application.Platform;
-
 import javafx.animation.AnimationTimer;
-
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -21,18 +18,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import javafx.scene.paint.Color;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class GameViewController extends ViewController {
@@ -50,6 +44,7 @@ public class GameViewController extends ViewController {
     private EventHandler<KeyEvent> releasedHandler;
 
     private AnimationTimer gameLoop;
+    private AnimationTimer loadingAnimation;
 
     private long lastUpdate;
     private int framesCount = 0;
@@ -196,25 +191,33 @@ public class GameViewController extends ViewController {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
-        new Thread(() -> {
-            int i = 0;
+
+        loadingAnimation = new AnimationTimer() {
             BufferedImage img = VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f);
-            while(!isLoaded) {
-                i = i % 3 + 1;
-                clearCanvas();
-                graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
-                        (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
-                String text = "Game is loading";
-                //for (int k = 0; k < i; k++) text. .append(".");
-                img = VisualUtil.rotateImage(img, -30);
-                graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null),(gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            long lastLoadingAnimation = 0;
+            int i = 0;
+            long framerate = 50_000_000L;
+
+            @Override
+            public void handle(long l) {
+                if (isLoaded && loadingAnimation != null) {
+                    loadingAnimation.stop();
+                    loadingAnimation = null;
+                } else if (l - lastLoadingAnimation >= framerate) {
+                    lastLoadingAnimation = l;
+
+                    clearCanvas();
+                    i = i % 3 + 1;
+                    graphicsContext.fillText("Game is loading" + ".".repeat(Math.max(0, i)), gameCanvas.getWidth() / 2,
+                            (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+                    img = VisualUtil.rotateImage(img, -1);
+                    graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null), (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
+
                 }
+
             }
-        }).start();
+        };
+        loadingAnimation.start();
 
 
     }
