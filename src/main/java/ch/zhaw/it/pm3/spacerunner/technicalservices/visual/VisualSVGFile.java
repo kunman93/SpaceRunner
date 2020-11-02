@@ -12,7 +12,8 @@ public enum VisualSVGFile {
     SHINEY_COIN_6("coin/shiny-coin6.svg"),
     SPACE_SHIP_1("space-ship.svg"),
     UFO_1("UFO.svg"),
-    ASTEROID("comet-asteroid.svg");
+    ASTEROID("comet-asteroid.svg"),
+    LOADING_SPINNER("loading-spinner.svg");
 
 
 
