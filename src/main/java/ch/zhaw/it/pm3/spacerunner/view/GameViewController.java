@@ -58,7 +58,8 @@ public class GameViewController extends ViewController {
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
 
-        setCanvasScale();
+        calc16to9Proportions();
+        addWindowSizeListeners();
 
 
         graphicsContext = gameCanvas.getGraphicsContext2D();
@@ -75,7 +76,8 @@ public class GameViewController extends ViewController {
 
         //TODO: Thread is required for loading screen but its ugly
         new Thread(()->{
-            gameController.initialize((int)gameCanvas.getWidth(), (int)gameCanvas.getHeight());
+            gameController.initialize();
+
             int fps = gameController.getFps();
             long timeForFrameNano = 1_000_000_000 / fps;
 
@@ -129,8 +131,7 @@ public class GameViewController extends ViewController {
 
     }
 
-    private void setCanvasScale() {
-        calc16to9Proportions();
+    private void addWindowSizeListeners() {
         primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
             calc16to9Proportions();
         });
@@ -138,6 +139,11 @@ public class GameViewController extends ViewController {
             calc16to9Proportions();
         });
     }
+
+    //TODO: remove window size Listeners
+
+
+
 
     private void calc16to9Proportions() {
         double height = primaryStage.getHeight() - 20;
@@ -149,6 +155,7 @@ public class GameViewController extends ViewController {
         }
         gameCanvas.setWidth(width);
         gameCanvas.setHeight(height);
+        gameController.setViewport((int)width, (int)height);
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {

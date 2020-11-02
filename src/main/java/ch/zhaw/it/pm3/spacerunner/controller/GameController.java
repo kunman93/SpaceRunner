@@ -166,12 +166,10 @@ public class GameController {
     /**
      * Initializes the class variables
      */
-    public void initialize(int width, int height) {
+    public void initialize() {
 
         //TODO: check if 16:9 view
 
-        this.width = width;
-        this.height = height;
         gameOver = false;
 
         playerProfile = PersistenceUtil.loadProfile();
@@ -196,6 +194,13 @@ public class GameController {
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
+
+    public void setViewport(int width, int height){
+        this.height = height;
+        this.width = width;
+
+        //TODO: Update Images and hitboxes
+    }
 
     /**
      * Initializes the SpaceElement classes with their corresponding images
