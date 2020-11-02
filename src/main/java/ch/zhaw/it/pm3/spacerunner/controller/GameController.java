@@ -1,11 +1,12 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
+import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
@@ -13,8 +14,8 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,15 +46,15 @@ public class GameController {
     private int height = 0;
 
 
-    public void saveGame(){
+    public void saveGame() {
         //TODO: Use and maybe improve
         updatePlayerProfile();
         PersistenceUtil.saveProfile(playerProfile);
     }
 
-    public void processFrame(boolean upPressed, boolean downPressed){
+    public void processFrame(boolean upPressed, boolean downPressed) {
 
-        if(!isPaused){
+        if (!isPaused) {
             checkMovementKeys(upPressed, downPressed);
 
 
@@ -66,7 +67,7 @@ public class GameController {
 
 
             //TODO: Dont make this FPS based!!! (imagine FrameDrops, etc!!) => Time based approach
-            horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond /fps;
+            horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond / fps;
 
             //TODO: this is to test game over (REMOVE AFTER implemented)
 //            if(horizontalGameSpeed > 1.5){
@@ -78,19 +79,19 @@ public class GameController {
         }
     }
 
-    private void updateObstacleSpeed(){
-        for(SpaceElement spaceElement : elements){
-            if(spaceElement instanceof UFO){
-                spaceElement.setVelocity(new Point((int)(-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
-            }else if(spaceElement instanceof Asteroid){
-                spaceElement.setVelocity(new Point((int)(-HorizontalSpeed.ASTEROID.getSpeed() * horizontalGameSpeed), VerticalSpeed.ASTEROID.getSpeed()));
-            }else if(spaceElement instanceof Coin) {
-                spaceElement.setVelocity(new Point((int)(-HorizontalSpeed.COIN.getSpeed() * horizontalGameSpeed),VerticalSpeed.ZERO.getSpeed()));
+    private void updateObstacleSpeed() {
+        for (SpaceElement spaceElement : elements) {
+            if (spaceElement instanceof UFO) {
+                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
+            } else if (spaceElement instanceof Asteroid) {
+                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.ASTEROID.getSpeed() * horizontalGameSpeed), VerticalSpeed.ASTEROID.getSpeed()));
+            } else if (spaceElement instanceof Coin) {
+                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.COIN.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
             }
         }
 
         spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
-        background.setVelocity(new Point((int)(-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed),VerticalSpeed.ZERO.getSpeed()));
+        background.setVelocity(new Point((int) (-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
     }
 
     /**
@@ -107,16 +108,18 @@ public class GameController {
 
     /**
      * Moves the spaceship
+     *
      * @param direction The direction of movement (UP,DOWN or NONE)
      */
     protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                if(spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * ElementScaling.SPACE_SHIP.getScaling()) <= 0.0) return;
+                if (spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * ElementScaling.SPACE_SHIP.getScaling()) <= 0.0)
+                    return;
                 spaceShip.directMoveUp();
                 break;
             case DOWN:
-                if(spaceShip.getCurrentPosition().y - (spaceShip.getHeight() * ElementScaling.SPACE_SHIP.getScaling())
+                if (spaceShip.getCurrentPosition().y - (spaceShip.getHeight() * ElementScaling.SPACE_SHIP.getScaling())
                         >= height) return; //TODO canvas = 500.0, height
                 spaceShip.directMoveDown();
                 break;
@@ -133,22 +136,22 @@ public class GameController {
 //        }
     }
 
-    public ArrayList<SpaceElement> getGameElements(){
+    public ArrayList<SpaceElement> getGameElements() {
         ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
         dataToDisplay.add(0, background);
         dataToDisplay.add(1, spaceShip);
         return dataToDisplay;
     }
 
-    public int getCollectedCoins(){
+    public int getCollectedCoins() {
         return collectedCoins;
     }
 
-    public int getScore(){
+    public int getScore() {
         return score;
     }
 
-    public int getFps(){
+    public int getFps() {
         return fps;
     }
 
@@ -180,7 +183,7 @@ public class GameController {
 
         setUpSpaceElementImages();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
-        background = new SpaceWorld(new Point(0,0),2880,640);
+        background = new SpaceWorld(new Point(0, 0), 2880, 640);
         spaceShip = new SpaceShip(new Point(20, 100), 200, 50);
 
         fps = playerProfile.getFps();
@@ -195,7 +198,7 @@ public class GameController {
     }
 
 
-    public void setViewport(int width, int height){
+    public void setViewport(int width, int height) {
         this.height = height;
         this.width = width;
 
@@ -261,7 +264,7 @@ public class GameController {
      */
     private void removePastDrawables() {
         elements.removeIf((SpaceElement element) ->
-                element.getCurrentPosition().x + element.getWidth() < 0 );
+                element.getCurrentPosition().x + element.getWidth() < 0);
     }
 
     /**
@@ -290,7 +293,7 @@ public class GameController {
      * Moves all SpaceElements
      */
     public void moveElements() {
-        for(SpaceElement element : elements) {
+        for (SpaceElement element : elements) {
             //TODO: islermic ask nachbric why not?
 //            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
 
@@ -306,24 +309,24 @@ public class GameController {
      */
     private SpaceElement detectCollision() {
 
-        for(SpaceElement spaceElement : elements) {
-            if (spaceShip.doesCollide(spaceElement)){
+        for (SpaceElement spaceElement : elements) {
+            if (spaceShip.doesCollide(spaceElement)) {
                 return spaceElement;
             }
         }
         return null;
     }
 
-    private void processCollision(SpaceElement spaceElement){
+    private void processCollision(SpaceElement spaceElement) {
         if (spaceElement == null) return;
 
-        if(spaceElement instanceof Obstacle){
+        if (spaceElement instanceof Obstacle) {
             spaceShip.crash();
             gameOver = true;
-        } else if(spaceElement instanceof Coin) {
+        } else if (spaceElement instanceof Coin) {
             collectedCoins++;
             elements.remove(spaceElement);
-        } else if(spaceElement instanceof PowerUp) {
+        } else if (spaceElement instanceof PowerUp) {
             // spaceElement.getEffect(); //ToDo one of the two
             // handlePowerUp(spaceElement)
         }

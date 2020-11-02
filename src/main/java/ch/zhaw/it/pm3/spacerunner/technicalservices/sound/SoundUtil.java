@@ -6,11 +6,12 @@ import java.io.IOException;
 
 public class SoundUtil {
 
-        //TODO: Copied from old project...
+    //TODO: Copied from old project...
+
     /**
      * Loads a SoundClip from a File
      *
-     * @param audioFile     File to be loaded from
+     * @param audioFile File to be loaded from
      * @return SoundClip that was loaded
      * @throws IOException
      * @throws UnsupportedAudioFileException
@@ -33,7 +34,6 @@ public class SoundUtil {
 
         return new SoundClip(loadedClip);
     }
-
 
 
 }

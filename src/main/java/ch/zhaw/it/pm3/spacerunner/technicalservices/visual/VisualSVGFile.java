@@ -15,8 +15,6 @@ public enum VisualSVGFile {
     ASTEROID("comet-asteroid.svg");
 
 
-
-
     private String fileName;
 
     VisualSVGFile(String fileName) {

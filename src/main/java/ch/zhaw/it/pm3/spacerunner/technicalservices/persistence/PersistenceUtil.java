@@ -1,23 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import com.google.gson.Gson;
-import org.apache.batik.anim.dom.SVGDOMImplementation;
-import org.apache.batik.transcoder.TranscoderException;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.TranscodingHints;
-import org.apache.batik.transcoder.image.ImageTranscoder;
-import org.apache.batik.util.SVGConstants;
-import org.apache.commons.io.FileUtils;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.lang.reflect.Type;
-import java.net.URL;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -41,7 +28,7 @@ public class PersistenceUtil {
         PlayerProfile playerProfile = null;
 
 
-        if(path != null  && Files.exists(path)){
+        if (path != null && Files.exists(path)) {
             try {
                 playerProfile = loadAndDeserializeData(GameFile.PROFILE.getFileName(), PlayerProfile.class);
             } catch (IOException e) {
@@ -49,7 +36,7 @@ public class PersistenceUtil {
                 e.printStackTrace();
                 playerProfile = new PlayerProfile();
             }
-        }else{
+        } else {
             playerProfile = new PlayerProfile();
         }
 
@@ -61,9 +48,10 @@ public class PersistenceUtil {
 
     /**
      * load and deserialize data from path to a data object of class T
-     * @param path path to load data from
+     *
+     * @param path      path to load data from
      * @param dataClass Class of data object
-     * @param <T> Type of the data object
+     * @param <T>       Type of the data object
      * @return loaded data as object of class T
      * @throws IOException
      */
@@ -83,7 +71,7 @@ public class PersistenceUtil {
      * @param playerProfile player profile to save
      */
     public static void saveProfile(PlayerProfile playerProfile) {
-        if(playerProfile == null){
+        if (playerProfile == null) {
             throw new IllegalArgumentException("null is not a legal argument for a player profile!");
         }
         //gson.toJson(playerProfile, new FileWriter(GameFile.PROFILE.getFileName()));
@@ -98,9 +86,10 @@ public class PersistenceUtil {
 
     /**
      * Serialize the data object of type T and save it as JSON to the path
+     *
      * @param path path for the file
      * @param data data to serialize and save
-     * @param <T> type of the data to be saved
+     * @param <T>  type of the data to be saved
      * @throws IOException
      */
     public static <T> void serializeAndSaveData(String path, T data) throws IOException {
@@ -110,7 +99,6 @@ public class PersistenceUtil {
             throw e;
         }
     }
-
 
 
     private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {

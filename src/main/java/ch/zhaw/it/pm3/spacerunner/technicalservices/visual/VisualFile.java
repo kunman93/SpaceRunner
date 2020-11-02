@@ -4,10 +4,6 @@ public enum VisualFile {
 
     BACKGROUND_STARS("background.jpg"),
     ROCKET_ICON("icon.png");
-    
-
-
-
 
 
     private String fileName;
