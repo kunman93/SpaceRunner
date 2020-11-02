@@ -1,14 +1,14 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
 public enum FXMLFile {
-    MENU("view/menu.fxml"),
-    GAME("view/game.fxml"),
-    SETTINGS("view/settings.fxml");
+    MENU("menu.fxml"),
+    GAME("game.fxml"),
+    SETTINGS("settings.fxml");
 
     private String filename;
 
     FXMLFile(String filename){
-        this.filename = filename;
+        this.filename = "view/" + filename;
     }
 
     public String getFilename() {
