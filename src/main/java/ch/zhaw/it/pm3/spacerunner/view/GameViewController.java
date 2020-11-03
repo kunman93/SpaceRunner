@@ -4,7 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

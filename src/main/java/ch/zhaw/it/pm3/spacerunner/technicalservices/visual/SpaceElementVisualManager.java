@@ -1,7 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
