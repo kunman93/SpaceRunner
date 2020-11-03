@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.Coin;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.SpaceElementVisualManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
@@ -275,10 +276,17 @@ public class GameViewController extends ViewController {
 
     // todo private, wenn mit AnimationTimer
     public void displayCollectedCoins(int coins) {
+        BufferedImage image = null;
+        try {
+            image = spaceElementVisualManager.getVisual(Coin.class);
+        } catch (VisualNotSetException e) {
+            // todo handle
+            e.printStackTrace();
+        }
         //Image image = SwingFXUtils.toFXImage(VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource("images/shiny-coin1.svg"), 40f), null);
-        //graphicsContext.drawImage(image, (gameCanvas.getWidth() - 40), 40, 30, 30);
+        graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null), (gameCanvas.getWidth() - 40), 5, 50, 50);
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, 30));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, 50));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.fillText(String.valueOf(coins),  (gameCanvas.getWidth() - 80),40, 100);
     }
