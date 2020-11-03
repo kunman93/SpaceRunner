@@ -3,6 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.SpaceElementVisualManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
@@ -50,6 +51,8 @@ public class GameViewController extends ViewController {
     private int framesCount = 0;
     private long framesTimestamp = 0;
     private long lastProcessingTime = 0;
+
+    private final SpaceElementVisualManager spaceElementVisualManager = SpaceElementVisualManager.getInstance();
 
 
     @Override
@@ -214,7 +217,7 @@ public class GameViewController extends ViewController {
                 Point position = spaceElement.getCurrentPosition();
                 Image image = null;
                 try {
-                    image = SwingFXUtils.toFXImage(spaceElement.getVisual(), null);
+                    image = SwingFXUtils.toFXImage(spaceElementVisualManager.getVisual(spaceElement.getClass()), null);
                 } catch (VisualNotSetException e) {
                     e.printStackTrace();
                     //TODO: handle

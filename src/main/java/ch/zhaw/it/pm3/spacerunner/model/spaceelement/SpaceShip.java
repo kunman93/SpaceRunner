@@ -11,7 +11,6 @@ public class SpaceShip extends SpaceElement {
 
     private static Point UP = new Point(HorizontalSpeed.ZERO.getSpeed(), -VerticalSpeed.SPACE_SHIP.getSpeed());
     private static Point DOWN = new Point(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed());
-    private static BufferedImage visual;
 
     public SpaceShip(Point startPosition, int width, int height){
         super(startPosition, width, height);
@@ -41,18 +40,6 @@ public class SpaceShip extends SpaceElement {
     public void setSpaceShipSpeed(int spaceShipSpeed){
         UP = new Point(0,-spaceShipSpeed);
         DOWN = new Point(0,spaceShipSpeed);
-    }
-
-    public static void setVisual(BufferedImage visual){
-        SpaceShip.visual = visual;
-    }
-
-    @Override
-    public BufferedImage getVisual() throws VisualNotSetException{
-        if (visual == null) {
-            throw new VisualNotSetException("Visual for SpaceShip was not set!");
-        }
-        return visual;
     }
 
 }

@@ -10,7 +10,6 @@ public abstract class SpaceElement {
     private Point velocity = new Point(0, 0);
     private int height;
     private int width;
-    private static BufferedImage visual;
 
     public SpaceElement(Point startPosition, int width, int height) {
         this.width = width;
@@ -56,17 +55,6 @@ public abstract class SpaceElement {
             velocity.x = direction.x;
             velocity.y = direction.y;
         }
-    }
-
-    public static void setVisual(BufferedImage visual){
-        SpaceElement.visual = visual;
-    }
-
-    public BufferedImage getVisual() throws VisualNotSetException{
-        if (visual == null) {
-            throw new VisualNotSetException("Visual for SpaceElement was not set!");
-        }
-        return visual;
     }
 
     public Point getCurrentPosition() {
