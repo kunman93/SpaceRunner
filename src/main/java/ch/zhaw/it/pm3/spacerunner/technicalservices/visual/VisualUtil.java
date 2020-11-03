@@ -163,4 +163,12 @@ public class VisualUtil {
     }
 
 
+    public static BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
+        BufferedImage image = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
+        AffineTransform trans = AffineTransform.getRotateInstance(deg, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
+        AffineTransformOp op = new AffineTransformOp(trans, AffineTransformOp.TYPE_BILINEAR);
+        op.filter(bufferedImage, image);
+        return image;
+    }
+
 }

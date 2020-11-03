@@ -5,12 +5,12 @@ import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.SpaceElementVisualManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
-
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
-import javafx.application.Platform;
-
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.animation.AnimationTimer;
-
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,15 +19,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import javafx.scene.paint.Color;
-
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 
@@ -46,13 +45,16 @@ public class GameViewController extends ViewController {
     private EventHandler<KeyEvent> releasedHandler;
 
     private AnimationTimer gameLoop;
+    private AnimationTimer loadingAnimation;
 
     private long lastUpdate;
     private int framesCount = 0;
     private long framesTimestamp = 0;
     private long lastProcessingTime = 0;
 
+    private boolean isLoaded = false;
     private final SpaceElementVisualManager spaceElementVisualManager = SpaceElementVisualManager.getInstance();
+
 
 
     @Override
@@ -83,8 +85,9 @@ public class GameViewController extends ViewController {
 
             int fps = gameController.getFps();
             long timeForFrameNano = 1_000_000_000 / fps;
-
             framesTimestamp = 0;
+
+            isLoaded = true;
 
 
             gameLoop = new AnimationTimer()
@@ -96,6 +99,7 @@ public class GameViewController extends ViewController {
                         try{
                             framesCount++;
                             gameController.processFrame(upPressed, downPressed);
+                            clearCanvas();
                             displayUpdatedSpaceElements(gameController.getGameElements());
                             displayCollectedCoins(gameController.getCollectedCoins());
                             displayCurrentScore(gameController.getScore());
@@ -143,13 +147,19 @@ public class GameViewController extends ViewController {
         });
     }
 
-    //TODO: remove window size Listeners
-
-
+    private void removeWindowSizeListeners() {
+        new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                primaryStage.widthProperty().removeListener(this);
+                primaryStage.heightProperty().removeListener(this);
+            }
+        };
+    }
 
 
     private void calc16to9Proportions() {
-        double height = primaryStage.getHeight() - 20;
+        double height = primaryStage.getHeight() - 20; // subtract 20 because app-bar overflows game screen
         double width = primaryStage.getWidth();
         if (width / 16 < height / 9) {
             height = width * 9 / 16;
@@ -179,14 +189,43 @@ public class GameViewController extends ViewController {
         };
     }
 
+
+    /*
+    * https://stackoverflow.com/questions/45326525/how-to-show-a-loading-animation-in-javafx-application
+    * */
     private void showLoadingScreen() {
-        graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource(VisualFile.ROCKET_ICON.getFileName()))),
-                (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
-        graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
-                (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+
+        loadingAnimation = new AnimationTimer() {
+            BufferedImage img = VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f);
+            long lastLoadingAnimation = 0;
+            int i = 0;
+            long framerate = 50_000_000L;
+
+            @Override
+            public void handle(long l) {
+                if (isLoaded && loadingAnimation != null) {
+                    loadingAnimation.stop();
+                    loadingAnimation = null;
+                } else if (l - lastLoadingAnimation >= framerate) {
+                    lastLoadingAnimation = l;
+
+                    clearCanvas();
+                    i = i % 3 + 1;
+                    graphicsContext.fillText("Game is loading" + ".".repeat(Math.max(0, i)), gameCanvas.getWidth() / 2,
+                            (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+                    img = VisualUtil.rotateImage(img, -1);
+                    graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null), (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
+
+                }
+
+            }
+        };
+        loadingAnimation.start();
+
+
     }
 
 
@@ -204,12 +243,15 @@ public class GameViewController extends ViewController {
         return gameCanvas.getHeight();
     }*/
 
+    private void clearCanvas(){
+        graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+    }
+
 
     public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         //TODO: Should we clear it?
 
         //Platform.runLater(()->{
-            graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
 
 
