@@ -229,15 +229,9 @@ public class GameController {
         //TODO: not needed but not bad^^
         spaceElementVisualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN);
 
-        VisualSVGFile[] coinAnimationVisuals = new VisualSVGFile[]{
-                VisualSVGFile.SHINEY_COIN_1,
-                VisualSVGFile.SHINEY_COIN_2,
-                VisualSVGFile.SHINEY_COIN_3,
-                VisualSVGFile.SHINEY_COIN_4,
-                VisualSVGFile.SHINEY_COIN_5,
-                VisualSVGFile.SHINEY_COIN_6};
 
-        AnimatedVisual coinAnimation = new AnimatedVisual(250, coinAnimationVisuals);
+
+        AnimatedVisual coinAnimation = new AnimatedVisual(250, VisualSVGAnimationFiles.COIN_ANIMATION);
         spaceElementVisualManager.setAnimatedVisual(Coin.class, coinAnimation, VisualScaling.COIN);
     }
 

@@ -2,9 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.Coin;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
-import ch.zhaw.it.pm3.spacerunner.model.uielement.CoinCount;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 import javafx.animation.AnimationTimer;
@@ -280,7 +278,7 @@ public class GameViewController extends ViewController {
     private void displayCollectedCoins(int coins) {
         BufferedImage image = null;
         try {
-            image = spaceElementVisualManager.getVisual(CoinCount.class);
+            image = spaceElementVisualManager.getVisual(UIElement.COIN_COUNT.getClass());
         } catch (VisualNotSetException e) {
             // todo handle
             e.printStackTrace();
@@ -304,16 +302,8 @@ public class GameViewController extends ViewController {
     }
 
     private void initializeUiElements(){
-        VisualSVGFile[] coinAnimationVisuals = new VisualSVGFile[]{
-                VisualSVGFile.SHINEY_COIN_1,
-                VisualSVGFile.SHINEY_COIN_2,
-                VisualSVGFile.SHINEY_COIN_3,
-                VisualSVGFile.SHINEY_COIN_4,
-                VisualSVGFile.SHINEY_COIN_5,
-                VisualSVGFile.SHINEY_COIN_6};
-        AnimatedVisual coinAnimation = new AnimatedVisual(250, coinAnimationVisuals);
-
-        spaceElementVisualManager.setAnimatedVisual(CoinCount.class, coinAnimation, VisualScaling.COIN_COUNT);
+        AnimatedVisual coinAnimation = new AnimatedVisual(250, VisualSVGAnimationFiles.COIN_ANIMATION);
+        spaceElementVisualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation, VisualScaling.COIN_COUNT);
     }
 
 }

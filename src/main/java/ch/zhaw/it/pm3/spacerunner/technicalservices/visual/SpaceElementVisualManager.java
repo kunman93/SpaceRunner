@@ -65,7 +65,7 @@ public class SpaceElementVisualManager <T extends VisualElement>{
 
 
     public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual, VisualScaling visualScaling){
-        VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles();
+        VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles().getAnimationVisuals();
 
         List<BufferedImage> visuals = new ArrayList<>();
         for(VisualSVGFile svgFile : svgFiles){

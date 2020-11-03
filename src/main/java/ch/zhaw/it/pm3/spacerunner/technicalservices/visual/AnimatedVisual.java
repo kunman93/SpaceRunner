@@ -6,20 +6,20 @@ public class AnimatedVisual {
     private long animationTimeStamp = 0;
     private int animationStepTime = 250;
     private int animationPointer = 0;
-    private VisualSVGFile[] visualSVGFiles;
+    private VisualSVGAnimationFiles visualSVGAnimationFiles;
     private BufferedImage[] visuals;
 
 
     //TODO: ThreadSafe animationPointer etc!!!
 
-    public AnimatedVisual(int animationStepTime, VisualSVGFile[] visualSVGFiles) {
+    public AnimatedVisual(int animationStepTime, VisualSVGAnimationFiles visualSVGAnimationFiles) {
         this.animationStepTime = animationStepTime;
         this.animationPointer = 0;
-        this.visualSVGFiles = visualSVGFiles;
+        this.visualSVGAnimationFiles = visualSVGAnimationFiles;
     }
 
-    public VisualSVGFile[] getVisualSVGFiles() {
-        return visualSVGFiles;
+    public VisualSVGAnimationFiles getVisualSVGFiles() {
+        return visualSVGAnimationFiles;
     }
 
     public void setVisuals(BufferedImage[] visuals) {
