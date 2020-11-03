@@ -201,6 +201,7 @@ public class GameController {
     public void setViewport(int width, int height) {
         this.height = height;
         this.width = width;
+        this.spaceElementVisualManager.setHeight(height);
 
         //TODO: Update Images and hitboxes
         //TODO: UFO, ElementPreset
@@ -213,26 +214,11 @@ public class GameController {
         try {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             //TODO: Maybe enum for resources strings
-            URL spaceShipImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SPACE_SHIP_1.getFileName());
-            BufferedImage spaceShipImage = VisualUtil.loadSVGImage(spaceShipImageURL,
-                    (float) (height * ElementScaling.SPACE_SHIP.getScaling()));
-            spaceShipImage = VisualUtil.flipImage(spaceShipImage, true);
 
-            spaceElementVisualManager.setVisual(SpaceShip.class ,spaceShipImage);
-
-            URL unidentifiedSpaceObjectImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.UFO_1.getFileName());
-            BufferedImage unidentifiedSpaceObjectImage = VisualUtil.loadSVGImage(unidentifiedSpaceObjectImageURL,
-                    (float) (height * ElementScaling.UFO.getScaling()));
-            spaceElementVisualManager.setVisual(UFO.class, unidentifiedSpaceObjectImage);
-
-            URL asteroidImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.ASTEROID.getFileName());
-            BufferedImage asteroidImage = VisualUtil.loadSVGImage(asteroidImageURL,
-                    (float) (height * ElementScaling.ASTEROID.getScaling()));
-            spaceElementVisualManager.setVisual(Asteroid.class, asteroidImage);
-
-            URL backgroundImageURL = SpaceRunnerApp.class.getResource(VisualFile.BACKGROUND_STARS.getFileName());
-            BufferedImage backgroundImage = VisualUtil.loadImage(backgroundImageURL);
-            spaceElementVisualManager.setVisual(SpaceWorld.class, backgroundImage);
+            spaceElementVisualManager.flipAndSetVisual(SpaceShip.class, VisualSVGFile.SPACE_SHIP_1, ElementScaling.SPACE_SHIP, true, false);
+            spaceElementVisualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, ElementScaling.UFO);
+            spaceElementVisualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, ElementScaling.ASTEROID);
+            spaceElementVisualManager.setVisual(SpaceWorld.class, VisualFile.BACKGROUND_STARS);
 
             setUpCoinWithAnimation();
 
@@ -243,23 +229,19 @@ public class GameController {
     }
 
     private void setUpCoinWithAnimation() {
-        URL coin1ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_1.getFileName());
-        URL coin2ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_2.getFileName());
-        URL coin3ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_3.getFileName());
-        URL coin4ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_4.getFileName());
-        URL coin5ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_5.getFileName());
-        URL coin6ImageURL = SpaceRunnerApp.class.getResource(VisualSVGFile.SHINEY_COIN_6.getFileName());
-        float coinHeight = (float) (height * ElementScaling.COIN.getScaling());
-        BufferedImage coin1Image = VisualUtil.loadSVGImage(coin1ImageURL, coinHeight);
-        BufferedImage coin2Image = VisualUtil.loadSVGImage(coin2ImageURL, coinHeight);
-        BufferedImage coin3Image = VisualUtil.loadSVGImage(coin3ImageURL, coinHeight);
-        BufferedImage coin4Image = VisualUtil.loadSVGImage(coin4ImageURL, coinHeight);
-        BufferedImage coin5Image = VisualUtil.loadSVGImage(coin5ImageURL, coinHeight);
-        BufferedImage coin6Image = VisualUtil.loadSVGImage(coin6ImageURL, coinHeight);
-        spaceElementVisualManager.setVisual(Coin.class, coin1Image);
-        BufferedImage[] coinAnimationVisuals = new BufferedImage[]{coin1Image, coin2Image, coin3Image, coin4Image, coin5Image, coin6Image};
+        //TODO: not needed but not bad^^
+        spaceElementVisualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, ElementScaling.COIN);
+
+        VisualSVGFile[] coinAnimationVisuals = new VisualSVGFile[]{
+                VisualSVGFile.SHINEY_COIN_1,
+                VisualSVGFile.SHINEY_COIN_2,
+                VisualSVGFile.SHINEY_COIN_3,
+                VisualSVGFile.SHINEY_COIN_4,
+                VisualSVGFile.SHINEY_COIN_5,
+                VisualSVGFile.SHINEY_COIN_6};
+
         AnimatedVisual coinAnimation = new AnimatedVisual(250, coinAnimationVisuals);
-        spaceElementVisualManager.setAnimatedVisual(Coin.class, coinAnimation);
+        spaceElementVisualManager.setAnimatedVisual(Coin.class, coinAnimation, ElementScaling.COIN);
     }
 
     /**
