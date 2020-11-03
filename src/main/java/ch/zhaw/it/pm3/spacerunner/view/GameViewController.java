@@ -3,6 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.SpaceElementVisualManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
@@ -52,6 +53,8 @@ public class GameViewController extends ViewController {
     private long lastProcessingTime = 0;
 
     private boolean isLoaded = false;
+    private final SpaceElementVisualManager spaceElementVisualManager = SpaceElementVisualManager.getInstance();
+
 
 
     @Override
@@ -60,8 +63,8 @@ public class GameViewController extends ViewController {
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
 
-        addWindowSizeListener();
         calc16to9Proportions();
+        addWindowSizeListeners();
 
 
         graphicsContext = gameCanvas.getGraphicsContext2D();
@@ -78,7 +81,8 @@ public class GameViewController extends ViewController {
 
         //TODO: Thread is required for loading screen but its ugly
         new Thread(()->{
-            gameController.initialize((int)gameCanvas.getWidth(), (int)gameCanvas.getHeight());
+            gameController.initialize();
+
             int fps = gameController.getFps();
             long timeForFrameNano = 1_000_000_000 / fps;
             framesTimestamp = 0;
@@ -134,7 +138,7 @@ public class GameViewController extends ViewController {
 
     }
 
-    private void addWindowSizeListener() {
+    private void addWindowSizeListeners() {
         primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
             calc16to9Proportions();
         });
@@ -143,7 +147,7 @@ public class GameViewController extends ViewController {
         });
     }
 
-    private void removeWindowSizeListener() {
+    private void removeWindowSizeListeners() {
         new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
@@ -152,6 +156,7 @@ public class GameViewController extends ViewController {
             }
         };
     }
+
 
     private void calc16to9Proportions() {
         double height = primaryStage.getHeight() - 20; // subtract 20 because app-bar overflows game screen
@@ -163,6 +168,7 @@ public class GameViewController extends ViewController {
         }
         gameCanvas.setWidth(width);
         gameCanvas.setHeight(height);
+        gameController.setViewport((int)width, (int)height);
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
@@ -253,7 +259,7 @@ public class GameViewController extends ViewController {
                 Point position = spaceElement.getCurrentPosition();
                 Image image = null;
                 try {
-                    image = SwingFXUtils.toFXImage(spaceElement.getVisual(), null);
+                    image = SwingFXUtils.toFXImage(spaceElementVisualManager.getVisual(spaceElement.getClass()), null);
                 } catch (VisualNotSetException e) {
                     e.printStackTrace();
                     //TODO: handle

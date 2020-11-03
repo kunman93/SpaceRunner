@@ -4,14 +4,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SpaceWorld extends SpaceElement{
-    private static BufferedImage visual;
 
     public SpaceWorld(Point startPosition, int width, int height) {
         super(startPosition, width, height);
-    }
-
-    public static void setVisual(BufferedImage visual){
-        SpaceWorld.visual = visual;
     }
 
     @Override
@@ -29,13 +24,5 @@ public class SpaceWorld extends SpaceElement{
         }
 
         setCurrentPosition(position);
-    }
-
-    @Override
-    public BufferedImage getVisual() throws VisualNotSetException{
-        if (visual == null) {
-            throw new VisualNotSetException("Visual for Asteroid was not set!");
-        }
-        return visual;
     }
 }

@@ -16,8 +16,6 @@ public enum VisualSVGFile {
     LOADING_SPINNER("loading-spinner.svg");
 
 
-
-
     private String fileName;
 
     VisualSVGFile(String fileName) {
