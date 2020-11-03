@@ -9,6 +9,9 @@ public class AnimatedVisual {
     private VisualSVGFile[] visualSVGFiles;
     private BufferedImage[] visuals;
 
+
+    //TODO: ThreadSafe animationPointer etc!!!
+
     public AnimatedVisual(int animationStepTime, VisualSVGFile[] visualSVGFiles) {
         this.animationStepTime = animationStepTime;
         this.animationPointer = 0;

@@ -1,8 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.ElementScaling;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
 
 import java.awt.image.BufferedImage;
@@ -12,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SpaceElementVisualManager <T extends SpaceElement>{
+public class SpaceElementVisualManager <T extends VisualElement>{
 
     private int height = 500;
     private static SpaceElementVisualManager instance = new SpaceElementVisualManager();
@@ -23,8 +21,8 @@ public class SpaceElementVisualManager <T extends SpaceElement>{
 
     }
 
-    public void flipAndSetVisual(Class<T> elementClass, VisualSVGFile imagePath, ElementScaling elementScaling, boolean flipHorizontally, boolean flipVertically){
-        BufferedImage image = getSVGBufferedImage(imagePath, elementScaling);
+    public void flipAndSetVisual(Class<T> elementClass, VisualSVGFile imagePath, VisualScaling visualScaling, boolean flipHorizontally, boolean flipVertically){
+        BufferedImage image = getSVGBufferedImage(imagePath, visualScaling);
         image = flipVisual(flipHorizontally, flipVertically, image);
         visualList.put(elementClass, image);
     }
@@ -40,8 +38,8 @@ public class SpaceElementVisualManager <T extends SpaceElement>{
         visualList.put(elementClass, image);
     }
 
-    public void setVisual(Class<T> elementClass, VisualSVGFile imagePath, ElementScaling elementScaling){
-        BufferedImage image = getSVGBufferedImage(imagePath, elementScaling);
+    public void setVisual(Class<T> elementClass, VisualSVGFile imagePath, VisualScaling visualScaling){
+        BufferedImage image = getSVGBufferedImage(imagePath, visualScaling);
         visualList.put(elementClass, image);
     }
 
@@ -55,9 +53,9 @@ public class SpaceElementVisualManager <T extends SpaceElement>{
         return image;
     }
 
-    private BufferedImage getSVGBufferedImage(VisualSVGFile imagePath, ElementScaling elementScaling) {
+    private BufferedImage getSVGBufferedImage(VisualSVGFile imagePath, VisualScaling visualScaling) {
         URL imageURL = SpaceRunnerApp.class.getResource(imagePath.getFileName());
-        return VisualUtil.loadSVGImage(imageURL, (float) (height * elementScaling.getScaling()));
+        return VisualUtil.loadSVGImage(imageURL, (float) (height * visualScaling.getScaling()));
     }
 
     private BufferedImage getBufferedImage(VisualFile imagePath) {
@@ -66,12 +64,12 @@ public class SpaceElementVisualManager <T extends SpaceElement>{
     }
 
 
-    public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual, ElementScaling elementScaling){
+    public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual, VisualScaling visualScaling){
         VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles();
 
         List<BufferedImage> visuals = new ArrayList<>();
         for(VisualSVGFile svgFile : svgFiles){
-            visuals.add(getSVGBufferedImage(svgFile, elementScaling));
+            visuals.add(getSVGBufferedImage(svgFile, visualScaling));
         }
         animatedVisual.setVisuals(visuals.toArray(BufferedImage[]::new));
 
