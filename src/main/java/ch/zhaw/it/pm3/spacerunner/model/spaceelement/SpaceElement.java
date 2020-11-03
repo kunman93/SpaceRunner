@@ -1,9 +1,11 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualElement;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class SpaceElement {
+public abstract class SpaceElement implements VisualElement {
 
     //todo: Idee: Object die alle variablen (position, width, length) umfasst
     private Point position = new Point(0, 0);

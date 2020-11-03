@@ -3,10 +3,8 @@ package ch.zhaw.it.pm3.spacerunner.view;
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.SpaceElementVisualManager;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -59,6 +58,8 @@ public class GameViewController extends ViewController {
 
     @Override
     public void initialize() {
+        initializeUiElements();
+
 
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
@@ -159,7 +160,8 @@ public class GameViewController extends ViewController {
 
 
     private void calc16to9Proportions() {
-        double height = primaryStage.getHeight() - 20; // subtract 20 because app-bar overflows game screen
+        //TODO: 25 magic number => dont like
+        double height = primaryStage.getHeight() - 25; // subtract 20 because app-bar overflows game screen
         double width = primaryStage.getWidth();
         if (width / 16 < height / 9) {
             height = width * 9 / 16;
@@ -273,23 +275,35 @@ public class GameViewController extends ViewController {
 
     }
 
-    // todo private, wenn mit AnimationTimer
-    public void displayCollectedCoins(int coins) {
+    private void displayCollectedCoins(int coins) {
+        BufferedImage image = null;
+        try {
+            image = spaceElementVisualManager.getVisual(UIElement.COIN_COUNT.getClass());
+        } catch (VisualNotSetException e) {
+            // todo handle
+            e.printStackTrace();
+        }
         //Image image = SwingFXUtils.toFXImage(VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource("images/shiny-coin1.svg"), 40f), null);
-        //graphicsContext.drawImage(image, (gameCanvas.getWidth() - 40), 40, 30, 30);
+        graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null), (gameCanvas.getWidth() - image.getWidth() - 10), 5, image.getWidth(), image.getHeight());
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, 30));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, image.getHeight()));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
-        graphicsContext.fillText(String.valueOf(coins),  (gameCanvas.getWidth() - 80),40, 100);
+        graphicsContext.setTextBaseline(VPos.TOP);
+        graphicsContext.fillText(String.valueOf(coins),  (gameCanvas.getWidth() - image.getWidth() - 15),5, 100);
     }
 
-    public void displayCurrentScore(int score) {
+    private void displayCurrentScore(int score) {
 
     }
 
-    public void removeKeyHandlers() {
+    private void removeKeyHandlers() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+    }
+
+    private void initializeUiElements(){
+        AnimatedVisual coinAnimation = new AnimatedVisual(250, VisualSVGAnimationFiles.COIN_ANIMATION);
+        spaceElementVisualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation, VisualScaling.COIN_COUNT);
     }
 
 }

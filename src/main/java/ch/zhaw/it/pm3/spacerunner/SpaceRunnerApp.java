@@ -59,7 +59,8 @@ public class SpaceRunnerApp extends Application {
                 primaryStage.show();
 
                 // todo already set to 16:9
-                primaryStage.setHeight(470);
+                //TODO: 475,800,450  magic number => dont like
+                primaryStage.setHeight(475);
                 primaryStage.setWidth(800);
                 primaryStage.setMinHeight(450);
                 primaryStage.setMinWidth(800);

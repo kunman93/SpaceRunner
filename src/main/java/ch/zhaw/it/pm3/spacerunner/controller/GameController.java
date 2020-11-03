@@ -1,6 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
@@ -10,8 +9,6 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -114,12 +111,12 @@ public class GameController {
     protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                if (spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * ElementScaling.SPACE_SHIP.getScaling()) <= 0.0)
+                if (spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * VisualScaling.SPACE_SHIP.getScaling()) <= 0.0)
                     return;
                 spaceShip.directMoveUp();
                 break;
             case DOWN:
-                if (spaceShip.getCurrentPosition().y - (spaceShip.getHeight() * ElementScaling.SPACE_SHIP.getScaling())
+                if (spaceShip.getCurrentPosition().y - (spaceShip.getHeight() * VisualScaling.SPACE_SHIP.getScaling())
                         >= height) return; //TODO canvas = 500.0, height
                 spaceShip.directMoveDown();
                 break;
@@ -215,9 +212,9 @@ public class GameController {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             //TODO: Maybe enum for resources strings
 
-            spaceElementVisualManager.flipAndSetVisual(SpaceShip.class, VisualSVGFile.SPACE_SHIP_1, ElementScaling.SPACE_SHIP, true, false);
-            spaceElementVisualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, ElementScaling.UFO);
-            spaceElementVisualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, ElementScaling.ASTEROID);
+            spaceElementVisualManager.flipAndSetVisual(SpaceShip.class, VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false);
+            spaceElementVisualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, VisualScaling.UFO);
+            spaceElementVisualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, VisualScaling.ASTEROID);
             spaceElementVisualManager.setVisual(SpaceWorld.class, VisualFile.BACKGROUND_STARS);
 
             setUpCoinWithAnimation();
@@ -230,18 +227,12 @@ public class GameController {
 
     private void setUpCoinWithAnimation() {
         //TODO: not needed but not bad^^
-        spaceElementVisualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, ElementScaling.COIN);
+        spaceElementVisualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN);
 
-        VisualSVGFile[] coinAnimationVisuals = new VisualSVGFile[]{
-                VisualSVGFile.SHINEY_COIN_1,
-                VisualSVGFile.SHINEY_COIN_2,
-                VisualSVGFile.SHINEY_COIN_3,
-                VisualSVGFile.SHINEY_COIN_4,
-                VisualSVGFile.SHINEY_COIN_5,
-                VisualSVGFile.SHINEY_COIN_6};
 
-        AnimatedVisual coinAnimation = new AnimatedVisual(250, coinAnimationVisuals);
-        spaceElementVisualManager.setAnimatedVisual(Coin.class, coinAnimation, ElementScaling.COIN);
+
+        AnimatedVisual coinAnimation = new AnimatedVisual(250, VisualSVGAnimationFiles.COIN_ANIMATION);
+        spaceElementVisualManager.setAnimatedVisual(Coin.class, coinAnimation, VisualScaling.COIN);
     }
 
     /**

@@ -1,8 +1,9 @@
-package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
+package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
-public enum ElementScaling {
+public enum VisualScaling {
     SPACE_SHIP(0.3),
     COIN(0.1),
+    COIN_COUNT(0.05),
     UFO(0.3),
     ASTEROID(0.2);
 
@@ -10,7 +11,7 @@ public enum ElementScaling {
 
     private double scaling;
 
-    ElementScaling(double scaling) {
+    VisualScaling(double scaling) {
         this.scaling = scaling;
     }
 
