@@ -13,6 +13,8 @@ import java.util.*;
 
 public class GameController {
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
+    private final double HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND = 0.05;
+
     private Timer gameSpeedTimer;
 
 
@@ -27,11 +29,10 @@ public class GameController {
     private SpaceWorld background = null;
 
     private double horizontalGameSpeed;
-    private double horizontalGameSpeedIncreasePerSecond;
 
 
     private SpaceShip spaceShip;
-    private Set<SpaceElement> elements;
+    private Set<SpaceElement> elements = new HashSet<>();
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
 
@@ -60,7 +61,6 @@ public class GameController {
 
             processCollision(detectCollision());
 
-            updateObstacleSpeed();
             generateObstacles();
             moveElements();
             removePastDrawables();
@@ -69,7 +69,7 @@ public class GameController {
     }
 
     private void updateObstacleSpeed() {
-        //TODO: SpaceElementSpeedManager
+        //TODO: SpaceElementSpeedManager and use velocity
         for (SpaceElement spaceElement : elements) {
             if (spaceElement instanceof UFO) {
                 spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
@@ -80,8 +80,12 @@ public class GameController {
             }
         }
 
-        spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
-        background.setVelocity(new Point((int) (-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
+        if(spaceShip != null){
+            spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
+        }
+        if(background != null){
+            background.setVelocity(new Point((int) (-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
+        }
     }
 
     /**
@@ -184,7 +188,6 @@ public class GameController {
         distance = 0;
         collectedCoins = 0;
         horizontalGameSpeed = 1;
-        horizontalGameSpeedIncreasePerSecond = 0.05;
 //        gameSpeed = playerProfile.getStartingGameSpeed;
 //        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
@@ -194,7 +197,8 @@ public class GameController {
         return new TimerTask() {
             public void run() {
                 if(!isPaused){
-                    horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond;
+                    horizontalGameSpeed += HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND;
+                    updateObstacleSpeed();
                 }
             }
         };
@@ -215,9 +219,6 @@ public class GameController {
      */
     private void setUpSpaceElementImages() {
         try {
-            //TODO: SetVisuals for Coins, UFO, Powerups etc.
-            //TODO: Maybe enum for resources strings
-
             visualManager.flipAndSetVisual(SpaceShip.class, VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false);
             visualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, VisualScaling.UFO);
             visualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, VisualScaling.ASTEROID);
