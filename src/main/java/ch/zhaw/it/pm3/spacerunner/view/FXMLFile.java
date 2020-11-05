@@ -13,6 +13,7 @@ public enum FXMLFile implements FileResource {
         this.filename = "view/" + filename;
     }
 
+    @Override
     public String getFileName() {
         return filename;
     }

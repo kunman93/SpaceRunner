@@ -24,6 +24,7 @@ public enum VisualSVGFile implements FileResource {
         this.fileName = "images/" + fileName;
     }
 
+    @Override
     public String getFileName() {
         return fileName;
     }

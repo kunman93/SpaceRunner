@@ -12,6 +12,7 @@ public enum GameSound  implements FileResource {
         this.fileName = "sound/" + fileName;
     }
 
+    @Override
     public String getFileName() {
         return fileName;
     }
