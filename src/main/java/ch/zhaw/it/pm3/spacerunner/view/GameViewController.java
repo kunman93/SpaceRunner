@@ -65,7 +65,7 @@ public class GameViewController extends ViewController {
     private long lastProcessingTime = 0;
 
     private boolean isLoaded = false;
-    private final SpaceElementVisualManager spaceElementVisualManager = SpaceElementVisualManager.getInstance();
+    private final VisualManager visualManager = VisualManager.getInstance();
 
 
 
@@ -285,7 +285,7 @@ public class GameViewController extends ViewController {
                 Point position = spaceElement.getCurrentPosition();
                 Image image = null;
                 try {
-                    image = SwingFXUtils.toFXImage(spaceElementVisualManager.getVisual(spaceElement.getClass()), null);
+                    image = SwingFXUtils.toFXImage(visualManager.getVisual(spaceElement.getClass()), null);
                 } catch (VisualNotSetException e) {
                     e.printStackTrace();
                     //TODO: handle
@@ -302,7 +302,7 @@ public class GameViewController extends ViewController {
     private void displayCollectedCoins(int coins) {
         BufferedImage image = null;
         try {
-            image = spaceElementVisualManager.getVisual(UIElement.COIN_COUNT.getClass());
+            image = visualManager.getVisual(UIElement.COIN_COUNT.getClass());
         } catch (VisualNotSetException e) {
             // todo handle
             e.printStackTrace();
@@ -328,6 +328,7 @@ public class GameViewController extends ViewController {
     private void initializeUiElements(){
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
         spaceElementVisualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation, VisualScaling.COIN_COUNT);
+
     }
 
 }

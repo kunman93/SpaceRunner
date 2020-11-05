@@ -39,6 +39,7 @@ public abstract class SpaceElement implements VisualElement {
         position.y += velocity.y;
     }
 
+    //TODO: remove accelerate and velocity => they are not used for their intended purposes
     public void accelerate(Point direction){
         if (direction == null){
             velocity.x += 0;

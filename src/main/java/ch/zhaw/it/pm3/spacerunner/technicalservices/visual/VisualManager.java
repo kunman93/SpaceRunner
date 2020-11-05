@@ -9,14 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SpaceElementVisualManager <T extends VisualElement>{
+public class VisualManager<T extends VisualElement>{
 
     private int height = 500;
-    private static SpaceElementVisualManager instance = new SpaceElementVisualManager();
+    private static VisualManager instance = new VisualManager();
     private Map<Class<T>, BufferedImage> visualList = new HashMap<>();
     private Map<Class<T>, AnimatedVisual> animatedVisualList = new HashMap<>();
 
-    private SpaceElementVisualManager(){
+    private VisualManager(){
 
     }
 
@@ -107,7 +107,7 @@ public class SpaceElementVisualManager <T extends VisualElement>{
         this.height = height;
     }
 
-    public static SpaceElementVisualManager getInstance(){
+    public static VisualManager getInstance(){
         return instance;
     }
 

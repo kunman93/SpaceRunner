@@ -40,7 +40,7 @@ public class GameController {
     private int width = 0;
     private int height = 0;
 
-    private final SpaceElementVisualManager spaceElementVisualManager = SpaceElementVisualManager.getInstance();
+    private final VisualManager visualManager = VisualManager.getInstance();
 
 
     public void saveGame() {
@@ -66,17 +66,11 @@ public class GameController {
             //TODO: Dont make this FPS based!!! (imagine FrameDrops, etc!!) => Time based approach
             horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond / fps;
 
-            //TODO: this is to test game over (REMOVE AFTER implemented)
-//            if(horizontalGameSpeed > 1.5){
-//                System.out.println("GAME OVER");
-//                gameOver = true;
-//            }
-
-            //displayToUI();
         }
     }
 
     private void updateObstacleSpeed() {
+        //TODO: SpaceElementSpeedManager
         for (SpaceElement spaceElement : elements) {
             if (spaceElement instanceof UFO) {
                 spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
@@ -198,7 +192,7 @@ public class GameController {
     public void setViewport(int width, int height) {
         this.height = height;
         this.width = width;
-        this.spaceElementVisualManager.setHeight(height);
+        this.visualManager.setHeight(height);
 
         //TODO: Update Images and hitboxes
         //TODO: UFO, ElementPreset
@@ -212,10 +206,10 @@ public class GameController {
             //TODO: SetVisuals for Coins, UFO, Powerups etc.
             //TODO: Maybe enum for resources strings
 
-            spaceElementVisualManager.flipAndSetVisual(SpaceShip.class, VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false);
-            spaceElementVisualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, VisualScaling.UFO);
-            spaceElementVisualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, VisualScaling.ASTEROID);
-            spaceElementVisualManager.setVisual(SpaceWorld.class, VisualFile.BACKGROUND_STARS);
+            visualManager.flipAndSetVisual(SpaceShip.class, VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false);
+            visualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, VisualScaling.UFO);
+            visualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, VisualScaling.ASTEROID);
+            visualManager.setVisual(SpaceWorld.class, VisualFile.BACKGROUND_STARS);
 
             setUpCoinWithAnimation();
 
@@ -227,12 +221,13 @@ public class GameController {
 
     private void setUpCoinWithAnimation() {
         //TODO: not needed but not bad^^
-        spaceElementVisualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN);
+        visualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN);
 
 
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
         spaceElementVisualManager.setAnimatedVisual(Coin.class, coinAnimation, VisualScaling.COIN);
+
     }
 
     /**
