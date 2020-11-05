@@ -1,9 +1,11 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
+import ch.zhaw.it.pm3.spacerunner.FileResource;
+
 /**
  * Enum only for SVG files
  */
-public enum VisualSVGFile {
+public enum VisualSVGFile implements FileResource {
     SHINEY_COIN_1("coin/shiny-coin1.svg"),
     SHINEY_COIN_2("coin/shiny-coin2.svg"),
     SHINEY_COIN_3("coin/shiny-coin3.svg"),
