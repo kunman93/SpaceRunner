@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
@@ -81,7 +82,8 @@ public class SpaceRunnerApp extends Application {
 
     private void setupBackgroundMusic() {
         try {
-            URL backgroundMusicURL = getClass().getResource("sound/background.wav");
+            //TODO: Use Enum value with loadClip / create GameSoundUtil extends SoundUtil
+            URL backgroundMusicURL = getClass().getResource(GameSound.BACKGROUND.getFileName());
             SoundClip backgroundMusic = SoundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
             backgroundMusic.setLoop(true);
             backgroundMusic.play();
