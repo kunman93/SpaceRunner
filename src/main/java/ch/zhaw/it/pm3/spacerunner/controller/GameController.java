@@ -9,12 +9,12 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class GameController {
+    private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
+    private Timer gameSpeedTimer;
+
 
     private boolean isPaused = false;
 
@@ -43,6 +43,9 @@ public class GameController {
     private final VisualManager visualManager = VisualManager.getInstance();
 
 
+
+
+
     public void saveGame() {
         //TODO: Use and maybe improve
         updatePlayerProfile();
@@ -61,10 +64,6 @@ public class GameController {
             generateObstacles();
             moveElements();
             removePastDrawables();
-
-
-            //TODO: Dont make this FPS based!!! (imagine FrameDrops, etc!!) => Time based approach
-            horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond / fps;
 
         }
     }
@@ -161,7 +160,8 @@ public class GameController {
      * Initializes the class variables
      */
     public void initialize() {
-
+        gameSpeedTimer = new Timer("Timer");
+        gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
         //TODO: check if 16:9 view
 
         gameOver = false;
@@ -186,6 +186,16 @@ public class GameController {
 //        gameSpeed = playerProfile.getStartingGameSpeed;
 //        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
+    }
+
+    private TimerTask getGameSpeedTimerTask() {
+        return new TimerTask() {
+            public void run() {
+                if(!isPaused){
+                    horizontalGameSpeed += horizontalGameSpeedIncreasePerSecond;
+                }
+            }
+        };
     }
 
 
@@ -265,9 +275,6 @@ public class GameController {
      */
     public void moveElements() {
         for (SpaceElement element : elements) {
-            //TODO: islermic ask nachbric why not?
-//            element.move(new Point(-(int) horizontalGameSpeed, 0)); //todo keine gute lösung vtl constructor anpassen
-
             element.move();
         }
 
@@ -293,6 +300,7 @@ public class GameController {
 
         if (spaceElement instanceof Obstacle) {
             spaceShip.crash();
+            gameSpeedTimer.cancel();
             gameOver = true;
         } else if (spaceElement instanceof Coin) {
             collectedCoins++;
