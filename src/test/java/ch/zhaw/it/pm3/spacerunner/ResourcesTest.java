@@ -51,8 +51,8 @@ public class ResourcesTest {
 
     @Test
     void testIfImageResourceFilesHaveAnEnumEntry() {
-        checkIfPathFilesWithExtensionExistInEnum(VisualSVGFile.class, new String[]{"svg"}, "images", "SVG Images");
-        checkIfPathFilesWithExtensionExistInEnum(VisualFile.class, new String[]{"jpg", "jpeg", "gif", "png"}, "images", "SVG Images");
+        checkIfPathFilesWithExtensionExistInEnum(VisualSVGFile.class, new String[]{"svg"}, "images", "SVG Image");
+        checkIfPathFilesWithExtensionExistInEnum(VisualFile.class, new String[]{"jpg", "jpeg", "gif", "png"}, "images", "Image");
     }
 
     @Test
