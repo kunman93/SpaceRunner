@@ -68,7 +68,7 @@ public class GameController {
         }
     }
 
-    private void updateObstacleSpeed() {
+    private void updateElementsSpeed() {
         //TODO: SpaceElementSpeedManager and use velocity
         for (SpaceElement spaceElement : elements) {
             if (spaceElement instanceof UFO) {
@@ -198,7 +198,7 @@ public class GameController {
             public void run() {
                 if(!isPaused){
                     horizontalGameSpeed += HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND;
-                    updateObstacleSpeed();
+                    updateElementsSpeed();
                 }
             }
         };
