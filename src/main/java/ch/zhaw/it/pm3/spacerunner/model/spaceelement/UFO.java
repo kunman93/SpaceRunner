@@ -7,13 +7,16 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class UFO extends Obstacle {
+    private static int ufoHeight;
+    private static int ufoWidth;
     private boolean changeDirection = false;
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
     private Point vectorUp = new Point(-HorizontalSpeed.UFO.getSpeed(),-VerticalSpeed.UFO.getSpeed());
     private Point vectorDown = new Point(-HorizontalSpeed.UFO.getSpeed(),VerticalSpeed.UFO.getSpeed());
 
-    public UFO(Point startPosition, int width, int height) {
-        super(startPosition, width, height);
+    public UFO(Point startPosition) {
+        super(startPosition);
+        setElementHitbox();
     }
 
     @Override
@@ -57,5 +60,16 @@ public class UFO extends Obstacle {
 
     private boolean reachedLowerThreshold(Point currentPosition, int bottomBorderLimitOfCanvas) {
         return currentPosition.y > bottomBorderLimitOfCanvas;
+    }
+
+    @Override
+    protected void setElementHitbox() {
+        setHeight(ufoHeight);
+        setWidth(ufoWidth);
+    }
+
+    public static void setClassHitbox(int height, int width) {
+        ufoHeight = height;
+        ufoWidth = width;
     }
 }

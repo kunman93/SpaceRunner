@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class SpaceWorld extends SpaceElement{
 
-    public SpaceWorld(Point startPosition, int width, int height) {
-        super(startPosition, width, height);
+    public SpaceWorld(Point startPosition) {
+        super(startPosition);
     }
 
     @Override

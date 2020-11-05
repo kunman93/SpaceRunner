@@ -8,12 +8,15 @@ import java.awt.image.BufferedImage;
 
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
+    private static int spaceShipHeight;
+    private static int spaceShipWidth;
 
     private static Point UP = new Point(HorizontalSpeed.ZERO.getSpeed(), -VerticalSpeed.SPACE_SHIP.getSpeed());
     private static Point DOWN = new Point(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed());
 
-    public SpaceShip(Point startPosition, int width, int height){
-        super(startPosition, width, height);
+    public SpaceShip(Point startPosition){
+        super(startPosition);
+        setElementHitbox();
     }
 
     public boolean hasCrashed() {
@@ -42,4 +45,14 @@ public class SpaceShip extends SpaceElement {
         DOWN = new Point(0,spaceShipSpeed);
     }
 
+    @Override
+    protected void setElementHitbox() {
+        setHeight(spaceShipHeight);
+        setWidth(spaceShipWidth);
+    }
+
+    public static void setClassHitbox(int height, int width) {
+        spaceShipHeight = height;
+        spaceShipWidth = width;
+    }
 }
