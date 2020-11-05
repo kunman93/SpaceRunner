@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 public enum VisualScaling {
-    SPACE_SHIP(0.3),
+    SPACE_SHIP(0.1),
     COIN(0.1),
     COIN_COUNT(0.05),
     UFO(0.3),

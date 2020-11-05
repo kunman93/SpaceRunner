@@ -16,11 +16,11 @@ public class ElementPreset {
 
     private void generatePresets() {
         presets = new SpaceElement[][]{
-                {new Coin(new Point(900,200),50,50), new Coin(new Point(900,280),50,50), new Coin(new Point(940,240),50,50), new Coin(new Point(980,200),50,50), new Coin(new Point(980,280),50,50)},
-                {new Asteroid(new Point(900,-100), 100, 100), new Asteroid(new Point(950,50), 100, 100)},
-                {new UFO(new Point(900,0), 100, 100), new UFO(new Point(900,100), 100, 100)},
-                {new Asteroid(new Point(900,200), 100, 100)},
-                {new Asteroid(new Point(900,125), 100, 100)}
+                {new Coin(new Point(900,200)), new Coin(new Point(900,280)), new Coin(new Point(940,240)), new Coin(new Point(980,200)), new Coin(new Point(980,280))},
+                {new Asteroid(new Point(900,-100)), new Asteroid(new Point(950,50))},
+                {new UFO(new Point(900,0)), new UFO(new Point(900,100))},
+                {new Asteroid(new Point(900,200))},
+                {new Asteroid(new Point(900,125))}
         };
     }
 
