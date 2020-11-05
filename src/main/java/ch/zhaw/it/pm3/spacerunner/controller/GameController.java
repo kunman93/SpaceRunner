@@ -160,9 +160,11 @@ public class GameController {
      * Initializes the class variables
      */
     public void initialize() {
+        //TODO: check if 16:9 view
+
+
         gameSpeedTimer = new Timer("Timer");
         gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
-        //TODO: check if 16:9 view
 
         gameOver = false;
 
