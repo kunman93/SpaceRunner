@@ -8,16 +8,22 @@ public enum VisualSVGAnimationFiles {
             VisualSVGFile.SHINEY_COIN_3,
             VisualSVGFile.SHINEY_COIN_4,
             VisualSVGFile.SHINEY_COIN_5,
-            VisualSVGFile.SHINEY_COIN_6});
+            VisualSVGFile.SHINEY_COIN_6}, 125);
 
 
     private VisualSVGFile[] animationVisuals;
+    private int animationStepTime;
 
-    VisualSVGAnimationFiles(VisualSVGFile[] animationVisuals) {
+    VisualSVGAnimationFiles(VisualSVGFile[] animationVisuals, int animationStepTime) {
         this.animationVisuals = animationVisuals;
+        this.animationStepTime = animationStepTime;
     }
 
     public VisualSVGFile[] getAnimationVisuals() {
         return animationVisuals;
+    }
+
+    public int getAnimationStepTime() {
+        return animationStepTime;
     }
 }

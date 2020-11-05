@@ -225,8 +225,9 @@ public class GameController {
 
 
 
-        AnimatedVisual coinAnimation = new AnimatedVisual(250, VisualSVGAnimationFiles.COIN_ANIMATION);
-        visualManager.setAnimatedVisual(Coin.class, coinAnimation, VisualScaling.COIN);
+        AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
+        spaceElementVisualManager.setAnimatedVisual(Coin.class, coinAnimation, VisualScaling.COIN);
+
     }
 
     /**

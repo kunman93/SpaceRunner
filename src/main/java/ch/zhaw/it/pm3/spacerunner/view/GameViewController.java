@@ -42,6 +42,19 @@ public class GameViewController extends ViewController {
     private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
+    private EventHandler startGameKeyHandler = new EventHandler<KeyEvent>(){
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.getCode() == KeyCode.SPACE){
+                gameController.togglePause();
+                if(primaryStage != null){
+                    primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, this);
+                }
+            }
+
+        }
+
+    };
 
     private AnimationTimer gameLoop;
     private AnimationTimer loadingAnimation;
@@ -90,6 +103,11 @@ public class GameViewController extends ViewController {
 
             isLoaded = true;
 
+            updateGameFrame();
+            gameController.togglePause();
+            //TODO: Add text to press space to start
+            primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
+
 
             gameLoop = new AnimationTimer()
             {
@@ -99,21 +117,8 @@ public class GameViewController extends ViewController {
                         lastUpdate = currentNanoTime;
                         try{
                             framesCount++;
-                            gameController.processFrame(upPressed, downPressed);
-                            clearCanvas();
-                            displayUpdatedSpaceElements(gameController.getGameElements());
-                            displayCollectedCoins(gameController.getCollectedCoins());
-                            displayCurrentScore(gameController.getScore());
 
-                            boolean gameOver = gameController.isGameOver();
-
-                            if(gameOver){
-                                removeKeyHandlers();
-                                if(gameLoop != null){
-                                    gameLoop.stop();
-                                    //TODO: GameOver => Show GameOver Screen
-                                }
-                            }
+                            updateGameFrame();
 
                             lastProcessingTime = (System.nanoTime() - currentNanoTime);
                             // System.out.println("Processing took " + lastProcessingTime / 1000000);
@@ -137,6 +142,25 @@ public class GameViewController extends ViewController {
 
 
 
+    }
+
+
+    private void updateGameFrame(){
+        gameController.processFrame(upPressed, downPressed);
+        clearCanvas();
+        displayUpdatedSpaceElements(gameController.getGameElements());
+        displayCollectedCoins(gameController.getCollectedCoins());
+        displayCurrentScore(gameController.getScore());
+
+        boolean gameOver = gameController.isGameOver();
+
+        if(gameOver){
+            removeKeyHandlers();
+            if(gameLoop != null){
+                gameLoop.stop();
+                //TODO: GameOver => Show GameOver Screen
+            }
+        }
     }
 
     private void addWindowSizeListeners() {
@@ -302,8 +326,9 @@ public class GameViewController extends ViewController {
     }
 
     private void initializeUiElements(){
-        AnimatedVisual coinAnimation = new AnimatedVisual(250, VisualSVGAnimationFiles.COIN_ANIMATION);
-        visualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation, VisualScaling.COIN_COUNT);
+        AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
+        spaceElementVisualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation, VisualScaling.COIN_COUNT);
+
     }
 
 }
