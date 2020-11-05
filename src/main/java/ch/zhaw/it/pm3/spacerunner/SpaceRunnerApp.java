@@ -43,7 +43,7 @@ public class SpaceRunnerApp extends Application {
 
     public void setFXMLView(FXMLFile source){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFilename()));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFileName()));
 
             URL a = getClass().getResource("font/video_games.ttf");
             Font.loadFont(a.toString().replace("%20", " "), 10);
