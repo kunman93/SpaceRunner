@@ -63,12 +63,8 @@ public class GameController {
             processCollision(detectCollision());
 
             generateObstacles();
-            try{
-                moveElements();
+            moveElements();
 
-            }catch (Exception e){
-                System.out.println("Motherfucker");
-            }
             removePastDrawables();
 
         }
