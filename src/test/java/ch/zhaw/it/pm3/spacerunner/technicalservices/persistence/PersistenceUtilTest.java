@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersistenceUtilTest {
 
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
 
     @BeforeEach
     void setUp() throws IOException {
@@ -34,7 +35,7 @@ public class PersistenceUtilTest {
         playerProfile.setFps(35);
         playerProfile.setVolume(55);
 
-        PersistenceUtil.saveProfile(playerProfile);
+        persistenceUtil.saveProfile(playerProfile);
         Path path = Path.of(GameFile.PROFILE.getFileName());
         assertTrue(Files.exists(path));
 
@@ -45,7 +46,7 @@ public class PersistenceUtilTest {
      */
     @Test
     void testSaveProfileWithNull(){
-        assertThrows(IllegalArgumentException.class, () -> PersistenceUtil.saveProfile(null));
+        assertThrows(IllegalArgumentException.class, () -> persistenceUtil.saveProfile(null));
         Path path = Path.of(GameFile.PROFILE.getFileName());
         assertFalse(Files.exists(path));
     }
@@ -62,8 +63,8 @@ public class PersistenceUtilTest {
         playerProfile.setFps(65);
         playerProfile.setVolume(45);
 
-        PersistenceUtil.saveProfile(playerProfile);
-        PlayerProfile playerProfileLoaded = PersistenceUtil.loadProfile();
+        persistenceUtil.saveProfile(playerProfile);
+        PlayerProfile playerProfileLoaded = persistenceUtil.loadProfile();
 
         assertEquals(playerProfile, playerProfileLoaded);
     }
@@ -76,7 +77,7 @@ public class PersistenceUtilTest {
     void testLoadProfileWithoutExistingProfile(){
         PlayerProfile playerProfile = new PlayerProfile(); //Creating default profile!
 
-        PlayerProfile playerProfileLoaded = PersistenceUtil.loadProfile();
+        PlayerProfile playerProfileLoaded = persistenceUtil.loadProfile();
 
         assertEquals(playerProfile, playerProfileLoaded);
     }
@@ -88,10 +89,10 @@ public class PersistenceUtilTest {
     void testSaveDataAndLoadIntoClassWithMoreFields() throws IOException {
         Path path = Path.of("testModel.json");
         TestDataModel testDataModel = new TestDataModel(13);
-        PersistenceUtil.serializeAndSaveData(path.toString(), testDataModel);
+        persistenceUtil.serializeAndSaveData(path.toString(), testDataModel);
 
         assertTrue(Files.exists(path));
-        TestDataModelExtended testDataModelExtended = PersistenceUtil.loadAndDeserializeData(path.toString(), TestDataModelExtended.class);
+        TestDataModelExtended testDataModelExtended = persistenceUtil.loadAndDeserializeData(path.toString(), TestDataModelExtended.class);
         assertEquals(testDataModel.getTestNumber(), testDataModelExtended.getTestNumber());
         Files.delete(path);
     }
@@ -103,10 +104,10 @@ public class PersistenceUtilTest {
     void testSaveDataAndLoadIntoClassWithLessFields() throws IOException {
         Path path = Path.of("testModel.json");
         TestDataModelExtended testDataModelExtended = new TestDataModelExtended(13, "Test", 55);
-        PersistenceUtil.serializeAndSaveData(path.toString(), testDataModelExtended);
+        persistenceUtil.serializeAndSaveData(path.toString(), testDataModelExtended);
 
         assertTrue(Files.exists(path));
-        TestDataModel testDataModel = PersistenceUtil.loadAndDeserializeData(path.toString(), TestDataModel.class);
+        TestDataModel testDataModel = persistenceUtil.loadAndDeserializeData(path.toString(), TestDataModel.class);
         assertEquals(testDataModelExtended.getTestNumber(), testDataModel.getTestNumber());
         Files.delete(path);
     }

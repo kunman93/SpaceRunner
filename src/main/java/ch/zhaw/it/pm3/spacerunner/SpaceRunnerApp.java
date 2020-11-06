@@ -24,6 +24,7 @@ import java.net.URL;
 public class SpaceRunnerApp extends Application {
 
     private Stage primaryStage;
+    private SoundUtil soundUtil = SoundUtil.getInstance();
 
     public static void main(String[] args) {
         launch(args);
@@ -84,7 +85,7 @@ public class SpaceRunnerApp extends Application {
         try {
             //TODO: Use Enum value with loadClip / create GameSoundUtil extends SoundUtil
             URL backgroundMusicURL = getClass().getResource(GameSound.BACKGROUND.getFileName());
-            SoundClip backgroundMusic = SoundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
+            SoundClip backgroundMusic = soundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
             backgroundMusic.setLoop(true);
             backgroundMusic.play();
         } catch (IOException e) {

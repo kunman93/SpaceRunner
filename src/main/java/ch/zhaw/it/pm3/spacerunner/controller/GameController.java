@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.*;
 
 public class GameController {
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND = 0.05;
 
@@ -50,7 +51,7 @@ public class GameController {
     public void saveGame() {
         //TODO: Use and maybe improve
         updatePlayerProfile();
-        PersistenceUtil.saveProfile(playerProfile);
+        persistenceUtil.saveProfile(playerProfile);
     }
 
     public void processFrame(boolean upPressed, boolean downPressed) {
@@ -172,7 +173,7 @@ public class GameController {
 
         gameOver = false;
 
-        playerProfile = PersistenceUtil.loadProfile();
+        playerProfile = persistenceUtil.loadProfile();
 
         elementPreset = new ElementPreset();
 

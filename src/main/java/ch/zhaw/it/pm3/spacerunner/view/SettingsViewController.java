@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
 public class SettingsViewController extends ViewController implements EventHandler<KeyEvent> {
-
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     public Button homeButton;
     public TextField playerName;
     public Slider soundVolume;
@@ -23,13 +23,13 @@ public class SettingsViewController extends ViewController implements EventHandl
         player.setPlayerName(playerName.getText());
         player.setVolume((int) soundVolume.getValue());
         player.setFps((int) framerate.getValue());
-        PersistenceUtil.saveProfile(player);
+        persistenceUtil.saveProfile(player);
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
     @Override
     public void initialize() {
-        player = PersistenceUtil.loadProfile();
+        player = persistenceUtil.loadProfile();
         playerName.setText(player.getPlayerName());
         soundVolume.setValue(player.getVolume());
         framerate.setValue(player.getFps());

@@ -45,7 +45,7 @@ public class VisualUtil {
      * @param imageURL URL of the image to load
      * @return loaded image
      */
-    public static BufferedImage loadImage(URL imageURL) {
+    public BufferedImage loadImage(URL imageURL) {
         Image image = new ImageIcon(imageURL).getImage();
         return toBufferedImage(image);
     }
@@ -57,7 +57,7 @@ public class VisualUtil {
      * @param img The Image to be converted
      * @return The converted BufferedImage
      */
-    private static BufferedImage toBufferedImage(Image img)
+    private BufferedImage toBufferedImage(Image img)
     {
         if (img instanceof BufferedImage)
         {
@@ -82,7 +82,7 @@ public class VisualUtil {
      * @param imageURL URL of the image to load
      * @return loaded image
      */
-    public static BufferedImage loadSVGImage(URL imageURL, float height) {
+    public BufferedImage loadSVGImage(URL imageURL, float height) {
         BufferedImage loadedImage = null;
         try {
             loadedImage = rasterize(new File(imageURL.getFile().replace("%20", " ")), height);
@@ -98,7 +98,7 @@ public class VisualUtil {
 
 
     //TODO: https://stackoverflow.com/questions/11435671/how-to-get-a-bufferedimage-from-a-svg
-    private static BufferedImage rasterize(File svgFile, float height) throws IOException {
+    private BufferedImage rasterize(File svgFile, float height) throws IOException {
 
         final BufferedImage[] imagePointer = new BufferedImage[1];
 
@@ -158,7 +158,7 @@ public class VisualUtil {
         return imagePointer[0];
     }
 
-    public static BufferedImage flipImage(BufferedImage image, boolean horizontal){
+    public BufferedImage flipImage(BufferedImage image, boolean horizontal){
         // Flip the image horizontally
         AffineTransform tx;
         if(horizontal){
@@ -175,7 +175,7 @@ public class VisualUtil {
     }
 
 
-    public static BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
+    public BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
         BufferedImage image = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
         AffineTransform trans = AffineTransform.getRotateInstance(deg, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
         AffineTransformOp op = new AffineTransformOp(trans, AffineTransformOp.TYPE_BILINEAR);

@@ -30,7 +30,7 @@ public class SoundUtil {
      * @throws UnsupportedAudioFileException
      * @throws LineUnavailableException
      */
-    public static SoundClip loadClip(File audioFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public SoundClip loadClip(File audioFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if (audioFile == null) {
             throw new IllegalArgumentException();
         }
@@ -39,7 +39,7 @@ public class SoundUtil {
         return getSoundClip(audioInputStream);
     }
 
-    private static SoundClip getSoundClip(AudioInputStream audioInputStream) throws LineUnavailableException, IOException {
+    private SoundClip getSoundClip(AudioInputStream audioInputStream) throws LineUnavailableException, IOException {
         Clip loadedClip;
 
         loadedClip = AudioSystem.getClip();

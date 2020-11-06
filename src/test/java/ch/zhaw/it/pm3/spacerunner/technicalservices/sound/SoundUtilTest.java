@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests The SoundUtil-Class.
  */
 class SoundUtilTest {
-
-    File file;
-    SoundClip soundClip;
+    private SoundUtil soundUtil = SoundUtil.getInstance();
+    private File file;
+    private SoundClip soundClip;
 
     @BeforeEach
     void setUp() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         file = new File("src/test/resources/ch/zhaw/it/pm3/spacerunner/sound/background.wav");
-        soundClip = SoundUtil.loadClip(file);
+        soundClip = soundUtil.loadClip(file);
     }
 
 
@@ -34,7 +34,7 @@ class SoundUtilTest {
     @Test
     void loadValidClipTest() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         file = new File("src/test/resources/ch/zhaw/it/pm3/spacerunner/sound/background.wav");
-        soundClip = SoundUtil.loadClip(file);
+        soundClip = soundUtil.loadClip(file);
         assertNotNull(soundClip);
     }
 
@@ -44,7 +44,7 @@ class SoundUtilTest {
     @Test
     void loadInvalidClipTest() {
         file = new File ("src/test/resources/ch/zhaw/it/pm3/spacerunner/sound/unsupportedAudioFile.txt");
-        assertThrows(UnsupportedAudioFileException.class, () -> SoundUtil.loadClip(file) );
+        assertThrows(UnsupportedAudioFileException.class, () -> soundUtil.loadClip(file) );
     }
 
     /**
@@ -52,7 +52,7 @@ class SoundUtilTest {
      */
     @Test
     void loadClipFromInvalidPathTest(){
-        assertThrows(IOException.class, () -> SoundUtil.loadClip(new File("src/fictionalPath/fiction.wav")) );
+        assertThrows(IOException.class, () -> soundUtil.loadClip(new File("src/fictionalPath/fiction.wav")) );
     }
 
 

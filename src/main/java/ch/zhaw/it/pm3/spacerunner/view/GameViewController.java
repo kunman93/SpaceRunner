@@ -31,7 +31,7 @@ import java.util.List;
 
 public class GameViewController extends ViewController {
 
-
+    private VisualUtil visualUtil = VisualUtil.getInstance();
     //TODO: Canvas has to be a fixed height and width so we dont have to deal with scaling
     @FXML
     public Canvas gameCanvas;
@@ -225,7 +225,7 @@ public class GameViewController extends ViewController {
         graphicsContext.setTextAlign(TextAlignment.CENTER);
 
         loadingAnimation = new AnimationTimer() {
-            BufferedImage img = VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f);
+            BufferedImage img = visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f);
             long lastLoadingAnimation = 0;
             int i = 0;
             long framerate = 50_000_000L;
@@ -242,7 +242,7 @@ public class GameViewController extends ViewController {
                     i = i % 3 + 1;
                     graphicsContext.fillText("Game is loading" + ".".repeat(Math.max(0, i)), gameCanvas.getWidth() / 2,
                             (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
-                    img = VisualUtil.rotateImage(img, -1);
+                    img = visualUtil.rotateImage(img, -1);
                     graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null), (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
 
                 }
