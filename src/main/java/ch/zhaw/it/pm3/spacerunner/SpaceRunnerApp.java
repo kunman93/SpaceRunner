@@ -41,15 +41,15 @@ public class SpaceRunnerApp extends Application {
 
     }
 
-
     public void setFXMLView(FXMLFile source){
+        double height = 490;
+        double width = 800;
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFileName()));
 
             URL a = getClass().getResource("font/video_games.ttf");
             Font.loadFont(a.toString().replace("%20", " "), 10);
-
-
 
             Pane rootPane = loader.load();
             ViewController windowViewController = loader.getController();
@@ -59,13 +59,10 @@ public class SpaceRunnerApp extends Application {
             if(primaryStage.getIcons().size() == 0) { // damit breite gleich bleibt beim laden neuer view
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
-
-                // todo already set to 16:9
-                //TODO: 475,800,450  magic number => dont like
-                primaryStage.setHeight(475);
-                primaryStage.setWidth(800);
-                primaryStage.setMinHeight(450);
-                primaryStage.setMinWidth(800);
+                primaryStage.setHeight(height);
+                primaryStage.setWidth(width);
+                primaryStage.setMinHeight(height);
+                primaryStage.setMinWidth(width);
             }
         } catch (IOException e) {
             //logger.log(Level.SEVERE, "!!!FILE NOT FOUND, CHECK FILEPATH!!!");
