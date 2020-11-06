@@ -10,7 +10,7 @@ public class SpaceShipTest {
 
     @BeforeEach
     void setUp() {
-        ship = new SpaceShip(new Point(0,0), 10,10);
+        ship = new SpaceShip(new Point(0,0));
         ship.setSpaceShipSpeed(3);
     }
 
