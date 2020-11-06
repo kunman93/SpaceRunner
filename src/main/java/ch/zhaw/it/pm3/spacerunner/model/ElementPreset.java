@@ -19,13 +19,13 @@ public class ElementPreset {
 
     private void generatePresets() {
         try{
-            int coinPreset1Y1 = (int) ((Math.random() * visualManager.getHeight()) - visualManager.getElementHeight(Coin.class) * 3);
-            int coinPreset1Y2 = coinPreset1Y1 + visualManager.getElementHeight(Coin.class);
-            int coinPreset1Y3 = coinPreset1Y1 + 2 * visualManager.getElementHeight(Coin.class);
+            int coinPreset1Y1 = (int) ((Math.random() * visualManager.getHeight()) - visualManager.getElementPixelHeight(Coin.class) * 3);
+            int coinPreset1Y2 = coinPreset1Y1 + visualManager.getElementPixelHeight(Coin.class);
+            int coinPreset1Y3 = coinPreset1Y1 + 2 * visualManager.getElementPixelHeight(Coin.class);
 
             int coinPreset1X1 = visualManager.getWidth();
-            int coinPreset1X2 = coinPreset1X1 + visualManager.getElementWidth(Coin.class);
-            int coinPreset1X3 = coinPreset1X1 + 2 * visualManager.getElementWidth(Coin.class);
+            int coinPreset1X2 = coinPreset1X1 + visualManager.getElementPixelWidth(Coin.class);
+            int coinPreset1X3 = coinPreset1X1 + 2 * visualManager.getElementPixelWidth(Coin.class);
 
             presets = new SpaceElement[][]{
                     {       new Coin(new Point(coinPreset1X1,coinPreset1Y1)),
@@ -37,7 +37,7 @@ public class ElementPreset {
                             new Coin(new Point(coinPreset1X3, coinPreset1Y3))
                     },
 
-                    {new Asteroid(new Point(visualManager.getWidth(),-100)), new Asteroid(new Point(visualManager.getWidth() + visualManager.getElementWidth(Asteroid.class) + 10,50))},
+                    {new Asteroid(new Point(visualManager.getWidth(),-100)), new Asteroid(new Point(visualManager.getWidth() + visualManager.getElementPixelWidth(Asteroid.class) + 10,50))},
                     {new UFO(new Point(new Point(visualManager.getWidth(),0))), new UFO(new Point(new Point(visualManager.getWidth(),100)))},
                     {new Asteroid(new Point(visualManager.getWidth(),200))},
                     {new Asteroid(new Point(visualManager.getWidth(),125))}

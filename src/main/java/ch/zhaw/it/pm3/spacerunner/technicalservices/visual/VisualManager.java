@@ -27,13 +27,22 @@ public class VisualManager<T extends VisualElement>{
 
     }
 
-    public int getElementHeight(Class<T> elementClass) throws VisualNotSetException {
+    public int getElementPixelHeight(Class<T> elementClass) throws VisualNotSetException {
         return getVisual(elementClass).getHeight();
     }
 
-    public int getElementWidth(Class<T> elementClass) throws VisualNotSetException {
+    public int getElementPixelWidth(Class<T> elementClass) throws VisualNotSetException {
         return getVisual(elementClass).getWidth();
     }
+
+    //TODO: implement
+//    public int getElementRelativeHeight(Class<T> elementClass) throws VisualNotSetException {
+//        return getVisual(elementClass).get();
+//    }
+//
+//    public int getElementRelativeWidth(Class<T> elementClass) throws VisualNotSetException {
+//        return getVisual(elementClass).getWidth();
+//    }
 
     public void setVisual(Class<T> elementClass, Visual visual){
         BufferedImage image;

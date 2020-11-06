@@ -182,6 +182,7 @@ public class GameViewController extends ViewController {
     }
 
     private void calc16to9Proportions() {
+
         double appBarHeight = 40;
 
         double height = primaryStage.getHeight() - appBarHeight;
@@ -193,6 +194,8 @@ public class GameViewController extends ViewController {
         }
         gameCanvas.setWidth(width);
         gameCanvas.setHeight(height);
+
+        //TODO: Resize window timer so its does not get called 800 times
         gameController.setViewport((int)width, (int)height);
     }
 

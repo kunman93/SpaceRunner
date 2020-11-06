@@ -91,13 +91,13 @@ public abstract class SpaceElement implements VisualElement {
     public boolean doesCollide(SpaceElement s){
         try {
             return pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y, this)
-                    || pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y + visualManager.getElementHeight(s.getClass()), this)
-                    || pointInObject(s.getCurrentPosition().x + visualManager.getElementWidth(s.getClass()), s.getCurrentPosition().y, this)
-                    || pointInObject(s.getCurrentPosition().x + visualManager.getElementWidth(s.getClass()), s.getCurrentPosition().y + visualManager.getElementHeight(s.getClass()), this)
+                    || pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y + visualManager.getElementPixelHeight(s.getClass()), this)
+                    || pointInObject(s.getCurrentPosition().x + visualManager.getElementPixelWidth(s.getClass()), s.getCurrentPosition().y, this)
+                    || pointInObject(s.getCurrentPosition().x + visualManager.getElementPixelWidth(s.getClass()), s.getCurrentPosition().y + visualManager.getElementPixelHeight(s.getClass()), this)
                     || pointInObject(position.x, position.y, s)
-                    || pointInObject(position.x, position.y + visualManager.getElementHeight(this.getClass()), s)
-                    || pointInObject(position.x + visualManager.getElementWidth(this.getClass()), position.y, s)
-                    || pointInObject(position.x + visualManager.getElementWidth(this.getClass()), position.y + visualManager.getElementHeight(this.getClass()), s);
+                    || pointInObject(position.x, position.y + visualManager.getElementPixelHeight(this.getClass()), s)
+                    || pointInObject(position.x + visualManager.getElementPixelWidth(this.getClass()), position.y, s)
+                    || pointInObject(position.x + visualManager.getElementPixelWidth(this.getClass()), position.y + visualManager.getElementPixelHeight(this.getClass()), s);
         }catch(VisualNotSetException e){
             //TODO: handle
             e.printStackTrace();
@@ -107,7 +107,7 @@ public abstract class SpaceElement implements VisualElement {
 
     private boolean pointInObject(float x, float y, SpaceElement s){
         try {
-            return x > s.getCurrentPosition().x && x < s.getCurrentPosition().x + visualManager.getElementWidth(s.getClass()) && y > s.getCurrentPosition().y && y < s.getCurrentPosition().y + visualManager.getElementHeight(s.getClass());
+            return x > s.getCurrentPosition().x && x < s.getCurrentPosition().x + visualManager.getElementPixelWidth(s.getClass()) && y > s.getCurrentPosition().y && y < s.getCurrentPosition().y + visualManager.getElementPixelHeight(s.getClass());
         }catch(VisualNotSetException e){
             //TODO: handle
             e.printStackTrace();

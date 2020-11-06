@@ -4,7 +4,6 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class SpaceWorld extends SpaceElement{
   public SpaceWorld(Point startPosition) {
@@ -17,12 +16,8 @@ public class SpaceWorld extends SpaceElement{
     public void move() {
         Point position = getCurrentPosition();
 
-        //TODO: How do we get this value?
-        //TODO: We can make it fixed
-        int viewport = 960;
-
         try {
-            if(position.x + visualManager.getElementWidth(SpaceWorld.class) - viewport < 0){
+            if(position.x + visualManager.getElementPixelWidth(SpaceWorld.class) - visualManager.getWidth() < 0){
                 position.x = 0;
             }else{
                 position.x += getVelocity().x;

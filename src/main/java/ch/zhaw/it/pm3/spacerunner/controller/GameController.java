@@ -117,7 +117,7 @@ public class GameController {
             case DOWN:
                 try {
                     //TODO: fix spaceship out of view
-                    if (spaceShip.getCurrentPosition().y + visualManager.getElementHeight(SpaceShip.class) >= height) return;
+                    if (spaceShip.getCurrentPosition().y + visualManager.getElementPixelHeight(SpaceShip.class) >= height) return;
                 } catch (VisualNotSetException e) {
                     //TODO: handle
                     e.printStackTrace();
@@ -265,7 +265,7 @@ public class GameController {
         elements.removeIf((SpaceElement element) ->
         {
             try {
-                return element.getCurrentPosition().x + visualManager.getElementWidth(element.getClass()) < 0;
+                return element.getCurrentPosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
                 //TODO: hanle
                 e.printStackTrace();
