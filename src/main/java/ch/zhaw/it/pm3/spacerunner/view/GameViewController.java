@@ -276,7 +276,7 @@ public class GameViewController extends ViewController {
             Point position = spaceElement.getCurrentPosition();
             Image image = null;
             try {
-                image = SwingFXUtils.toFXImage(visualManager.getVisual(spaceElement.getClass()), null);
+                image = SwingFXUtils.toFXImage(visualManager.getImage(spaceElement.getClass()), null);
             } catch (VisualNotSetException e) {
                 e.printStackTrace();
                 //TODO: handle
@@ -294,7 +294,7 @@ public class GameViewController extends ViewController {
         double marginRight = 15;
         BufferedImage image = null;
         try {
-            image = visualManager.getVisual(UIElement.COIN_COUNT.getClass());
+            image = visualManager.getImage(UIElement.COIN_COUNT.getClass());
             xPositionReference -= image.getWidth();
             graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
                     (gameCanvas.getWidth() - image.getWidth() - marginRightImage), yPosition, image.getWidth(), image.getHeight());
