@@ -1,23 +1,30 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualElement;
 
-public abstract class SpaceElement {
+import java.awt.*;
+
+public abstract class SpaceElement implements VisualElement {
 
     //todo: Idee: Object die alle variablen (position, width, length) umfasst
     private Point position = new Point(0, 0);
     private Point velocity = new Point(0, 0);
     private int height;
     private int width;
-    private static BufferedImage visual;
 
-    public SpaceElement(Point startPosition, int width, int height) {
+    public SpaceElement(Point startPosition) {
         this.width = width;
         this.height = height;
         this.position = startPosition;
     }
 
+    protected void setHeight(int height) {
+        this.height = height;
+    }
+
+    protected void setWidth(int width) {
+        this.width = width;
+    }
 
     public int getHeight() {
         return height;
@@ -49,6 +56,7 @@ public abstract class SpaceElement {
      * adds direction to velocity if direction == null no changes to Velocity will be made
      * @param direction
      */
+    //TODO: remove accelerate and velocity => they are not used for their intended purposes
     public void accelerate(Point direction){
         if (direction == null){
             velocity.x += 0;
@@ -71,17 +79,6 @@ public abstract class SpaceElement {
             velocity.x = direction.x;
             velocity.y = direction.y;
         }
-    }
-
-    public static void setVisual(BufferedImage visual){
-        SpaceElement.visual = visual;
-    }
-
-    public BufferedImage getVisual() throws VisualNotSetException{
-        if (visual == null) {
-            throw new VisualNotSetException("Visual for SpaceElement was not set!");
-        }
-        return visual;
     }
 
     public Point getCurrentPosition() {
@@ -124,4 +121,8 @@ public abstract class SpaceElement {
         return x > s.getCurrentPosition().x && x < s.getCurrentPosition().x + s.getWidth() && y > s.getCurrentPosition().y && y < s.getCurrentPosition().y + s.getHeight();
     }
 
+    protected abstract void setElementHitbox();
+
+    // Cant have abstract & static method
+    //public abstract void setHitbox(int height, int width);
 }

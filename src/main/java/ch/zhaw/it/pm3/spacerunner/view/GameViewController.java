@@ -3,30 +3,29 @@ package ch.zhaw.it.pm3.spacerunner.view;
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
-
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
-import javafx.application.Platform;
-
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 import javafx.animation.AnimationTimer;
-
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import javafx.scene.paint.Color;
-
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 
@@ -43,17 +42,37 @@ public class GameViewController extends ViewController {
     private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
+    private EventHandler startGameKeyHandler = new EventHandler<KeyEvent>(){
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.getCode() == KeyCode.SPACE){
+                gameController.togglePause();
+                if(primaryStage != null){
+                    primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, this);
+                }
+            }
+
+        }
+
+    };
 
     private AnimationTimer gameLoop;
+    private AnimationTimer loadingAnimation;
 
     private long lastUpdate;
     private int framesCount = 0;
     private long framesTimestamp = 0;
     private long lastProcessingTime = 0;
 
+    private boolean isLoaded = false;
+    private final VisualManager visualManager = VisualManager.getInstance();
+
+
 
     @Override
     public void initialize() {
+        initializeUiElements();
+
 
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
@@ -80,8 +99,14 @@ public class GameViewController extends ViewController {
 
             int fps = gameController.getFps();
             long timeForFrameNano = 1_000_000_000 / fps;
-
             framesTimestamp = 0;
+
+            isLoaded = true;
+
+            updateGameFrame();
+            gameController.togglePause();
+            //TODO: Add text to press space to start
+            primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
 
 
             gameLoop = new AnimationTimer()
@@ -92,20 +117,8 @@ public class GameViewController extends ViewController {
                         lastUpdate = currentNanoTime;
                         try{
                             framesCount++;
-                            gameController.processFrame(upPressed, downPressed);
-                            displayUpdatedSpaceElements(gameController.getGameElements());
-                            displayCollectedCoins(gameController.getCollectedCoins());
-                            displayCurrentScore(gameController.getScore());
 
-                            boolean gameOver = gameController.isGameOver();
-
-                            if(gameOver){
-                                removeKeyHandlers();
-                                if(gameLoop != null){
-                                    gameLoop.stop();
-                                    //TODO: GameOver => Show GameOver Screen
-                                }
-                            }
+                            updateGameFrame();
 
                             lastProcessingTime = (System.nanoTime() - currentNanoTime);
                             // System.out.println("Processing took " + lastProcessingTime / 1000000);
@@ -131,6 +144,25 @@ public class GameViewController extends ViewController {
 
     }
 
+
+    private void updateGameFrame(){
+        gameController.processFrame(upPressed, downPressed);
+        clearCanvas();
+        displayUpdatedSpaceElements(gameController.getGameElements());
+        displayCollectedCoins(gameController.getCollectedCoins());
+        displayCurrentScore(gameController.getScore());
+
+        boolean gameOver = gameController.isGameOver();
+
+        if(gameOver){
+            removeKeyHandlers();
+            if(gameLoop != null){
+                gameLoop.stop();
+                //TODO: GameOver => Show GameOver Screen
+            }
+        }
+    }
+
     private void addWindowSizeListeners() {
         primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
             calc16to9Proportions();
@@ -140,13 +172,20 @@ public class GameViewController extends ViewController {
         });
     }
 
-    //TODO: remove window size Listeners
-
-
+    private void removeWindowSizeListeners() {
+        new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                primaryStage.widthProperty().removeListener(this);
+                primaryStage.heightProperty().removeListener(this);
+            }
+        };
+    }
 
 
     private void calc16to9Proportions() {
-        double height = primaryStage.getHeight() - 20;
+        //TODO: 25 magic number => dont like
+        double height = primaryStage.getHeight() - 25; // subtract 20 because app-bar overflows game screen
         double width = primaryStage.getWidth();
         if (width / 16 < height / 9) {
             height = width * 9 / 16;
@@ -176,14 +215,43 @@ public class GameViewController extends ViewController {
         };
     }
 
+
+    /*
+    * https://stackoverflow.com/questions/45326525/how-to-show-a-loading-animation-in-javafx-application
+    * */
     private void showLoadingScreen() {
-        graphicsContext.drawImage(new Image(String.valueOf(SpaceRunnerApp.class.getResource(VisualFile.ROCKET_ICON.getFileName()))),
-                (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
-        graphicsContext.fillText("Game is loading...",  gameCanvas.getWidth() / 2,
-                (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+
+        loadingAnimation = new AnimationTimer() {
+            BufferedImage img = VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f);
+            long lastLoadingAnimation = 0;
+            int i = 0;
+            long framerate = 50_000_000L;
+
+            @Override
+            public void handle(long l) {
+                if (isLoaded && loadingAnimation != null) {
+                    loadingAnimation.stop();
+                    loadingAnimation = null;
+                } else if (l - lastLoadingAnimation >= framerate) {
+                    lastLoadingAnimation = l;
+
+                    clearCanvas();
+                    i = i % 3 + 1;
+                    graphicsContext.fillText("Game is loading" + ".".repeat(Math.max(0, i)), gameCanvas.getWidth() / 2,
+                            (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
+                    img = VisualUtil.rotateImage(img, -1);
+                    graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null), (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
+
+                }
+
+            }
+        };
+        loadingAnimation.start();
+
+
     }
 
 
@@ -201,12 +269,15 @@ public class GameViewController extends ViewController {
         return gameCanvas.getHeight();
     }*/
 
+    private void clearCanvas(){
+        graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+    }
+
 
     public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         //TODO: Should we clear it?
 
         //Platform.runLater(()->{
-            graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
 
 
 
@@ -214,7 +285,7 @@ public class GameViewController extends ViewController {
                 Point position = spaceElement.getCurrentPosition();
                 Image image = null;
                 try {
-                    image = SwingFXUtils.toFXImage(spaceElement.getVisual(), null);
+                    image = SwingFXUtils.toFXImage(visualManager.getVisual(spaceElement.getClass()), null);
                 } catch (VisualNotSetException e) {
                     e.printStackTrace();
                     //TODO: handle
@@ -228,23 +299,36 @@ public class GameViewController extends ViewController {
 
     }
 
-    // todo private, wenn mit AnimationTimer
-    public void displayCollectedCoins(int coins) {
+    private void displayCollectedCoins(int coins) {
+        BufferedImage image = null;
+        try {
+            image = visualManager.getVisual(UIElement.COIN_COUNT.getClass());
+        } catch (VisualNotSetException e) {
+            // todo handle
+            e.printStackTrace();
+        }
         //Image image = SwingFXUtils.toFXImage(VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource("images/shiny-coin1.svg"), 40f), null);
-        //graphicsContext.drawImage(image, (gameCanvas.getWidth() - 40), 40, 30, 30);
+        graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null), (gameCanvas.getWidth() - image.getWidth() - 10), 5, image.getWidth(), image.getHeight());
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, 30));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, image.getHeight()));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
-        graphicsContext.fillText(String.valueOf(coins),  (gameCanvas.getWidth() - 80),40, 100);
+        graphicsContext.setTextBaseline(VPos.TOP);
+        graphicsContext.fillText(String.valueOf(coins),  (gameCanvas.getWidth() - image.getWidth() - 15),5, 100);
     }
 
-    public void displayCurrentScore(int score) {
+    private void displayCurrentScore(int score) {
 
     }
 
-    public void removeKeyHandlers() {
+    private void removeKeyHandlers() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+    }
+
+    private void initializeUiElements(){
+        AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
+        visualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation, VisualScaling.COIN_COUNT);
+
     }
 
 }

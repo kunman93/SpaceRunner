@@ -1,12 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceShip;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.VisualNotSetException;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-import java.awt.*;
 
 public class GameControllerTest {
 

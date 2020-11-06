@@ -4,14 +4,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SpaceWorld extends SpaceElement{
-    private static BufferedImage visual;
+    private static int spaceWorldHeight;
+    private static int spaceWorldWidth;
 
     public SpaceWorld(Point startPosition, int width, int height) {
-        super(startPosition, width, height);
-    }
-
-    public static void setVisual(BufferedImage visual){
-        SpaceWorld.visual = visual;
+        super(startPosition);
+        spaceWorldHeight = height;
+        spaceWorldWidth = width;
+        setElementHitbox();
     }
 
     @Override
@@ -32,10 +32,8 @@ public class SpaceWorld extends SpaceElement{
     }
 
     @Override
-    public BufferedImage getVisual() throws VisualNotSetException{
-        if (visual == null) {
-            throw new VisualNotSetException("Visual for Asteroid was not set!");
-        }
-        return visual;
+    protected void setElementHitbox() {
+        setHeight(spaceWorldHeight);
+        setWidth(spaceWorldWidth);
     }
 }

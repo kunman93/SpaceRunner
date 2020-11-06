@@ -1,25 +1,24 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class PowerUp extends SpaceElement {
-    private static BufferedImage visual;
+    private static int powerUpHeight;
+    private static int powerUpWidth;
 
-    public PowerUp(Point startPosition, int width, int height) {
-        super(startPosition, width, height);
-    }
-
-
-    public static void setVisual(BufferedImage visual){
-        PowerUp.visual = visual;
+    public PowerUp(Point startPosition) {
+        super(startPosition);
+        setElementHitbox();
     }
 
     @Override
-    public BufferedImage getVisual() throws VisualNotSetException{
-        if (visual == null) {
-            throw new VisualNotSetException("Visual for PowerUp was not set!");
-        }
-        return visual;
+    protected void setElementHitbox() {
+        setHeight(powerUpHeight);
+        setWidth(powerUpWidth);
+    }
+
+    public static void setClassHitbox(int height, int width) {
+        powerUpHeight = height;
+        powerUpWidth = width;
     }
 }

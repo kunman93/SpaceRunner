@@ -1,9 +1,11 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
+import ch.zhaw.it.pm3.spacerunner.FileResource;
+
 /**
  * Enum only for SVG files
  */
-public enum VisualSVGFile {
+public enum VisualSVGFile implements FileResource {
     SHINEY_COIN_1("coin/shiny-coin1.svg"),
     SHINEY_COIN_2("coin/shiny-coin2.svg"),
     SHINEY_COIN_3("coin/shiny-coin3.svg"),
@@ -12,7 +14,8 @@ public enum VisualSVGFile {
     SHINEY_COIN_6("coin/shiny-coin6.svg"),
     SPACE_SHIP_1("space-ship.svg"),
     UFO_1("UFO.svg"),
-    ASTEROID("comet-asteroid.svg");
+    ASTEROID("comet-asteroid.svg"),
+    LOADING_SPINNER("loading-spinner.svg");
 
 
     private String fileName;
@@ -21,6 +24,7 @@ public enum VisualSVGFile {
         this.fileName = "images/" + fileName;
     }
 
+    @Override
     public String getFileName() {
         return fileName;
     }

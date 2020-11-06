@@ -1,25 +1,24 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Asteroid extends Obstacle {
-    private static BufferedImage visual;
+    private static int asteroidHeight;
+    private static int asteroidWidth;
 
-    public Asteroid(Point startPosition, int width, int height) {
-        super(startPosition, width, height);
-    }
-
-    public static void setVisual(BufferedImage visual){
-        Asteroid.visual = visual;
+    public Asteroid(Point startPosition) {
+        super(startPosition);
+        setElementHitbox();
     }
 
     @Override
-    public BufferedImage getVisual() throws VisualNotSetException{
-        if (visual == null) {
-            throw new VisualNotSetException("Visual for Asteroid was not set!");
-        }
-        return visual;
+    protected void setElementHitbox() {
+        setHeight(asteroidHeight);
+        setWidth(asteroidWidth);
     }
 
+    public static void setClassHitbox(int height, int width) {
+        asteroidHeight = height;
+        asteroidWidth = width;
+    }
 }

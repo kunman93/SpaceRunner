@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
@@ -20,6 +21,17 @@ import java.io.IOException;
 import java.net.URL;
 
 public class VisualUtil {
+    // Singleton pattern
+    private static final VisualUtil instance = new VisualUtil();
+
+    /**
+     * private constructor for the singleton-pattern
+     */
+    private VisualUtil(){}
+
+    public static VisualUtil getInstance(){
+        return instance;
+    }
 
     /**
      * Loads the image from the URL provided
@@ -162,5 +174,13 @@ public class VisualUtil {
         return image;
     }
 
+
+    public static BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
+        BufferedImage image = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
+        AffineTransform trans = AffineTransform.getRotateInstance(deg, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
+        AffineTransformOp op = new AffineTransformOp(trans, AffineTransformOp.TYPE_BILINEAR);
+        op.filter(bufferedImage, image);
+        return image;
+    }
 
 }
