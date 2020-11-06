@@ -108,12 +108,12 @@ public class GameController {
     protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                if (spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * VisualScaling.SPACE_SHIP.getScaling()) <= 0.0)
+                if (spaceShip.getCurrentPosition().y <= 0.0)
                     return;
                 spaceShip.directMoveUp();
                 break;
             case DOWN:
-                if (spaceShip.getCurrentPosition().y - (spaceShip.getHeight() * VisualScaling.SPACE_SHIP.getScaling())
+                if (spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * VisualScaling.SPACE_SHIP.getScaling())
                         >= height) return; //TODO canvas = 500.0, height
                 spaceShip.directMoveDown();
                 break;
