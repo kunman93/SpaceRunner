@@ -10,7 +10,7 @@ class CoinTest {
 
     @BeforeEach
     void setUp() {
-        coin1 = new Coin(new Point(200,100),50,50);
+        coin1 = new Coin(new Point(200,100));
         coin1.setVelocity(new Point(-3,0));
     }
 

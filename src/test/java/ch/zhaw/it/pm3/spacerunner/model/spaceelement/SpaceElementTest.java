@@ -10,7 +10,14 @@ public class SpaceElementTest {
 
     @BeforeEach
     void setUp() {
-        element = new SpaceElement(new Point(0,0), 10,10) {};
+        element = new SpaceElement(new Point(0,0)) {
+            @Override
+            protected void setElementHitbox() {
+                setHeight(10);
+                setWidth(10);
+            }
+        };
+        element.setElementHitbox();
     }
 
     @Test
@@ -46,8 +53,22 @@ public class SpaceElementTest {
 
     @Test
     void testDoesCollide(){
-        SpaceElement elementInside = new SpaceElement(new Point(1,1), 10, 10){};
-        SpaceElement elementOutside = new SpaceElement(new Point(11,11), 10, 10){};
+        SpaceElement elementInside = new SpaceElement(new Point(1,1)){
+            @Override
+            protected void setElementHitbox() {
+                setHeight(10);
+                setWidth(10);
+            }
+        };
+        SpaceElement elementOutside = new SpaceElement(new Point(11,11)){
+            @Override
+            protected void setElementHitbox() {
+                setHeight(10);
+                setWidth(10);
+            }
+        };
+        elementInside.setElementHitbox();
+        elementOutside.setElementHitbox();
         assertTrue(element.doesCollide(elementInside));
         assertFalse(element.doesCollide(elementOutside));
     }

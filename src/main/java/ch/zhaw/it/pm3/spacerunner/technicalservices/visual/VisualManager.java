@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class VisualManager<T extends VisualElement>{
+    private VisualUtil visualUtil = VisualUtil.getInstance();
 
     private int height = 500;
     private static VisualManager instance = new VisualManager();
@@ -44,22 +45,22 @@ public class VisualManager<T extends VisualElement>{
 
     private BufferedImage flipVisual(boolean flipHorizontally, boolean flipVertically, BufferedImage image) {
         if (flipHorizontally) {
-            image = VisualUtil.flipImage(image, true);
+            image = visualUtil.flipImage(image, true);
         }
         if (flipVertically) {
-            image = VisualUtil.flipImage(image, false);
+            image = visualUtil.flipImage(image, false);
         }
         return image;
     }
 
     private BufferedImage getSVGBufferedImage(VisualSVGFile imagePath, VisualScaling visualScaling) {
         URL imageURL = SpaceRunnerApp.class.getResource(imagePath.getFileName());
-        return VisualUtil.loadSVGImage(imageURL, (float) (height * visualScaling.getScaling()));
+        return visualUtil.loadSVGImage(imageURL, (float) (height * visualScaling.getScaling()));
     }
 
     private BufferedImage getBufferedImage(VisualFile imagePath) {
         URL imageURL = SpaceRunnerApp.class.getResource(imagePath.getFileName());
-        return VisualUtil.loadImage(imageURL);
+        return visualUtil.loadImage(imageURL);
     }
 
 

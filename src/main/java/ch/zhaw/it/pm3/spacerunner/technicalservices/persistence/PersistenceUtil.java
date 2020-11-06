@@ -15,7 +15,20 @@ import java.util.Set;
  * Utility tool to persist data (load / save)
  */
 public class PersistenceUtil {
+    // Singleton pattern
+    private static final PersistenceUtil instance = new PersistenceUtil();
+
     private static final Gson gson = new Gson();
+
+    /**
+     * private constructor for the singleton-pattern
+     */
+    private PersistenceUtil(){}
+
+    public static PersistenceUtil getInstance(){
+        return instance;
+    }
+
 
     /**
      * Load the profile of the player from the disk where it is saved in json.
@@ -23,7 +36,7 @@ public class PersistenceUtil {
      *
      * @return the player's profile (or a default profile if it doesn't exist)
      */
-    public static PlayerProfile loadProfile() {
+    public PlayerProfile loadProfile() {
         Path path = Path.of(GameFile.PROFILE.getFileName());
         PlayerProfile playerProfile = null;
 
@@ -55,7 +68,7 @@ public class PersistenceUtil {
      * @return loaded data as object of class T
      * @throws IOException
      */
-    public static <T> T loadAndDeserializeData(String path, Class<T> dataClass) throws IOException {
+    public <T> T loadAndDeserializeData(String path, Class<T> dataClass) throws IOException {
         T data = null;
         try (FileReader reader = new FileReader(path)) {
             data = gson.fromJson(reader, dataClass);
@@ -70,7 +83,7 @@ public class PersistenceUtil {
      *
      * @param playerProfile player profile to save
      */
-    public static void saveProfile(PlayerProfile playerProfile) {
+    public void saveProfile(PlayerProfile playerProfile) {
         if (playerProfile == null) {
             throw new IllegalArgumentException("null is not a legal argument for a player profile!");
         }
@@ -92,7 +105,7 @@ public class PersistenceUtil {
      * @param <T>  type of the data to be saved
      * @throws IOException
      */
-    public static <T> void serializeAndSaveData(String path, T data) throws IOException {
+    public <T> void serializeAndSaveData(String path, T data) throws IOException {
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(data, writer);
         } catch (IOException e) {
@@ -101,12 +114,12 @@ public class PersistenceUtil {
     }
 
 
-    private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {
+    private Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {
         //TODO: Implement and JavaDOC
         return new HashSet<>();
     }
 
-    public static List<ShopContent> loadShopContent() {
+    public List<ShopContent> loadShopContent() {
         //TODO: Implement and JavaDOC
         return null;
     }

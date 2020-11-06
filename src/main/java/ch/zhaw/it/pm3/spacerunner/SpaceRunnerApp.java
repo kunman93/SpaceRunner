@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
@@ -23,6 +24,7 @@ import java.net.URL;
 public class SpaceRunnerApp extends Application {
 
     private Stage primaryStage;
+    private SoundUtil soundUtil = SoundUtil.getInstance();
 
     public static void main(String[] args) {
         launch(args);
@@ -42,7 +44,7 @@ public class SpaceRunnerApp extends Application {
 
     public void setFXMLView(FXMLFile source){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFilename()));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFileName()));
 
             URL a = getClass().getResource("font/video_games.ttf");
             Font.loadFont(a.toString().replace("%20", " "), 10);
@@ -81,8 +83,9 @@ public class SpaceRunnerApp extends Application {
 
     private void setupBackgroundMusic() {
         try {
-            URL backgroundMusicURL = getClass().getResource("sound/background.wav");
-            SoundClip backgroundMusic = SoundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
+            //TODO: Use Enum value with loadClip / create GameSoundUtil extends SoundUtil
+            URL backgroundMusicURL = getClass().getResource(GameSound.BACKGROUND.getFileName());
+            SoundClip backgroundMusic = soundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
             backgroundMusic.setLoop(true);
             backgroundMusic.play();
         } catch (IOException e) {
