@@ -215,7 +215,15 @@ public class GameController {
     public void setViewport(int width, int height) {
         this.height = height;
         this.width = width;
+        boolean wasPaused = isPaused;
+        if(!wasPaused){
+            isPaused = true;
+        }
         this.visualManager.setHeight(height);
+        this.visualManager.setWidth(width);
+        if(!wasPaused){
+            isPaused = false;
+        }
 
         //TODO: Update Images and hitboxes
         //TODO: UFO, ElementPreset
@@ -226,10 +234,10 @@ public class GameController {
      */
     private void setUpSpaceElementImages() {
         try {
-            visualManager.flipAndSetVisual(SpaceShip.class, VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false);
-            visualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, VisualScaling.UFO);
-            visualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, VisualScaling.ASTEROID);
-            visualManager.setVisual(SpaceWorld.class, VisualFile.BACKGROUND_STARS);
+            visualManager.setVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+            visualManager.setVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
+            visualManager.setVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
+            visualManager.setVisual(SpaceWorld.class, new Visual(VisualFile.BACKGROUND_STARS));
 
             setUpCoinWithAnimation();
 
@@ -241,12 +249,12 @@ public class GameController {
 
     private void setUpCoinWithAnimation() {
         //TODO: not needed but not bad^^
-        visualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN);
+        visualManager.setVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
 
 
 
-        AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
-        visualManager.setAnimatedVisual(Coin.class, coinAnimation, VisualScaling.COIN);
+        AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
+        visualManager.setAnimatedVisual(Coin.class, coinAnimation);
 
     }
 

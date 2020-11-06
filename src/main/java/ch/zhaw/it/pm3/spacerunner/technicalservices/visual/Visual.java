@@ -6,15 +6,31 @@ public class Visual{
     private BufferedImage image;
     private VisualSVGFile visualSVGFile;
     private VisualFile visualFile;
+    private VisualScaling visualScaling;
+    private boolean flipVertically = false;
+    private boolean flipHorizontally = false;
 
-    public Visual(BufferedImage image, VisualFile visualFile) {
-        this.image = image;
+
+    public Visual(VisualFile visualFile, boolean flipHorizontally, boolean flipVertically) {
+        this.visualFile = visualFile;
+        this.flipVertically = flipVertically;
+        this.flipHorizontally = flipHorizontally;
+    }
+
+    public Visual(VisualFile visualFile) {
         this.visualFile = visualFile;
     }
 
-    public Visual(BufferedImage image, VisualSVGFile visualSVGFile) {
-        this.image = image;
+    public Visual(VisualSVGFile visualSVGFile, VisualScaling visualScaling, boolean flipHorizontally, boolean flipVertically) {
         this.visualSVGFile = visualSVGFile;
+        this.visualScaling = visualScaling;
+        this.flipVertically = flipVertically;
+        this.flipHorizontally = flipHorizontally;
+    }
+
+    public Visual(VisualSVGFile visualSVGFile, VisualScaling visualScaling) {
+        this.visualSVGFile = visualSVGFile;
+        this.visualScaling = visualScaling;
     }
 
     public BufferedImage getImage() {
@@ -45,4 +61,27 @@ public class Visual{
         return visualFile;
     }
 
+    public VisualScaling getVisualScaling() {
+        return visualScaling;
+    }
+
+    public void setVisualScaling(VisualScaling visualScaling) {
+        this.visualScaling = visualScaling;
+    }
+
+    public boolean isFlipVertically() {
+        return flipVertically;
+    }
+
+    public void setFlipVertically(boolean flipVertically) {
+        this.flipVertically = flipVertically;
+    }
+
+    public boolean isFlipHorizontally() {
+        return flipHorizontally;
+    }
+
+    public void setFlipHorizontally(boolean flipHorizontally) {
+        this.flipHorizontally = flipHorizontally;
+    }
 }

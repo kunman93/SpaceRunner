@@ -7,13 +7,15 @@ public class AnimatedVisual {
     private int animationPointer = 0;
     private VisualSVGAnimationFiles visualSVGAnimationFiles;
     private BufferedImage[] visuals;
+    private VisualScaling visualScaling;
 
 
     //TODO: ThreadSafe animationPointer etc!!!
 
-    public AnimatedVisual(VisualSVGAnimationFiles visualSVGAnimationFiles) {
+    public AnimatedVisual(VisualSVGAnimationFiles visualSVGAnimationFiles, VisualScaling visualScaling) {
         this.animationPointer = 0;
         this.visualSVGAnimationFiles = visualSVGAnimationFiles;
+        this.visualScaling = visualScaling;
     }
 
     public VisualSVGAnimationFiles getVisualSVGFiles() {
@@ -37,5 +39,13 @@ public class AnimatedVisual {
         }
 
         return this.visuals[animationPointer];
+    }
+
+    public VisualScaling getVisualScaling() {
+        return visualScaling;
+    }
+
+    public void setVisualScaling(VisualScaling visualScaling) {
+        this.visualScaling = visualScaling;
     }
 }

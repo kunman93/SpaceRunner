@@ -1,6 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -13,9 +14,14 @@ public class VisualManager<T extends VisualElement>{
     private VisualUtil visualUtil = VisualUtil.getInstance();
 
     private int height = 500;
-    private static VisualManager instance = new VisualManager();
+    private int width = 500;
+    private static VisualManager instance = new VisualManager<SpaceElement>();
     private Map<Class<T>, Visual> visualList = new HashMap<>();
     private Map<Class<T>, AnimatedVisual> animatedVisualList = new HashMap<>();
+
+    public static VisualManager getInstance(){
+        return instance;
+    }
 
     private VisualManager(){
 
@@ -29,32 +35,19 @@ public class VisualManager<T extends VisualElement>{
         return getVisual(elementClass).getWidth();
     }
 
-    public void flipAndSetVisual(Class<T> elementClass, VisualSVGFile imagePath, VisualScaling visualScaling, boolean flipHorizontally, boolean flipVertically){
-        BufferedImage image = getSVGBufferedImage(imagePath, visualScaling);
-        image = flipVisual(flipHorizontally, flipVertically, image);
+    public void setVisual(Class<T> elementClass, Visual visual){
+        BufferedImage image;
+        if(visual.getVisualFile() == null){
+            //load SVG
+            image = getSVGBufferedImage(visual.getVisualSVGFile(), visual.getVisualScaling());
+        }else{
+            //load image file
+            image = getBufferedImage(visual.getVisualFile());
+        }
 
-        Visual visual = new Visual(image, imagePath);
-        visualList.put(elementClass, visual);
-    }
+        image = flipVisual(visual.isFlipHorizontally(), visual.isFlipVertically(), image);
+        visual.setImage(image);
 
-    public void flipAndSetVisual(Class<T> elementClass, VisualFile imagePath, boolean flipHorizontally, boolean flipVertically){
-        BufferedImage image = getBufferedImage(imagePath);
-        image = flipVisual(flipHorizontally, flipVertically, image);
-
-
-        Visual visual = new Visual(image, imagePath);
-        visualList.put(elementClass, visual);
-    }
-
-    public void setVisual(Class<T> elementClass, VisualFile imagePath){
-        BufferedImage image = getBufferedImage(imagePath);
-        Visual visual = new Visual(image, imagePath);
-        visualList.put(elementClass, visual);
-    }
-
-    public void setVisual(Class<T> elementClass, VisualSVGFile imagePath, VisualScaling visualScaling){
-        BufferedImage image = getSVGBufferedImage(imagePath, visualScaling);
-        Visual visual = new Visual(image, imagePath);
         visualList.put(elementClass, visual);
     }
 
@@ -79,12 +72,12 @@ public class VisualManager<T extends VisualElement>{
     }
 
 
-    public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual, VisualScaling visualScaling){
+    public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual){
         VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles().getAnimationVisuals();
 
         List<BufferedImage> visuals = new ArrayList<>();
         for(VisualSVGFile svgFile : svgFiles){
-            visuals.add(getSVGBufferedImage(svgFile, visualScaling));
+            visuals.add(getSVGBufferedImage(svgFile, animatedVisual.getVisualScaling()));
         }
         animatedVisual.setVisuals(visuals.toArray(BufferedImage[]::new));
 
@@ -121,10 +114,21 @@ public class VisualManager<T extends VisualElement>{
 
     public void setHeight(int height) {
         this.height = height;
+        for (Map.Entry<Class<T>, Visual> classVisualEntry : visualList.entrySet()){
+            setVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
+        }
+
+        for (Map.Entry<Class<T>, AnimatedVisual> classVisualEntry : animatedVisualList.entrySet()){
+            setAnimatedVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
+        }
     }
 
-    public static VisualManager getInstance(){
-        return instance;
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 
 }
