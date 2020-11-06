@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
+import ch.zhaw.it.pm3.spacerunner.model.GameDataCache;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
@@ -141,8 +142,6 @@ public class GameViewController extends ViewController {
             gameLoop.start();
         }).start();
 
-
-
     }
 
 
@@ -158,7 +157,8 @@ public class GameViewController extends ViewController {
             removeKeyHandlers();
             if(gameLoop != null){
                 gameLoop.stop();
-                //TODO: GameOver => Show GameOver Screen
+                setGameDataCache(new GameDataCache(gameController.getCollectedCoins(), gameController.getScore()));
+                getMain().setFXMLView(FXMLFile.GAME_ENDED);
             }
         }
     }
@@ -298,12 +298,14 @@ public class GameViewController extends ViewController {
         double xPositionReference = gameCanvas.getWidth();
         double yPosition = 5;
         double textWidth = 100;
+        double marginRightImage = 10;
+        double marginRight = 15;
         BufferedImage image = null;
         try {
             image = visualManager.getVisual(UIElement.COIN_COUNT.getClass());
             xPositionReference -= image.getWidth();
             graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
-                    (gameCanvas.getWidth() - image.getWidth() - 10), yPosition, image.getWidth(), image.getHeight());
+                    (gameCanvas.getWidth() - image.getWidth() - marginRightImage), yPosition, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
             // todo handle
             e.printStackTrace();
@@ -312,8 +314,8 @@ public class GameViewController extends ViewController {
         graphicsContext.setFont(new Font(DEFAULT_FONT, image.getHeight()));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
-        graphicsContext.fillText(String.valueOf(coins), xPositionReference - 15, yPosition, textWidth);
-        graphicsContext.fillText(String.valueOf(score), xPositionReference - textWidth - 15, yPosition, textWidth);
+        graphicsContext.fillText(String.valueOf(coins), xPositionReference - marginRight, yPosition, textWidth);
+        graphicsContext.fillText(String.valueOf(score), xPositionReference - textWidth - marginRight, yPosition, textWidth);
     }
 
     private void displayInformation(String info) {
@@ -325,9 +327,6 @@ public class GameViewController extends ViewController {
         graphicsContext.setTextAlign(TextAlignment.CENTER);
         graphicsContext.fillText(info, xPosition, yPosition);
     }
-
-
-
 
     private void removeKeyHandlers() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
