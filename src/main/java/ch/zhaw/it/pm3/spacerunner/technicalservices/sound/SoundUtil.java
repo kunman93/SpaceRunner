@@ -1,10 +1,23 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.sound;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
 public class SoundUtil {
+    // Singleton pattern
+    private static final SoundUtil instance = new SoundUtil();
+
+    /**
+     * private constructor for the singleton-pattern
+     */
+    private SoundUtil(){}
+
+    public static SoundUtil getInstance(){
+        return instance;
+    }
 
     //TODO: Copied from old project...
 
