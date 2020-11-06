@@ -63,7 +63,12 @@ public class GameController {
             processCollision(detectCollision());
 
             generateObstacles();
-            moveElements();
+            try{
+                moveElements();
+
+            }catch (Exception e){
+                System.out.println("Motherfucker");
+            }
             removePastDrawables();
 
         }
@@ -254,7 +259,15 @@ public class GameController {
      */
     private void removePastDrawables() {
         elements.removeIf((SpaceElement element) ->
-                element.getCurrentPosition().x + element.getWidth() < 0);
+        {
+            try {
+                return element.getCurrentPosition().x + visualManager.getElementWidth(element.getClass()) < 0;
+            } catch (VisualNotSetException e) {
+                //TODO: hanle
+                e.printStackTrace();
+                return true;
+            }
+        });
     }
 
     /**

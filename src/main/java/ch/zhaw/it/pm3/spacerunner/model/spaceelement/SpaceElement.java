@@ -1,37 +1,20 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualElement;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.*;
 
 public abstract class SpaceElement implements VisualElement {
 
+    private VisualManager visualManager = VisualManager.getInstance();
     //todo: Idee: Object die alle variablen (position, width, length) umfasst
     private Point position = new Point(0, 0);
     private Point velocity = new Point(0, 0);
-    private int height;
-    private int width;
 
     public SpaceElement(Point startPosition) {
-        this.width = width;
-        this.height = height;
         this.position = startPosition;
-    }
-
-    protected void setHeight(int height) {
-        this.height = height;
-    }
-
-    protected void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
     }
 
     /**
@@ -106,19 +89,30 @@ public abstract class SpaceElement implements VisualElement {
      * @return Returns true if SpaceElements Overlapp
      */
     public boolean doesCollide(SpaceElement s){
-        return pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y, this)
-                || pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y + s.getHeight(), this)
-                || pointInObject(s.getCurrentPosition().x +s.getWidth(), s.getCurrentPosition().y, this)
-                || pointInObject(s.getCurrentPosition().x + s.getWidth(), s.getCurrentPosition().y + s.getHeight(), this)
-                || pointInObject(position.x, position.y, s)
-                || pointInObject(position.x, position.y + height, s)
-                || pointInObject(position.x + width, position.y, s)
-                || pointInObject(position.x + width, position.y + height, s)
-        ;
+        try {
+            return pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y, this)
+                    || pointInObject(s.getCurrentPosition().x, s.getCurrentPosition().y + visualManager.getElementHeight(s.getClass()), this)
+                    || pointInObject(s.getCurrentPosition().x + visualManager.getElementWidth(s.getClass()), s.getCurrentPosition().y, this)
+                    || pointInObject(s.getCurrentPosition().x + visualManager.getElementWidth(s.getClass()), s.getCurrentPosition().y + visualManager.getElementHeight(s.getClass()), this)
+                    || pointInObject(position.x, position.y, s)
+                    || pointInObject(position.x, position.y + visualManager.getElementHeight(this.getClass()), s)
+                    || pointInObject(position.x + visualManager.getElementWidth(this.getClass()), position.y, s)
+                    || pointInObject(position.x + visualManager.getElementWidth(this.getClass()), position.y + visualManager.getElementHeight(this.getClass()), s);
+        }catch(VisualNotSetException e){
+            //TODO: handle
+            e.printStackTrace();
+            return true;
+        }
     }
 
     private boolean pointInObject(float x, float y, SpaceElement s){
-        return x > s.getCurrentPosition().x && x < s.getCurrentPosition().x + s.getWidth() && y > s.getCurrentPosition().y && y < s.getCurrentPosition().y + s.getHeight();
+        try {
+            return x > s.getCurrentPosition().x && x < s.getCurrentPosition().x + visualManager.getElementWidth(s.getClass()) && y > s.getCurrentPosition().y && y < s.getCurrentPosition().y + visualManager.getElementHeight(s.getClass());
+        }catch(VisualNotSetException e){
+            //TODO: handle
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
