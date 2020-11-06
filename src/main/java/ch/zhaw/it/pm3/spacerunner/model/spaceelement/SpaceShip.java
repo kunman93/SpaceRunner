@@ -38,6 +38,10 @@ public class SpaceShip extends SpaceElement {
         directMove(DOWN);
     }
 
+    /**
+     * sets the spaceship speed for UP and DOWN
+     * @param spaceShipSpeed
+     */
     public void setSpaceShipSpeed(int spaceShipSpeed){
         UP = new Point(0,-spaceShipSpeed);
         DOWN = new Point(0,spaceShipSpeed);
