@@ -15,7 +15,20 @@ import java.util.Set;
  * Utility tool to persist data (load / save)
  */
 public class PersistenceUtil {
+    // Singleton pattern
+    private static final PersistenceUtil instance = new PersistenceUtil();
+
     private static final Gson gson = new Gson();
+
+    /**
+     * private constructor for the singleton-pattern
+     */
+    private PersistenceUtil(){}
+
+    public static PersistenceUtil getInstance(){
+        return instance;
+    }
+
 
     /**
      * Load the profile of the player from the disk where it is saved in json.
