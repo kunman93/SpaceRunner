@@ -4,14 +4,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SpaceWorld extends SpaceElement{
-    private static int spaceWorldHeight;
-    private static int spaceWorldWidth;
-
-    public SpaceWorld(Point startPosition, int width, int height) {
+  public SpaceWorld(Point startPosition) {
         super(startPosition);
-        spaceWorldHeight = height;
-        spaceWorldWidth = width;
-        setElementHitbox();
     }
 
     @Override
@@ -29,11 +23,5 @@ public class SpaceWorld extends SpaceElement{
         }
 
         setCurrentPosition(position);
-    }
-
-    @Override
-    protected void setElementHitbox() {
-        setHeight(spaceWorldHeight);
-        setWidth(spaceWorldWidth);
     }
 }

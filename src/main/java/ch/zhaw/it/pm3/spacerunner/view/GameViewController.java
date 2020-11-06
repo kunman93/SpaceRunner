@@ -4,7 +4,6 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -275,28 +274,18 @@ public class GameViewController extends ViewController {
 
 
     public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
-        //TODO: Should we clear it?
-
-        //Platform.runLater(()->{
-
-
-
-            for(SpaceElement spaceElement : spaceElements){
-                Point position = spaceElement.getCurrentPosition();
-                Image image = null;
-                try {
-                    image = SwingFXUtils.toFXImage(visualManager.getVisual(spaceElement.getClass()), null);
-                } catch (VisualNotSetException e) {
-                    e.printStackTrace();
-                    //TODO: handle
-                }
-                graphicsContext.drawImage(image, position.x, position.y);
-                //TODO: possible memory leak
+        for (SpaceElement spaceElement : spaceElements) {
+            Point position = spaceElement.getCurrentPosition();
+            Image image = null;
+            try {
+                image = SwingFXUtils.toFXImage(visualManager.getVisual(spaceElement.getClass()), null);
+            } catch (VisualNotSetException e) {
+                e.printStackTrace();
+                //TODO: handle
             }
-
-
-        //});
-
+            graphicsContext.drawImage(image, position.x, position.y);
+            //TODO: possible memory leak
+        }
     }
 
     private void displayCollectedCoins(int coins) {

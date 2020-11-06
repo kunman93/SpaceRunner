@@ -114,8 +114,13 @@ public class GameController {
                 spaceShip.directMoveUp();
                 break;
             case DOWN:
-                if (spaceShip.getCurrentPosition().y + (spaceShip.getHeight() * VisualScaling.SPACE_SHIP.getScaling())
-                        >= height) return; //TODO canvas = 500.0, height
+                try {
+                    //TODO: fix spaceship out of view
+                    if (spaceShip.getCurrentPosition().y + visualManager.getElementHeight(SpaceShip.class) >= height) return;
+                } catch (VisualNotSetException e) {
+                    //TODO: handle
+                    e.printStackTrace();
+                }
                 spaceShip.directMoveDown();
                 break;
         }
@@ -168,7 +173,7 @@ public class GameController {
         //TODO: check if 16:9 view
 
 
-        gameSpeedTimer = new Timer("Timer");
+        gameSpeedTimer = new Timer("GameSpeedTimer");
         gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
 
         gameOver = false;
@@ -180,9 +185,8 @@ public class GameController {
         elements = new HashSet<>();
 
         setUpSpaceElementImages();
-        setUpSpaceElementHitboxes();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
-        background = new SpaceWorld(new Point(0, 0), 2880, 640);
+        background = new SpaceWorld(new Point(0, 0));
         spaceShip = new SpaceShip(new Point(20, 100));
 
         fps = playerProfile.getFps();
@@ -212,12 +216,6 @@ public class GameController {
         this.width = width;
         this.visualManager.setHeight(height);
 
-        for (SpaceElement spaceElement : elements) {
-            if (spaceElement instanceof UFO) {
-                ((UFO) spaceElement).setCanvasHeightLimit(height);
-            }
-        }
-        
         //TODO: Update Images and hitboxes
         //TODO: UFO, ElementPreset
     }
@@ -238,15 +236,6 @@ public class GameController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void setUpSpaceElementHitboxes() {
-        SpaceShip.setClassHitbox((int)(height*VisualScaling.SPACE_SHIP.getScaling()), (int)(height*VisualScaling.SPACE_SHIP.getScaling()*VisualHeightToWidthRatio.SPACE_SHIP.getRatio()));
-        Coin.setClassHitbox((int)(height*VisualScaling.COIN.getScaling()), (int)(height*VisualScaling.COIN.getScaling()*VisualHeightToWidthRatio.COIN.getRatio()));
-        Asteroid.setClassHitbox((int)(height*VisualScaling.ASTEROID.getScaling()), (int)(height*VisualScaling.ASTEROID.getScaling()*VisualHeightToWidthRatio.ASTEROID.getRatio()));
-        UFO.setClassHitbox((int)(height*VisualScaling.UFO.getScaling()), (int)(height*VisualScaling.UFO.getScaling()*VisualHeightToWidthRatio.UFO.getRatio()));
-        //TODO: When powerup impelmented
-        //PowerUp.setClassHitbox((int)(height*VisualScaling.???.getScaling()), (int)(height*VisualScaling.???.getScaling()*VisualHeightToWidthRatio.???.getRatio()));
     }
 
     private void setUpCoinWithAnimation() {

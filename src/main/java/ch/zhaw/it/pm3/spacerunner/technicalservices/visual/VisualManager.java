@@ -21,6 +21,14 @@ public class VisualManager<T extends VisualElement>{
 
     }
 
+    public int getElementHeight(Class<T> elementClass) throws VisualNotSetException {
+        return getVisual(elementClass).getHeight();
+    }
+
+    public int getElementWidth(Class<T> elementClass) throws VisualNotSetException {
+        return getVisual(elementClass).getWidth();
+    }
+
     public void flipAndSetVisual(Class<T> elementClass, VisualSVGFile imagePath, VisualScaling visualScaling, boolean flipHorizontally, boolean flipVertically){
         BufferedImage image = getSVGBufferedImage(imagePath, visualScaling);
         image = flipVisual(flipHorizontally, flipVertically, image);

@@ -121,8 +121,4 @@ public abstract class SpaceElement implements VisualElement {
         return x > s.getCurrentPosition().x && x < s.getCurrentPosition().x + s.getWidth() && y > s.getCurrentPosition().y && y < s.getCurrentPosition().y + s.getHeight();
     }
 
-    protected abstract void setElementHitbox();
-
-    // Cant have abstract & static method
-    //public abstract void setHitbox(int height, int width);
 }
