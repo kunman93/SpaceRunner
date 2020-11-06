@@ -19,8 +19,8 @@ public class UFO extends Obstacle {
 
     @Override
     public void move() {
-        if (canvasHeightLimit == 0 ) {
-            throw new IllegalArgumentException("canvasHeightLimit not set");
+        if (canvasHeightLimit == 0) {
+            throw new IllegalArgumentException();
         }
         //TODO: sinus curve for example
         Point currentPosition = getCurrentPosition();
