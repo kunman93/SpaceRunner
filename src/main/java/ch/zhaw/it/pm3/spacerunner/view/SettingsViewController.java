@@ -16,7 +16,7 @@ public class SettingsViewController extends ViewController implements EventHandl
     public TextField playerName;
     public Slider soundVolume;
     public Slider framerate;
-    PlayerProfile player;
+    private PlayerProfile player;
 
     @FXML
     public void showMenu() {
