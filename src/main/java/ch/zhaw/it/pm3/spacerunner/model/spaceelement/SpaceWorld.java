@@ -16,8 +16,9 @@ public class SpaceWorld extends SpaceElement{
     public void move() {
         Point position = getCurrentPosition();
 
+        //TODO: Fix background visualManager.getWidth()
         try {
-            if(position.x + visualManager.getElementPixelWidth(SpaceWorld.class) - visualManager.getWidth() < 0){
+            if(position.x + visualManager.getElementPixelWidth(SpaceWorld.class) - 960 < 0){
                 position.x = 0;
             }else{
                 position.x += getVelocity().x;
