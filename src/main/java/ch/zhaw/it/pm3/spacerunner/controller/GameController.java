@@ -210,6 +210,12 @@ public class GameController {
         this.width = width;
         this.visualManager.setHeight(height);
 
+        for (SpaceElement spaceElement : elements) {
+            if (spaceElement instanceof UFO) {
+                ((UFO) spaceElement).setCanvasHeightLimit(height);
+            }
+        }
+        
         //TODO: Update Images and hitboxes
         //TODO: UFO, ElementPreset
     }
