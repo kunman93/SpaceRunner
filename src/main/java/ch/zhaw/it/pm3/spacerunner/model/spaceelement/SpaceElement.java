@@ -5,13 +5,14 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public abstract class SpaceElement implements VisualElement {
 
     private VisualManager visualManager = VisualManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getInstance();
     //todo: Idee: Object die alle variablen (position, width, length) umfasst
     private Point position = new Point(0, 0);
-    private Point velocity = new Point(0, 0);
 
     public SpaceElement(Point startPosition) {
         this.position = startPosition;
@@ -21,48 +22,18 @@ public abstract class SpaceElement implements VisualElement {
      * will change the position by the current velocity
      */
     public void move() {
+        Point velocity = null;
+        try {
+            velocity = velocityManager.getVelocity(this.getClass());
+        } catch (VelocityNotSetException e) {
+            //TODO: handle
+            e.printStackTrace();
+        }
+
         position.x += velocity.x;
         position.y += velocity.y;
     }
 
-    /**
-     * will change the position by the given point
-     * @param direction
-     */
-    public void move(Point direction) {
-        setVelocity(direction);
-        position.x += velocity.x;
-        position.y += velocity.y;
-    }
-
-    /**
-     * adds direction to velocity if direction == null no changes to Velocity will be made
-     * @param direction
-     */
-    //TODO: remove accelerate and velocity => they are not used for their intended purposes
-    public void accelerate(Point direction){
-        if (direction == null){
-            velocity.x += 0;
-            velocity.y += 0;
-        } else {
-            velocity.x += direction.x;
-            velocity.y += direction.y;
-        }
-    }
-
-    /**
-     * sets Velocity if direction == null then it will be set to 0
-     * @param direction
-     */
-    public void setVelocity(Point direction){
-        if (direction == null){
-            velocity.x = 0;
-            velocity.y = 0;
-        } else {
-            velocity.x = direction.x;
-            velocity.y = direction.y;
-        }
-    }
 
     public Point getCurrentPosition() {
         return position;
@@ -76,11 +47,15 @@ public abstract class SpaceElement implements VisualElement {
      * @return Returns Point where the SpaceElement will be after one move()
      */
     public Point getNextPosition(){
-        return new Point(position.x + velocity.x, position.y + velocity.y);
-    }
+        Point velocity = null;
+        try {
+            velocity = velocityManager.getVelocity(this.getClass());
+        } catch (VelocityNotSetException e) {
+            //TODO: handle
+            e.printStackTrace();
+        }
 
-    public Point getVelocity(){
-        return velocity;
+        return new Point(position.x + velocity.x, position.y + velocity.y);
     }
 
 
