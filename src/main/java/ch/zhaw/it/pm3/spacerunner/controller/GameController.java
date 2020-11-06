@@ -309,6 +309,10 @@ public class GameController {
         return null;
     }
 
+    /**
+     * exevutes effects depending on type of spaceElement
+     * @param spaceElement
+     */
     private void processCollision(SpaceElement spaceElement) {
         if (spaceElement == null) return;
 
