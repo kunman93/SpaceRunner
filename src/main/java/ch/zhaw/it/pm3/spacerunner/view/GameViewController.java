@@ -105,7 +105,11 @@ public class GameViewController extends ViewController {
 
             updateGameFrame();
             gameController.togglePause();
-            //TODO: Add text to press space to start
+
+            //TODO: not displayed yet
+            Platform.runLater(() -> {
+                displayInformation("press SPACE to start");
+            });
             primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
 
 
@@ -117,7 +121,6 @@ public class GameViewController extends ViewController {
                         lastUpdate = currentNanoTime;
                         try{
                             framesCount++;
-
                             updateGameFrame();
 
                             lastProcessingTime = (System.nanoTime() - currentNanoTime);
@@ -135,8 +138,6 @@ public class GameViewController extends ViewController {
 
                 }
             };
-
-
             gameLoop.start();
         }).start();
 
@@ -149,8 +150,7 @@ public class GameViewController extends ViewController {
         gameController.processFrame(upPressed, downPressed);
         clearCanvas();
         displayUpdatedSpaceElements(gameController.getGameElements());
-        displayCollectedCoins(gameController.getCollectedCoins());
-        displayCurrentScore(gameController.getScore());
+        displayCoinsAndScore(gameController.getCollectedCoins(), gameController.getScore());
 
         boolean gameOver = gameController.isGameOver();
 
@@ -182,10 +182,10 @@ public class GameViewController extends ViewController {
         };
     }
 
-
     private void calc16to9Proportions() {
-        //TODO: 25 magic number => dont like
-        double height = primaryStage.getHeight() - 25; // subtract 20 because app-bar overflows game screen
+        double appBarHeight = 40;
+
+        double height = primaryStage.getHeight() - appBarHeight;
         double width = primaryStage.getWidth();
         if (width / 16 < height / 9) {
             height = width * 9 / 16;
@@ -227,8 +227,7 @@ public class GameViewController extends ViewController {
         loadingAnimation = new AnimationTimer() {
             BufferedImage img = visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 80f);
             long lastLoadingAnimation = 0;
-            int i = 0;
-            long framerate = 50_000_000L;
+            long framerate = 100_000_000L;
 
             @Override
             public void handle(long l) {
@@ -237,10 +236,8 @@ public class GameViewController extends ViewController {
                     loadingAnimation = null;
                 } else if (l - lastLoadingAnimation >= framerate) {
                     lastLoadingAnimation = l;
-
                     clearCanvas();
-                    i = i % 3 + 1;
-                    graphicsContext.fillText("Game is loading" + ".".repeat(Math.max(0, i)), gameCanvas.getWidth() / 2,
+                    graphicsContext.fillText("Game is loading...", gameCanvas.getWidth() / 2,
                             (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
                     img = visualUtil.rotateImage(img, -1);
                     graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null), (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
@@ -250,8 +247,6 @@ public class GameViewController extends ViewController {
             }
         };
         loadingAnimation.start();
-
-
     }
 
 
@@ -299,26 +294,40 @@ public class GameViewController extends ViewController {
 
     }
 
-    private void displayCollectedCoins(int coins) {
+    private void displayCoinsAndScore(int coins, int score) {
+        double xPositionReference = gameCanvas.getWidth();
+        double yPosition = 5;
+        double textWidth = 100;
         BufferedImage image = null;
         try {
             image = visualManager.getVisual(UIElement.COIN_COUNT.getClass());
+            xPositionReference -= image.getWidth();
+            graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
+                    (gameCanvas.getWidth() - image.getWidth() - 10), yPosition, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
             // todo handle
             e.printStackTrace();
         }
-        //Image image = SwingFXUtils.toFXImage(VisualUtil.loadSVGImage(SpaceRunnerApp.class.getResource("images/shiny-coin1.svg"), 40f), null);
-        graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null), (gameCanvas.getWidth() - image.getWidth() - 10), 5, image.getWidth(), image.getHeight());
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, image.getHeight()));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
-        graphicsContext.fillText(String.valueOf(coins),  (gameCanvas.getWidth() - image.getWidth() - 15),5, 100);
+        graphicsContext.fillText(String.valueOf(coins), xPositionReference - 15, yPosition, textWidth);
+        graphicsContext.fillText(String.valueOf(score), xPositionReference - textWidth - 15, yPosition, textWidth);
     }
 
-    private void displayCurrentScore(int score) {
-
+    private void displayInformation(String info) {
+        double xPosition = gameCanvas.getWidth() / 2;
+        double yPosition = gameCanvas.getHeight() * 0.2;
+        double fontSize = 40;
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.setFont(new Font(DEFAULT_FONT, fontSize));
+        graphicsContext.setTextAlign(TextAlignment.CENTER);
+        graphicsContext.fillText(info, xPosition, yPosition);
     }
+
+
+
 
     private void removeKeyHandlers() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
@@ -328,7 +337,6 @@ public class GameViewController extends ViewController {
     private void initializeUiElements(){
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
         visualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation, VisualScaling.COIN_COUNT);
-
     }
 
 }
