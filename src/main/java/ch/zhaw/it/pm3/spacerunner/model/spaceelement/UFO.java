@@ -11,9 +11,8 @@ public class UFO extends Obstacle {
 
     private boolean changeDirection = false;
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
-    private Point vectorUp = new Point(-HorizontalSpeed.UFO.getSpeed(),-VerticalSpeed.UFO.getSpeed());
-    private Point vectorDown = new Point(-HorizontalSpeed.UFO.getSpeed(),VerticalSpeed.UFO.getSpeed());
     private VisualManager visualManager = VisualManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getInstance();
 
     public UFO(Point startPosition) {
         super(startPosition);
@@ -27,31 +26,38 @@ public class UFO extends Obstacle {
         int bottomBorderLimitOfCanvas = visualManager.getHeight();
         int topBorderLimitOfCanvas = 0;
 
+        Point velocity = null;
+        try {
+            velocity = velocityManager.getVelocity(this.getClass());
+        } catch (VelocityNotSetException e) {
+            //TODO: handle
+            e.printStackTrace();
+        }
+
         if(!reachedLowerThreshold(currentPosition, bottomBorderLimitOfCanvas) && !changeDirection){
-            descend();
+            descend(velocity, currentPosition);
         }else {
-            ascend(currentPosition, topBorderLimitOfCanvas);
+            ascend(velocity,currentPosition, topBorderLimitOfCanvas);
         }
     }
 
-    @Override
-    public void setVelocity(Point direction){
-        vectorUp = new Point(direction.x, -direction.y);
-        vectorDown = new Point(direction.x, direction.y);
-    }
-
-    private void ascend(Point currentPosition, int topBorderLimitOfCanvas) {
+    private void ascend(Point velocity, Point currentPosition, int topBorderLimitOfCanvas) {
         changeDirection = true;
-        super.setVelocity(vectorUp);
-        super.move();
+
+        currentPosition.x += velocity.x;
+        currentPosition.y -= velocity.y;
+
+
         if(reachedUpperThreshold(currentPosition, topBorderLimitOfCanvas)){
             changeDirection = false;
         }
     }
 
-    private void descend() {
-        super.setVelocity(vectorDown);
-        super.move();
+    private void descend(Point velocity, Point currentPosition) {
+
+        currentPosition.x += velocity.x;
+        currentPosition.y += velocity.y;
+
     }
 
     private boolean reachedUpperThreshold(Point currentPosition, int topBorderLimitOfCanvas) {

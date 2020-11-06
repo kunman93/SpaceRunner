@@ -9,12 +9,14 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.*;
 
 public class GameController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND = 0.05;
+    private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
 
     private Timer gameSpeedTimer;
 
@@ -43,6 +45,7 @@ public class GameController {
     private int height = 0;
 
     private final VisualManager visualManager = VisualManager.getInstance();
+    private final VelocityManager velocityManager = VelocityManager.getInstance();
 
 
 
@@ -72,22 +75,24 @@ public class GameController {
 
     private void updateElementsSpeed() {
         //TODO: SpaceElementSpeedManager and use velocity
-        for (SpaceElement spaceElement : elements) {
-            if (spaceElement instanceof UFO) {
-                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
-            } else if (spaceElement instanceof Asteroid) {
-                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.ASTEROID.getSpeed() * horizontalGameSpeed), VerticalSpeed.ASTEROID.getSpeed()));
-            } else if (spaceElement instanceof Coin) {
-                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.COIN.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
-            }
-        }
+        velocityManager.accelerateAll(new Point2D.Double(-RELATIVE_GAME_SPEED_INCREASE_PER_SECOND, RELATIVE_GAME_SPEED_INCREASE_PER_SECOND));
 
-        if(spaceShip != null){
-            spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
-        }
-        if(background != null){
-            background.setVelocity(new Point((int) (-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
-        }
+//        for (SpaceElement spaceElement : elements) {
+//            if (spaceElement instanceof UFO) {
+//                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
+//            } else if (spaceElement instanceof Asteroid) {
+//                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.ASTEROID.getSpeed() * horizontalGameSpeed), VerticalSpeed.ASTEROID.getSpeed()));
+//            } else if (spaceElement instanceof Coin) {
+//                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.COIN.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
+//            }
+//        }
+//
+//        if(spaceShip != null){
+//            spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
+//        }
+//        if(background != null){
+//            background.setVelocity(new Point((int) (-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
+//        }
     }
 
     /**
@@ -172,7 +177,7 @@ public class GameController {
      */
     public void initialize() {
         //TODO: check if 16:9 view
-
+        velocityManager.initialize();
 
         gameSpeedTimer = new Timer("GameSpeedTimer");
         gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);

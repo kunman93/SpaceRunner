@@ -11,6 +11,7 @@ public class SpaceWorld extends SpaceElement{
     }
 
     private VisualManager visualManager = VisualManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getInstance();
 
     @Override
     public void move() {
@@ -21,10 +22,12 @@ public class SpaceWorld extends SpaceElement{
             if(position.x + visualManager.getElementPixelWidth(SpaceWorld.class) - 960 < 0){
                 position.x = 0;
             }else{
-                position.x += getVelocity().x;
+                position.x += velocityManager.getVelocity(this.getClass()).x;
             }
         } catch (VisualNotSetException e) {
             //TODO: handle
+            e.printStackTrace();
+        } catch (VelocityNotSetException e) {
             e.printStackTrace();
         }
 
