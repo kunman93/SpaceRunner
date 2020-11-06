@@ -179,9 +179,10 @@ public class GameController {
         elements = new HashSet<>();
 
         setUpSpaceElementImages();
+        setUpSpaceElementHitboxes();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point(0, 0), 2880, 640);
-        spaceShip = new SpaceShip(new Point(20, 100), 200, 50);
+        spaceShip = new SpaceShip(new Point(20, 100));
 
         fps = playerProfile.getFps();
 
@@ -230,6 +231,15 @@ public class GameController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setUpSpaceElementHitboxes() {
+        SpaceShip.setClassHitbox((int)(height*VisualScaling.SPACE_SHIP.getScaling()), (int)(height*VisualScaling.SPACE_SHIP.getScaling()*VisualHeightToWidthRatio.SPACE_SHIP.getRatio()));
+        Coin.setClassHitbox((int)(height*VisualScaling.COIN.getScaling()), (int)(height*VisualScaling.COIN.getScaling()*VisualHeightToWidthRatio.COIN.getRatio()));
+        Asteroid.setClassHitbox((int)(height*VisualScaling.ASTEROID.getScaling()), (int)(height*VisualScaling.ASTEROID.getScaling()*VisualHeightToWidthRatio.ASTEROID.getRatio()));
+        UFO.setClassHitbox((int)(height*VisualScaling.UFO.getScaling()), (int)(height*VisualScaling.UFO.getScaling()*VisualHeightToWidthRatio.UFO.getRatio()));
+        //TODO: When powerup impelmented
+        //PowerUp.setClassHitbox((int)(height*VisualScaling.???.getScaling()), (int)(height*VisualScaling.???.getScaling()*VisualHeightToWidthRatio.???.getRatio()));
     }
 
     private void setUpCoinWithAnimation() {

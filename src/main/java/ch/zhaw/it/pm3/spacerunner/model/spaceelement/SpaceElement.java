@@ -3,7 +3,6 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualElement;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public abstract class SpaceElement implements VisualElement {
 
@@ -13,12 +12,19 @@ public abstract class SpaceElement implements VisualElement {
     private int height;
     private int width;
 
-    public SpaceElement(Point startPosition, int width, int height) {
+    public SpaceElement(Point startPosition) {
         this.width = width;
         this.height = height;
         this.position = startPosition;
     }
 
+    protected void setHeight(int height) {
+        this.height = height;
+    }
+
+    protected void setWidth(int width) {
+        this.width = width;
+    }
 
     public int getHeight() {
         return height;
@@ -87,4 +93,8 @@ public abstract class SpaceElement implements VisualElement {
         return x > position.x && x < position.x + width && y > position.y && y < position.y + height;
     }
 
+    protected abstract void setElementHitbox();
+
+    // Cant have abstract & static method
+    //public abstract void setHitbox(int height, int width);
 }
