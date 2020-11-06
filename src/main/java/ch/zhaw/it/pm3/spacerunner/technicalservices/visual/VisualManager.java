@@ -14,7 +14,7 @@ public class VisualManager<T extends VisualElement>{
 
     private int height = 500;
     private static VisualManager instance = new VisualManager();
-    private Map<Class<T>, BufferedImage> visualList = new HashMap<>();
+    private Map<Class<T>, Visual> visualList = new HashMap<>();
     private Map<Class<T>, AnimatedVisual> animatedVisualList = new HashMap<>();
 
     private VisualManager(){
@@ -32,23 +32,30 @@ public class VisualManager<T extends VisualElement>{
     public void flipAndSetVisual(Class<T> elementClass, VisualSVGFile imagePath, VisualScaling visualScaling, boolean flipHorizontally, boolean flipVertically){
         BufferedImage image = getSVGBufferedImage(imagePath, visualScaling);
         image = flipVisual(flipHorizontally, flipVertically, image);
-        visualList.put(elementClass, image);
+
+        Visual visual = new Visual(image, imagePath);
+        visualList.put(elementClass, visual);
     }
 
     public void flipAndSetVisual(Class<T> elementClass, VisualFile imagePath, boolean flipHorizontally, boolean flipVertically){
         BufferedImage image = getBufferedImage(imagePath);
         image = flipVisual(flipHorizontally, flipVertically, image);
-        visualList.put(elementClass, image);
+
+
+        Visual visual = new Visual(image, imagePath);
+        visualList.put(elementClass, visual);
     }
 
     public void setVisual(Class<T> elementClass, VisualFile imagePath){
         BufferedImage image = getBufferedImage(imagePath);
-        visualList.put(elementClass, image);
+        Visual visual = new Visual(image, imagePath);
+        visualList.put(elementClass, visual);
     }
 
     public void setVisual(Class<T> elementClass, VisualSVGFile imagePath, VisualScaling visualScaling){
         BufferedImage image = getSVGBufferedImage(imagePath, visualScaling);
-        visualList.put(elementClass, image);
+        Visual visual = new Visual(image, imagePath);
+        visualList.put(elementClass, visual);
     }
 
     private BufferedImage flipVisual(boolean flipHorizontally, boolean flipVertically, BufferedImage image) {
@@ -89,12 +96,12 @@ public class VisualManager<T extends VisualElement>{
         if(animatedVisual != null){
             return animatedVisual;
         }else{
-            BufferedImage image = visualList.get(elementClass);
-            if(image == null){
+            Visual visual = visualList.get(elementClass);
+            if(visual == null){
                 throw new VisualNotSetException("Visual for " + elementClass.toString() + " was not set!");
             }
 
-            return image;
+            return visual.getImage();
         }
     }
 
