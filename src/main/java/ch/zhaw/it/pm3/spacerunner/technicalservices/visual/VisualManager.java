@@ -28,21 +28,20 @@ public class VisualManager<T extends VisualElement>{
     }
 
     public int getElementPixelHeight(Class<T> elementClass) throws VisualNotSetException {
-        return getVisual(elementClass).getHeight();
+        return getImage(elementClass).getHeight();
     }
 
     public int getElementPixelWidth(Class<T> elementClass) throws VisualNotSetException {
-        return getVisual(elementClass).getWidth();
+        return getImage(elementClass).getWidth();
     }
 
-    //TODO: implement
-//    public int getElementRelativeHeight(Class<T> elementClass) throws VisualNotSetException {
-//        return getVisual(elementClass).get();
-//    }
-//
-//    public int getElementRelativeWidth(Class<T> elementClass) throws VisualNotSetException {
-//        return getVisual(elementClass).getWidth();
-//    }
+    public double getElementRelativeHeight(Class<T> elementClass) throws VisualNotSetException {
+        return getVisual(elementClass).getVisualScaling().getScaling();
+    }
+
+    public double getElementRelativeWidth(Class<T> elementClass) throws VisualNotSetException {
+        return getImage(elementClass).getWidth() / ((double)width);
+    }
 
     public void setVisual(Class<T> elementClass, Visual visual){
         BufferedImage image;
@@ -84,17 +83,23 @@ public class VisualManager<T extends VisualElement>{
     public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual){
         VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles().getAnimationVisuals();
 
-        List<BufferedImage> visuals = new ArrayList<>();
+        List<Visual> visuals = new ArrayList<>();
         for(VisualSVGFile svgFile : svgFiles){
-            visuals.add(getSVGBufferedImage(svgFile, animatedVisual.getVisualScaling()));
+            Visual currentVisual = new Visual(svgFile, animatedVisual.getVisualScaling());
+            currentVisual.setImage(getSVGBufferedImage(svgFile, animatedVisual.getVisualScaling()));
+            visuals.add(currentVisual);
         }
-        animatedVisual.setVisuals(visuals.toArray(BufferedImage[]::new));
+        animatedVisual.setVisuals(visuals.toArray(Visual[]::new));
 
         animatedVisualList.put(elementClass, animatedVisual);
     }
 
-    public BufferedImage getVisual(Class<T> elementClass) throws VisualNotSetException {
-        BufferedImage animatedVisual = getAnimatedVisual(elementClass);
+    public BufferedImage getImage(Class<T> elementClass) throws VisualNotSetException {
+        return getVisual(elementClass).getImage();
+    }
+
+    private Visual getVisual(Class<T> elementClass) throws VisualNotSetException {
+        Visual animatedVisual = getAnimatedVisual(elementClass);
         if(animatedVisual != null){
             return animatedVisual;
         }else{
@@ -103,11 +108,11 @@ public class VisualManager<T extends VisualElement>{
                 throw new VisualNotSetException("Visual for " + elementClass.toString() + " was not set!");
             }
 
-            return visual.getImage();
+            return visual;
         }
     }
 
-    private BufferedImage getAnimatedVisual(Class<T> elementClass) {
+    private Visual getAnimatedVisual(Class<T> elementClass) {
         AnimatedVisual visualsForAnimation = animatedVisualList.get(elementClass);
 
         if(visualsForAnimation == null){
