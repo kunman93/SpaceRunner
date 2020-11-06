@@ -11,6 +11,7 @@ public class UFO extends Obstacle {
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
     private Point vectorUp = new Point(-HorizontalSpeed.UFO.getSpeed(),-VerticalSpeed.UFO.getSpeed());
     private Point vectorDown = new Point(-HorizontalSpeed.UFO.getSpeed(),VerticalSpeed.UFO.getSpeed());
+    private int canvasHeightLimit = 0;
 
     public UFO(Point startPosition, int width, int height) {
         super(startPosition, width, height);
@@ -18,11 +19,14 @@ public class UFO extends Obstacle {
 
     @Override
     public void move() {
+        if (canvasHeightLimit == 0 ) {
+            throw new IllegalArgumentException("canvasHeightLimit not set");
+        }
         //TODO: sinus curve for example
         Point currentPosition = getCurrentPosition();
         //TODO: access Canvas height and width? maybe as static variable
-        int bottomBorderLimitOfCanvas = 200;
-        int topBorderLimitOfCanvas = 20;
+        int bottomBorderLimitOfCanvas = canvasHeightLimit;
+        int topBorderLimitOfCanvas = 0;
 
         if(!reachedLowerThreshold(currentPosition, bottomBorderLimitOfCanvas) && !changeDirection){
             descend();
@@ -44,6 +48,10 @@ public class UFO extends Obstacle {
         if(reachedUpperThreshold(currentPosition, topBorderLimitOfCanvas)){
             changeDirection = false;
         }
+    }
+
+    public void setCanvasHeightLimit(int canvasHeightLimit) {
+        this.canvasHeightLimit = canvasHeightLimit;
     }
 
     private void descend() {
