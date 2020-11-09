@@ -52,7 +52,6 @@ public class ShopViewController extends ViewController {
      * static class for each table row which contains various FXML elements
      * */
     static class Cell extends ListCell<ShopContent> {
-
         private HBox hBox = new HBox();
         private Label label = new Label("");
         private Button btn = new Button("buy");
@@ -79,6 +78,7 @@ public class ShopViewController extends ViewController {
                 label.setText(content.getTitle());
                 if (content.isEquipped()) {
                     btn.setText("equiped");
+                    // background-image: Häckchen
                 } else if (content.isPurchased()) {
                     btn.setText("equip");
                 }
@@ -86,15 +86,18 @@ public class ShopViewController extends ViewController {
                     if (!content.isPurchased()) {
                         inProgress.add(content);
                         btn.setText("purchase now");
+                        // background-image: Einkauftasche
                         // remove all other purchase now
                     } else if (inProgress.contains(content)) {
                         inProgress.remove(content);
                         content.buyContent();
                         btn.setText("equip");
+                        // background-image: Contains
                         // remove all other purchase now
                     } else if (!content.isEquipped()) {
                         content.setEquipped(true);
                         btn.setText("equiped");
+                        // background-image: Fragezeichen
                     }
                 });
                 setGraphic(hBox);
