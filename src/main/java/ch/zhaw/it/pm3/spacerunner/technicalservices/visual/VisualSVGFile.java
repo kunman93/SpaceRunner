@@ -15,6 +15,10 @@ public enum VisualSVGFile implements FileResource {
     SPACE_SHIP_1("space-ship.svg"),
     UFO_1("UFO.svg"),
     ASTEROID("comet-asteroid.svg"),
+    POWER_UP_SPAWN_RATE_UPGRADE("1.svg"),
+    DOUBLE_DURATION_COIN_UPGRADE("2.svg"),
+    SPACE_SHIP_SKIN_1("3.svg"),
+    SPACE_SHIP_SKIN_2("4.svg"),
     LOADING_SPINNER("loading-spinner.svg");
 
 

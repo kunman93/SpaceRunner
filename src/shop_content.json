@@ -1,0 +1,34 @@
+[
+  {
+    "contentId": 0,
+    "title": "1.5x PowerUp Chance",
+    "description": "The chance of spawning a PowerUp is multiplied by 1.5",
+    "price": 1000,
+    "imageId":  1,
+    "itemType":0
+  },
+  {
+    "contentId": 1,
+    "title": "Double duration of coin powerup",
+    "description": "Double duration of coin powerup",
+    "price": 1000,
+    "imageId":  2,
+    "itemType": 0
+  },
+  {
+    "contentId": 2,
+    "title": "Ship skin 1",
+    "description": "Ship skin 1",
+    "price": 1000,
+    "imageId":  3,
+    "itemType": 1
+  },
+  {
+    "contentId": 3,
+    "title": "Ship skin 2",
+    "description": "Ship skin 2",
+    "price": 1000,
+    "imageId":  4,
+    "itemType": 1
+  }
+]

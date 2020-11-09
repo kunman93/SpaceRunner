@@ -51,7 +51,6 @@ public class GameController {
 
 
     public void saveGame() {
-        //TODO: Use and maybe improve
         updatePlayerProfile();
         persistenceUtil.saveProfile(playerProfile);
     }
@@ -180,6 +179,11 @@ public class GameController {
 
         gameSpeedTimer = new Timer("GameSpeedTimer");
         gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
+
+        //TODO: PowerupTimer and Task (Every "3" seconds)
+        //TODO: Roll -> 0-100
+        // 0 - 10 => Double Coins
+        // 10 - 20 => Shield
 
         gameOver = false;
 
@@ -339,13 +343,22 @@ public class GameController {
             spaceShip.crash();
             gameSpeedTimer.cancel();
             gameOver = true;
+            saveGame();
         } else if (spaceElement instanceof Coin) {
             collectedCoins++;
             elements.remove(spaceElement);
         } else if (spaceElement instanceof PowerUp) {
+            //TODO: double coins for 10 seconds
+            //TODO: shield until crash
+
             // spaceElement.getEffect(); //ToDo one of the two
             // handlePowerUp(spaceElement)
         }
+    }
+
+    private Map<PowerUp, Boolean> getActivePowerUps(){
+        //TODO: rico implement
+        return null;
     }
 
     protected SpaceShip getSpaceShip() {

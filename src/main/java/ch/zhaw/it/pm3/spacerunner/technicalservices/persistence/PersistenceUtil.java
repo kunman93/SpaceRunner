@@ -54,7 +54,7 @@ public class PersistenceUtil {
         }
 
         //TODO: implement
-        playerProfile.setPurchasedContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
+        playerProfile.setActiveShopContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
 
         return playerProfile;
     }
