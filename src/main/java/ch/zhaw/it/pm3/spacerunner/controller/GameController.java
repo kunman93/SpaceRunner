@@ -2,8 +2,6 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
@@ -242,10 +240,10 @@ public class GameController {
      */
     private void setUpSpaceElementImages() {
         try {
-            visualManager.setVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
-            visualManager.setVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
-            visualManager.setVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-            visualManager.setVisual(SpaceWorld.class, new Visual(VisualFile.BACKGROUND_STARS));
+            visualManager.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+            visualManager.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
+            visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
+            visualManager.loadAndSetVisual(SpaceWorld.class, new Visual(VisualFile.BACKGROUND_STARS));
 
             setUpCoinWithAnimation();
 
@@ -257,12 +255,12 @@ public class GameController {
 
     private void setUpCoinWithAnimation() {
         //TODO: not needed but not bad^^
-        visualManager.setVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
+        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
 
 
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
-        visualManager.setAnimatedVisual(Coin.class, coinAnimation);
+        visualManager.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
 
     }
 

@@ -23,6 +23,7 @@ public class VisualManager<T extends VisualElement>{
         return instance;
     }
 
+
     private VisualManager(){
 
     }
@@ -43,7 +44,7 @@ public class VisualManager<T extends VisualElement>{
         return getImage(elementClass).getWidth() / ((double)width);
     }
 
-    public void setVisual(Class<T> elementClass, Visual visual){
+    public void loadAndSetVisual(Class<T> elementClass, Visual visual){
         BufferedImage image;
         if(visual.getVisualFile() == null){
             //load SVG
@@ -80,7 +81,7 @@ public class VisualManager<T extends VisualElement>{
     }
 
 
-    public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual){
+    public void loadAndSetAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual){
         VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles().getAnimationVisuals();
 
         List<Visual> visuals = new ArrayList<>();
@@ -129,13 +130,19 @@ public class VisualManager<T extends VisualElement>{
     public void setHeight(int height) {
         this.height = height;
         for (Map.Entry<Class<T>, Visual> classVisualEntry : visualList.entrySet()){
-            setVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
+            loadAndSetVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
         }
 
         for (Map.Entry<Class<T>, AnimatedVisual> classVisualEntry : animatedVisualList.entrySet()){
-            setAnimatedVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
+            loadAndSetAnimatedVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
         }
     }
+
+    public void clear(){
+        visualList = new HashMap<>();
+        animatedVisualList = new HashMap<>();
+    };
+
 
     public int getWidth() {
         return width;
