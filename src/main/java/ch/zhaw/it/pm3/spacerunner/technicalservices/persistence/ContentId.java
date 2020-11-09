@@ -14,5 +14,4 @@ public enum ContentId {
 
     public int getValue() { return value; }
 
-
 }
