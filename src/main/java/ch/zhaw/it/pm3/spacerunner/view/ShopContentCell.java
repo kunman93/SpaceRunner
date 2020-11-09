@@ -59,7 +59,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
                         // background-image: Contains
                         // remove all other purchase now
                     } else if (!content.isEquipped()) {
-                        content.setEquipped(true);
+                        content.equipContent(true);
                         btn.setText("equiped");
                         // background-image: Fragezeichen
                     }

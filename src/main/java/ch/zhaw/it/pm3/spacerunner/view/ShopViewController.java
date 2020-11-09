@@ -23,10 +23,11 @@ public class ShopViewController extends ViewController {
 
     private List<ShopContent> dummyData() {
         List<ShopContent> dummyData = new ArrayList<>();
-        dummyData.add(new ShopContent("NASA Shuttle", ItemType.PLAYER_MODEL, ContentId.NASA_SPACE_SHIP, false));
-        dummyData.add(new ShopContent("Millenium Falcon", ItemType.PLAYER_MODEL, ContentId.MILLENNIUM_FALCON, false));
-        dummyData.add(new ShopContent("NASA Shuttle 2", ItemType.PLAYER_MODEL, ContentId.NASA_SPACE_SHIP, true));
-        dummyData.add(new ShopContent("Millenium Falcon 2", ItemType.PLAYER_MODEL, ContentId.MILLENNIUM_FALCON, true));
+        //TODO: load from persistenceUtil
+        //dummyData.add(new ShopContent("NASA Shuttle", ItemType.PLAYER_MODEL, ContentId.NASA_SPACE_SHIP, false));
+        //dummyData.add(new ShopContent("Millenium Falcon", ItemType.PLAYER_MODEL, ContentId.MILLENNIUM_FALCON, false));
+        //dummyData.add(new ShopContent("NASA Shuttle 2", ItemType.PLAYER_MODEL, ContentId.NASA_SPACE_SHIP, true));
+        //dummyData.add(new ShopContent("Millenium Falcon 2", ItemType.PLAYER_MODEL, ContentId.MILLENNIUM_FALCON, true));
         return dummyData;
     }
 

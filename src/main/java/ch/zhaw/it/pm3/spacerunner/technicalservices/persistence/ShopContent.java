@@ -18,43 +18,21 @@ public class ShopContent {
     private boolean purchased;
     private boolean equipped;
 
-    public void setEquipped(boolean equipped) {
-        this.equipped = equipped;
-    }
-
-
-
-
-    public ShopContent(String title, ItemType itemType, ContentId contentId, boolean purchased) {
-        this.title = title;
-        this.itemType = itemType;
+    public ShopContent(ContentId contentId, String title, String description, int price, int imageId, ItemType itemType) {
         this.contentId = contentId;
-        this.purchased = purchased;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.imageId = imageId;
+        this.itemType = itemType;
     }
 
-    public boolean buyContent() {
+    public void buyContent() {
         purchased = true;
-        return purchased;
     }
 
-    public ContentId getContentId() {
-        return contentId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getImageId() {
-        return imageId;
-    }
-
-    public ItemType getItemType() {
-        return itemType;
+    public void equipContent(boolean equipped) {
+        this.equipped = equipped;
     }
 
     public boolean isPurchased() {
@@ -64,15 +42,7 @@ public class ShopContent {
     public boolean isEquipped() {
         return equipped;
     }
-  
-    public ShopContent(ContentId contentId, String title, String description, int price, int imageId, ItemType itemType) {
-        this.contentId = contentId;
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.imageId = imageId;
-        this.itemType = itemType;
-    }
+
 
     public ContentId getContentId() {
         return contentId;
