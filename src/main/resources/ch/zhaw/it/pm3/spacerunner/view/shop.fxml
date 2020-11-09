@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.view.ShopViewController"
+          stylesheets="@style.css"
+          prefHeight="490" prefWidth="800"
+          xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"
+          styleClass="darkbg">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="10" />
+        <ColumnConstraints percentWidth="90" />
+        <ColumnConstraints percentWidth="10" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="5" />
+        <RowConstraints percentHeight="75" />
+        <RowConstraints percentHeight="5" />
+        <RowConstraints percentHeight="15" />
+        <RowConstraints percentHeight="5" />
+    </rowConstraints>
+    <children>
+        <TabPane fx:id="tabPane" styleClass="shop" side="LEFT" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <tabs>
+                <Tab text="UPGRADES">
+                    <content>
+                        <Button onAction="#updateList" text="* update List" />
+                        <ListView fx:id="listView" />
+                    </content>
+                </Tab>
+                <Tab text="PLAYER MODEL">
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+    <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Button fx:id="homeButton" onAction="#showMenu" text="&lt; BACK"/>
+    </HBox>
+</GridPane>

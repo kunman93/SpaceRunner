@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 
-public class MenuViewController extends ViewController implements EventHandler<KeyEvent> {
+public class MenuViewController extends ViewController {
 
     @FXML
     public Button settingsButton;
@@ -18,17 +18,16 @@ public class MenuViewController extends ViewController implements EventHandler<K
     }
 
     @FXML
-    public void showSettings() {
-        getMain().setFXMLView(FXMLFile.SETTINGS);
+    public void showShop() {
+        getMain().setFXMLView(FXMLFile.SHOP);
     }
 
+    @FXML
+    public void showSettings() { getMain().setFXMLView(FXMLFile.SETTINGS); }
+
+    // todo remove from super
     @Override
     public void initialize() {
-
-    }
-
-    @Override
-    public void handle(KeyEvent keyEvent) {
 
     }
 }

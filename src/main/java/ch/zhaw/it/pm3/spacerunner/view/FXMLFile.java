@@ -6,6 +6,7 @@ public enum FXMLFile implements FileResource {
     MENU("menu.fxml"),
     GAME("game.fxml"),
     GAME_ENDED("gameEnded.fxml"),
+    SHOP("shop.fxml"),
     SETTINGS("settings.fxml");
 
     private String filename;

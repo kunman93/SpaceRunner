@@ -2,15 +2,12 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 
-public class SettingsViewController extends ViewController implements EventHandler<KeyEvent> {
+public class SettingsViewController extends ViewController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     public Button homeButton;
     public TextField playerName;
@@ -45,10 +42,4 @@ public class SettingsViewController extends ViewController implements EventHandl
         });
 
     }
-
-    @Override
-    public void handle(KeyEvent keyEvent) {
-
-    }
-
 }

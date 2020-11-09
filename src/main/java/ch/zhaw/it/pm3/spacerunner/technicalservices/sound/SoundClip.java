@@ -64,13 +64,13 @@ public class SoundClip {
      * Sets up all clip data for playing, setting up a paused clip sets playback position where it was paused.
      */
     public void play() {
-        if (state == PlayStates.PAUSED) {
+        /*if (state == PlayStates.PAUSED) {
             playPausedClip();
         } else {
             playClipFromStart();
         }
 
-        state = PlayStates.PLAYING;
+        state = PlayStates.PLAYING;*/
 
     }
 

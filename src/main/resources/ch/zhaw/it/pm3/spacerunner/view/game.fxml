@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.TextArea?>
-<GridPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css"
-          xmlns="http://javafx.com/javafx/10.0.2-internal"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="ch.zhaw.it.pm3.spacerunner.view.GameViewController" styleClass="gameBG">
-   <children>
-      <Canvas fx:id="gameCanvas" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-   </children>
+<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.view.GameViewController"
+          stylesheets="@style.css"
+          prefHeight="490" prefWidth="800"
+          xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"
+          styleClass="gameBG">
    <columnConstraints>
-      <ColumnConstraints percentWidth="100.0" />
+      <ColumnConstraints percentWidth="100"/>
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints percentHeight="100.0" />
+      <RowConstraints percentHeight="100"/>
    </rowConstraints>
+   <Canvas fx:id="gameCanvas" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.hgrow="ALWAYS"
+           GridPane.vgrow="ALWAYS"/>
 </GridPane>
