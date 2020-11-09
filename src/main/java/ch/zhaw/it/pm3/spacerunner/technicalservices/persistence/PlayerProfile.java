@@ -12,11 +12,14 @@ public class PlayerProfile {
     private int playerImageId;
     private String playerName;
     private int coins;
+    //gekaufte shop inhalte
     private Set<Integer> purchasedContentIds;
+    //aktivierte shop inhalte
+    private Set<Integer> activeContentIds;
     private int fps;
 
     //TODO: Do not persist
-    private Set<ShopContent> purchasedContent;
+    private Set<ShopContent> activeShopContent;
 
     public static boolean TEST = false;
 
@@ -29,7 +32,7 @@ public class PlayerProfile {
         coins = 0;
         fps = 60;
         purchasedContentIds = new HashSet<>();
-        purchasedContent = new HashSet<>();
+        activeShopContent = new HashSet<>();
     }
 
     public boolean isAudioEnabled() {
@@ -88,12 +91,24 @@ public class PlayerProfile {
         purchasedContentIds.add(contentId);
     }
 
-    public Set<ShopContent> getPurchasedContent() {
-        return purchasedContent;
+    public Set<Integer> getActiveContentIds() {
+        return activeContentIds;
     }
 
-    public void setPurchasedContent(Set<ShopContent> purchasedContent) {
-        this.purchasedContent = purchasedContent;
+    public void deactivateContent(int contentId) {
+        activeContentIds.remove(contentId);
+    }
+
+    public void activateContent(int contentId) {
+        activeContentIds.add(contentId);
+    }
+
+    public Set<ShopContent> getActiveShopContent() {
+        return activeShopContent;
+    }
+
+    public void setActiveShopContent(Set<ShopContent> activeShopContent) {
+        this.activeShopContent = activeShopContent;
     }
 
     public void setPurchasedContentIds(Set<Integer> purchasedContentIds) {
@@ -120,7 +135,7 @@ public class PlayerProfile {
                         fps == that.fps &&
                         Objects.equals(playerName, that.playerName) &&
                         Objects.equals(purchasedContentIds, that.purchasedContentIds) &&
-                        purchasedContent.size() == that.purchasedContent.size();
+                        activeShopContent.size() == that.activeShopContent.size();
             }else{
                 return super.equals(o);
             }

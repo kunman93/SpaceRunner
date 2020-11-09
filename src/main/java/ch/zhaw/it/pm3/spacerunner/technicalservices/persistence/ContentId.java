@@ -1,11 +1,17 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 public enum ContentId {
+    POWER_UP_CHANCE_MULTIPLIER(0),
+    DOUBLE_DURATION_COIN_UPGRADE(1),
+    SHIP_SKIN_1(2),
+    SHIP_SKIN_2(3);
 
+    private final int value;
 
-    NASA_SPACE_SHIP,
-    MILLENNIUM_FALCON
+    ContentId(final int newValue) {
+        value = newValue;
+    }
 
-    //SPEED_BUFF
+    public int getValue() { return value; }
 
 }
