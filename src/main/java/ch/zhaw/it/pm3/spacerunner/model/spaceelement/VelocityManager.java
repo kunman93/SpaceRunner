@@ -10,16 +10,16 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VelocityManager<T> {
+public class VelocityManager {
 
     private Map<Class<? extends SpaceElement>, Point2D.Double> velocityMap = new HashMap<>();
-    private static VelocityManager<SpaceElement> instance = new VelocityManager<SpaceElement>();
+    private static VelocityManager instance = new VelocityManager();
 
     private int height = 500;
     private int width = 500;
 
 
-    public static VelocityManager<? super SpaceElement> getInstance(){
+    public static VelocityManager getInstance(){
         return instance;
     }
 

@@ -45,7 +45,8 @@ public class GameController {
     private final VisualManager visualManager = VisualManager.getInstance();
     private final VelocityManager velocityManager = VelocityManager.getInstance();
 
-
+    //TODO: information expert verletzung bei laden der bilder im voraus (wegen laggs).
+    //TODO: proxy pattern mit manager
 
 
 
