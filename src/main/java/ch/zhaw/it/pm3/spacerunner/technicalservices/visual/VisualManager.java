@@ -10,40 +10,43 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VisualManager<T extends VisualElement>{
+public class VisualManager{
     private VisualUtil visualUtil = VisualUtil.getInstance();
 
     private int height = 500;
     private int width = 500;
-    private static VisualManager instance = new VisualManager<SpaceElement>();
-    private Map<Class<T>, Visual> visualList = new HashMap<>();
-    private Map<Class<T>, AnimatedVisual> animatedVisualList = new HashMap<>();
+    private static VisualManager instance = new VisualManager();
+    private Map<Class<? extends VisualElement>, Visual> visualList = new HashMap<>();
+    private Map<Class<? extends VisualElement>, AnimatedVisual> animatedVisualList = new HashMap<>();
+
+
 
     public static VisualManager getInstance(){
         return instance;
     }
 
+
     private VisualManager(){
 
     }
 
-    public int getElementPixelHeight(Class<T> elementClass) throws VisualNotSetException {
+    public int getElementPixelHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getImage(elementClass).getHeight();
     }
 
-    public int getElementPixelWidth(Class<T> elementClass) throws VisualNotSetException {
+    public int getElementPixelWidth(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getImage(elementClass).getWidth();
     }
 
-    public double getElementRelativeHeight(Class<T> elementClass) throws VisualNotSetException {
+    public double getElementRelativeHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getVisual(elementClass).getVisualScaling().getScaling();
     }
 
-    public double getElementRelativeWidth(Class<T> elementClass) throws VisualNotSetException {
+    public double getElementRelativeWidth(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getImage(elementClass).getWidth() / ((double)width);
     }
 
-    public void setVisual(Class<T> elementClass, Visual visual){
+    public void loadAndSetVisual(Class<? extends VisualElement> elementClass, Visual visual){
         BufferedImage image;
         if(visual.getVisualFile() == null){
             //load SVG
@@ -80,7 +83,7 @@ public class VisualManager<T extends VisualElement>{
     }
 
 
-    public void setAnimatedVisual(Class<T> elementClass, AnimatedVisual animatedVisual){
+    public void loadAndSetAnimatedVisual(Class<? extends VisualElement> elementClass, AnimatedVisual animatedVisual){
         VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles().getAnimationVisuals();
 
         List<Visual> visuals = new ArrayList<>();
@@ -94,11 +97,11 @@ public class VisualManager<T extends VisualElement>{
         animatedVisualList.put(elementClass, animatedVisual);
     }
 
-    public BufferedImage getImage(Class<T> elementClass) throws VisualNotSetException {
+    public BufferedImage getImage(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getVisual(elementClass).getImage();
     }
 
-    private Visual getVisual(Class<T> elementClass) throws VisualNotSetException {
+    private Visual getVisual(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         Visual animatedVisual = getAnimatedVisual(elementClass);
         if(animatedVisual != null){
             return animatedVisual;
@@ -112,7 +115,7 @@ public class VisualManager<T extends VisualElement>{
         }
     }
 
-    private Visual getAnimatedVisual(Class<T> elementClass) {
+    private Visual getAnimatedVisual(Class<? extends VisualElement> elementClass) {
         AnimatedVisual visualsForAnimation = animatedVisualList.get(elementClass);
 
         if(visualsForAnimation == null){
@@ -128,14 +131,20 @@ public class VisualManager<T extends VisualElement>{
 
     public void setHeight(int height) {
         this.height = height;
-        for (Map.Entry<Class<T>, Visual> classVisualEntry : visualList.entrySet()){
-            setVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
+        for (Map.Entry<Class<? extends VisualElement>, Visual> classVisualEntry : visualList.entrySet()){
+            loadAndSetVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
         }
 
-        for (Map.Entry<Class<T>, AnimatedVisual> classVisualEntry : animatedVisualList.entrySet()){
-            setAnimatedVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
+        for (Map.Entry<Class<? extends VisualElement>, AnimatedVisual> classVisualEntry : animatedVisualList.entrySet()){
+            loadAndSetAnimatedVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
         }
     }
+
+    public void clear(){
+        visualList = new HashMap<>();
+        animatedVisualList = new HashMap<>();
+    };
+
 
     public int getWidth() {
         return width;

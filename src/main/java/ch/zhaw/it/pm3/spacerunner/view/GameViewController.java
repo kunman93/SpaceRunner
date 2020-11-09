@@ -327,7 +327,7 @@ public class GameViewController extends ViewController {
 
     private void initializeUiElements(){
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
-        visualManager.setAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation);
+        visualManager.loadAndSetAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation);
     }
 
 }
