@@ -34,10 +34,12 @@ public class PersistenceUtil {
 
 
 
+    //TODO: JavaDOC and name
     public int getSoundVolume(){
         return loadProfile().getVolume();
     }
 
+    //TODO: JavaDOC and name
     public boolean isAudioEnabled(){
         return loadProfile().isAudioEnabled();
     }
