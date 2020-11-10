@@ -13,13 +13,12 @@ public class PlayerProfile {
     private String playerName;
     private int coins;
     //gekaufte shop inhalte
-    private Set<Integer> purchasedContentIds;
+    private Set<ContentId> purchasedContentIds;
     //aktivierte shop inhalte
-    private Set<Integer> activeContentIds;
+    private Set<ContentId> activeContentIds;
     private int fps;
 
-    //TODO: Do not persist
-    private Set<ShopContent> activeShopContent;
+    private transient Set<ShopContent> activeShopContent;
 
     public static boolean TEST = false;
 
@@ -31,7 +30,7 @@ public class PlayerProfile {
         playerName = "Player1";
         coins = 0;
         fps = 60;
-        purchasedContentIds = new HashSet<>();
+        purchasedContentIds = new HashSet<ContentId>();
         activeShopContent = new HashSet<>();
     }
 
@@ -83,23 +82,23 @@ public class PlayerProfile {
         this.coins -= coins;
     }
 
-    public Set<Integer> getPurchasedContentIds() {
+    public Set<ContentId> getPurchasedContentIds() {
         return purchasedContentIds;
     }
 
-    public void addContent(int contentId){
+    public void addContent(ContentId contentId){
         purchasedContentIds.add(contentId);
     }
 
-    public Set<Integer> getActiveContentIds() {
+    public Set<ContentId> getActiveContentIds() {
         return activeContentIds;
     }
 
-    public void deactivateContent(int contentId) {
+    public void deactivateContent(ContentId contentId) {
         activeContentIds.remove(contentId);
     }
 
-    public void activateContent(int contentId) {
+    public void activateContent(ContentId contentId) {
         activeContentIds.add(contentId);
     }
 
@@ -111,7 +110,7 @@ public class PlayerProfile {
         this.activeShopContent = activeShopContent;
     }
 
-    public void setPurchasedContentIds(Set<Integer> purchasedContentIds) {
+    public void setPurchasedContentIds(Set<ContentId> purchasedContentIds) {
         this.purchasedContentIds = purchasedContentIds;
     }
 

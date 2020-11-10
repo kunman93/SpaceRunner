@@ -4,11 +4,13 @@ import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.List;
 
 public class GameController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
@@ -193,6 +195,7 @@ public class GameController {
      * Initializes the class variables
      */
     public void initialize() {
+
         //TODO: check if 16:9 view
         velocityManager.initialize();
 

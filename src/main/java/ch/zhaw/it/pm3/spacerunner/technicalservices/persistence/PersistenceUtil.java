@@ -1,15 +1,18 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility tool to persist data (load / save)
@@ -68,7 +71,7 @@ public class PersistenceUtil {
      * @return loaded data as object of class T
      * @throws IOException
      */
-    public <T> T loadAndDeserializeData(String path, Class<T> dataClass) throws IOException {
+    public <T> T loadAndDeserializeData(String path, Type dataClass) throws IOException {
         T data = null;
         try (FileReader reader = new FileReader(path)) {
             data = gson.fromJson(reader, dataClass);
@@ -113,15 +116,28 @@ public class PersistenceUtil {
         }
     }
 
-
-    private Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {
-        //TODO: Implement and JavaDOC
-        return new HashSet<>();
+    //TODO: JavaDOC
+    private Set<ShopContent> loadPurchasedContent(Set<ContentId> purchasedContentIds) {
+        List<ShopContent> shopContentList = loadShopContent();
+        return shopContentList.stream().filter((shopContent)->{
+            return purchasedContentIds.stream().anyMatch((purchasedContentId) ->{
+                return purchasedContentId == shopContent.getContentId();
+            });
+        }).collect(Collectors.toSet());
     }
 
+    //TODO: JavaDOC
     public List<ShopContent> loadShopContent() {
-        //TODO: Implement and JavaDOC
-        return null;
+        Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {}.getType();
+
+        List<ShopContent> shopContentList = null;
+        try {
+            shopContentList = loadAndDeserializeData(GameFile.SHOP_CONTENT.getFileName(), listOfShopContentType);
+        } catch (IOException e) {
+            // TODO handle
+            e.printStackTrace();
+        }
+        return shopContentList;
     }
 
 

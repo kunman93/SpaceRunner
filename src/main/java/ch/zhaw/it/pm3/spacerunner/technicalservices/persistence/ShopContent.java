@@ -1,5 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
+
 public class ShopContent {
 
     //1.5 x Powerup Chance
@@ -13,12 +15,12 @@ public class ShopContent {
     private String description;
     private int price;
 
-    private int imageId;
+    private VisualSVGFile imageId;
     private ItemType itemType;
-    private boolean purchased;
-    private boolean equipped;
+    private transient boolean purchased;
+    private transient boolean equipped;
 
-    public ShopContent(ContentId contentId, String title, String description, int price, int imageId, ItemType itemType) {
+    public ShopContent(ContentId contentId, String title, String description, int price, VisualSVGFile imageId, ItemType itemType) {
         this.contentId = contentId;
         this.title = title;
         this.description = description;
@@ -76,11 +78,11 @@ public class ShopContent {
         this.price = price;
     }
 
-    public int getImageId() {
+    public VisualSVGFile getImageId() {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+    public void setImageId(VisualSVGFile imageId) {
         this.imageId = imageId;
     }
 
