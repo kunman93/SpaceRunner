@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -9,27 +10,31 @@ import javafx.scene.control.TextField;
 
 public class SettingsViewController extends ViewController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private SoundUtil soundUtil = SoundUtil.getInstance();
     public Button homeButton;
     public TextField playerName;
     public Slider soundVolume;
     public Slider framerate;
-    private PlayerProfile player;
+    private PlayerProfile playerProfile;
 
     @FXML
     public void showMenu() {
-        player.setPlayerName(playerName.getText());
-        player.setVolume((int) soundVolume.getValue());
-        player.setFps((int) framerate.getValue());
-        persistenceUtil.saveProfile(player);
+        playerProfile.setPlayerName(playerName.getText());
+        playerProfile.setVolume((int) soundVolume.getValue());
+        playerProfile.setAudioEnabled(soundVolume.getValue() > 0);
+        playerProfile.setFps((int) framerate.getValue());
+        persistenceUtil.saveProfile(playerProfile);
+        soundUtil.setVolume(playerProfile.getVolume());
+        getMain().setupBackgroundMusic();
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
     @Override
     public void initialize() {
-        player = persistenceUtil.loadProfile();
-        playerName.setText(player.getPlayerName());
-        soundVolume.setValue(player.getVolume());
-        framerate.setValue(player.getFps());
+        playerProfile = persistenceUtil.loadProfile();
+        playerName.setText(playerProfile.getPlayerName());
+        soundVolume.setValue(playerProfile.getVolume());
+        framerate.setValue(playerProfile.getFps());
 
         playerName.textProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal.equals("")) {

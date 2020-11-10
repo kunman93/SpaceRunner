@@ -19,6 +19,17 @@ public class SoundUtil {
         return instance;
     }
 
+
+    private int volume = 100;
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+
     //TODO: Copied from old project...
 
     /**
@@ -36,7 +47,10 @@ public class SoundUtil {
         }
 
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile.getAbsoluteFile());
-        return getSoundClip(audioInputStream);
+
+        SoundClip soundClip = getSoundClip(audioInputStream);
+        soundClip.setVolume(volume);
+        return soundClip;
     }
 
     private SoundClip getSoundClip(AudioInputStream audioInputStream) throws LineUnavailableException, IOException {

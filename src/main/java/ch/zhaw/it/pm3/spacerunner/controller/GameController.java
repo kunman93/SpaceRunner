@@ -124,6 +124,8 @@ public class GameController {
         }
     }
 
+
+    //TODO: move into spaceship. Also move the enum into package spaceelement
     /**
      * Moves the spaceship
      *

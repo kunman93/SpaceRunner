@@ -1,6 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.sound;
 
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,24 @@ public class SoundClip {
         this.clip = clip;
 
         clip.addLineListener(this::clipLineListener);
+    }
+
+    /**
+     * Sets the volume of the SoundClip.
+     * @param volume desired volume from 0 - 100
+     */
+    public void setVolume(int volume){
+        if(volume < 0 || volume > 100){
+            throw new IllegalArgumentException("Invalid volume. Volume must me between 0 - 100");
+        }
+
+        float f_volume = volume/100f;
+
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        float range = gainControl.getMaximum() - gainControl.getMinimum();
+        float gain = (range * f_volume) + gainControl.getMinimum();
+
+        gainControl.setValue(gain);
     }
 
     public void setLoop(boolean enableLoop) {
@@ -64,13 +83,13 @@ public class SoundClip {
      * Sets up all clip data for playing, setting up a paused clip sets playback position where it was paused.
      */
     public void play() {
-        /*if (state == PlayStates.PAUSED) {
+        if (state == PlayStates.PAUSED) {
             playPausedClip();
         } else {
             playClipFromStart();
         }
 
-        state = PlayStates.PLAYING;*/
+        state = PlayStates.PLAYING;
 
     }
 

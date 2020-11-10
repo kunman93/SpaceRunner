@@ -33,6 +33,15 @@ public class PersistenceUtil {
     }
 
 
+
+    public int getSoundVolume(){
+        return loadProfile().getVolume();
+    }
+
+    public boolean isAudioEnabled(){
+        return loadProfile().isAudioEnabled();
+    }
+
     /**
      * Load the profile of the player from the disk where it is saved in json.
      * If there is no profile.json found it will return a new default profile!
