@@ -19,7 +19,7 @@ public class UFO extends Obstacle {
     }
 
     @Override
-    public void move() {
+    public void move() { //long timeInMillis
         //TODO: sinus curve for example
         Point currentPosition = getCurrentPosition();
         //TODO: access Canvas height and width? maybe as static variable

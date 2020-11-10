@@ -14,7 +14,7 @@ public class SpaceWorld extends SpaceElement{
     private VelocityManager velocityManager = VelocityManager.getInstance();
 
     @Override
-    public void move() {
+    public void move() { //long timeInMillis
         Point position = getCurrentPosition();
 
         //TODO: Fix background visualManager.getWidth()
@@ -22,7 +22,7 @@ public class SpaceWorld extends SpaceElement{
             if(position.x + visualManager.getElementPixelWidth(SpaceWorld.class) - 960 < 0){
                 position.x = 0;
             }else{
-                position.x += velocityManager.getVelocity(this.getClass()).x;
+                position.x += velocityManager.getVelocity(this.getClass()).x; //timeInMillis/1000 *
             }
         } catch (VisualNotSetException e) {
             //TODO: handle
