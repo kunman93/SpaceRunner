@@ -21,7 +21,7 @@ public abstract class SpaceElement implements VisualElement {
     /**
      * will change the position by the current velocity
      */
-    public void move() {
+    public void move() { //long timeInMillis
         Point velocity = null;
         try {
             velocity = velocityManager.getVelocity(this.getClass());
@@ -30,8 +30,8 @@ public abstract class SpaceElement implements VisualElement {
             e.printStackTrace();
         }
 
-        position.x += velocity.x;
-        position.y += velocity.y;
+        position.x += velocity.x; //timeInMillis/1000 *
+        position.y += velocity.y; //timeInMillis/1000 *
     }
 
 

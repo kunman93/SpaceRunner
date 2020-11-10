@@ -33,6 +33,9 @@ public class GameController {
 
 
     private SpaceShip spaceShip;
+
+    //TODO: ConcurrentHashSet??
+    //Set<String> mySet = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
     private Set<SpaceElement> elements = new HashSet<>();
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
@@ -45,6 +48,8 @@ public class GameController {
     private final VisualManager visualManager = VisualManager.getInstance();
     private final VelocityManager velocityManager = VelocityManager.getInstance();
 
+    private long lastUpdate = 0;
+
     //TODO: information expert verletzung bei laden der bilder im voraus (wegen laggs).
     //TODO: proxy pattern mit manager
 
@@ -56,18 +61,32 @@ public class GameController {
     }
 
     public void processFrame(boolean upPressed, boolean downPressed) {
+        // System.out.println("Processing took " + lastProcessingTime / 1000000);
+
+        long timeSinceLastUpdate = millisSinceLastProcessing();
 
         if (!isPaused) {
-            checkMovementKeys(upPressed, downPressed);
+            moveSpaceShip(upPressed, downPressed);
 
 
             processCollision(detectCollision());
 
             generateObstacles();
-            moveElements();
+            moveElements(timeSinceLastUpdate);
 
             removePastDrawables();
 
+        }
+
+        lastUpdate = System.currentTimeMillis();
+    }
+
+
+    private long millisSinceLastProcessing(){
+        if(lastUpdate == 0){
+            return 0;
+        }else{
+            return System.currentTimeMillis() - lastUpdate;
         }
     }
 
@@ -96,7 +115,7 @@ public class GameController {
     /**
      * Checks if movement keys are pressed & moves the spaceship accordingly
      */
-    public void checkMovementKeys(boolean upPressed, boolean downPressed) {
+    public void moveSpaceShip(boolean upPressed, boolean downPressed) {
 
         if (upPressed && !downPressed) {
             moveSpaceShip(SpaceShipDirection.UP);
@@ -310,7 +329,7 @@ public class GameController {
     /**
      * Moves all SpaceElements
      */
-    public void moveElements() {
+    public void moveElements(long timeSinceLastUpdate) {
         for (SpaceElement element : elements) {
             element.move();
         }
