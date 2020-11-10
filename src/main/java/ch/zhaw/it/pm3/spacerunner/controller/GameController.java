@@ -4,13 +4,11 @@ import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
-import java.util.List;
 
 public class GameController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
@@ -197,7 +195,9 @@ public class GameController {
     public void initialize() {
 
         //TODO: check if 16:9 view
-        velocityManager.initialize();
+
+        velocityManager.setupGameElementVelocity();
+        visualManager.loadGameElementVisuals();
 
         gameSpeedTimer = new Timer("GameSpeedTimer");
         gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
@@ -214,8 +214,6 @@ public class GameController {
         elementPreset = new ElementPreset();
 
         elements = new HashSet<>();
-
-        setUpSpaceElementImages();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point(0, 0));
         spaceShip = new SpaceShip(new Point(20, 100));
@@ -262,36 +260,7 @@ public class GameController {
         //TODO: UFO, ElementPreset
     }
 
-    /**
-     * Initializes the SpaceElement classes with their corresponding images
-     */
-    private void setUpSpaceElementImages() {
-        try {
-            visualManager.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
-            visualManager.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
-            visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-            visualManager.loadAndSetVisual(SpaceWorld.class, new Visual(VisualFile.BACKGROUND_STARS));
-
-            setUpCoinWithAnimation();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setUpCoinWithAnimation() {
-        //TODO: not needed but not bad^^
-        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
-
-
-
-        AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
-        visualManager.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
-
-    }
-
-    /**
+      /**
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {

@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -28,6 +28,17 @@ public class VisualManager{
 
     private VisualManager(){
 
+    }
+
+    public void loadGameElementVisuals(){
+        instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+        instance.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
+        instance.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
+        instance.loadAndSetVisual(SpaceWorld.class, new Visual(VisualFile.BACKGROUND_STARS));
+        instance.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
+
+        AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
+        instance.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
     }
 
     public int getElementPixelHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {

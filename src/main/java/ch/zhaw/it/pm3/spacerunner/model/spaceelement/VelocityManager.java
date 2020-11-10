@@ -29,7 +29,7 @@ public class VelocityManager {
 
     }
 
-    public void initialize(){
+    public void setupGameElementVelocity(){
         instance.setVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
         instance.setVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.UFO.getSpeed()));
         instance.setVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
