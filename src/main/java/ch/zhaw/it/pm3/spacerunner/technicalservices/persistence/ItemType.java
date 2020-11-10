@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 public enum ItemType {
-    UPGRADES(0),
+    UPGRADE(0),
     PLAYER_MODEL(1);
 
 
