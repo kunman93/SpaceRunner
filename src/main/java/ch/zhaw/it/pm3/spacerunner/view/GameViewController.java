@@ -27,6 +27,8 @@ import javafx.stage.WindowEvent;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GameViewController extends ViewController {
@@ -58,6 +60,9 @@ public class GameViewController extends ViewController {
 
     private AnimationTimer gameLoop;
     private AnimationTimer loadingAnimation;
+
+    private Timer resizeTimer = new Timer("ResizeTimer");
+    private TimerTask resizeTask = null;
 
     private long lastUpdate;
     private int framesCount = 0;
@@ -192,11 +197,32 @@ public class GameViewController extends ViewController {
         } else if (width / 16 > height / 9) {
             width = height * 16 / 9;
         }
-        gameCanvas.setWidth(width);
-        gameCanvas.setHeight(height);
 
-        //TODO: Resize window timer so its does not get called 800 times
-        gameController.setViewport((int)width, (int)height);
+        if(resizeTask != null){
+            resizeTask.cancel();
+        }
+
+        //needed for scheduler
+        double finalWidth = width;
+        double finalHeight = height;
+
+        resizeTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(()->{
+                    gameCanvas.setWidth(finalWidth);
+                    gameCanvas.setHeight(finalHeight);
+
+                    gameController.setViewport((int) finalWidth, (int) finalHeight);
+                });
+            }
+
+
+        };
+
+        resizeTimer.schedule(resizeTask, 100);
+
+
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {

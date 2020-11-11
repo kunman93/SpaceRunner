@@ -80,8 +80,9 @@ public class VisualManager{
         }
         visual.setImage(image);
 
-
-        visualList.put(elementClass, visual);
+        synchronized (this){
+            visualList.put(elementClass, visual);
+        }
     }
 
     private BufferedImage flipVisual(boolean flipHorizontally, boolean flipVertically, BufferedImage image) {
@@ -115,8 +116,9 @@ public class VisualManager{
             visuals.add(currentVisual);
         }
         animatedVisual.setVisuals(visuals.toArray(Visual[]::new));
-
-        animatedVisualList.put(elementClass, animatedVisual);
+        synchronized (this) {
+            animatedVisualList.put(elementClass, animatedVisual);
+        }
     }
 
     public BufferedImage getImage(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
@@ -128,16 +130,19 @@ public class VisualManager{
         if(animatedVisual != null){
             return animatedVisual;
         }else{
-            Visual visual = visualList.get(elementClass);
-            if(visual == null){
-                throw new VisualNotSetException("Visual for " + elementClass.toString() + " was not set!");
-            }
+            synchronized (this) {
+                Visual visual = visualList.get(elementClass);
 
-            return visual;
+                if(visual == null){
+                    throw new VisualNotSetException("Visual for " + elementClass.toString() + " was not set!");
+                }
+
+                return visual;
+            }
         }
     }
 
-    private Visual getAnimatedVisual(Class<? extends VisualElement> elementClass) {
+    private synchronized Visual getAnimatedVisual(Class<? extends VisualElement> elementClass) {
         AnimatedVisual visualsForAnimation = animatedVisualList.get(elementClass);
 
         if(visualsForAnimation == null){
@@ -147,11 +152,22 @@ public class VisualManager{
         }
     }
 
+
+    public synchronized void clear(){
+        visualList = new HashMap<>();
+        animatedVisualList = new HashMap<>();
+    };
+
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public int getWidth() {
+        return width;
+    }
+
+    public synchronized void setViewport(int width, int height) {
+        this.width = width;
         this.height = height;
         for (Map.Entry<Class<? extends VisualElement>, Visual> classVisualEntry : visualList.entrySet()){
             loadAndSetVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
@@ -160,20 +176,6 @@ public class VisualManager{
         for (Map.Entry<Class<? extends VisualElement>, AnimatedVisual> classVisualEntry : animatedVisualList.entrySet()){
             loadAndSetAnimatedVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
         }
-    }
-
-    public void clear(){
-        visualList = new HashMap<>();
-        animatedVisualList = new HashMap<>();
-    };
-
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
     }
 
 }
