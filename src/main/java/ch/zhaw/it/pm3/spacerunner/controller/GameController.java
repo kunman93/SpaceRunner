@@ -4,14 +4,23 @@ import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.*;
 
 public class GameController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
+
+
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND = 0.05;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
@@ -303,13 +312,55 @@ public class GameController {
         if (spaceElement == null) return;
 
         if (spaceElement instanceof Obstacle) {
+
+            if(playerProfile.isAudioEnabled()){
+                new Thread(()->{
+                    try {
+                        SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
+                        explosion.addListener(() -> {
+                            try {
+                                SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
+                                gameOverVoice.addListener(()->{
+                                    try {
+                                        gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
+                                    }  catch (Exception e){
+                                        //IGNORE ON PURPOSE
+                                    }
+                                });
+                                gameOverVoice.play();
+                                gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
+                            } catch (Exception e){
+                                //IGNORE ON PURPOSE
+                            }
+                        });
+                        explosion.play();
+
+                    } catch (Exception e){
+                        //IGNORE ON PURPOSE
+                    }
+                }).start();
+            }
+            try {
+                Thread.sleep(500);
+                //TODO: show explosion??
+            } catch (Exception e){
+                //IGNORE ON PURPOSE
+            }
             spaceShip.crash();
             gameSpeedTimer.cancel();
             gameOver = true;
             saveGame();
+
         } else if (spaceElement instanceof Coin) {
             collectedCoins++;
             elements.remove(spaceElement);
+            new Thread(()->{
+                try {
+                    gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
+                } catch (Exception e){
+                    //IGNORE ON PURPOSE
+                }
+            }).start();
         } else if (spaceElement instanceof PowerUp) {
             //TODO: double coins for 10 seconds
             //TODO: shield until crash

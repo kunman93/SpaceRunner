@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
@@ -25,7 +26,7 @@ import java.net.URL;
 public class SpaceRunnerApp extends Application {
 
     private Stage primaryStage;
-    private SoundUtil soundUtil = SoundUtil.getInstance();
+    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     private SoundClip backgroundMusic;
 
@@ -41,7 +42,7 @@ public class SpaceRunnerApp extends Application {
         setFXMLView(FXMLFile.MENU);
 
 
-        soundUtil.setVolume(persistenceUtil.getSoundVolume());
+        gameSoundUtil.setVolume(persistenceUtil.getSoundVolume());
         setupBackgroundMusic();
 
     }
@@ -93,9 +94,7 @@ public class SpaceRunnerApp extends Application {
         }
 
         try {
-            //TODO: Use Enum value with loadClip / create GameSoundUtil extends SoundUtil
-            URL backgroundMusicURL = getClass().getResource(GameSound.BACKGROUND.getFileName());
-            backgroundMusic = soundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
+            backgroundMusic = gameSoundUtil.loadClip(GameSound.BACKGROUND_2);
             backgroundMusic.setLoop(true);
             backgroundMusic.play();
         } catch (IOException e) {
