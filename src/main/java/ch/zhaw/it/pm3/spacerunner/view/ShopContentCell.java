@@ -45,13 +45,12 @@ public class ShopContentCell extends ListCell<ShopContent> {
         public void updateItem(ShopContent content, boolean empty) {
             super.updateItem(getItem(),empty);
 
-            //content.getImageId().getFileName();
-            Image image = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 30f), null);
-            pane.add(new ImageView(image), 0, 0);
-
-
             setText(null);
             if(content != null) {
+                VisualSVGFile visualSVGFile = content.getImageId();
+                Image image = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFile.getFileName()), 60f), null);
+                pane.add(new ImageView(image), 0, 0);
+
                 label.setText(content.getTitle());
                 if (content.isEquipped()) {
                     btn.setText("equiped");
