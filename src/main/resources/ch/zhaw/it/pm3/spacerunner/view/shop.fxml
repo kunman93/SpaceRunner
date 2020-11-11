@@ -27,10 +27,13 @@
                 <Tab text="UPGRADES">
                     <content>
                         <Button onAction="#updateList" text="* update List" />
-                        <ListView fx:id="listView" />
+                        <ListView fx:id="listViewForUpgrades" />
                     </content>
                 </Tab>
                 <Tab text="PLAYER MODEL">
+                    <content>
+                        <ListView fx:id="listViewForSkins" />
+                    </content>
                 </Tab>
             </tabs>
         </TabPane>

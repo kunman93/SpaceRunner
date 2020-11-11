@@ -1,9 +1,15 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
+import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -15,7 +21,9 @@ import java.util.List;
  * class for each table row which contains various FXML elements
  * */
 public class ShopContentCell extends ListCell<ShopContent> {
+        VisualUtil visualUtil = VisualUtil.getInstance();
 
+        private GridPane pane = new GridPane();
         private HBox hBox = new HBox();
         private Label label = new Label("");
         private Button btn = new Button("buy");
@@ -23,9 +31,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
         public ShopContentCell() {
             super();
-            GridPane pane = new GridPane();
-            pane.add(label, 0, 0);
-            pane.add(btn, 1,0);
+            pane.add(label, 1, 0);
+            pane.add(btn, 2,0);
             hBox.getChildren().addAll(pane);
             hBox.setHgrow(pane, Priority.ALWAYS);
         }
@@ -37,6 +44,12 @@ public class ShopContentCell extends ListCell<ShopContent> {
         @Override
         public void updateItem(ShopContent content, boolean empty) {
             super.updateItem(getItem(),empty);
+
+            //content.getImageId().getFileName();
+            Image image = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(VisualSVGFile.LOADING_SPINNER.getFileName()), 30f), null);
+            pane.add(new ImageView(image), 0, 0);
+
+
             setText(null);
             if(content != null) {
                 label.setText(content.getTitle());
