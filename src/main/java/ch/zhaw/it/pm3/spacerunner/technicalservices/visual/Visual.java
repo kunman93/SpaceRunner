@@ -9,6 +9,10 @@ public class Visual{
     private VisualScaling visualScaling;
     private boolean flipVertically = false;
     private boolean flipHorizontally = false;
+    private boolean resize = false;
+    private boolean isBackground = false;
+    private int resizeWidth;
+    private int resizeHeight;
 
 
     public Visual(VisualFile visualFile, boolean flipHorizontally, boolean flipVertically) {
@@ -31,6 +35,33 @@ public class Visual{
     public Visual(VisualSVGFile visualSVGFile, VisualScaling visualScaling) {
         this.visualSVGFile = visualSVGFile;
         this.visualScaling = visualScaling;
+    }
+
+    public void setResize(int resizeHeight, int resizeWidth){
+        this.resize = true;
+        this.resizeHeight = resizeHeight;
+        this.resizeWidth = resizeWidth;
+    }
+
+    public void setIsBackground(boolean isBackground){
+        this.resize = isBackground;
+        this.isBackground = isBackground;
+    }
+
+    public boolean shouldResize() {
+        return resize;
+    }
+
+    public boolean isBackground() {
+        return isBackground;
+    }
+
+    public int getResizeWidth() {
+        return resizeWidth;
+    }
+
+    public int getResizeHeight() {
+        return resizeHeight;
     }
 
     public BufferedImage getImage() {
@@ -84,4 +115,5 @@ public class Visual{
     public void setFlipHorizontally(boolean flipHorizontally) {
         this.flipHorizontally = flipHorizontally;
     }
+
 }

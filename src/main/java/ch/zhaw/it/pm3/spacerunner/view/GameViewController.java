@@ -124,7 +124,7 @@ public class GameViewController extends ViewController {
                             updateGameFrame();
 
                             lastProcessingTime = (System.nanoTime() - currentNanoTime);
-                            // System.out.println("Processing took " + lastProcessingTime / 1000000);
+                            //System.out.println("Processing took " + lastProcessingTime / 1000000);
 
                             if(currentNanoTime - framesTimestamp >= 1000_000_000){
                                 System.out.println("Current FPS " + framesCount);

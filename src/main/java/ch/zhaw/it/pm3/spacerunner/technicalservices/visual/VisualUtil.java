@@ -50,6 +50,44 @@ public class VisualUtil {
         return toBufferedImage(image);
     }
 
+
+    public BufferedImage generateBackground(BufferedImage inputImage,  int scaledWidth, int scaledHeight){
+        BufferedImage outputImage = new BufferedImage(scaledWidth * 3, scaledHeight, inputImage.getType());
+
+        // creates output image
+        BufferedImage resizedImage = resizeImage(inputImage, scaledWidth, scaledHeight);
+        BufferedImage mirrorImage = flipImage(inputImage, true);
+
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.drawImage(resizedImage, 0, 0, scaledWidth, scaledHeight, null);
+        g2d.drawImage(mirrorImage, scaledWidth, 0, scaledWidth, scaledHeight, null);
+        g2d.drawImage(resizedImage, scaledWidth * 2, 0, scaledWidth, scaledHeight, null);
+        g2d.dispose();
+
+        return outputImage;
+    }
+
+    /**
+     * This will resize the inputImage and return the resized image
+     * @param inputImage image to resize
+     * @param scaledWidth width for resized image
+     * @param scaledHeight height for resized image
+     * @return resized image
+     */
+    public BufferedImage resizeImage(BufferedImage inputImage, int scaledWidth, int scaledHeight){
+
+
+        // creates output image
+        BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, inputImage.getType());
+
+        // scales the input image to the output image
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.drawImage(inputImage, 0, 0, scaledWidth, scaledHeight, null);
+        g2d.dispose();
+
+        return outputImage;
+    }
+
     //TODO: Declare as copied from internet. (Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage)
     /**
      * Converts a given Image into a BufferedImage

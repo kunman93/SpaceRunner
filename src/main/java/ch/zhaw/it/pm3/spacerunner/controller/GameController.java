@@ -67,15 +67,9 @@ public class GameController {
 
         if (!isPaused) {
             moveSpaceShip(upPressed, downPressed);
-
-
             processCollision(detectCollision());
-
             generateObstacles();
             moveElements(timeSinceLastUpdate);
-
-            removePastDrawables();
-
         }
 
         lastUpdate = System.currentTimeMillis();
@@ -91,32 +85,13 @@ public class GameController {
     }
 
     private void updateElementsSpeed() {
-        //TODO: SpaceElementSpeedManager and use velocity
         velocityManager.accelerateAll(new Point2D.Double(-RELATIVE_GAME_SPEED_INCREASE_PER_SECOND, RELATIVE_GAME_SPEED_INCREASE_PER_SECOND));
-
-//        for (SpaceElement spaceElement : elements) {
-//            if (spaceElement instanceof UFO) {
-//                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.UFO.getSpeed() * horizontalGameSpeed), VerticalSpeed.UFO.getSpeed()));
-//            } else if (spaceElement instanceof Asteroid) {
-//                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.ASTEROID.getSpeed() * horizontalGameSpeed), VerticalSpeed.ASTEROID.getSpeed()));
-//            } else if (spaceElement instanceof Coin) {
-//                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.COIN.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
-//            }
-//        }
-//
-//        if(spaceShip != null){
-//            spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
-//        }
-//        if(background != null){
-//            background.setVelocity(new Point((int) (-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
-//        }
     }
 
     /**
      * Checks if movement keys are pressed & moves the spaceship accordingly
      */
     public void moveSpaceShip(boolean upPressed, boolean downPressed) {
-
         if (upPressed && !downPressed) {
             moveSpaceShip(SpaceShipDirection.UP);
         } else if (downPressed && !upPressed) {
@@ -237,6 +212,9 @@ public class GameController {
                     horizontalGameSpeed += HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND;
                     updateElementsSpeed();
                 }
+
+                //TODO: move into own task??
+                removePastDrawables();
             }
         };
     }
@@ -266,12 +244,13 @@ public class GameController {
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
+        System.out.println("Removing past drawables");
         elements.removeIf((SpaceElement element) ->
         {
             try {
                 return element.getCurrentPosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
-                //TODO: hanle
+                //TODO: handle
                 e.printStackTrace();
                 return true;
             }
@@ -286,14 +265,6 @@ public class GameController {
         if (preset != null) {
             generatePreset(preset);
         }
-
-        /*try {
-            elements.add(new Coin(new Point(20, 100), 20, 20));
-            elements.add(new UnidentifiedFlightObject(new Point(20, 100), 20, 20));
-            elements.add(new PowerUp(new Point(20, 100), 20, 20));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void generatePreset(SpaceElement[] preset) {

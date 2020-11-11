@@ -34,7 +34,10 @@ public class VisualManager{
         instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
         instance.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
         instance.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-        instance.loadAndSetVisual(SpaceWorld.class, new Visual(VisualFile.BACKGROUND_STARS));
+
+        Visual background = new Visual(VisualFile.BACKGROUND_STARS);
+        background.setIsBackground(true);
+        instance.loadAndSetVisual(SpaceWorld.class, background);
         instance.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
@@ -68,7 +71,15 @@ public class VisualManager{
         }
 
         image = flipVisual(visual.isFlipHorizontally(), visual.isFlipVertically(), image);
+        if(visual.shouldResize()){
+            if(visual.isBackground()){
+                image = visualUtil.generateBackground(image, width, height);
+            }else{
+                image = visualUtil.resizeImage(image, visual.getResizeWidth(), visual.getResizeHeight());
+            }
+        }
         visual.setImage(image);
+
 
         visualList.put(elementClass, visual);
     }
