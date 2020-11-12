@@ -30,7 +30,8 @@ public class PlayerProfile {
         playerName = "Player1";
         coins = 0;
         fps = 60;
-        purchasedContentIds = new HashSet<ContentId>();
+        purchasedContentIds = new HashSet<>();
+        activeContentIds = new HashSet<>();
         activeShopContent = new HashSet<>();
     }
 
