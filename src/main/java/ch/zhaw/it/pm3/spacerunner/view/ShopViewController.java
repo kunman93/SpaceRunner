@@ -23,8 +23,8 @@ import java.util.Set;
 public class ShopViewController extends ViewController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     @FXML private TabPane tabPane;
-    @FXML private ListView listViewForUpgrades;
-    @FXML private ListView listViewForSkins;
+    @FXML private ListView<ShopContent> listViewForUpgrades;
+    @FXML private ListView<ShopContent> listViewForSkins;
 
     @FXML
     public void showMenu() {
@@ -52,11 +52,11 @@ public class ShopViewController extends ViewController {
 
         observableListOfUpgrades.setAll(upgrades);
         listViewForUpgrades.setItems(observableListOfUpgrades);
-        listViewForUpgrades.setCellFactory(param -> new ShopContentCell());
+        listViewForUpgrades.setCellFactory(shopContentListView -> new ShopContentCell());
 
         observableListOfSkins.setAll(skins);
         listViewForSkins.setItems(observableListOfSkins);
-        listViewForSkins.setCellFactory(param -> new ShopContentCell());
+        listViewForSkins.setCellFactory(shopContentListView -> new ShopContentCell());
     }
 
     public void updateList() {
