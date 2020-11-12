@@ -25,20 +25,21 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     private VisualUtil visualUtil = VisualUtil.getInstance();
 
-    private static final String BUY_BUTTON_BUY_TEXT = "buy";
-    private static final String BUY_BUTTON_BOUGHT_TEXT = "bought";
-    private static final String ACTIVATE_BUTTON_ACTIVATE_TEXT = "activate";
-    private static final String ACTIVATE_BUTTON_DEACTIVATE_TEXT = "deactivate";
+    private static final String BUY_TEXT_FOR_BUY_BUTTON = "buy";
+    private static final String BOUGHT_TEXT_FOR_BUY_TEXT = "bought";
+    private static final String ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "activate";
+    private static final String DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON = "deactivate";
 
     private GridPane pane = new GridPane();
     private HBox hBox = new HBox();
     private Label label = new Label();
-    private Button buyButton = new Button(BUY_BUTTON_BUY_TEXT);
-    private Button activateButton = new Button(ACTIVATE_BUTTON_ACTIVATE_TEXT);
+    private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
+    private Button activateButton = new Button(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
     private static PlayerProfile playerProfile;
     private static Set<ContentId> purchasedContentIds = new HashSet<>();
     private static Set<ContentId> activeContentIds = new HashSet<>();
     private static boolean spaceShipModelIsAlreadySelected;
+    private static ShopContent content;
 
     public ShopContentCell() {
         super();
@@ -56,9 +57,9 @@ public class ShopContentCell extends ListCell<ShopContent> {
     @Override
     public void updateItem(ShopContent content, boolean empty) {
         super.updateItem(getItem(),empty);
-
+        ShopContentCell.content = content;
         setText(null);
-        if(content != null) {
+        if(ShopContentCell.content != null) {
             //TODO always loading images
             VisualSVGFile visualSVGFileOfContent = content.getImageId();
             Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
@@ -70,8 +71,13 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
             label.setText(content.getTitle());
 
+            if(contentIsPurchased(content)){
+                buyButton.setText(BOUGHT_TEXT_FOR_BUY_TEXT);
+                buyButton.setDisable(true);
+            }
+
             if(contentIsActive(content)){
-                activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+                activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
                 if(contentIsAPlayerModel(content)) {
                     spaceShipModelIsAlreadySelected = true;
                 }
@@ -81,7 +87,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
                 if (!contentIsActive(content) && contentIsAPlayerModel(content)) {
                     activateButton.setDisable(true);
                 } else if(contentIsAPlayerModel(content)){
-                    activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+                    activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
                     activateButton.setDisable(false);
                 }
             }else if(contentIsAPlayerModel(content)){
@@ -112,36 +118,32 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void deactivatePurchasedContent(ShopContent content) {
-        buyButton.setText(BUY_BUTTON_BOUGHT_TEXT);
-        buyButton.setDisable(true);
         activateButton.setOnAction(event -> {
             if(contentIsAnUpgrade(content)) {
                 playerProfile.deactivateContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(ACTIVATE_BUTTON_ACTIVATE_TEXT);
+                activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
             }else if(contentIsAPlayerModel(content) && (spaceShipModelIsAlreadySelected)){
                 //TODO
                 playerProfile.deactivateContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(ACTIVATE_BUTTON_ACTIVATE_TEXT);
+                activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
                 spaceShipModelIsAlreadySelected = false;
             }
         });
     }
 
     private void activatePurchasedContent(ShopContent content) {
-        buyButton.setText(BUY_BUTTON_BOUGHT_TEXT);
-        buyButton.setDisable(true);
         activateButton.setOnAction(event -> {
             if(contentIsAnUpgrade(content)){
                 playerProfile.activateContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+                activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
             }else if(contentIsAPlayerModel(content) && (!spaceShipModelIsAlreadySelected)){
                 //TODO
                 playerProfile.activateContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+                activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
                 spaceShipModelIsAlreadySelected = true;
             }
         });
@@ -154,6 +156,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
                 playerProfile.setCoins(getAmountDeducted(content));
                 playerProfile.addContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
+                buyButton.setText(BOUGHT_TEXT_FOR_BUY_TEXT);
+                buyButton.setDisable(true);
                 activateButton.setDisable(false);
             }else{
                 alertFailedToPurchaseContent(content);
