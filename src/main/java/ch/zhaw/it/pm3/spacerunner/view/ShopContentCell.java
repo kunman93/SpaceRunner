@@ -1,10 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ContentId;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
@@ -18,9 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,15 +25,20 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     private VisualUtil visualUtil = VisualUtil.getInstance();
 
+    private static final String BUY_BUTTON_BUY_TEXT = "buy";
+    private static final String BUY_BUTTON_BOUGHT_TEXT = "bought";
+    private static final String ACTIVATE_BUTTON_ACTIVATE_TEXT = "activate";
+    private static final String ACTIVATE_BUTTON_DEACTIVATE_TEXT = "deactivate";
+
     private GridPane pane = new GridPane();
     private HBox hBox = new HBox();
     private Label label = new Label();
-    private Button buyButton = new Button("buy");
-    private Button activateButton = new Button("activate");
-    private static List<ShopContent> inProgress = new ArrayList<>();
+    private Button buyButton = new Button(BUY_BUTTON_BUY_TEXT);
+    private Button activateButton = new Button(ACTIVATE_BUTTON_ACTIVATE_TEXT);
     private static PlayerProfile playerProfile;
     private static Set<ContentId> purchasedContentIds = new HashSet<>();
     private static Set<ContentId> activeContentIds = new HashSet<>();
+    private static boolean spaceShipModelIsAlreadySelected;
 
     public ShopContentCell() {
         super();
@@ -59,6 +59,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
         setText(null);
         if(content != null) {
+            //TODO always loading images
             VisualSVGFile visualSVGFileOfContent = content.getImageId();
             Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
             pane.add(new ImageView(imageOfContent), 0, 0);
@@ -69,6 +70,24 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
             label.setText(content.getTitle());
 
+            if(contentIsActive(content)){
+                activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+                if(contentIsAPlayerModel(content)) {
+                    spaceShipModelIsAlreadySelected = true;
+                }
+            }
+
+            if(spaceShipModelIsAlreadySelected) {
+                if (!contentIsActive(content) && contentIsAPlayerModel(content)) {
+                    activateButton.setDisable(true);
+                } else if(contentIsAPlayerModel(content)){
+                    activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+                    activateButton.setDisable(false);
+                }
+            }else if(contentIsAPlayerModel(content)){
+                activateButton.setDisable(false);
+            }
+
             if(contentIsPurchased(content)) {
                 if (contentIsActive(content)) {
                     deactivatePurchasedContent(content);
@@ -76,7 +95,6 @@ public class ShopContentCell extends ListCell<ShopContent> {
                     activatePurchasedContent(content);
                 }
             }else{
-                activateButton.setDisable(true);
                 buyContent(content);
             }
 
@@ -110,30 +128,57 @@ public class ShopContentCell extends ListCell<ShopContent> {
         }
     }
 
+    private boolean contentIsAPlayerModel(ShopContent content) {
+        return content.getItemType() == ItemType.PLAYER_MODEL;
+    }
+
+    private boolean contentIsAnUpgrade(ShopContent content){
+        return content.getItemType() == ItemType.UPGRADE;
+    }
+
     private void deactivatePurchasedContent(ShopContent content) {
+        buyButton.setText(BUY_BUTTON_BOUGHT_TEXT);
+        buyButton.setDisable(true);
         activateButton.setOnAction(event -> {
-           playerProfile.deactivateContent(content.getContentId());
-           persistenceUtil.saveProfile(playerProfile);
-           activateButton.setText("activate");
+            if(contentIsAnUpgrade(content)) {
+                playerProfile.deactivateContent(content.getContentId());
+                persistenceUtil.saveProfile(playerProfile);
+                activateButton.setText(ACTIVATE_BUTTON_ACTIVATE_TEXT);
+            }else if(contentIsAPlayerModel(content) && (spaceShipModelIsAlreadySelected)){
+                //TODO
+                playerProfile.deactivateContent(content.getContentId());
+                persistenceUtil.saveProfile(playerProfile);
+                activateButton.setText(ACTIVATE_BUTTON_ACTIVATE_TEXT);
+                spaceShipModelIsAlreadySelected = false;
+            }
         });
     }
 
     private void activatePurchasedContent(ShopContent content) {
+        buyButton.setText(BUY_BUTTON_BOUGHT_TEXT);
+        buyButton.setDisable(true);
         activateButton.setOnAction(event -> {
-            playerProfile.activateContent(content.getContentId());
-            persistenceUtil.saveProfile(playerProfile);
-            activateButton.setText("deactivate");
+            if(contentIsAnUpgrade(content)){
+                playerProfile.activateContent(content.getContentId());
+                persistenceUtil.saveProfile(playerProfile);
+                activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+            }else if(contentIsAPlayerModel(content) && (!spaceShipModelIsAlreadySelected)){
+                //TODO
+                playerProfile.activateContent(content.getContentId());
+                persistenceUtil.saveProfile(playerProfile);
+                activateButton.setText(ACTIVATE_BUTTON_DEACTIVATE_TEXT);
+                spaceShipModelIsAlreadySelected = true;
+            }
         });
     }
 
     private void buyContent(ShopContent content) {
+        activateButton.setDisable(true);
         buyButton.setOnAction(event -> {
             if(playerHasEnoughCoinsToBuy(content)){
                 playerProfile.setCoins(getAmountDeducted(content));
                 playerProfile.addContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
-                buyButton.setText("bought");
-                buyButton.setDisable(true);
                 activateButton.setDisable(false);
             }else{
                 alertFailedToPurchaseContent(content);
@@ -142,12 +187,15 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void alertFailedToPurchaseContent(ShopContent content) {
-        int amountOfCoinsNeed = content.getPrice() - playerProfile.getCoins();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
-        alert.setContentText("Not enough coins!\n You need atleast " + amountOfCoinsNeed + " coins");
+        alert.setContentText("Not enough coins!\n You need atleast " + getAmountOfCoinsNeedToBuyContent(content) + " coins");
         alert.showAndWait();
+    }
+
+    private int getAmountOfCoinsNeedToBuyContent(ShopContent content){
+        return content.getPrice() - playerProfile.getCoins();
     }
 
     private int getAmountDeducted(ShopContent content) {
