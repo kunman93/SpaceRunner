@@ -76,6 +76,7 @@ public class GameController {
 
         if (!isPaused) {
             moveSpaceShip(upPressed, downPressed);
+            updateHighScore();
             processCollision(detectCollision());
             generateObstacles();
             moveElements(timeSinceLastUpdate);
@@ -140,9 +141,9 @@ public class GameController {
      */
     private void updatePlayerProfile() {
         playerProfile.addCoins(collectedCoins);
-//        if(score > playerProfile.getHighScore()) {
-//            playerProfile.setHighScore();
-//        }
+        if(score > playerProfile.getHighScore()) {
+            playerProfile.setHighScore(score);
+        }
     }
 
     public ArrayList<SpaceElement> getGameElements() {
@@ -353,6 +354,7 @@ public class GameController {
 
         } else if (spaceElement instanceof Coin) {
             collectedCoins++;
+            score = score + 25;
             elements.remove(spaceElement);
             new Thread(()->{
                 try {
@@ -362,6 +364,7 @@ public class GameController {
                 }
             }).start();
         } else if (spaceElement instanceof PowerUp) {
+            score = score + 10;
             //TODO: double coins for 10 seconds
             //TODO: shield until crash
 
@@ -377,5 +380,13 @@ public class GameController {
 
     protected SpaceShip getSpaceShip() {
         return spaceShip;
+    }
+
+    private void updateHighScore() {
+        if (distance >= 50) {
+            score = score + 10;
+            distance = 0;
+        }
+        distance++;
     }
 }
