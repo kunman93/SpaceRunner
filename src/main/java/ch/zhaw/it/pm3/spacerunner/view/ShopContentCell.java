@@ -26,9 +26,9 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private VisualUtil visualUtil = VisualUtil.getInstance();
 
     private static final String BUY_TEXT_FOR_BUY_BUTTON = "buy";
-    private static final String BOUGHT_TEXT_FOR_BUY_TEXT = "bought";
+    private static final String BOUGHT_TEXT_FOR_BUY_BUTTON = "bought";
     private static final String ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "activate";
-    private static final String DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON = "deactivate";
+    private static final String DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "deactivate";
 
     private GridPane pane = new GridPane();
     private HBox hBox = new HBox();
@@ -39,7 +39,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private static Set<ContentId> purchasedContentIds = new HashSet<>();
     private static Set<ContentId> activeContentIds = new HashSet<>();
     private static boolean spaceShipModelIsAlreadySelected;
-    private static ShopContent content;
+    private ShopContent content;
 
     public ShopContentCell() {
         super();
@@ -57,139 +57,158 @@ public class ShopContentCell extends ListCell<ShopContent> {
     @Override
     public void updateItem(ShopContent content, boolean empty) {
         super.updateItem(getItem(),empty);
-        ShopContentCell.content = content;
+        this.content = content;
         setText(null);
-        if(ShopContentCell.content != null) {
-            //TODO always loading images
+        if(this.content != null) {
+            //TODO always loading images ask Isler how to solve this better
             VisualSVGFile visualSVGFileOfContent = content.getImageId();
             Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
             pane.add(new ImageView(imageOfContent), 0, 0);
 
-            playerProfile = persistenceUtil.loadProfile();
-            purchasedContentIds = playerProfile.getPurchasedContentIds();
-            activeContentIds = playerProfile.getActiveContentIds();
+            loadPlayerProfileAndContentIds();
 
-            label.setText(content.getTitle());
+            label.setText(this.content.getTitle());
 
-            if(contentIsPurchased(content)){
-                buyButton.setText(BOUGHT_TEXT_FOR_BUY_TEXT);
-                buyButton.setDisable(true);
-            }
-
-            if(contentIsActive(content)){
-                activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
-                if(contentIsAPlayerModel(content)) {
-                    spaceShipModelIsAlreadySelected = true;
-                }
-            }
-
-            if(spaceShipModelIsAlreadySelected) {
-                if (!contentIsActive(content) && contentIsAPlayerModel(content)) {
-                    activateButton.setDisable(true);
-                } else if(contentIsAPlayerModel(content)){
-                    activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
-                    activateButton.setDisable(false);
-                }
-            }else if(contentIsAPlayerModel(content)){
-                activateButton.setDisable(false);
-            }
-
-            if(contentIsPurchased(content)) {
-                if (contentIsActive(content)) {
-                    deactivatePurchasedContent(content);
-                } else {
-                    activatePurchasedContent(content);
-                }
-            }else{
-                buyContent(content);
-            }
+            setUpBuyButton();
+            setUpActivateButton();
+            processShopping();
 
             setGraphic(hBox);
             // setGraphic(new ImageView().setImage(new Image("...")))
         }
     }
 
-    private boolean contentIsAPlayerModel(ShopContent content) {
+    private void loadPlayerProfileAndContentIds() {
+        playerProfile = persistenceUtil.loadProfile();
+        purchasedContentIds = playerProfile.getPurchasedContentIds();
+        activeContentIds = playerProfile.getActiveContentIds();
+    }
+
+    private void setUpBuyButton() {
+        if(contentIsPurchased()){
+            buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
+            buyButton.setDisable(true);
+        }else{
+            buyButton.setText(BUY_TEXT_FOR_BUY_BUTTON);
+            buyButton.setDisable(false);
+        }
+    }
+
+    private void setUpActivateButton() {
+        if(contentIsActive()){
+            activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
+            if(contentIsAPlayerModel()) {
+                spaceShipModelIsAlreadySelected = true;
+            }
+        }
+
+        if(spaceShipModelIsAlreadySelected) {
+            if (!contentIsActive() && contentIsAPlayerModel()) {
+                activateButton.setDisable(true);
+            } else if(contentIsAPlayerModel()){
+                activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
+                activateButton.setDisable(false);
+            }
+        }else if(contentIsAPlayerModel()){
+            activateButton.setDisable(false);
+        }
+    }
+
+    private void processShopping() {
+        if(contentIsPurchased()) {
+            if (contentIsActive()) {
+                deactivatePurchasedContent();
+            } else {
+                activatePurchasedContent();
+            }
+        }else{
+            buyContent();
+        }
+    }
+
+    private boolean contentIsAPlayerModel() {
         return content.getItemType() == ItemType.PLAYER_MODEL;
     }
 
-    private boolean contentIsAnUpgrade(ShopContent content){
+    private boolean contentIsAnUpgrade(){
         return content.getItemType() == ItemType.UPGRADE;
     }
 
-    private void deactivatePurchasedContent(ShopContent content) {
+    private void deactivatePurchasedContent() {
         activateButton.setOnAction(event -> {
-            if(contentIsAnUpgrade(content)) {
-                playerProfile.deactivateContent(content.getContentId());
-                persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
-            }else if(contentIsAPlayerModel(content) && (spaceShipModelIsAlreadySelected)){
-                //TODO
-                playerProfile.deactivateContent(content.getContentId());
-                persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
+            if(contentIsAnUpgrade()) {
+                deactivateContentInPlayerProfile();
+            }else if(contentIsAPlayerModel() && (spaceShipModelIsAlreadySelected)){
+                deactivateContentInPlayerProfile();
                 spaceShipModelIsAlreadySelected = false;
             }
         });
     }
 
-    private void activatePurchasedContent(ShopContent content) {
+    private void deactivateContentInPlayerProfile() {
+        playerProfile.deactivateContent(content.getContentId());
+        persistenceUtil.saveProfile(playerProfile);
+        activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
+    }
+
+    private void activatePurchasedContent() {
         activateButton.setOnAction(event -> {
-            if(contentIsAnUpgrade(content)){
-                playerProfile.activateContent(content.getContentId());
-                persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
-            }else if(contentIsAPlayerModel(content) && (!spaceShipModelIsAlreadySelected)){
-                //TODO
-                playerProfile.activateContent(content.getContentId());
-                persistenceUtil.saveProfile(playerProfile);
-                activateButton.setText(DEACTIVATE_TEXT_FOR_DEACTIVATE_BUTTON);
+            if(contentIsAnUpgrade()){
+                activateContentInPlayerProfile();
+            }else if(contentIsAPlayerModel() && (!spaceShipModelIsAlreadySelected)){
+                activateContentInPlayerProfile();
                 spaceShipModelIsAlreadySelected = true;
             }
         });
     }
 
-    private void buyContent(ShopContent content) {
+    private void activateContentInPlayerProfile() {
+        playerProfile.activateContent(content.getContentId());
+        persistenceUtil.saveProfile(playerProfile);
+        activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
+    }
+
+    private void buyContent() {
         activateButton.setDisable(true);
         buyButton.setOnAction(event -> {
-            if(playerHasEnoughCoinsToBuy(content)){
-                playerProfile.setCoins(getAmountDeducted(content));
+            if(playerHasEnoughCoinsToBuy()){
+                playerProfile.setCoins(getAmountDeducted());
                 playerProfile.addContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
-                buyButton.setText(BOUGHT_TEXT_FOR_BUY_TEXT);
+                buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
                 buyButton.setDisable(true);
                 activateButton.setDisable(false);
             }else{
-                alertFailedToPurchaseContent(content);
+                alertFailedToPurchaseContent();
             }
         });
     }
 
-    private void alertFailedToPurchaseContent(ShopContent content) {
+    private void alertFailedToPurchaseContent() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
-        alert.setContentText("Not enough coins!\n You need atleast " + getAmountOfCoinsNeedToBuyContent(content) + " coins");
+        alert.setContentText("Not enough coins!\n You need atleast " + getAmountOfCoinsNeedToBuyContent() + " coins");
         alert.showAndWait();
     }
 
-    private int getAmountOfCoinsNeedToBuyContent(ShopContent content){
+    private int getAmountOfCoinsNeedToBuyContent(){
         return content.getPrice() - playerProfile.getCoins();
     }
 
-    private int getAmountDeducted(ShopContent content) {
+    private int getAmountDeducted() {
         return playerProfile.getCoins() - content.getPrice();
     }
 
-    private boolean playerHasEnoughCoinsToBuy(ShopContent content) {
+    private boolean playerHasEnoughCoinsToBuy() {
         return playerProfile.getCoins() >= content.getPrice();
     }
 
-    private boolean contentIsActive(ShopContent content) {
+    private boolean contentIsActive() {
         return activeContentIds.contains(content.getContentId());
     }
 
-    private boolean contentIsPurchased(ShopContent content) {
+    private boolean contentIsPurchased() {
         return purchasedContentIds.contains(content.getContentId());
     }
 }
