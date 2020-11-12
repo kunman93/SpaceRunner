@@ -60,8 +60,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
         this.content = content;
         setText(null);
         if(this.content != null) {
-            //TODO always loading images ask Isler how to solve this better
-            VisualSVGFile visualSVGFileOfContent = content.getImageId();
+            //TODO always loading images, this might be bad
+            VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
             Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
             pane.add(new ImageView(imageOfContent), 0, 0);
 
