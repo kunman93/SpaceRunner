@@ -70,13 +70,9 @@ public class ShopContentCell extends ListCell<ShopContent> {
             label.setText(content.getTitle());
 
             if(contentIsPurchased(content)) {
-                buyButton.setText("bought");
-                buyButton.setDisable(true);
                 if (contentIsActive(content)) {
-                    activateButton.setText("deactivate");
                     deactivatePurchasedContent(content);
                 } else {
-                    activateButton.setText("activate");
                     activatePurchasedContent(content);
                 }
             }else{
@@ -115,17 +111,18 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void deactivatePurchasedContent(ShopContent content) {
-        /*activateButton.setOnAction(event -> {
-           playerProfile.activateContent(content.getContentId());
+        activateButton.setOnAction(event -> {
+           playerProfile.deactivateContent(content.getContentId());
            persistenceUtil.saveProfile(playerProfile);
-        });*/
+           activateButton.setText("activate");
+        });
     }
-
 
     private void activatePurchasedContent(ShopContent content) {
         activateButton.setOnAction(event -> {
-            playerProfile.deactivateContent(content.getContentId());
+            playerProfile.activateContent(content.getContentId());
             persistenceUtil.saveProfile(playerProfile);
+            activateButton.setText("deactivate");
         });
     }
 
@@ -135,6 +132,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
                 playerProfile.setCoins(getAmountDeducted(content));
                 playerProfile.addContent(content.getContentId());
                 persistenceUtil.saveProfile(playerProfile);
+                buyButton.setText("bought");
+                buyButton.setDisable(true);
                 activateButton.setDisable(false);
             }else{
                 alertFailedToPurchaseContent(content);
