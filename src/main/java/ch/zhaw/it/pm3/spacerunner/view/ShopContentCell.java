@@ -98,31 +98,6 @@ public class ShopContentCell extends ListCell<ShopContent> {
                 buyContent(content);
             }
 
-
-            /*if (content.isEquipped()) {
-                btn.setText("equipped");
-                // background-image: Häckchen
-            } else if (content.isPurchased()) {
-                btn.setText("equip");
-            }
-            btn.setOnAction(event -> {
-                if (!content.isPurchased()) {
-                    inProgress.add(content);
-                    btn.setText("purchase now");
-                    // background-image: Einkauftasche
-                    // remove all other purchase now
-                } else if (inProgress.contains(content)) {
-                    inProgress.remove(content);
-                    content.buyContent();
-                    btn.setText("equip");
-                    // background-image: Contains
-                    // remove all other purchase now
-                } else if (!content.isEquipped()) {
-                    content.equipContent(true);
-                    btn.setText("equiped");
-                    // background-image: Fragezeichen
-                }
-            });*/
             setGraphic(hBox);
             // setGraphic(new ImageView().setImage(new Image("...")))
         }
