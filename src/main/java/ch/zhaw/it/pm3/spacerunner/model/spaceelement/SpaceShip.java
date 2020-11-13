@@ -56,14 +56,17 @@ public class SpaceShip extends SpaceElement {
         Point2D.Double position = getRelativePosition();
         switch (direction) {
             case UP:
-                if (position.y <= 0.0)
+                if (position.y <= 0.0){
                     return;
+                }
                 directMove(direction, position, timeInMillis);
                 break;
             case DOWN:
                 try {
                     //TODO: fix spaceship out of view
-                    if (position.y + visualManager.getElementRelativeHeight(this.getClass()) >= 1.0) return;
+                    if (position.y + visualManager.getElementRelativeHeight(this.getClass()) >= 1.0) {
+                        return;
+                    }
                 } catch (VisualNotSetException e) {
                     //TODO: handle
                     e.printStackTrace();
