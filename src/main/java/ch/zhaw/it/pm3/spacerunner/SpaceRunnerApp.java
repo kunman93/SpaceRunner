@@ -47,7 +47,7 @@ public class SpaceRunnerApp extends Application {
     }
 
     public void setFXMLView(FXMLFile source){
-        double height = 490;
+        double height = 515; // (800 * 9 / 16) + (800 * 0.5 / 16) - 40
         double width = 800;
 
         try {

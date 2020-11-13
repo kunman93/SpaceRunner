@@ -33,9 +33,9 @@ public class GameViewController extends ViewController {
 
     private VisualUtil visualUtil = VisualUtil.getInstance();
     //TODO: Canvas has to be a fixed height and width so we dont have to deal with scaling
-    @FXML
-    public Canvas gameCanvas;
+    @FXML private Canvas gameCanvas;
     private GraphicsContext graphicsContext;
+    private double gameBarHeight;
     private GameController gameController = new GameController();
     private boolean downPressed;
     private boolean upPressed;
@@ -51,9 +51,7 @@ public class GameViewController extends ViewController {
                     primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, this);
                 }
             }
-
         }
-
     };
 
     private AnimationTimer gameLoop;
@@ -107,11 +105,11 @@ public class GameViewController extends ViewController {
             gameController.togglePause();
 
             //TODO: not displayed yet
-            Platform.runLater(() -> {
-                displayInformation("press SPACE to start");
-            });
-            primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
 
+
+
+
+            primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
 
             gameLoop = new AnimationTimer()
             {
@@ -126,6 +124,15 @@ public class GameViewController extends ViewController {
                             lastProcessingTime = (System.nanoTime() - currentNanoTime);
                             //System.out.println("Processing took " + lastProcessingTime / 1000000);
 
+                            if (gameController.isPaused()) {
+                                if (gameController.getScore() == 0) {
+                                    displayInformation("press SPACE to start");
+                                } else {
+                                    displayInformation("press SPACE to continue");
+                                }
+                            }
+
+                            //Platform.runLater(() -> );
                             if(currentNanoTime - framesTimestamp >= 1000_000_000){
                                 System.out.println("Current FPS " + framesCount);
                                 framesTimestamp = currentNanoTime;
@@ -182,21 +189,27 @@ public class GameViewController extends ViewController {
     }
 
     private void calc16to9Proportions() {
+        double proportionGame = 9;
+        double proportionGameBar = 0.5;
+        double proportionY = proportionGame + proportionGameBar;
+        double proportionX = 16;
 
         double appBarHeight = 40;
 
         double height = primaryStage.getHeight() - appBarHeight;
         double width = primaryStage.getWidth();
-        if (width / 16 < height / 9) {
-            height = width * 9 / 16;
-        } else if (width / 16 > height / 9) {
-            width = height * 16 / 9;
+        if (width / proportionX < height / proportionY) {
+            height = width * proportionY / proportionX;
+        } else if (width / proportionX > height / proportionY) {
+            width = height * proportionX / proportionY;
         }
+        gameBarHeight = height * (proportionGameBar / proportionY);
+
         gameCanvas.setWidth(width);
-        gameCanvas.setHeight(height);
+        gameCanvas.setHeight(height + gameBarHeight);
 
         //TODO: Resize window timer so its does not get called 800 times
-        gameController.setViewport((int)width, (int)height);
+        gameController.setViewport((int)width, (int) (height * proportionGame / proportionY));
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
@@ -251,21 +264,6 @@ public class GameViewController extends ViewController {
         loadingAnimation.start();
     }
 
-
-
-
-
-
-
-    /*@Override
-    public void handle(KeyEvent keyEvent) {
-        game.moveSpaceShip(keyEvent.getCode());
-    }*/
-
-    /*public double canvasHeight() {
-        return gameCanvas.getHeight();
-    }*/
-
     private void clearCanvas(){
         graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
     }
@@ -287,11 +285,13 @@ public class GameViewController extends ViewController {
     }
 
     private void displayCoinsAndScore(int coins, int score) {
+        double paddingTopPercent = 0.1;
+        double fontSize = gameBarHeight * (1 - 2 * paddingTopPercent);
+        double textWidth = fontSize * 5; // todo reicht für 7-stellige Zahlen -> genug?
         double xPositionReference = gameCanvas.getWidth();
-        double yPosition = 5;
-        double textWidth = 100;
+        double yPosition = gameCanvas.getHeight() - gameBarHeight - fontSize;
         double marginRightImage = 10;
-        double marginRight = 15;
+        double marginRight = 30;
         BufferedImage image = null;
         try {
             image = visualManager.getImage(UIElement.COIN_COUNT.getClass());
@@ -303,7 +303,7 @@ public class GameViewController extends ViewController {
             e.printStackTrace();
         }
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, image.getHeight()));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, fontSize));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
         graphicsContext.fillText(String.valueOf(coins), xPositionReference - marginRight, yPosition, textWidth);
@@ -311,9 +311,10 @@ public class GameViewController extends ViewController {
     }
 
     private void displayInformation(String info) {
+        double paddingTopPercent = 0.1;
+        double fontSize = gameBarHeight * (1 - 2 * paddingTopPercent);
         double xPosition = gameCanvas.getWidth() / 2;
-        double yPosition = gameCanvas.getHeight() * 0.2;
-        double fontSize = 40;
+        double yPosition = gameCanvas.getHeight() - gameBarHeight - fontSize;
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, fontSize));
         graphicsContext.setTextAlign(TextAlignment.CENTER);

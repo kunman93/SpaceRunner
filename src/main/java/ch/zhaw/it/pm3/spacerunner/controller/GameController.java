@@ -19,6 +19,7 @@ public class GameController {
     private Timer gameSpeedTimer;
 
 
+
     private boolean isPaused = false;
 
     private int collectedCoins;
@@ -154,6 +155,8 @@ public class GameController {
     public int getFps() {
         return fps;
     }
+
+    public boolean isPaused() {return isPaused;}
 
     /**
      * Continues or stops game logic according to clicking pause/resume button
