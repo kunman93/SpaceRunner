@@ -13,11 +13,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ElementPreset {
-    private Timer timer = new Timer();
-    private boolean canGenerate = true;
-    private int delay = 5000;
-    private VisualManager visualManager = VisualManager.getInstance();
-
     private Preset[] presets = generatePresets();
 
     private Preset[] generatePresets() {
