@@ -3,12 +3,13 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
     private VelocityManager velocityManager = VelocityManager.getInstance();
 
-    public SpaceShip(Point startPosition){
+    public SpaceShip(Point2D.Double startPosition){
         super(startPosition);
     }
 
@@ -21,15 +22,15 @@ public class SpaceShip extends SpaceElement {
     }
 
     private void directMove(boolean invert){
-        Point velocity = null;
+        Point2D.Double velocity = null;
         try {
-            velocity = velocityManager.getVelocity(this.getClass());
+            velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
             //TODO: handle
             e.printStackTrace();
         }
 
-        Point position = getCurrentPosition();
+        Point2D.Double position = getRelativePosition();
 
         if(invert){
             position.x -= velocity.x;
@@ -39,7 +40,7 @@ public class SpaceShip extends SpaceElement {
             position.y += velocity.y;
         }
 
-        setCurrentPosition(position);
+        setRelativePosition(position);
     }
 
     public void directMoveUp(){

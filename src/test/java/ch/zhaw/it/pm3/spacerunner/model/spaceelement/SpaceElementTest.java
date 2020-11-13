@@ -30,10 +30,10 @@ public class SpaceElementTest {
     @Test
     void testGetPosition(){
         //velocity == (0,0) -> nextPosition = currentPosition
-        assertEquals(element.getNextPosition(),element.getCurrentPosition());
+        assertEquals(element.getNextPosition(),element.getRelativePosition());
         velocityManager.setVelocity(Coin.class, new Point2D.Double(0.1, 0));
         element.move();
-        assertEquals(new Point(10,0), element.getCurrentPosition());
+        assertEquals(new Point(10,0), element.getRelativePosition());
         assertEquals(new Point(20,0), element.getNextPosition());
     }
 
@@ -52,10 +52,10 @@ public class SpaceElementTest {
     void testMove(){
         velocityManager.accelerateX(Coin.class, 0.01);
         element.move();
-        assertEquals(new Point(1,0), element.getCurrentPosition());
+        assertEquals(new Point(1,0), element.getRelativePosition());
         velocityManager.accelerateX(Coin.class, 0.01);
         element.move();
-        assertEquals(new Point(3,0), element.getCurrentPosition());
+        assertEquals(new Point(3,0), element.getRelativePosition());
     }
 
     @Test

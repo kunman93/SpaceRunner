@@ -25,10 +25,10 @@ class CoinTest {
 
     @Test
     void moveTest(){
-        assertEquals(new Point(200,100), coin1.getCurrentPosition());
+        assertEquals(new Point(200,100), coin1.getRelativePosition());
         coin1.move();
-        assertEquals(new Point(197,100), coin1.getCurrentPosition());
+        assertEquals(new Point(197,100), coin1.getRelativePosition());
         coin1.move();
-        assertEquals(new Point(194,100), coin1.getCurrentPosition());
+        assertEquals(new Point(194,100), coin1.getRelativePosition());
     }
 }

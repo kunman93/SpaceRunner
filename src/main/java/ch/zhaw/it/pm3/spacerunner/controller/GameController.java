@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
@@ -9,11 +10,8 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.io.IOException;
 import java.util.*;
 
 public class GameController {
@@ -27,6 +25,8 @@ public class GameController {
 
     private Timer gameSpeedTimer;
 
+    private double remainingDistanceUntilNextPreset = 0.1;
+    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
 
     private boolean isPaused = false;
 
@@ -118,14 +118,14 @@ public class GameController {
     protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                if (spaceShip.getCurrentPosition().y <= 0.0)
+                if (spaceShip.getRelativePosition().y <= 0.0)
                     return;
                 spaceShip.directMoveUp();
                 break;
             case DOWN:
                 try {
                     //TODO: fix spaceship out of view
-                    if (spaceShip.getCurrentPosition().y + visualManager.getElementPixelHeight(SpaceShip.class) >= height) return;
+                    if (spaceShip.getRelativePosition().y + visualManager.getElementPixelHeight(SpaceShip.class) >= height) return;
                 } catch (VisualNotSetException e) {
                     //TODO: handle
                     e.printStackTrace();
@@ -201,8 +201,8 @@ public class GameController {
 
         elements = new HashSet<>();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
-        background = new SpaceWorld(new Point(0, 0));
-        spaceShip = new SpaceShip(new Point(20, 100));
+        background = new SpaceWorld(new Point2D.Double(0, 0));
+        spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
 
@@ -238,8 +238,6 @@ public class GameController {
         }
         this.visualManager.setViewport(width, height);
 
-        this.velocityManager.setHeight(height);
-        this.velocityManager.setWidth(width);
         if(!wasPaused){
             isPaused = false;
         }
@@ -256,7 +254,7 @@ public class GameController {
         elements.removeIf((SpaceElement element) ->
         {
             try {
-                return element.getCurrentPosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
+                return element.getRelativePosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
                 //TODO: handle
                 e.printStackTrace();
@@ -269,14 +267,15 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
-        SpaceElement[] preset = elementPreset.getRandomPreset(horizontalGameSpeed);
-        if (preset != null) {
-            generatePreset(preset);
+        if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
+            generatePreset(elementPreset.getRandomPreset());
+
         }
     }
 
-    private void generatePreset(SpaceElement[] preset) {
-        Collections.addAll(elements, preset);
+    private void generatePreset(Preset preset) {
+        Collections.addAll(elements, preset.getElementsInPreset());
+        remainingDistanceUntilNextPreset = preset.getPresetSize();
     }
 
     /**
@@ -286,9 +285,8 @@ public class GameController {
         for (SpaceElement element : elements) {
             element.move();
         }
-
         background.move();
-
+        remainingDistanceUntilNextPreset -= HorizontalSpeed.BACKGROUND.getSpeed();
     }
 
     /**

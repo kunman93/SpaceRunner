@@ -15,12 +15,6 @@ public class VelocityManager {
     private Map<Class<? extends SpaceElement>, Point2D.Double> velocityMap = new HashMap<>();
     private static VelocityManager instance = new VelocityManager();
 
-    //TODO: evan remove
-    private int height = 500;
-    private int width = 500;
-    //TODO: evan remove
-
-
     public static VelocityManager getInstance(){
         return instance;
     }
@@ -87,34 +81,4 @@ public class VelocityManager {
 
         return velocity;
     }
-
-
-    //TODO: evan remove
-    public synchronized Point getVelocity(Class<? extends SpaceElement> elementClass) throws VelocityNotSetException {
-        Point2D.Double velocity = velocityMap.get(elementClass);
-        if(velocity == null) {
-            throw new VelocityNotSetException("Velocity for " + elementClass.getSimpleName() + " was not set!");
-        }
-
-        return new Point((int)(velocity.x * width), (int)(velocity.y * height));
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-    //TODO: evan remove
-
-
 }
