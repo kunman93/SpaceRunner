@@ -8,7 +8,8 @@ public enum HorizontalSpeed {
     ASTEROID(1),
     COIN(0.7),
     BACKGROUND(0.7),
-    UFO(0.7);
+    UFO(0.7),
+    POWERUP(0.7);
 
 
     private double speed;
