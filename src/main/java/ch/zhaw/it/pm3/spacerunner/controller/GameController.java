@@ -9,11 +9,8 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.io.IOException;
 import java.util.*;
 
 public class GameController {
@@ -118,14 +115,14 @@ public class GameController {
     protected void moveSpaceShip(SpaceShipDirection direction) {
         switch (direction) {
             case UP:
-                if (spaceShip.getCurrentPosition().y <= 0.0)
+                if (spaceShip.getRelativePosition().y <= 0.0)
                     return;
                 spaceShip.directMoveUp();
                 break;
             case DOWN:
                 try {
                     //TODO: fix spaceship out of view
-                    if (spaceShip.getCurrentPosition().y + visualManager.getElementPixelHeight(SpaceShip.class) >= height) return;
+                    if (spaceShip.getRelativePosition().y + visualManager.getElementPixelHeight(SpaceShip.class) >= height) return;
                 } catch (VisualNotSetException e) {
                     //TODO: handle
                     e.printStackTrace();
@@ -201,8 +198,8 @@ public class GameController {
 
         elements = new HashSet<>();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
-        background = new SpaceWorld(new Point(0, 0));
-        spaceShip = new SpaceShip(new Point(20, 100));
+        background = new SpaceWorld(new Point2D.Double(0, 0));
+        spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
 
@@ -256,7 +253,7 @@ public class GameController {
         elements.removeIf((SpaceElement element) ->
         {
             try {
-                return element.getCurrentPosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
+                return element.getRelativePosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
                 //TODO: handle
                 e.printStackTrace();

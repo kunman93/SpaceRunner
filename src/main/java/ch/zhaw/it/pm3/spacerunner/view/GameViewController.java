@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Timer;
@@ -299,7 +300,7 @@ public class GameViewController extends ViewController {
 
     public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         for (SpaceElement spaceElement : spaceElements) {
-            Point position = spaceElement.getCurrentPosition();
+            Point2D.Double position = spaceElement.getRelativePosition();
             Image image = null;
             try {
                 image = SwingFXUtils.toFXImage(visualManager.getImage(spaceElement.getClass()), null);

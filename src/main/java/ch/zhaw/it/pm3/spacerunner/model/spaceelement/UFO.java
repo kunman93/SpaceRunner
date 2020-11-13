@@ -1,11 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 
 public class UFO extends Obstacle {
 
@@ -14,21 +12,21 @@ public class UFO extends Obstacle {
     private VisualManager visualManager = VisualManager.getInstance();
     private VelocityManager velocityManager = VelocityManager.getInstance();
 
-    public UFO(Point startPosition) {
+    public UFO(Point2D.Double startPosition) {
         super(startPosition);
     }
 
     @Override
     public void move() { //long timeInMillis
         //TODO: sinus curve for example
-        Point currentPosition = getCurrentPosition();
+        Point2D.Double currentPosition = getRelativePosition();
         //TODO: access Canvas height and width? maybe as static variable
         int bottomBorderLimitOfCanvas = visualManager.getHeight();
         int topBorderLimitOfCanvas = 0;
 
-        Point velocity = null;
+        Point2D.Double velocity = null;
         try {
-            velocity = velocityManager.getVelocity(this.getClass());
+            velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
             //TODO: handle
             e.printStackTrace();
@@ -41,7 +39,7 @@ public class UFO extends Obstacle {
         }
     }
 
-    private void ascend(Point velocity, Point currentPosition, int topBorderLimitOfCanvas) {
+    private void ascend(Point2D.Double velocity, Point2D.Double currentPosition, int topBorderLimitOfCanvas) {
         changeDirection = true;
 
         currentPosition.x += velocity.x;
@@ -53,18 +51,18 @@ public class UFO extends Obstacle {
         }
     }
 
-    private void descend(Point velocity, Point currentPosition) {
+    private void descend(Point2D.Double velocity, Point2D.Double currentPosition) {
 
         currentPosition.x += velocity.x;
         currentPosition.y += velocity.y;
 
     }
 
-    private boolean reachedUpperThreshold(Point currentPosition, int topBorderLimitOfCanvas) {
+    private boolean reachedUpperThreshold(Point2D.Double currentPosition, int topBorderLimitOfCanvas) {
         return currentPosition.y < topBorderLimitOfCanvas;
     }
 
-    private boolean reachedLowerThreshold(Point currentPosition, int bottomBorderLimitOfCanvas) {
+    private boolean reachedLowerThreshold(Point2D.Double currentPosition, int bottomBorderLimitOfCanvas) {
         return currentPosition.y > bottomBorderLimitOfCanvas;
     }
 }

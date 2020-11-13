@@ -6,6 +6,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,7 +29,7 @@ public class ElementPreset {
             int coinPreset1X3 = coinPreset1X1 + 2 * visualManager.getElementPixelWidth(Coin.class);
 
             presets = new SpaceElement[][]{
-                    {       new Coin(new Point(coinPreset1X1,coinPreset1Y1)),
+                    /*{       new Coin(new Point(coinPreset1X1,coinPreset1Y1)),
                             new Coin(new Point(coinPreset1X3,coinPreset1Y1)),
 
                             new Coin(new Point(coinPreset1X2, coinPreset1Y2)),
@@ -40,7 +41,8 @@ public class ElementPreset {
                     {new Asteroid(new Point(visualManager.getWidth(),-100)), new Asteroid(new Point(visualManager.getWidth() + visualManager.getElementPixelWidth(Asteroid.class) + 10,50))},
                     {new UFO(new Point(new Point(visualManager.getWidth(),0))), new UFO(new Point(new Point(visualManager.getWidth(),100)))},
                     {new Asteroid(new Point(visualManager.getWidth(),200))},
-                    {new Asteroid(new Point(visualManager.getWidth(),125))}
+                    {new Asteroid(new Point(visualManager.getWidth(),125))}*/
+                    {new Coin(new Point2D.Double(0.5,1))}
             };
         }catch (VisualNotSetException e){
             //TODO handle!

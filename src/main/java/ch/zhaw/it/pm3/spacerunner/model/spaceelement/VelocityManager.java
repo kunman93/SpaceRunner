@@ -88,17 +88,6 @@ public class VelocityManager {
         return velocity;
     }
 
-
-    //TODO: evan remove
-    public synchronized Point getVelocity(Class<? extends SpaceElement> elementClass) throws VelocityNotSetException {
-        Point2D.Double velocity = velocityMap.get(elementClass);
-        if(velocity == null) {
-            throw new VelocityNotSetException("Velocity for " + elementClass.getSimpleName() + " was not set!");
-        }
-
-        return new Point((int)(velocity.x * width), (int)(velocity.y * height));
-    }
-
     public int getHeight() {
         return height;
     }
