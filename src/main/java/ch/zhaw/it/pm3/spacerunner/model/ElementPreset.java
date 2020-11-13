@@ -28,11 +28,11 @@ public class ElementPreset {
         };
     }
 
-    public void regeneratePresets(){
+    public synchronized void regeneratePresets(){
         presets = generatePresets();
     }
 
-    public Preset getRandomPreset() {
+    public synchronized Preset getRandomPreset() {
         int index = (int)Math.floor(Math.random() * presets.length);
         return presets[index];
     }
