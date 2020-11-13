@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
@@ -24,6 +25,8 @@ public class GameController {
 
     private Timer gameSpeedTimer;
 
+    private double remainingDistanceUntilNextPreset = 0.1;
+    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
 
     private boolean isPaused = false;
 
@@ -264,14 +267,15 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
-        SpaceElement[] preset = elementPreset.getRandomPreset(horizontalGameSpeed);
-        if (preset != null) {
-            generatePreset(preset);
+        if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
+            generatePreset(elementPreset.getRandomPreset());
+
         }
     }
 
-    private void generatePreset(SpaceElement[] preset) {
-        Collections.addAll(elements, preset);
+    private void generatePreset(Preset preset) {
+        Collections.addAll(elements, preset.getElementsInPreset());
+        remainingDistanceUntilNextPreset = preset.getPresetSize();
     }
 
     /**
@@ -281,9 +285,8 @@ public class GameController {
         for (SpaceElement element : elements) {
             element.move();
         }
-
         background.move();
-
+        remainingDistanceUntilNextPreset -= HorizontalSpeed.BACKGROUND.getSpeed();
     }
 
     /**

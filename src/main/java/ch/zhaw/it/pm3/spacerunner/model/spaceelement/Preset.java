@@ -29,4 +29,11 @@ public class Preset {
         return 0;
     }
 
+    public SpaceElement[] getElementsInPreset() {
+        return elementsInPreset;
+    }
+
+    public double getPresetSize() {
+        return presetSize;
+    }
 }
