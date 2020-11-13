@@ -31,7 +31,6 @@ public class GameController {
     private boolean isPaused = false;
 
     private int collectedCoins;
-    private int distance;
     private int score;
 
     private int fps;
@@ -76,7 +75,7 @@ public class GameController {
 
         if (!isPaused) {
             moveSpaceShip(upPressed, downPressed);
-            updateHighScore();
+            updateHighScore(timeSinceLastUpdate);
             processCollision(detectCollision());
             generateObstacles();
             moveElements(timeSinceLastUpdate);
@@ -207,12 +206,8 @@ public class GameController {
 
         fps = playerProfile.getFps();
 
-        distance = 0;
         collectedCoins = 0;
         horizontalGameSpeed = 1;
-//        gameSpeed = playerProfile.getStartingGameSpeed;
-//        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
-//        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
     private TimerTask getGameSpeedTimerTask() {
@@ -382,11 +377,9 @@ public class GameController {
         return spaceShip;
     }
 
-    private void updateHighScore() {
-        if (distance >= 50) {
-            score = score + 10;
-            distance = 0;
-        }
-        distance++;
+    private void updateHighScore(long timeSinceLastUpdate) {
+        score = score + (int)(timeSinceLastUpdate/10);
     }
+
+
 }
