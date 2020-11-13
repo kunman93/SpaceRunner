@@ -1,22 +1,21 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
+
+
+import ch.zhaw.it.pm3.spacerunner.controller.SpaceShipDirection;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
-    private static int spaceShipHeight;
-    private static int spaceShipWidth;
+    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private final VisualManager visualManager = VisualManager.getInstance();
 
-    private static Point UP = new Point(HorizontalSpeed.ZERO.getSpeed(), -VerticalSpeed.SPACE_SHIP.getSpeed());
-    private static Point DOWN = new Point(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed());
-
-    public SpaceShip(Point startPosition){
+    public SpaceShip(Point2D.Double startPosition){
         super(startPosition);
-        setElementHitbox();
     }
 
     public boolean hasCrashed() {
@@ -27,36 +26,51 @@ public class SpaceShip extends SpaceElement {
         hasCrashed = true;
     }
 
-    private void directMove(Point direction){
-        setVelocity(direction);
-        move();
-    }
+    private void directMove(SpaceShipDirection direction, Point2D.Double position, long timeInMillis){
+        Point2D.Double velocity = null;
+        try {
+            velocity = velocityManager.getRelativeVelocity(this.getClass());
+        } catch (VelocityNotSetException e) {
+            //TODO: handle
+            e.printStackTrace();
+        }
 
-    public void directMoveUp(){
-        directMove(UP);
-    }
 
-    public void directMoveDown(){
-        directMove(DOWN);
+        if(direction == SpaceShipDirection.UP){
+            position.x -= timeInMillis/1000.0 * velocity.x;
+            position.y -= timeInMillis/1000.0 * velocity.y;
+        }else if(direction == SpaceShipDirection.DOWN){
+            position.x += timeInMillis/1000.0 * velocity.x;
+            position.y += timeInMillis/1000.0 * velocity.y;
+        }
+
+        setRelativePosition(position);
     }
 
     /**
-     * sets the spaceship speed for UP and DOWN
-     * @param spaceShipSpeed
+     * Moves the spaceship
+     *
+     * @param direction The direction of movement (UP,DOWN or NONE)
      */
-    public void setSpaceShipSpeed(int spaceShipSpeed){
-        UP = new Point(0,-spaceShipSpeed);
-        DOWN = new Point(0,spaceShipSpeed);
+    public void moveSpaceShip(SpaceShipDirection direction, long timeInMillis) {
+        Point2D.Double position = getRelativePosition();
+        switch (direction) {
+            case UP:
+                if (position.y <= 0.0)
+                    return;
+                directMove(direction, position, timeInMillis);
+                break;
+            case DOWN:
+                try {
+                    //TODO: fix spaceship out of view
+                    if (position.y + visualManager.getElementRelativeHeight(this.getClass()) >= 1.0) return;
+                } catch (VisualNotSetException e) {
+                    //TODO: handle
+                    e.printStackTrace();
+                }
+                directMove(direction, position, timeInMillis);
+                break;
+        }
     }
 
-    @Override
-    protected void setElementHitbox() {
-        setHeight(spaceShipHeight);
-        setWidth(spaceShipWidth);
-    }
-
-    public static void setClassHitbox(int height, int width) {
-        spaceShipHeight = height;
-        spaceShipWidth = width;
-    }
 }

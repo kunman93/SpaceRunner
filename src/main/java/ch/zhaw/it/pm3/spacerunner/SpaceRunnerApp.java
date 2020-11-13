@@ -1,6 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
@@ -24,7 +26,9 @@ import java.net.URL;
 public class SpaceRunnerApp extends Application {
 
     private Stage primaryStage;
-    private SoundUtil soundUtil = SoundUtil.getInstance();
+    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private SoundClip backgroundMusic;
 
     public static void main(String[] args) {
         launch(args);
@@ -37,12 +41,14 @@ public class SpaceRunnerApp extends Application {
         ViewController.setMain(this);
         setFXMLView(FXMLFile.MENU);
 
+
+        gameSoundUtil.setVolume(persistenceUtil.getSoundVolume());
         setupBackgroundMusic();
 
     }
 
     public void setFXMLView(FXMLFile source){
-        double height = 490;
+        double height = 515; // (800 * 9 / 16) + (800 * 0.5 / 16) - 40
         double width = 800;
 
         try {
@@ -78,11 +84,17 @@ public class SpaceRunnerApp extends Application {
         return primaryStage;
     }
 
-    private void setupBackgroundMusic() {
+    public void setupBackgroundMusic() {
+        if(backgroundMusic != null){
+            backgroundMusic.stop();
+            backgroundMusic = null;
+        }
+        if(!persistenceUtil.isAudioEnabled()){
+            return;
+        }
+
         try {
-            //TODO: Use Enum value with loadClip / create GameSoundUtil extends SoundUtil
-            URL backgroundMusicURL = getClass().getResource(GameSound.BACKGROUND.getFileName());
-            SoundClip backgroundMusic = soundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
+            backgroundMusic = gameSoundUtil.loadClip(GameSound.BACKGROUND_2);
             backgroundMusic.setLoop(true);
             backgroundMusic.play();
         } catch (IOException e) {
