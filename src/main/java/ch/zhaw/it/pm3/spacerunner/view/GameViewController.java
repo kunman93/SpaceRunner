@@ -189,6 +189,7 @@ public class GameViewController extends ViewController {
 
     private void calc16to9Proportions() {
 
+
         double appBarHeight = 40;
 
         double height = primaryStage.getHeight() - appBarHeight;
@@ -221,7 +222,7 @@ public class GameViewController extends ViewController {
 
         };
 
-        resizeTimer.schedule(resizeTask, 100);
+        resizeTimer.schedule(resizeTask, 300);
 
 
     }

@@ -8,7 +8,6 @@ import java.awt.geom.Point2D;
 
 public class UFO extends Obstacle {
 
-    private boolean changeDirection = false;
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
     private VisualManager visualManager = VisualManager.getInstance();
     private VelocityManager velocityManager = VelocityManager.getInstance();
@@ -18,7 +17,7 @@ public class UFO extends Obstacle {
     }
 
     @Override
-    public void move() { //long time millis
+    public void move(long timeInMillis) {
         double currentXPos = getRelativePosition().x;
         Point2D.Double currentPos = new Point2D.Double(currentXPos, sinWave(currentXPos));
         setRelativePosition(currentPos);
@@ -28,12 +27,12 @@ public class UFO extends Obstacle {
 
         velocityManager.setVelocity(UFO.class, velocity);
 
-        super.move();
+        super.move(timeInMillis);
     }
 
     private double sinWave(double currentXPos) {
         try {
-            return .25 * Math.sin(currentXPos * 5 + 1) + .5 - .5*visualManager.getElementRelativeHeight(UFO.class);
+            return 0.25 * Math.sin(currentXPos * 5 + 1) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
         } catch (VisualNotSetException e) {
             e.printStackTrace();
         }

@@ -74,7 +74,7 @@ public class GameController {
         long timeSinceLastUpdate = millisSinceLastProcessing();
 
         if (!isPaused) {
-            moveSpaceShip(upPressed, downPressed);
+            moveSpaceShip(upPressed, downPressed, timeSinceLastUpdate);
             updateHighScore(timeSinceLastUpdate);
             processCollision(detectCollision());
             generateObstacles();
@@ -100,40 +100,16 @@ public class GameController {
     /**
      * Checks if movement keys are pressed & moves the spaceship accordingly
      */
-    public void moveSpaceShip(boolean upPressed, boolean downPressed) {
+    public void moveSpaceShip(boolean upPressed, boolean downPressed, long timeInMillis) {
         if (upPressed && !downPressed) {
-            moveSpaceShip(SpaceShipDirection.UP);
+            spaceShip.moveSpaceShip(SpaceShipDirection.UP, timeInMillis);
         } else if (downPressed && !upPressed) {
-            moveSpaceShip(SpaceShipDirection.DOWN);
+            spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, timeInMillis);
         }
     }
 
 
-    //TODO: move into spaceship. Also move the enum into package spaceelement
-    /**
-     * Moves the spaceship
-     *
-     * @param direction The direction of movement (UP,DOWN or NONE)
-     */
-    protected void moveSpaceShip(SpaceShipDirection direction) {
-        switch (direction) {
-            case UP:
-                if (spaceShip.getRelativePosition().y <= 0.0)
-                    return;
-                spaceShip.directMoveUp();
-                break;
-            case DOWN:
-                try {
-                    //TODO: fix spaceship out of view
-                    if (spaceShip.getRelativePosition().y + visualManager.getElementPixelHeight(SpaceShip.class) >= height) return;
-                } catch (VisualNotSetException e) {
-                    //TODO: handle
-                    e.printStackTrace();
-                }
-                spaceShip.directMoveDown();
-                break;
-        }
-    }
+
 
     /**
      * Updates the playerProfile with collected coins and new highscore
@@ -148,7 +124,7 @@ public class GameController {
     public ArrayList<SpaceElement> getGameElements() {
         ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
         dataToDisplay.add(0, background);
-        dataToDisplay.add(1, spaceShip);
+        dataToDisplay.add(spaceShip);
         return dataToDisplay;
     }
 
@@ -250,7 +226,7 @@ public class GameController {
         elements.removeIf((SpaceElement element) ->
         {
             try {
-                return element.getRelativePosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
+                return element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
                 //TODO: handle
                 e.printStackTrace();
@@ -283,10 +259,10 @@ public class GameController {
      */
     public void moveElements(long timeSinceLastUpdate) {
         for (SpaceElement element : elements) {
-            element.move();
+            element.move(timeSinceLastUpdate);
         }
-        background.move();
-        remainingDistanceUntilNextPreset -= HorizontalSpeed.BACKGROUND.getSpeed();
+        background.move(timeSinceLastUpdate);
+        remainingDistanceUntilNextPreset -= timeSinceLastUpdate/1000.0 * HorizontalSpeed.BACKGROUND.getSpeed();
     }
 
     /**
