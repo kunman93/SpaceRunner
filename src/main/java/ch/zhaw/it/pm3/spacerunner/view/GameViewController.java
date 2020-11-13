@@ -25,8 +25,11 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GameViewController extends ViewController {
@@ -56,6 +59,9 @@ public class GameViewController extends ViewController {
 
     private AnimationTimer gameLoop;
     private AnimationTimer loadingAnimation;
+
+    private Timer resizeTimer = new Timer("ResizeTimer");
+    private TimerTask resizeTask = null;
 
     private long lastUpdate;
     private int framesCount = 0;
@@ -203,13 +209,33 @@ public class GameViewController extends ViewController {
         } else if (width / proportionX > height / proportionY) {
             width = height * proportionX / proportionY;
         }
+
         gameBarHeight = height * (proportionGameBar / proportionY);
 
-        gameCanvas.setWidth(width);
-        gameCanvas.setHeight(height + gameBarHeight);
+        if(resizeTask != null){
+            resizeTask.cancel();
+        }
 
-        //TODO: Resize window timer so its does not get called 800 times
-        gameController.setViewport((int)width, (int) (height * proportionGame / proportionY));
+        //needed for scheduler
+        double finalWidth = width;
+        double finalHeight = height;
+
+        resizeTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(()->{
+                    gameCanvas.setWidth(finalWidth);
+                    gameCanvas.setHeight(finalHeight + gameBarHeight);
+
+                    gameController.setViewport((int) finalWidth, (int) (finalHeight * proportionGame / proportionY));
+                });
+            }
+
+
+        };
+
+        resizeTimer.schedule(resizeTask, 300);
+
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
@@ -271,7 +297,7 @@ public class GameViewController extends ViewController {
 
     public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         for (SpaceElement spaceElement : spaceElements) {
-            Point position = spaceElement.getCurrentPosition();
+            Point2D.Double position = spaceElement.getRelativePosition();
             Image image = null;
             try {
                 image = SwingFXUtils.toFXImage(visualManager.getImage(spaceElement.getClass()), null);
@@ -279,7 +305,7 @@ public class GameViewController extends ViewController {
                 e.printStackTrace();
                 //TODO: handle
             }
-            graphicsContext.drawImage(image, position.x, position.y);
+            graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
             //TODO: possible memory leak
         }
     }

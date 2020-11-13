@@ -1,70 +1,41 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 
 public class UFO extends Obstacle {
 
-    private boolean changeDirection = false;
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
     private VisualManager visualManager = VisualManager.getInstance();
     private VelocityManager velocityManager = VelocityManager.getInstance();
 
-    public UFO(Point startPosition) {
+    public UFO(Point2D.Double startPosition) {
         super(startPosition);
     }
 
     @Override
-    public void move() { //long timeInMillis
-        //TODO: sinus curve for example
-        Point currentPosition = getCurrentPosition();
-        //TODO: access Canvas height and width? maybe as static variable
-        int bottomBorderLimitOfCanvas = visualManager.getHeight();
-        int topBorderLimitOfCanvas = 0;
+    public void move(long timeInMillis) {
+        double currentXPos = getRelativePosition().x;
+        Point2D.Double currentPos = new Point2D.Double(currentXPos, sinWave(currentXPos));
+        setRelativePosition(currentPos);
+        double nextXPos = getNextPosition().x;
+        Point2D.Double nextPos = new Point2D.Double(nextXPos, sinWave(nextXPos));
+        Point2D.Double velocity = new Point2D.Double(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
 
-        Point velocity = null;
+        velocityManager.setVelocity(UFO.class, velocity);
+
+        super.move(timeInMillis);
+    }
+
+    private double sinWave(double currentXPos) {
         try {
-            velocity = velocityManager.getVelocity(this.getClass());
-        } catch (VelocityNotSetException e) {
-            //TODO: handle
+            return 0.25 * Math.sin(currentXPos * 5 + 1) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
+        } catch (VisualNotSetException e) {
             e.printStackTrace();
         }
-
-        if(!reachedLowerThreshold(currentPosition, bottomBorderLimitOfCanvas) && !changeDirection){
-            descend(velocity, currentPosition);
-        }else {
-            ascend(velocity,currentPosition, topBorderLimitOfCanvas);
-        }
-    }
-
-    private void ascend(Point velocity, Point currentPosition, int topBorderLimitOfCanvas) {
-        changeDirection = true;
-
-        currentPosition.x += velocity.x;
-        currentPosition.y -= velocity.y;
-
-
-        if(reachedUpperThreshold(currentPosition, topBorderLimitOfCanvas)){
-            changeDirection = false;
-        }
-    }
-
-    private void descend(Point velocity, Point currentPosition) {
-
-        currentPosition.x += velocity.x;
-        currentPosition.y += velocity.y;
-
-    }
-
-    private boolean reachedUpperThreshold(Point currentPosition, int topBorderLimitOfCanvas) {
-        return currentPosition.y < topBorderLimitOfCanvas;
-    }
-
-    private boolean reachedLowerThreshold(Point currentPosition, int bottomBorderLimitOfCanvas) {
-        return currentPosition.y > bottomBorderLimitOfCanvas;
+        return 0;
     }
 }

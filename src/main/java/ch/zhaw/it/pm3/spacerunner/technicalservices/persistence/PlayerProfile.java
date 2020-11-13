@@ -12,6 +12,7 @@ public class PlayerProfile {
     private int playerImageId;
     private String playerName;
     private int coins;
+    private int highScore;
     //gekaufte shop inhalte
     private Set<ContentId> purchasedContentIds;
     //aktivierte shop inhalte
@@ -23,14 +24,17 @@ public class PlayerProfile {
     public static boolean TEST = false;
 
 
+
     public PlayerProfile(){
         audioEnabled = true;
         volume = 100;
         playerImageId = -1;
         playerName = "Player1";
         coins = 0;
+        highScore = 0;
         fps = 60;
-        purchasedContentIds = new HashSet<ContentId>();
+        purchasedContentIds = new HashSet<>();
+        activeContentIds = new HashSet<>();
         activeShopContent = new HashSet<>();
     }
 
@@ -80,6 +84,14 @@ public class PlayerProfile {
 
     public void subtractCoins(int coins) {
         this.coins -= coins;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
     }
 
     public Set<ContentId> getPurchasedContentIds() {

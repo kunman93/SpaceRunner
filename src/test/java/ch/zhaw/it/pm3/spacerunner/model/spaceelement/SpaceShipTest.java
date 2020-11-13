@@ -22,20 +22,20 @@ public class SpaceShipTest {
 
     @Test
     void directMoveUpTest(){
-        assertEquals(new Point(0,0), ship.getCurrentPosition());
+        assertEquals(new Point(0,0), ship.getRelativePosition());
         ship.directMoveUp();
-        assertEquals(new Point(0,-2), ship.getCurrentPosition());
+        assertEquals(new Point(0,-2), ship.getRelativePosition());
         ship.directMoveUp();
-        assertEquals(new Point(0,-4), ship.getCurrentPosition());
+        assertEquals(new Point(0,-4), ship.getRelativePosition());
     }
 
     @Test
     void directMoveDownTest(){
-        assertEquals(new Point(0,0), ship.getCurrentPosition());
+        assertEquals(new Point(0,0), ship.getRelativePosition());
         ship.directMoveDown();
-        assertEquals(new Point(0,2), ship.getCurrentPosition());
+        assertEquals(new Point(0,2), ship.getRelativePosition());
         ship.directMoveDown();
-        assertEquals(new Point(0,4), ship.getCurrentPosition());
+        assertEquals(new Point(0,4), ship.getRelativePosition());
     }
 
 }

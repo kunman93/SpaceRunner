@@ -2,8 +2,12 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
 import java.awt.*;
@@ -12,18 +16,22 @@ import java.util.*;
 
 public class GameController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
+
+
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND = 0.05;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
 
     private Timer gameSpeedTimer;
 
+    private double remainingDistanceUntilNextPreset = 0.1;
+    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
 
 
     private boolean isPaused = false;
 
     private int collectedCoins;
-    private int distance;
     private int score;
 
     private int fps;
@@ -67,7 +75,8 @@ public class GameController {
         long timeSinceLastUpdate = millisSinceLastProcessing();
 
         if (!isPaused) {
-            moveSpaceShip(upPressed, downPressed);
+            moveSpaceShip(upPressed, downPressed, timeSinceLastUpdate);
+            updateHighScore(timeSinceLastUpdate);
             processCollision(detectCollision());
             generateObstacles();
             moveElements(timeSinceLastUpdate);
@@ -92,55 +101,31 @@ public class GameController {
     /**
      * Checks if movement keys are pressed & moves the spaceship accordingly
      */
-    public void moveSpaceShip(boolean upPressed, boolean downPressed) {
+    public void moveSpaceShip(boolean upPressed, boolean downPressed, long timeInMillis) {
         if (upPressed && !downPressed) {
-            moveSpaceShip(SpaceShipDirection.UP);
+            spaceShip.moveSpaceShip(SpaceShipDirection.UP, timeInMillis);
         } else if (downPressed && !upPressed) {
-            moveSpaceShip(SpaceShipDirection.DOWN);
+            spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, timeInMillis);
         }
     }
 
 
-    //TODO: move into spaceship. Also move the enum into package spaceelement
-    /**
-     * Moves the spaceship
-     *
-     * @param direction The direction of movement (UP,DOWN or NONE)
-     */
-    protected void moveSpaceShip(SpaceShipDirection direction) {
-        switch (direction) {
-            case UP:
-                if (spaceShip.getCurrentPosition().y <= 0.0)
-                    return;
-                spaceShip.directMoveUp();
-                break;
-            case DOWN:
-                try {
-                    //TODO: fix spaceship out of view
-                    if (spaceShip.getCurrentPosition().y + visualManager.getElementPixelHeight(SpaceShip.class) >= height) return;
-                } catch (VisualNotSetException e) {
-                    //TODO: handle
-                    e.printStackTrace();
-                }
-                spaceShip.directMoveDown();
-                break;
-        }
-    }
+
 
     /**
      * Updates the playerProfile with collected coins and new highscore
      */
     private void updatePlayerProfile() {
         playerProfile.addCoins(collectedCoins);
-//        if(score > playerProfile.getHighScore()) {
-//            playerProfile.setHighScore();
-//        }
+        if(score > playerProfile.getHighScore()) {
+            playerProfile.setHighScore(score);
+        }
     }
 
     public ArrayList<SpaceElement> getGameElements() {
         ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
         dataToDisplay.add(0, background);
-        dataToDisplay.add(1, spaceShip);
+        dataToDisplay.add(spaceShip);
         return dataToDisplay;
     }
 
@@ -195,17 +180,13 @@ public class GameController {
 
         elements = new HashSet<>();
         //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
-        background = new SpaceWorld(new Point(0, 0));
-        spaceShip = new SpaceShip(new Point(20, 100));
+        background = new SpaceWorld(new Point2D.Double(0, 0));
+        spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
 
-        distance = 0;
         collectedCoins = 0;
         horizontalGameSpeed = 1;
-//        gameSpeed = playerProfile.getStartingGameSpeed;
-//        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
-//        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
     private TimerTask getGameSpeedTimerTask() {
@@ -230,11 +211,8 @@ public class GameController {
         if(!wasPaused){
             isPaused = true;
         }
-        this.visualManager.setHeight(height);
-        this.visualManager.setWidth(width);
+        this.visualManager.setViewport(width, height);
 
-        this.velocityManager.setHeight(height);
-        this.velocityManager.setWidth(width);
         if(!wasPaused){
             isPaused = false;
         }
@@ -251,7 +229,7 @@ public class GameController {
         elements.removeIf((SpaceElement element) ->
         {
             try {
-                return element.getCurrentPosition().x + visualManager.getElementPixelWidth(element.getClass()) < 0;
+                return element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
                 //TODO: handle
                 e.printStackTrace();
@@ -264,14 +242,19 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
-        SpaceElement[] preset = elementPreset.getRandomPreset(horizontalGameSpeed);
-        if (preset != null) {
-            generatePreset(preset);
+        if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
+            generatePreset(elementPreset.getRandomPreset());
+
+
         }
     }
 
-    private void generatePreset(SpaceElement[] preset) {
-        Collections.addAll(elements, preset);
+    private void generatePreset(Preset preset) {
+        Collections.addAll(elements, preset.getElementsInPreset());
+        remainingDistanceUntilNextPreset = preset.getPresetSize();
+        new Thread(()->{
+            elementPreset.regeneratePresets();
+        }).start();
     }
 
     /**
@@ -279,11 +262,10 @@ public class GameController {
      */
     public void moveElements(long timeSinceLastUpdate) {
         for (SpaceElement element : elements) {
-            element.move();
+            element.move(timeSinceLastUpdate);
         }
-
-        background.move();
-
+        background.move(timeSinceLastUpdate);
+        remainingDistanceUntilNextPreset -= timeSinceLastUpdate/1000.0 * HorizontalSpeed.BACKGROUND.getSpeed();
     }
 
     /**
@@ -307,14 +289,58 @@ public class GameController {
         if (spaceElement == null) return;
 
         if (spaceElement instanceof Obstacle) {
+
+            if(playerProfile.isAudioEnabled()){
+                new Thread(()->{
+                    try {
+                        SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
+                        explosion.addListener(() -> {
+                            try {
+                                SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
+                                gameOverVoice.addListener(()->{
+                                    try {
+                                        gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
+                                    }  catch (Exception e){
+                                        //IGNORE ON PURPOSE
+                                    }
+                                });
+                                gameOverVoice.play();
+                                gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
+                            } catch (Exception e){
+                                //IGNORE ON PURPOSE
+                            }
+                        });
+                        explosion.play();
+
+                    } catch (Exception e){
+                        //IGNORE ON PURPOSE
+                    }
+                }).start();
+            }
+            try {
+                Thread.sleep(500);
+                //TODO: show explosion??
+            } catch (Exception e){
+                //IGNORE ON PURPOSE
+            }
             spaceShip.crash();
             gameSpeedTimer.cancel();
             gameOver = true;
             saveGame();
+
         } else if (spaceElement instanceof Coin) {
             collectedCoins++;
+            score = score + 25;
             elements.remove(spaceElement);
+            new Thread(()->{
+                try {
+                    gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
+                } catch (Exception e){
+                    //IGNORE ON PURPOSE
+                }
+            }).start();
         } else if (spaceElement instanceof PowerUp) {
+            score = score + 10;
             //TODO: double coins for 10 seconds
             //TODO: shield until crash
 
@@ -331,4 +357,10 @@ public class GameController {
     protected SpaceShip getSpaceShip() {
         return spaceShip;
     }
+
+    private void updateHighScore(long timeSinceLastUpdate) {
+        score = score + (int)(timeSinceLastUpdate/10);
+    }
+
+
 }
