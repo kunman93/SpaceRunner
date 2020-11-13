@@ -5,10 +5,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -16,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -32,7 +30,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     private GridPane pane = new GridPane();
     private HBox hBox = new HBox();
-    private Label label = new Label();
+    private Label contentTitelLabel = new Label();
+    private Label contentPriceLabel = new Label();
     private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
     private Button activateButton = new Button(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
     private static PlayerProfile playerProfile;
@@ -43,9 +42,10 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     public ShopContentCell() {
         super();
-        pane.add(label, 1, 0);
-        pane.add(buyButton, 2,0);
-        pane.add(activateButton, 3,0);
+        pane.add(contentTitelLabel, 1, 0);
+        pane.add(contentPriceLabel, 2,0);
+        pane.add(buyButton, 3,0);
+        pane.add(activateButton, 4,0);
         hBox.getChildren().addAll(pane);
         hBox.setHgrow(pane, Priority.ALWAYS);
     }
@@ -67,7 +67,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
             loadPlayerProfileAndContentIds();
 
-            label.setText(this.content.getTitle());
+            contentTitelLabel.setText(this.content.getTitle());
+            contentPriceLabel.setText("Price: " + this.content.getPrice());
 
             setUpBuyButton();
             setUpActivateButton();
@@ -172,23 +173,39 @@ public class ShopContentCell extends ListCell<ShopContent> {
         activateButton.setDisable(true);
         buyButton.setOnAction(event -> {
             if(playerHasEnoughCoinsToBuy()){
-                playerProfile.setCoins(getAmountDeducted());
-                playerProfile.addContent(content.getContentId());
-                persistenceUtil.saveProfile(playerProfile);
-                buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
-                buyButton.setDisable(true);
-                activateButton.setDisable(false);
+                purchaseContentConfirmationDialogue();
             }else{
-                alertFailedToPurchaseContent();
+                failedToPurchaseContentAlertDialogue();
             }
         });
     }
 
-    private void alertFailedToPurchaseContent() {
+    private void purchaseContentConfirmationDialogue(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Purchase");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you really want to buy " + content.getTitle());
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            buy();
+        }
+    }
+
+    private void buy() {
+        playerProfile.setCoins(getAmountDeducted());
+        playerProfile.addContent(content.getContentId());
+        persistenceUtil.saveProfile(playerProfile);
+        buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
+        buyButton.setDisable(true);
+        activateButton.setDisable(false);
+    }
+
+    private void failedToPurchaseContentAlertDialogue() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
-        alert.setContentText("Not enough coins!\n You need atleast " + getAmountOfCoinsNeedToBuyContent() + " coins");
+        alert.setContentText("Not enough coins! You need atleast " + getAmountOfCoinsNeedToBuyContent() + " coins");
         alert.showAndWait();
     }
 
