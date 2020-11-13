@@ -43,9 +43,10 @@ public class GameController {
 
     private final VisualManager visualManager = VisualManager.getInstance();
 
-
-
-
+    private Map<PowerUpType, Integer> activePowerUps = new HashMap<>();
+//    private Map<PowerUpType, Long> powerUpTimers = new HashMap<>();
+    private final int GENERAL_POWERUP_PROBABILITY = 33;
+    private final int GENERAL_POWERUP_COOLDOWN = 5000;
 
     public void saveGame() {
         //TODO: Use and maybe improve
@@ -58,13 +59,29 @@ public class GameController {
         if (!isPaused) {
             checkMovementKeys(upPressed, downPressed);
 
-
             processCollision(detectCollision());
-
             generateObstacles();
             moveElements();
             removePastDrawables();
 
+        }
+    }
+
+    private void generatePowerUps() {
+        int x = (int) Math.floor(Math.random()*100);
+        if (x < GENERAL_POWERUP_PROBABILITY) {
+            int sum = 0;
+            for (PowerUpType p : PowerUpType.values()) {
+                sum += p.getProbabilityPercent();
+            }
+            x = (int) Math.floor(Math.random()*sum);
+            int secondSum = 0;
+            for (PowerUpType p : PowerUpType.values()) {
+                if (x < p.getProbabilityPercent() + secondSum){
+                    elements.add(new PowerUp(new Point(300, 150), p));
+                    break;
+                }
+            }
         }
     }
 
@@ -77,13 +94,15 @@ public class GameController {
                 spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.ASTEROID.getSpeed() * horizontalGameSpeed), VerticalSpeed.ASTEROID.getSpeed()));
             } else if (spaceElement instanceof Coin) {
                 spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.COIN.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
+            } else if (spaceElement instanceof PowerUp){
+                spaceElement.setVelocity(new Point((int) (-HorizontalSpeed.POWERUP.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
             }
         }
 
-        if(spaceShip != null){
+        if (spaceShip != null) {
             spaceShip.setSpaceShipSpeed((int) (VerticalSpeed.SPACE_SHIP.getSpeed() * horizontalGameSpeed));
         }
-        if(background != null){
+        if (background != null) {
             background.setVelocity(new Point((int) (-HorizontalSpeed.BACKGROUND.getSpeed() * horizontalGameSpeed), VerticalSpeed.ZERO.getSpeed()));
         }
     }
@@ -92,7 +111,6 @@ public class GameController {
      * Checks if movement keys are pressed & moves the spaceship accordingly
      */
     public void checkMovementKeys(boolean upPressed, boolean downPressed) {
-
         if (upPressed && !downPressed) {
             moveSpaceShip(SpaceShipDirection.UP);
         } else if (downPressed && !upPressed) {
@@ -166,10 +184,9 @@ public class GameController {
     public void initialize() {
         //TODO: check if 16:9 view
 
-
         gameSpeedTimer = new Timer("Timer");
         gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
-
+        gameSpeedTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWERUP_COOLDOWN);
         gameOver = false;
 
         playerProfile = PersistenceUtil.loadProfile();
@@ -194,10 +211,23 @@ public class GameController {
 //        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
+
+
+    private TimerTask getPowerUpGeneratorTask(){
+        return new TimerTask() {
+            @Override
+            public void run() {
+                if (!isPaused){
+                    generatePowerUps();
+                }
+            }
+        };
+    }
+
     private TimerTask getGameSpeedTimerTask() {
         return new TimerTask() {
             public void run() {
-                if(!isPaused){
+                if (!isPaused) {
                     horizontalGameSpeed += HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND;
                     updateElementsSpeed();
                 }
@@ -224,28 +254,26 @@ public class GameController {
             visualManager.setVisual(UFO.class, VisualSVGFile.UFO_1, VisualScaling.UFO);
             visualManager.setVisual(Asteroid.class, VisualSVGFile.ASTEROID, VisualScaling.ASTEROID);
             visualManager.setVisual(SpaceWorld.class, VisualFile.BACKGROUND_STARS);
-
+            visualManager.setVisual(PowerUp.class, VisualSVGFile.SHINEY_COIN_1, VisualScaling.ASTEROID); // ToDo own image and scaling
             setUpCoinWithAnimation();
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void setUpSpaceElementHitboxes() {
-        SpaceShip.setClassHitbox((int)(height*VisualScaling.SPACE_SHIP.getScaling()), (int)(height*VisualScaling.SPACE_SHIP.getScaling()*VisualHeightToWidthRatio.SPACE_SHIP.getRatio()));
-        Coin.setClassHitbox((int)(height*VisualScaling.COIN.getScaling()), (int)(height*VisualScaling.COIN.getScaling()*VisualHeightToWidthRatio.COIN.getRatio()));
-        Asteroid.setClassHitbox((int)(height*VisualScaling.ASTEROID.getScaling()), (int)(height*VisualScaling.ASTEROID.getScaling()*VisualHeightToWidthRatio.ASTEROID.getRatio()));
-        UFO.setClassHitbox((int)(height*VisualScaling.UFO.getScaling()), (int)(height*VisualScaling.UFO.getScaling()*VisualHeightToWidthRatio.UFO.getRatio()));
+        SpaceShip.setClassHitbox((int) (height * VisualScaling.SPACE_SHIP.getScaling()), (int) (height * VisualScaling.SPACE_SHIP.getScaling() * VisualHeightToWidthRatio.SPACE_SHIP.getRatio()));
+        Coin.setClassHitbox((int) (height * VisualScaling.COIN.getScaling()), (int) (height * VisualScaling.COIN.getScaling() * VisualHeightToWidthRatio.COIN.getRatio()));
+        Asteroid.setClassHitbox((int) (height * VisualScaling.ASTEROID.getScaling()), (int) (height * VisualScaling.ASTEROID.getScaling() * VisualHeightToWidthRatio.ASTEROID.getRatio()));
+        UFO.setClassHitbox((int) (height * VisualScaling.UFO.getScaling()), (int) (height * VisualScaling.UFO.getScaling() * VisualHeightToWidthRatio.UFO.getRatio()));
         //TODO: When powerup impelmented
+        PowerUp.setClassHitbox((int)(height * VisualScaling.ASTEROID.getScaling()), (int) (height * VisualScaling.ASTEROID.getScaling() * VisualHeightToWidthRatio.ASTEROID.getRatio())); //ToDo own scaling
         //PowerUp.setClassHitbox((int)(height*VisualScaling.???.getScaling()), (int)(height*VisualScaling.???.getScaling()*VisualHeightToWidthRatio.???.getRatio()));
     }
 
     private void setUpCoinWithAnimation() {
         //TODO: not needed but not bad^^
         visualManager.setVisual(Coin.class, VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN);
-
 
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION);
@@ -290,16 +318,13 @@ public class GameController {
         for (SpaceElement element : elements) {
             element.move();
         }
-
         background.move();
-
     }
 
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
     private SpaceElement detectCollision() {
-
         for (SpaceElement spaceElement : elements) {
             if (spaceShip.doesCollide(spaceElement)) {
                 return spaceElement;
@@ -308,24 +333,83 @@ public class GameController {
         return null;
     }
 
+    private void endRun(){
+        spaceShip.crash();
+        gameSpeedTimer.cancel();
+        gameOver = true;
+    }
+
     /**
      * exevutes effects depending on type of spaceElement
+     *
      * @param spaceElement
      */
     private void processCollision(SpaceElement spaceElement) {
         if (spaceElement == null) return;
 
         if (spaceElement instanceof Obstacle) {
-            spaceShip.crash();
-            gameSpeedTimer.cancel();
-            gameOver = true;
+            if (!powerUpDecrement(PowerUpType.SHIELD)){
+                endRun();
+            }
         } else if (spaceElement instanceof Coin) {
-            collectedCoins++;
+            collectedCoins += 1 * Math.pow(2, activePowerUps.getOrDefault(PowerUpType.DOUBLECOINS, 0));
             elements.remove(spaceElement);
         } else if (spaceElement instanceof PowerUp) {
-            // spaceElement.getEffect(); //ToDo one of the two
-            // handlePowerUp(spaceElement)
+            processPowerUp((PowerUp) spaceElement);
+            elements.remove(spaceElement);
         }
+    }
+
+    private void powerUpIncrement(PowerUpType t){
+        if (activePowerUps.containsKey(t)) {
+            activePowerUps.put(t, activePowerUps.get(t) + 1);
+        } else {
+            activePowerUps.put(t, 1);
+        }
+    }
+
+    /**
+     * true if it could have been decremented else false
+     * @param t
+     * @return
+     */
+    private boolean powerUpDecrement(PowerUpType t){
+        if (activePowerUps.containsKey(t)){
+            activePowerUps.put(t, activePowerUps.get(t)-1);
+            if (activePowerUps.get(t) <= 0){
+                activePowerUps.remove(t);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void createPowerUpTimer(PowerUpType t){
+        gameSpeedTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                powerUpDecrement(t);
+            }
+        }, t.getDuration());
+    }
+
+    private void processPowerUp(PowerUp p) {
+        if (p.getType().equals(PowerUpType.DOUBLECOINS)) {
+            powerUpIncrement(PowerUpType.DOUBLECOINS);
+            createPowerUpTimer(PowerUpType.DOUBLECOINS);
+        } else if (p.getType().equals(PowerUpType.SHIELD)) {
+            // ToDo if only one shield can be active it would be diffrent
+//            powerUpIncrement(PowerUpType.SHIELD);
+            if (activePowerUps.containsKey(PowerUpType.SHIELD)) {
+                //maybe sth else
+            } else {
+                activePowerUps.put(PowerUpType.SHIELD, 1);
+            }
+        } else {
+            //ToDo unknown PowerUp
+        }
+
     }
 
     protected SpaceShip getSpaceShip() {

@@ -5,7 +5,8 @@ public enum HorizontalSpeed {
     ASTEROID(3),
     COIN(2),
     BACKGROUND(3),
-    UFO(3);
+    UFO(3),
+    POWERUP(2);
 
 
     private int speed;
