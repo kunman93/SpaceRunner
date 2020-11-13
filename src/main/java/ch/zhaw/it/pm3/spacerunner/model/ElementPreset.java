@@ -19,35 +19,23 @@ public class ElementPreset {
     private static SpaceElement[][] presets;
 
     private void generatePresets() {
-        try{
-            int coinPreset1Y1 = (int) ((Math.random() * visualManager.getHeight()) - visualManager.getElementPixelHeight(Coin.class) * 3);
-            int coinPreset1Y2 = coinPreset1Y1 + visualManager.getElementPixelHeight(Coin.class);
-            int coinPreset1Y3 = coinPreset1Y1 + 2 * visualManager.getElementPixelHeight(Coin.class);
+        presets = new SpaceElement[][]{
+                /*{       new Coin(new Point(coinPreset1X1,coinPreset1Y1)),
+                        new Coin(new Point(coinPreset1X3,coinPreset1Y1)),
 
-            int coinPreset1X1 = visualManager.getWidth();
-            int coinPreset1X2 = coinPreset1X1 + visualManager.getElementPixelWidth(Coin.class);
-            int coinPreset1X3 = coinPreset1X1 + 2 * visualManager.getElementPixelWidth(Coin.class);
+                        new Coin(new Point(coinPreset1X2, coinPreset1Y2)),
 
-            presets = new SpaceElement[][]{
-                    /*{       new Coin(new Point(coinPreset1X1,coinPreset1Y1)),
-                            new Coin(new Point(coinPreset1X3,coinPreset1Y1)),
+                        new Coin(new Point(coinPreset1X1, coinPreset1Y3)),
+                        new Coin(new Point(coinPreset1X3, coinPreset1Y3))
+                },
 
-                            new Coin(new Point(coinPreset1X2, coinPreset1Y2)),
-
-                            new Coin(new Point(coinPreset1X1, coinPreset1Y3)),
-                            new Coin(new Point(coinPreset1X3, coinPreset1Y3))
-                    },
-
-                    {new Asteroid(new Point(visualManager.getWidth(),-100)), new Asteroid(new Point(visualManager.getWidth() + visualManager.getElementPixelWidth(Asteroid.class) + 10,50))},
-                    {new UFO(new Point(new Point(visualManager.getWidth(),0))), new UFO(new Point(new Point(visualManager.getWidth(),100)))},
-                    {new Asteroid(new Point(visualManager.getWidth(),200))},
-                    {new Asteroid(new Point(visualManager.getWidth(),125))}*/
-                    {new Coin(new Point2D.Double(0.5,1))}
-            };
-        }catch (VisualNotSetException e){
-            //TODO handle!
-            e.printStackTrace();
-        }
+                {new Asteroid(new Point(visualManager.getWidth(),-100)), new Asteroid(new Point(visualManager.getWidth() + visualManager.getElementPixelWidth(Asteroid.class) + 10,50))},
+                {new UFO(new Point(new Point(visualManager.getWidth(),0))), new UFO(new Point(new Point(visualManager.getWidth(),100)))},
+                {new Asteroid(new Point(visualManager.getWidth(),200))},
+                {new Asteroid(new Point(visualManager.getWidth(),125))}*/
+                {new Coin(new Point2D.Double(1,.5))},
+                {new Asteroid(new Point2D.Double(1,0))}
+        };
     }
 
     public SpaceElement[] getRandomPreset(double gameSpeed) {

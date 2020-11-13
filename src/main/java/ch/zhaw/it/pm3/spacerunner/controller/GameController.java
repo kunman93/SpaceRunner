@@ -235,8 +235,6 @@ public class GameController {
         }
         this.visualManager.setViewport(width, height);
 
-        this.velocityManager.setHeight(height);
-        this.velocityManager.setWidth(width);
         if(!wasPaused){
             isPaused = false;
         }

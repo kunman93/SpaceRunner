@@ -20,7 +20,7 @@ public class SpaceWorld extends SpaceElement{
 
         //TODO: Fix background visualManager.getWidth()
         try {
-            if(position.x + visualManager.getElementPixelWidth(SpaceWorld.class) - visualManager.getWidth() < 0){
+            if(position.x + visualManager.getElementRelativeWidth(SpaceWorld.class) < 1){
                 position.x = 0;
             }else{
                 position.x += velocityManager.getRelativeVelocity(this.getClass()).x; //timeInMillis/1000 *

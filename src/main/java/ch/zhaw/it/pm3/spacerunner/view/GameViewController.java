@@ -308,7 +308,7 @@ public class GameViewController extends ViewController {
                 e.printStackTrace();
                 //TODO: handle
             }
-            graphicsContext.drawImage(image, position.x, position.y);
+            graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
             //TODO: possible memory leak
         }
     }

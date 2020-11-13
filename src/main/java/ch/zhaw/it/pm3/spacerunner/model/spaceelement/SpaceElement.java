@@ -82,7 +82,7 @@ public abstract class SpaceElement implements VisualElement {
 
     private boolean pointInObject(double x, double y, SpaceElement s){
         try {
-            return x > s.getRelativePosition().x && x < s.getRelativePosition().x + visualManager.getElementPixelWidth(s.getClass()) && y > s.getRelativePosition().y && y < s.getRelativePosition().y + visualManager.getElementPixelHeight(s.getClass());
+            return x > s.getRelativePosition().x && x < s.getRelativePosition().x + visualManager.getElementRelativeWidth(s.getClass()) && y > s.getRelativePosition().y && y < s.getRelativePosition().y + visualManager.getElementRelativeHeight(s.getClass());
         }catch(VisualNotSetException e){
             //TODO: handle
             e.printStackTrace();
