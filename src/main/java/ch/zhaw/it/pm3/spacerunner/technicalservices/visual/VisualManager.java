@@ -45,14 +45,6 @@ public class VisualManager{
         instance.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
     }
 
-    public int getElementPixelHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
-        return getImage(elementClass).getHeight();
-    }
-
-    public int getElementPixelWidth(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
-        return getImage(elementClass).getWidth();
-    }
-
     public double getElementRelativeHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getVisual(elementClass).getVisualScaling().getScaling();
     }

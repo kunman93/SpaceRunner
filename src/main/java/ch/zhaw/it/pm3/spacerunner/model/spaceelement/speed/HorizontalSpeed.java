@@ -5,11 +5,11 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed;
  */
 public enum HorizontalSpeed {
     ZERO(0),
-    ASTEROID(0.02),
-    COIN(0.01),
-    BACKGROUND(0.01),
-    UFO(0.02),
-    POWERUP(0.01);
+    ASTEROID(1),
+    COIN(0.7),
+    BACKGROUND(0.7),
+    UFO(0.7),
+    POWERUP(0.7);
 
 
     private double speed;

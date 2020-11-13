@@ -21,7 +21,7 @@ public abstract class SpaceElement implements VisualElement {
     /**
      * will change the position by the current velocity
      */
-    public void move() { //long timeInMillis
+    public void move(long timeInMillis) {
         Point2D.Double velocity = null;
         try {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
@@ -30,8 +30,8 @@ public abstract class SpaceElement implements VisualElement {
             e.printStackTrace();
         }
 
-        position.x += velocity.x; //timeInMillis/1000 *
-        position.y += velocity.y; //timeInMillis/1000 *
+        position.x += (timeInMillis/1000.0) * velocity.x;
+        position.y += (timeInMillis/1000.0) * velocity.y;
     }
 
 
@@ -66,13 +66,13 @@ public abstract class SpaceElement implements VisualElement {
     public boolean doesCollide(SpaceElement s){
         try {
             return pointInObject(s.getRelativePosition().x, s.getRelativePosition().y, this)
-                    || pointInObject(s.getRelativePosition().x, s.getRelativePosition().y + visualManager.getElementPixelHeight(s.getClass()), this)
-                    || pointInObject(s.getRelativePosition().x + visualManager.getElementPixelWidth(s.getClass()), s.getRelativePosition().y, this)
-                    || pointInObject(s.getRelativePosition().x + visualManager.getElementPixelWidth(s.getClass()), s.getRelativePosition().y + visualManager.getElementPixelHeight(s.getClass()), this)
+                    || pointInObject(s.getRelativePosition().x, s.getRelativePosition().y + visualManager.getElementRelativeHeight(s.getClass()), this)
+                    || pointInObject(s.getRelativePosition().x + visualManager.getElementRelativeWidth(s.getClass()), s.getRelativePosition().y, this)
+                    || pointInObject(s.getRelativePosition().x + visualManager.getElementRelativeWidth(s.getClass()), s.getRelativePosition().y + visualManager.getElementRelativeHeight(s.getClass()), this)
                     || pointInObject(position.x, position.y, s)
-                    || pointInObject(position.x, position.y + visualManager.getElementPixelHeight(this.getClass()), s)
-                    || pointInObject(position.x + visualManager.getElementPixelWidth(this.getClass()), position.y, s)
-                    || pointInObject(position.x + visualManager.getElementPixelWidth(this.getClass()), position.y + visualManager.getElementPixelHeight(this.getClass()), s);
+                    || pointInObject(position.x, position.y + visualManager.getElementRelativeHeight(this.getClass()), s)
+                    || pointInObject(position.x + visualManager.getElementRelativeWidth(this.getClass()), position.y, s)
+                    || pointInObject(position.x + visualManager.getElementRelativeWidth(this.getClass()), position.y + visualManager.getElementRelativeHeight(this.getClass()), s);
         }catch(VisualNotSetException e){
             //TODO: handle
             e.printStackTrace();
