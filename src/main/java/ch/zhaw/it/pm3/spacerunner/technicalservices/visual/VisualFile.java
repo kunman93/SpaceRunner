@@ -4,7 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.FileResource;
 
 public enum VisualFile  implements FileResource {
 
-    BACKGROUND_STARS("background2.jpg"),
+    BACKGROUND_STARS("background.jpg"),
     ROCKET_ICON("icon.png");
 
 
