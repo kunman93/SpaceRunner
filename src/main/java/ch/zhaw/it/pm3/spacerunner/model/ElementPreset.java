@@ -34,7 +34,8 @@ public class ElementPreset {
                 {new Asteroid(new Point(visualManager.getWidth(),200))},
                 {new Asteroid(new Point(visualManager.getWidth(),125))}*/
                 {new Coin(new Point2D.Double(1,.5))},
-                {new Asteroid(new Point2D.Double(1,0))}
+                {new Asteroid(new Point2D.Double(1,0))},
+                {new UFO(new Point2D.Double(1,0))}
         };
     }
 
