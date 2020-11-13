@@ -266,12 +266,16 @@ public class GameController {
         if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
             generatePreset(elementPreset.getRandomPreset());
 
+
         }
     }
 
     private void generatePreset(Preset preset) {
         Collections.addAll(elements, preset.getElementsInPreset());
         remainingDistanceUntilNextPreset = preset.getPresetSize();
+        new Thread(()->{
+            elementPreset.regeneratePresets();
+        }).start();
     }
 
     /**

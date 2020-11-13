@@ -18,18 +18,21 @@ public class ElementPreset {
     private int delay = 5000;
     private VisualManager visualManager = VisualManager.getInstance();
 
-    private static Preset[] presets;
+    private Preset[] presets = generatePresets();
 
-    private void generatePresets() {
-        presets = new Preset[]{
+    private Preset[] generatePresets() {
+        return new Preset[]{
                 new Preset(new SpaceElement[]{new Asteroid(new Point2D.Double(1,0))}),
                 new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1, .5)), new Coin(new Point2D.Double(1.2, .5)), new Coin(new Point2D.Double(1.4, .5)), new Coin(new Point2D.Double(1.6, .5))}),
                 new Preset(new SpaceElement[]{new UFO(new Point2D.Double(1,0))})
         };
     }
 
+    public void regeneratePresets(){
+        presets = generatePresets();
+    }
+
     public Preset getRandomPreset() {
-        generatePresets();
         int index = (int)Math.floor(Math.random() * presets.length);
         return presets[index];
     }
