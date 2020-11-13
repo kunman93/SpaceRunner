@@ -175,14 +175,14 @@ public class ShopContentCell extends ListCell<ShopContent> {
         activateButton.setDisable(true);
         buyButton.setOnAction(event -> {
             if(playerHasEnoughCoinsToBuy()){
-                purchaseContentConfirmationDialogue();
+                showPurchaseContentConfirmationDialogue();
             }else{
-                failedToPurchaseContentAlertDialogue();
+                showFailedToPurchaseContentAlertDialogue();
             }
         });
     }
 
-    private void purchaseContentConfirmationDialogue(){
+    private void showPurchaseContentConfirmationDialogue(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Purchase");
         alert.setHeaderText(null);
@@ -203,7 +203,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         activateButton.setDisable(false);
     }
 
-    private void failedToPurchaseContentAlertDialogue() {
+    private void showFailedToPurchaseContentAlertDialogue() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
