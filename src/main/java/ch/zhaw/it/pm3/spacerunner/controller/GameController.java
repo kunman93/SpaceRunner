@@ -20,7 +20,6 @@ public class GameController {
 
 
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
-    private final double HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND = 0.05;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
 
     private Timer gameSpeedTimer;
@@ -37,8 +36,6 @@ public class GameController {
 
     private SpaceWorld background = null;
 
-    private double horizontalGameSpeed;
-
 
     private SpaceShip spaceShip;
 
@@ -50,8 +47,6 @@ public class GameController {
 
     private boolean gameOver = false;
 
-    private int width = 0;
-    private int height = 0;
 
     private final VisualManager visualManager = VisualManager.getInstance();
     private final VelocityManager velocityManager = VelocityManager.getInstance();
@@ -69,8 +64,6 @@ public class GameController {
     }
 
     public void processFrame(boolean upPressed, boolean downPressed) {
-        // System.out.println("Processing took " + lastProcessingTime / 1000000);
-
         long timeSinceLastUpdate = millisSinceLastProcessing();
 
         if (!isPaused) {
@@ -155,9 +148,6 @@ public class GameController {
      * Initializes the class variables
      */
     public void initialize() {
-
-        //TODO: check if 16:9 view
-
         velocityManager.setupGameElementVelocity();
         visualManager.loadGameElementVisuals();
 
@@ -176,21 +166,18 @@ public class GameController {
         elementPreset = new ElementPreset();
 
         elements = new HashSet<>();
-        //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point2D.Double(0, 0));
         spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
 
         collectedCoins = 0;
-        horizontalGameSpeed = 1;
     }
 
     private TimerTask getGameSpeedTimerTask() {
         return new TimerTask() {
             public void run() {
                 if(!isPaused){
-                    horizontalGameSpeed += HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND;
                     updateElementsSpeed();
                 }
 
@@ -202,8 +189,6 @@ public class GameController {
 
 
     public void setViewport(int width, int height) {
-        this.height = height;
-        this.width = width;
         boolean wasPaused = isPaused;
         if(!wasPaused){
             isPaused = true;
@@ -213,9 +198,6 @@ public class GameController {
         if(!wasPaused){
             isPaused = false;
         }
-
-        //TODO: Update Images and hitboxes
-        //TODO: UFO, ElementPreset
     }
 
       /**
