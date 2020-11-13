@@ -31,7 +31,6 @@ public class GameController {
     private boolean isPaused = false;
 
     private int collectedCoins;
-    private int distance;
     private int score;
 
     private int fps;
@@ -76,6 +75,7 @@ public class GameController {
 
         if (!isPaused) {
             moveSpaceShip(upPressed, downPressed);
+            updateHighScore(timeSinceLastUpdate);
             processCollision(detectCollision());
             generateObstacles();
             moveElements(timeSinceLastUpdate);
@@ -140,9 +140,9 @@ public class GameController {
      */
     private void updatePlayerProfile() {
         playerProfile.addCoins(collectedCoins);
-//        if(score > playerProfile.getHighScore()) {
-//            playerProfile.setHighScore();
-//        }
+        if(score > playerProfile.getHighScore()) {
+            playerProfile.setHighScore(score);
+        }
     }
 
     public ArrayList<SpaceElement> getGameElements() {
@@ -206,12 +206,8 @@ public class GameController {
 
         fps = playerProfile.getFps();
 
-        distance = 0;
         collectedCoins = 0;
         horizontalGameSpeed = 1;
-//        gameSpeed = playerProfile.getStartingGameSpeed;
-//        gameSpeedIncrease = playerProfile.getGameSpeedIncrease;
-//        spaceShipMoveSpeed = playerProfile.getSpaceShipMoveSpeed;
     }
 
     private TimerTask getGameSpeedTimerTask() {
@@ -351,6 +347,7 @@ public class GameController {
 
         } else if (spaceElement instanceof Coin) {
             collectedCoins++;
+            score = score + 25;
             elements.remove(spaceElement);
             new Thread(()->{
                 try {
@@ -360,6 +357,7 @@ public class GameController {
                 }
             }).start();
         } else if (spaceElement instanceof PowerUp) {
+            score = score + 10;
             //TODO: double coins for 10 seconds
             //TODO: shield until crash
 
@@ -376,4 +374,10 @@ public class GameController {
     protected SpaceShip getSpaceShip() {
         return spaceShip;
     }
+
+    private void updateHighScore(long timeSinceLastUpdate) {
+        score = score + (int)(timeSinceLastUpdate/10);
+    }
+
+
 }
