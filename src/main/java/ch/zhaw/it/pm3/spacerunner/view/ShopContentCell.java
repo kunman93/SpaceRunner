@@ -60,16 +60,9 @@ public class ShopContentCell extends ListCell<ShopContent> {
         this.content = content;
         setText(null);
         if(this.content != null) {
-            //TODO always loading images, this might be bad
-            VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
-            Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
-            pane.add(new ImageView(imageOfContent), 0, 0);
+            setUpImageAndLabelsOfContent();
 
             loadPlayerProfileAndContentIds();
-
-            contentTitelLabel.setText(this.content.getTitle());
-            contentPriceLabel.setText("Price: " + this.content.getPrice());
-
             setUpBuyButton();
             setUpActivateButton();
             processShopping();
@@ -77,6 +70,15 @@ public class ShopContentCell extends ListCell<ShopContent> {
             setGraphic(hBox);
             // setGraphic(new ImageView().setImage(new Image("...")))
         }
+    }
+
+    private void setUpImageAndLabelsOfContent() {
+        //TODO always loading images, this might be bad
+        VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
+        Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
+        pane.add(new ImageView(imageOfContent), 0, 0);
+        contentTitelLabel.setText(this.content.getTitle());
+        contentPriceLabel.setText("Price: " + this.content.getPrice());
     }
 
     private void loadPlayerProfileAndContentIds() {
