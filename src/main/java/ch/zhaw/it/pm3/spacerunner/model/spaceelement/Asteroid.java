@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 public class Asteroid extends Obstacle {
 
        public Asteroid(Point2D.Double startPosition) {
-        super(startPosition);
-    }
+           super(startPosition);
+       }
 
 }
