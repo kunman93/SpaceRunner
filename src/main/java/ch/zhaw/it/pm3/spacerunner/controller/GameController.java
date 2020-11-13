@@ -80,8 +80,6 @@ public class GameController {
         if (!isPaused) {
             moveSpaceShip(upPressed, downPressed);
             updateHighScore(timeSinceLastUpdate);
-            checkMovementKeys(upPressed, downPressed);
-
             processCollision(detectCollision());
             generateObstacles();
             moveElements(timeSinceLastUpdate);
@@ -110,7 +108,7 @@ public class GameController {
             int secondSum = 0;
             for (PowerUpType p : PowerUpType.values()) {
                 if (x < p.getProbabilityPercent() + secondSum){
-                    elements.add(new PowerUp(new Point(300, 150), p));
+                    elements.add(new PowerUp(new Point2D.Double(1,0.5), p));
                     break;
                 }
             }
