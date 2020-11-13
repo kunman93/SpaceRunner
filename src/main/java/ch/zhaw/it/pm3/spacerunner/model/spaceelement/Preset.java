@@ -22,10 +22,11 @@ public class Preset {
                 minPosition = Math.min(element.getRelativePosition().x, minPosition);
                 maxPosition = Math.max(element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()), maxPosition);
             }
+            return maxPosition - minPosition;
         } catch (VisualNotSetException e) {
             e.printStackTrace();
         }
-
+        return 0;
     }
 
 }
