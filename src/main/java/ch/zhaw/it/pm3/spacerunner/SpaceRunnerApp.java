@@ -1,6 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
@@ -24,6 +26,9 @@ import java.net.URL;
 public class SpaceRunnerApp extends Application {
 
     private Stage primaryStage;
+    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private SoundClip backgroundMusic;
 
     public static void main(String[] args) {
         launch(args);
@@ -36,19 +41,21 @@ public class SpaceRunnerApp extends Application {
         ViewController.setMain(this);
         setFXMLView(FXMLFile.MENU);
 
+
+        gameSoundUtil.setVolume(persistenceUtil.getSoundVolume());
         setupBackgroundMusic();
 
     }
 
-
     public void setFXMLView(FXMLFile source){
+        double height = 490;
+        double width = 800;
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFileName()));
 
             URL a = getClass().getResource("font/video_games.ttf");
             Font.loadFont(a.toString().replace("%20", " "), 10);
-
-
 
             Pane rootPane = loader.load();
             ViewController windowViewController = loader.getController();
@@ -58,13 +65,10 @@ public class SpaceRunnerApp extends Application {
             if(primaryStage.getIcons().size() == 0) { // damit breite gleich bleibt beim laden neuer view
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
-
-                // todo already set to 16:9
-                //TODO: 475,800,450  magic number => dont like
-                primaryStage.setHeight(475);
-                primaryStage.setWidth(800);
-                primaryStage.setMinHeight(450);
-                primaryStage.setMinWidth(800);
+                primaryStage.setHeight(height);
+                primaryStage.setWidth(width);
+                primaryStage.setMinHeight(height);
+                primaryStage.setMinWidth(width);
             }
         } catch (IOException e) {
             //logger.log(Level.SEVERE, "!!!FILE NOT FOUND, CHECK FILEPATH!!!");
@@ -80,11 +84,17 @@ public class SpaceRunnerApp extends Application {
         return primaryStage;
     }
 
-    private void setupBackgroundMusic() {
+    public void setupBackgroundMusic() {
+        if(backgroundMusic != null){
+            backgroundMusic.stop();
+            backgroundMusic = null;
+        }
+        if(!persistenceUtil.isAudioEnabled()){
+            return;
+        }
+
         try {
-            //TODO: Use Enum value with loadClip / create GameSoundUtil extends SoundUtil
-            URL backgroundMusicURL = getClass().getResource(GameSound.BACKGROUND.getFileName());
-            SoundClip backgroundMusic = SoundUtil.loadClip(new File(backgroundMusicURL.getPath().replace("%20", " ")));
+            backgroundMusic = gameSoundUtil.loadClip(GameSound.BACKGROUND_2);
             backgroundMusic.setLoop(true);
             backgroundMusic.play();
         } catch (IOException e) {

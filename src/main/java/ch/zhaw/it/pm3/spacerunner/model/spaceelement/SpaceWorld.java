@@ -1,39 +1,37 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 
 public class SpaceWorld extends SpaceElement{
-    private static int spaceWorldHeight;
-    private static int spaceWorldWidth;
-
-    public SpaceWorld(Point startPosition, int width, int height) {
+  public SpaceWorld(Point2D.Double startPosition) {
         super(startPosition);
-        spaceWorldHeight = height;
-        spaceWorldWidth = width;
-        setElementHitbox();
     }
 
+    private VisualManager visualManager = VisualManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getInstance();
+
     @Override
-    public void move() {
-        Point position = getCurrentPosition();
+    public void move() { //long timeInMillis
+        Point2D.Double position = getRelativePosition();
 
-        //TODO: How do we get this value?
-        //TODO: We can make it fixed
-        int viewport = 960;
-
-        if(position.x + getWidth() - viewport < 0){
-            position.x = 0;
-        }else{
-            position.x += getVelocity().x;
+        //TODO: Fix background visualManager.getWidth()
+        try {
+            if(position.x + visualManager.getElementRelativeWidth(SpaceWorld.class) < 1){
+                position.x = 0;
+            }else{
+                position.x += velocityManager.getRelativeVelocity(this.getClass()).x; //timeInMillis/1000 *
+            }
+        } catch (VisualNotSetException e) {
+            //TODO: handle
+            e.printStackTrace();
+        } catch (VelocityNotSetException e) {
+            e.printStackTrace();
         }
 
-        setCurrentPosition(position);
-    }
-
-    @Override
-    protected void setElementHitbox() {
-        setHeight(spaceWorldHeight);
-        setWidth(spaceWorldWidth);
+        setRelativePosition(position);
     }
 }

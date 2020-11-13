@@ -1,22 +1,16 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
+
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
-    private static int spaceShipHeight;
-    private static int spaceShipWidth;
+    private VelocityManager velocityManager = VelocityManager.getInstance();
 
-    private static Point UP = new Point(HorizontalSpeed.ZERO.getSpeed(), -VerticalSpeed.SPACE_SHIP.getSpeed());
-    private static Point DOWN = new Point(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed());
-
-    public SpaceShip(Point startPosition){
+    public SpaceShip(Point2D.Double startPosition){
         super(startPosition);
-        setElementHitbox();
     }
 
     public boolean hasCrashed() {
@@ -27,36 +21,34 @@ public class SpaceShip extends SpaceElement {
         hasCrashed = true;
     }
 
-    private void directMove(Point direction){
-        setVelocity(direction);
-        move();
+    private void directMove(boolean invert){
+        Point2D.Double velocity = null;
+        try {
+            velocity = velocityManager.getRelativeVelocity(this.getClass());
+        } catch (VelocityNotSetException e) {
+            //TODO: handle
+            e.printStackTrace();
+        }
+
+        Point2D.Double position = getRelativePosition();
+
+        if(invert){
+            position.x -= velocity.x;
+            position.y -= velocity.y;
+        }else{
+            position.x += velocity.x;
+            position.y += velocity.y;
+        }
+
+        setRelativePosition(position);
     }
 
     public void directMoveUp(){
-        directMove(UP);
+        directMove(true);
     }
 
     public void directMoveDown(){
-        directMove(DOWN);
+        directMove(false);
     }
 
-    /**
-     * sets the spaceship speed for UP and DOWN
-     * @param spaceShipSpeed
-     */
-    public void setSpaceShipSpeed(int spaceShipSpeed){
-        UP = new Point(0,-spaceShipSpeed);
-        DOWN = new Point(0,spaceShipSpeed);
-    }
-
-    @Override
-    protected void setElementHitbox() {
-        setHeight(spaceShipHeight);
-        setWidth(spaceShipWidth);
-    }
-
-    public static void setClassHitbox(int height, int width) {
-        spaceShipHeight = height;
-        spaceShipWidth = width;
-    }
 }

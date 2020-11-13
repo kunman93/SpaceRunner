@@ -17,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests the SoundClip-Class.
  */
 class SoundClipTest {
-
+    private SoundUtil soundUtil = SoundUtil.getInstance();
     private File file;
     private SoundClip soundClip;
 
     @BeforeEach
     void setUp() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         file = new File("src/test/resources/ch/zhaw/it/pm3/spacerunner/sound/background.wav");
-        soundClip = SoundUtil.loadClip(file);
+        soundClip = soundUtil.loadClip(file);
     }
 
     /**

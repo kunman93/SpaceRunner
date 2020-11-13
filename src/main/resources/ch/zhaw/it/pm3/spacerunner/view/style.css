@@ -1,9 +1,8 @@
 /* general */
 .darkbg {
-    /*-fx-background-color: black;*/
     -fx-background-image: url("../images/background.jpg");
     -fx-background-repeat: no-repeat;
-    -fx-background-size: auto 100%;
+    -fx-background-size: 100% 100%;
 }
 
 .darkbg Label {
@@ -11,7 +10,7 @@
 }
 
 Label, Button {
-    -fx-font-family: "Bauhaus 93";
+    -fx-font-family: 'metallord';
 }
 
 .darkbg .title {
@@ -20,10 +19,12 @@ Label, Button {
 }
 
 Button {
+    -fx-pref-width: 250;
+    -fx-max-width: 250;
     -fx-background-radius: 20;
     -fx-border-width: 0;
     -fx-border-color: white;
-    -fx-font-size: 30px;
+    -fx-font-size: 30;
     -fx-cursor: pointer;
     -fx-background-color: black;
     -fx-text-fill: white;
@@ -39,7 +40,7 @@ Button:hover Label {
 
 /* menu.fxml */
 .darkbg .menu Label.title {
-    -fx-font-size: 60px !important;
+    -fx-font-size: 60 !important;
 }
 
 .icon-start-game{
@@ -73,4 +74,56 @@ Slider .axis .axis-minor-tick-mark {
 /* game.fxml */
 .gameBG {
     -fx-background-color: black;
+}
+
+/* shop.fxml
+ -> https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#tabpane
+*/
+
+
+.tab-label {
+    -fx-text-fill: white;
+    -fx-font-family: "Bauhaus 93";
+    -fx-font-size: 20;
+
+}
+.tab,
+.shop .headers-region {
+    -fx-pref-height: 50;
+}
+.tab,
+.shop .headers-region,
+.shop .tab-header-area,
+.tab-header-background,
+.tab-content-area {
+    -fx-background-color: transparent;
+}
+
+ListView {
+    -fx-pref-height: 1000;
+}
+
+.shop,
+.shop TabPane,
+.shop ListView {
+    -fx-background-color: transparent;
+}
+.shop .list-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 2 0 0 0;
+    -fx-pref-height: 65; /* Button(Padding: 20; Font: 20) + Cell-Padding: 20 - 5*/
+    -fx-padding: 10 0 0 0;
+}
+
+.shop .list-cell Label {
+    -fx-pref-width: 200;
+    -fx-font-size: 20;
+}
+
+.shop .list-cell Button {
+    -fx-alignment: CENTER;
+    -fx-pref-width: 200;
+    -fx-pref-height: 30;
+    -fx-font-size: 20;
 }

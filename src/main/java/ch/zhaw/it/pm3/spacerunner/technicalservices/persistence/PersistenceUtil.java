@@ -1,15 +1,18 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility tool to persist data (load / save)
@@ -30,13 +33,24 @@ public class PersistenceUtil {
     }
 
 
+
+    //TODO: JavaDOC and name
+    public int getSoundVolume(){
+        return loadProfile().getVolume();
+    }
+
+    //TODO: JavaDOC and name
+    public boolean isAudioEnabled(){
+        return loadProfile().isAudioEnabled();
+    }
+
     /**
      * Load the profile of the player from the disk where it is saved in json.
      * If there is no profile.json found it will return a new default profile!
      *
      * @return the player's profile (or a default profile if it doesn't exist)
      */
-    public static PlayerProfile loadProfile() {
+    public PlayerProfile loadProfile() {
         Path path = Path.of(GameFile.PROFILE.getFileName());
         PlayerProfile playerProfile = null;
 
@@ -54,7 +68,7 @@ public class PersistenceUtil {
         }
 
         //TODO: implement
-        playerProfile.setPurchasedContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
+        playerProfile.setActiveShopContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
 
         return playerProfile;
     }
@@ -68,7 +82,7 @@ public class PersistenceUtil {
      * @return loaded data as object of class T
      * @throws IOException
      */
-    public static <T> T loadAndDeserializeData(String path, Class<T> dataClass) throws IOException {
+    public <T> T loadAndDeserializeData(String path, Type dataClass) throws IOException {
         T data = null;
         try (FileReader reader = new FileReader(path)) {
             data = gson.fromJson(reader, dataClass);
@@ -83,7 +97,7 @@ public class PersistenceUtil {
      *
      * @param playerProfile player profile to save
      */
-    public static void saveProfile(PlayerProfile playerProfile) {
+    public void saveProfile(PlayerProfile playerProfile) {
         if (playerProfile == null) {
             throw new IllegalArgumentException("null is not a legal argument for a player profile!");
         }
@@ -105,7 +119,7 @@ public class PersistenceUtil {
      * @param <T>  type of the data to be saved
      * @throws IOException
      */
-    public static <T> void serializeAndSaveData(String path, T data) throws IOException {
+    public <T> void serializeAndSaveData(String path, T data) throws IOException {
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(data, writer);
         } catch (IOException e) {
@@ -113,15 +127,28 @@ public class PersistenceUtil {
         }
     }
 
-
-    private static Set<ShopContent> loadPurchasedContent(Set<Integer> purchasedContentIds) {
-        //TODO: Implement and JavaDOC
-        return new HashSet<>();
+    //TODO: JavaDOC
+    private Set<ShopContent> loadPurchasedContent(Set<ContentId> purchasedContentIds) {
+        List<ShopContent> shopContentList = loadShopContent();
+        return shopContentList.stream().filter((shopContent)->{
+            return purchasedContentIds.stream().anyMatch((purchasedContentId) ->{
+                return purchasedContentId == shopContent.getContentId();
+            });
+        }).collect(Collectors.toSet());
     }
 
-    public static List<ShopContent> loadShopContent() {
-        //TODO: Implement and JavaDOC
-        return null;
+    //TODO: JavaDOC
+    public List<ShopContent> loadShopContent() {
+        Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {}.getType();
+
+        List<ShopContent> shopContentList = null;
+        try {
+            shopContentList = loadAndDeserializeData(GameFile.SHOP_CONTENT.getFileName(), listOfShopContentType);
+        } catch (IOException e) {
+            // TODO handle
+            e.printStackTrace();
+        }
+        return shopContentList;
     }
 
 

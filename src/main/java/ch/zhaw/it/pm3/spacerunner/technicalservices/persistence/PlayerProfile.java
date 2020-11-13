@@ -12,13 +12,17 @@ public class PlayerProfile {
     private int playerImageId;
     private String playerName;
     private int coins;
-    private Set<Integer> purchasedContentIds;
+    private int highScore;
+    //gekaufte shop inhalte
+    private Set<ContentId> purchasedContentIds;
+    //aktivierte shop inhalte
+    private Set<ContentId> activeContentIds;
     private int fps;
 
-    //TODO: Do not persist
-    private Set<ShopContent> purchasedContent;
+    private transient Set<ShopContent> activeShopContent;
 
     public static boolean TEST = false;
+
 
 
     public PlayerProfile(){
@@ -27,9 +31,11 @@ public class PlayerProfile {
         playerImageId = -1;
         playerName = "Player1";
         coins = 0;
+        highScore = 0;
         fps = 60;
         purchasedContentIds = new HashSet<>();
-        purchasedContent = new HashSet<>();
+        activeContentIds = new HashSet<>();
+        activeShopContent = new HashSet<>();
     }
 
     public boolean isAudioEnabled() {
@@ -80,23 +86,43 @@ public class PlayerProfile {
         this.coins -= coins;
     }
 
-    public Set<Integer> getPurchasedContentIds() {
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+    public Set<ContentId> getPurchasedContentIds() {
         return purchasedContentIds;
     }
 
-    public void addContent(int contentId){
+    public void addContent(ContentId contentId){
         purchasedContentIds.add(contentId);
     }
 
-    public Set<ShopContent> getPurchasedContent() {
-        return purchasedContent;
+    public Set<ContentId> getActiveContentIds() {
+        return activeContentIds;
     }
 
-    public void setPurchasedContent(Set<ShopContent> purchasedContent) {
-        this.purchasedContent = purchasedContent;
+    public void deactivateContent(ContentId contentId) {
+        activeContentIds.remove(contentId);
     }
 
-    public void setPurchasedContentIds(Set<Integer> purchasedContentIds) {
+    public void activateContent(ContentId contentId) {
+        activeContentIds.add(contentId);
+    }
+
+    public Set<ShopContent> getActiveShopContent() {
+        return activeShopContent;
+    }
+
+    public void setActiveShopContent(Set<ShopContent> activeShopContent) {
+        this.activeShopContent = activeShopContent;
+    }
+
+    public void setPurchasedContentIds(Set<ContentId> purchasedContentIds) {
         this.purchasedContentIds = purchasedContentIds;
     }
 
@@ -120,7 +146,7 @@ public class PlayerProfile {
                         fps == that.fps &&
                         Objects.equals(playerName, that.playerName) &&
                         Objects.equals(purchasedContentIds, that.purchasedContentIds) &&
-                        purchasedContent.size() == that.purchasedContent.size();
+                        activeShopContent.size() == that.activeShopContent.size();
             }else{
                 return super.equals(o);
             }

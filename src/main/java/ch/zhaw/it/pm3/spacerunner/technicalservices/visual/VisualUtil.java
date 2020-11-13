@@ -45,9 +45,47 @@ public class VisualUtil {
      * @param imageURL URL of the image to load
      * @return loaded image
      */
-    public static BufferedImage loadImage(URL imageURL) {
+    public BufferedImage loadImage(URL imageURL) {
         Image image = new ImageIcon(imageURL).getImage();
         return toBufferedImage(image);
+    }
+
+
+    public BufferedImage generateBackground(BufferedImage inputImage,  int scaledWidth, int scaledHeight){
+        BufferedImage outputImage = new BufferedImage(scaledWidth * 3, scaledHeight, inputImage.getType());
+
+        // creates output image
+        BufferedImage resizedImage = resizeImage(inputImage, scaledWidth, scaledHeight);
+        BufferedImage mirrorImage = flipImage(inputImage, true);
+
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.drawImage(resizedImage, 0, 0, scaledWidth, scaledHeight, null);
+        g2d.drawImage(mirrorImage, scaledWidth, 0, scaledWidth, scaledHeight, null);
+        g2d.drawImage(resizedImage, scaledWidth * 2, 0, scaledWidth, scaledHeight, null);
+        g2d.dispose();
+
+        return outputImage;
+    }
+
+    /**
+     * This will resize the inputImage and return the resized image
+     * @param inputImage image to resize
+     * @param scaledWidth width for resized image
+     * @param scaledHeight height for resized image
+     * @return resized image
+     */
+    public BufferedImage resizeImage(BufferedImage inputImage, int scaledWidth, int scaledHeight){
+
+
+        // creates output image
+        BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, inputImage.getType());
+
+        // scales the input image to the output image
+        Graphics2D g2d = outputImage.createGraphics();
+        g2d.drawImage(inputImage, 0, 0, scaledWidth, scaledHeight, null);
+        g2d.dispose();
+
+        return outputImage;
     }
 
     //TODO: Declare as copied from internet. (Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage)
@@ -57,7 +95,7 @@ public class VisualUtil {
      * @param img The Image to be converted
      * @return The converted BufferedImage
      */
-    private static BufferedImage toBufferedImage(Image img)
+    private BufferedImage toBufferedImage(Image img)
     {
         if (img instanceof BufferedImage)
         {
@@ -82,7 +120,7 @@ public class VisualUtil {
      * @param imageURL URL of the image to load
      * @return loaded image
      */
-    public static BufferedImage loadSVGImage(URL imageURL, float height) {
+    public BufferedImage loadSVGImage(URL imageURL, float height) {
         BufferedImage loadedImage = null;
         try {
             loadedImage = rasterize(new File(imageURL.getFile().replace("%20", " ")), height);
@@ -98,7 +136,7 @@ public class VisualUtil {
 
 
     //TODO: https://stackoverflow.com/questions/11435671/how-to-get-a-bufferedimage-from-a-svg
-    private static BufferedImage rasterize(File svgFile, float height) throws IOException {
+    private BufferedImage rasterize(File svgFile, float height) throws IOException {
 
         final BufferedImage[] imagePointer = new BufferedImage[1];
 
@@ -158,7 +196,7 @@ public class VisualUtil {
         return imagePointer[0];
     }
 
-    public static BufferedImage flipImage(BufferedImage image, boolean horizontal){
+    public BufferedImage flipImage(BufferedImage image, boolean horizontal){
         // Flip the image horizontally
         AffineTransform tx;
         if(horizontal){
@@ -175,7 +213,7 @@ public class VisualUtil {
     }
 
 
-    public static BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
+    public BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
         BufferedImage image = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
         AffineTransform trans = AffineTransform.getRotateInstance(deg, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
         AffineTransformOp op = new AffineTransformOp(trans, AffineTransformOp.TYPE_BILINEAR);
