@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox fx:id="shopContentHBox" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx">
+    <Label fx:id="contentTitelLabel"> </Label>
+    <Label fx:id="contentPriceLabel"> </Label>
+    <Button fx:id="buyButton"></Button>
+    <Button fx:id="activateButton"></Button>
+
+</HBox>

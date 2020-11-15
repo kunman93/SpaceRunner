@@ -5,6 +5,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,9 +13,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * class for each table row which contains various FXML elements
@@ -29,7 +32,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private static final String DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "deactivate";
 
     private GridPane pane = new GridPane();
-    private HBox hBox = new HBox();
+    private HBox shopContentHBox = new HBox();
     private Label contentTitelLabel = new Label();
     private Label contentPriceLabel = new Label();
     private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
@@ -41,13 +44,26 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private ShopContent content;
 
     public ShopContentCell() {
-        super();
-        pane.add(contentTitelLabel, 1, 0);
-        pane.add(contentPriceLabel, 2,0);
-        pane.add(buyButton, 3,0);
-        pane.add(activateButton, 4,0);
-        hBox.getChildren().addAll(pane);
-        hBox.setHgrow(pane, Priority.ALWAYS);
+        FXMLLoader fxmlLoader = new FXMLLoader(SpaceRunnerApp.class.getResource("view/ShopContentCell.fxml"));
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            //TODO
+            throw new RuntimeException(e);
+        }
+        shopContentHBox = fxmlLoader.getRoot();
+
+        setUpUI();
+
+        shopContentHBox.setHgrow(pane, Priority.ALWAYS);
+    }
+
+    private void setUpUI(){
+        contentTitelLabel = (Label) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
+        contentPriceLabel = (Label) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
+        buyButton = (Button) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
+        activateButton = (Button) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("activateButton")).collect(Collectors.toList()).get(0);
     }
 
     /**
@@ -67,7 +83,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
             setUpActivateButton();
             processShopping();
 
-            setGraphic(hBox);
+            setGraphic(shopContentHBox);
             // setGraphic(new ImageView().setImage(new Image("...")))
         }
     }
@@ -76,7 +92,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         //TODO always loading images, this might be bad
         VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
         Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
-        pane.add(new ImageView(imageOfContent), 0, 0);
+        //pane.add(new ImageView(imageOfContent), 0, 0);
         contentTitelLabel.setText(this.content.getTitle());
         contentPriceLabel.setText("Price: " + this.content.getPrice());
     }
