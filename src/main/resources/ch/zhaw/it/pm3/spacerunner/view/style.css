@@ -99,31 +99,49 @@ Slider .axis .axis-minor-tick-mark {
     -fx-background-color: transparent;
 }
 
-ListView {
-    -fx-pref-height: 1000;
-}
-
 .shop,
 .shop TabPane,
 .shop ListView {
     -fx-background-color: transparent;
 }
+
+.playerMoney {
+    -fx-font-size: 40;
+    -fx-text-fill: white;
+}
+
 .shop .list-cell {
     -fx-background-color: transparent;
     -fx-border-color: white;
-    -fx-border-width: 2 0 0 0;
-    -fx-pref-height: 65; /* Button(Padding: 20; Font: 20) + Cell-Padding: 20 - 5*/
+    -fx-border-width: 1 0 0 0;
+    -fx-pref-height: 120; /* Button(Padding: 20; Font: 20) + Cell-Padding: 20 - 5*/
     -fx-padding: 10 0 0 0;
 }
 
 .shop .list-cell Label {
-    -fx-pref-width: 200;
     -fx-font-size: 20;
+    -fx-padding: 10 0 0 0;
 }
 
 .shop .list-cell Button {
     -fx-alignment: CENTER;
-    -fx-pref-width: 200;
     -fx-pref-height: 30;
     -fx-font-size: 20;
+    -fx-pref-width: 150;
+}
+
+.dialog {
+    -fx-background-image: url("../images/background.jpg");
+    -fx-background-color: transparent;
+}
+
+.dialog > .label{
+    -fx-font-size: 20;
+    -fx-text-fill: WHITE;
+}
+
+.dialog .button{
+    -fx-font-size: 20;
+    -fx-pref-width: 120;
+    -fx-pref-height: 15;
 }

@@ -2,11 +2,16 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ItemType;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ShopContent;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -14,6 +19,7 @@ import java.util.*;
 
 public class VisualManager{
     private VisualUtil visualUtil = VisualUtil.getInstance();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
 
     private int height = 500;
     private int width = 500;
@@ -36,10 +42,20 @@ public class VisualManager{
         visualManagerListeners.forEach(VisualManagerListener::clear);
 
 
+        PlayerProfile playerProfile = persistenceUtil.loadProfile();
+        Set<ShopContent> activeShopContents = playerProfile.getActiveShopContent();
+
         visualManager.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+
+        for(ShopContent activeShopContent : activeShopContents){
+            if(activeShopContent.getItemType() == ItemType.PLAYER_MODEL){
+                visualManager.loadAndSetVisual(SpaceShip.class, new Visual(activeShopContent.getImageId(), VisualScaling.SPACE_SHIP, false, false));
+            }
+        }
+
         visualManager.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
         visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-        visualManager.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.POWERUP, VisualScaling.POWERUP));
+        visualManager.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.ASTEROID));
 
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);
         background.setIsBackground(true);

@@ -16,13 +16,15 @@
     </columnConstraints>
     <rowConstraints>
         <RowConstraints percentHeight="5" />
-        <RowConstraints percentHeight="75" />
+        <RowConstraints percentHeight="10" />
+        <RowConstraints percentHeight="65" />
         <RowConstraints percentHeight="5" />
         <RowConstraints percentHeight="15" />
         <RowConstraints percentHeight="5" />
     </rowConstraints>
     <children>
-        <TabPane fx:id="tabPane" styleClass="shop" side="LEFT" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label fx:id="collectedCoinsLabel" GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="playerMoney"/>
+        <TabPane fx:id="tabPane" styleClass="shop" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <tabs>
                 <Tab text="UPGRADES">
                     <content>
@@ -38,7 +40,7 @@
             </tabs>
         </TabPane>
     </children>
-    <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+    <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
         <Button fx:id="homeButton" onAction="#showMenu" text="&lt; BACK"/>
     </HBox>
 </GridPane>
