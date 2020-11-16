@@ -69,6 +69,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
         contentPriceLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
         buyButton = (Button) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
         activateButton = (Button) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("activateButton")).collect(Collectors.toList()).get(0);
+
+
     }
 
     /**
