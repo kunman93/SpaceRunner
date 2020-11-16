@@ -2,7 +2,6 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 
 
-import ch.zhaw.it.pm3.spacerunner.controller.SpaceShipDirection;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 

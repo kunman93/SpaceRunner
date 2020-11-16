@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.controller;
+package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 public enum PowerUpType {
     DOUBLECOINS(10,10000),
