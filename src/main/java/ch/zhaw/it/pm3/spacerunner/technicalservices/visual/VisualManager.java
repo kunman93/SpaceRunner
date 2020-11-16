@@ -36,11 +36,11 @@ public class VisualManager{
         PlayerProfile playerProfile = persistenceUtil.loadProfile();
         Set<ShopContent> activeShopContents = playerProfile.getActiveShopContent();
 
+        instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+
         for(ShopContent activeShopContent : activeShopContents){
             if(activeShopContent.getItemType() == ItemType.PLAYER_MODEL){
                 instance.loadAndSetVisual(SpaceShip.class, new Visual(activeShopContent.getImageId(), VisualScaling.SPACE_SHIP, false, false));
-            }else{
-                instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
             }
         }
 

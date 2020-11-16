@@ -8,8 +8,6 @@ public class PlayerProfile {
 
     private boolean audioEnabled;
     private int volume;
-    //Id des gekauften / default player model
-    private int playerImageId;
     private String playerName;
     private int coins;
     private int highScore;
@@ -28,7 +26,6 @@ public class PlayerProfile {
     public PlayerProfile(){
         audioEnabled = true;
         volume = 100;
-        playerImageId = -1;
         playerName = "Player1";
         coins = 0;
         highScore = 0;
@@ -52,14 +49,6 @@ public class PlayerProfile {
 
     public void setVolume(int volume) {
         this.volume = volume;
-    }
-
-    public int getPlayerImageId() {
-        return playerImageId;
-    }
-
-    public void setPlayerImageId(int playerImageId) {
-        this.playerImageId = playerImageId;
     }
 
     public String getPlayerName() {
@@ -141,7 +130,6 @@ public class PlayerProfile {
                 PlayerProfile that = (PlayerProfile) o;
                 return audioEnabled == that.audioEnabled &&
                         volume == that.volume &&
-                        playerImageId == that.playerImageId &&
                         coins == that.coins &&
                         fps == that.fps &&
                         Objects.equals(playerName, that.playerName) &&
