@@ -172,7 +172,10 @@ public class GameController {
             @Override
             public void run() {
                 if (!isPaused){
-                    elements.add(powerUpManager.generatePowerUps());
+                    PowerUp powerUp = powerUpManager.generatePowerUps();
+                    if(powerUp != null){
+                        elements.add(powerUp);
+                    }
                 }
             }
         };
