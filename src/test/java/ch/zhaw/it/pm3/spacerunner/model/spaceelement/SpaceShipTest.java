@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpaceShipTest {
     private SpaceShip ship;
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     @BeforeEach
     void setUp() {

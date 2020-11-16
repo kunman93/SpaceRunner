@@ -6,13 +6,12 @@ import ch.zhaw.it.pm3.spacerunner.controller.SpaceShipDirection;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
-    private VelocityManager velocityManager = VelocityManager.getInstance();
-    private final VisualManager visualManager = VisualManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getManager();
+    private final VisualManager visualManager = VisualManager.getManager();
 
     public SpaceShip(Point2D.Double startPosition){
         super(startPosition);

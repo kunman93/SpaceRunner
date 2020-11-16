@@ -18,7 +18,7 @@ public class VisualManager{
 
     private final Set<VisualManagerListener> visualManagerListeners = new HashSet<>();
 
-    public static VisualManager getInstance(){
+    public static VisualManager getManager(){
         return instance;
     }
 

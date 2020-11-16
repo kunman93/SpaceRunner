@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SpaceElementTest {
     SpaceElement element;
-    private VisualManager visualManager = VisualManager.getInstance();
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VisualManager visualManager = VisualManager.getManager();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     //TODO: Changed to coin cause SpaceElement does not really work with the manager... is this ok?
 

@@ -65,7 +65,7 @@ public class GameViewController extends ViewController {
 
 
     private boolean isLoaded = false;
-    private final VisualManager visualManager = VisualManager.getInstance();
+    private final VisualManager visualManager = VisualManager.getManager();
 
     private long lastUpdate = 0;
     //Used to overperform a little bit. if we dont have this we dont reach the required fps (has to do with some internal AnimationTimer stuff)

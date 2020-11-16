@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersistenceUtilTest {
 
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
 
     @BeforeEach
     void setUp() throws IOException {

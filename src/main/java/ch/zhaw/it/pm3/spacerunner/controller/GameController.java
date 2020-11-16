@@ -10,35 +10,29 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class GameController {
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
-    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
-
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
 
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
 
-    private Timer gameSpeedTimer;
 
     private double remainingDistanceUntilNextPreset = 0.1;
     private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
 
 
     private boolean isPaused = false;
+    private int collectedCoins = 0;
+    private int score = 0;
+    private int fps = 60;
+    private boolean gameOver = false;
 
-    private int collectedCoins;
-    private int score;
-
-    private int fps;
-
+    private Timer gameTimer;
     private SpaceWorld background = null;
-
-
     private SpaceShip spaceShip;
 
     //TODO: ConcurrentHashSet??
@@ -47,11 +41,10 @@ public class GameController {
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
 
-    private boolean gameOver = false;
 
 
-    private final VisualManager visualManager = VisualManager.getInstance();
-    private final VelocityManager velocityManager = VelocityManager.getInstance();
+    private final VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
 
     private Map<PowerUpType, Integer> activePowerUps = new HashMap<>();
 //    private Map<PowerUpType, Long> powerUpTimers = new HashMap<>();
@@ -177,23 +170,19 @@ public class GameController {
         velocityManager.setupGameElementVelocity();
         visualManager.loadGameElementVisuals();
 
-        gameSpeedTimer = new Timer("GameSpeedTimer");
-        gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
-        gameSpeedTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWERUP_COOLDOWN);
-
-        gameOver = false;
+        gameTimer = new Timer("GameSpeedTimer");
+        gameTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
+        gameTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWERUP_COOLDOWN);
 
         playerProfile = persistenceUtil.loadProfile();
 
         elementPreset = new ElementPreset();
 
-        elements = new HashSet<>();
         background = new SpaceWorld(new Point2D.Double(0, 0));
         spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
 
-        collectedCoins = 0;
     }
 
     private TimerTask getPowerUpGeneratorTask(){
@@ -292,7 +281,7 @@ public class GameController {
 
     private void endRun(){
         spaceShip.crash();
-        gameSpeedTimer.cancel();
+        gameTimer.cancel();
         gameOver = true;
         if(playerProfile.isAudioEnabled()){
             //ToDo why not one try-catch
@@ -400,7 +389,7 @@ public class GameController {
     }
 
     private void createPowerUpTimer(PowerUpType t){
-        gameSpeedTimer.schedule(new TimerTask() {
+        gameTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 powerUpDecrement(t);

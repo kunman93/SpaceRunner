@@ -7,7 +7,7 @@ public class Preset {
     SpaceElement[] elementsInPreset;
     double presetSize;
 
-    VisualManager visualManager = VisualManager.getInstance();
+    VisualManager visualManager = VisualManager.getManager();
 
     public Preset(SpaceElement[] elements) {
         elementsInPreset = elements;

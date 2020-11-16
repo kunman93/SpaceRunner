@@ -11,7 +11,7 @@ class CoinTest {
 
     //TODO: Do we need this test?
     //TODO: move is implemented in SpaceElement (Coin has no special movement)
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     @BeforeEach
     void setUp() {

@@ -9,7 +9,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 public class SettingsViewController extends ViewController {
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
     private SoundUtil soundUtil = SoundUtil.getInstance();
     public Button homeButton;
     public TextField playerName;

@@ -4,7 +4,6 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
 
@@ -19,15 +18,14 @@ import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 public class SpaceRunnerApp extends Application {
 
     private Stage primaryStage;
-    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
     private SoundClip backgroundMusic;
 
     public static void main(String[] args) {

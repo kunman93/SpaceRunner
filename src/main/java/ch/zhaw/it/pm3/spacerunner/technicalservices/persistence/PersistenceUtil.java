@@ -28,7 +28,7 @@ public class PersistenceUtil {
      */
     private PersistenceUtil(){}
 
-    public static PersistenceUtil getInstance(){
+    public static PersistenceUtil getUtil(){
         return instance;
     }
 

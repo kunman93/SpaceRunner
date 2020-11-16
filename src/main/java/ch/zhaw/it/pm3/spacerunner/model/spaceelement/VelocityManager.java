@@ -15,7 +15,7 @@ public class VelocityManager {
     private Map<Class<? extends SpaceElement>, Point2D.Double> velocityMap = new HashMap<>();
     private static VelocityManager instance = new VelocityManager();
 
-    public static VelocityManager getInstance(){
+    public static VelocityManager getManager(){
         return instance;
     }
 

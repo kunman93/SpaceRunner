@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.image.BufferedImage;
 
 public class VisualManagerTest {
-    private VisualManager visualManager = VisualManager.getInstance();
+    private VisualManager visualManager = VisualManager.getManager();
 
     @BeforeEach
     void setUp() {

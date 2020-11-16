@@ -20,7 +20,7 @@ import java.util.Set;
  * class for each table row which contains various FXML elements
  * */
 public class ShopContentCell extends ListCell<ShopContent> {
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
     private VisualUtil visualUtil = VisualUtil.getInstance();
 
     private static final String BUY_TEXT_FOR_BUY_BUTTON = "buy";

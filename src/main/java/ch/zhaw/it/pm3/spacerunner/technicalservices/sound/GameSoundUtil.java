@@ -17,7 +17,7 @@ public class GameSoundUtil{
 
     }
 
-    public static GameSoundUtil getInstance() {
+    public static GameSoundUtil getUtil() {
         return instance;
     }
 

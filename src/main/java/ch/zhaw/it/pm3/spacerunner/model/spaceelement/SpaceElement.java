@@ -4,13 +4,12 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualElement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 public abstract class SpaceElement implements VisualElement {
 
-    private VisualManager visualManager = VisualManager.getInstance();
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VisualManager visualManager = VisualManager.getManager();
+    private VelocityManager velocityManager = VelocityManager.getManager();
     //todo: Idee: Object die alle variablen (position, width, length) umfasst
     private Point2D.Double position = new Point2D.Double(0, 0);
 

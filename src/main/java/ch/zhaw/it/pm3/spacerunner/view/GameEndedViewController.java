@@ -17,7 +17,7 @@ public class GameEndedViewController extends ViewController {
     @Override
     public void initialize() {
 
-        PlayerProfile player = PersistenceUtil.getInstance().loadProfile();
+        PlayerProfile player = PersistenceUtil.getUtil().loadProfile();
         name.setText("Congratulation " + player.getPlayerName());
         score.setText("Score: " + getGameDataCache().getScore());
         collectedCoins.setText("Collected Coins: " + getGameDataCache().getCoins());
