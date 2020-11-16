@@ -112,6 +112,12 @@ TabPane{
 .shop ListView {
     -fx-background-color: transparent;
 }
+
+.playerMoney {
+    -fx-font-size: 40;
+    -fx-text-fill: white;
+}
+
 .shop .list-cell {
     -fx-background-color: transparent;
     -fx-border-color: white;

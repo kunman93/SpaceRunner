@@ -23,7 +23,7 @@
         <RowConstraints percentHeight="5" />
     </rowConstraints>
     <children>
-        <Label fx:id="collectedCoinsLabel" text="collectedCoins" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label fx:id="collectedCoinsLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="playerMoney"/>
         <TabPane fx:id="tabPane" styleClass="shop" side="LEFT" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <tabs>
                 <Tab text="UPGRADES">
