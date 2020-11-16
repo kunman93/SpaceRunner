@@ -39,7 +39,7 @@ public class SpaceRunnerApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Space Runner");
         ViewController.setMain(this);
-        setFXMLView(FXMLFile.MENU);
+        setFXMLView(FXMLFile.HELP);
 
 
         gameSoundUtil.setVolume(persistenceUtil.getSoundVolume());

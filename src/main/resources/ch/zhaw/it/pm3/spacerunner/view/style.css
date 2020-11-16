@@ -127,3 +127,12 @@ ListView {
     -fx-pref-height: 30;
     -fx-font-size: 20;
 }
+
+ListCell {
+    -fx-pref-width: 500;
+}
+
+/* help */
+.help ScrollPane Pane {
+    -fx-background-color: red;
+}

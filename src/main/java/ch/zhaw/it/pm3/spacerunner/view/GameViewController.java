@@ -24,7 +24,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -38,7 +37,8 @@ public class GameViewController extends ViewController {
     //TODO: Canvas has to be a fixed height and width so we dont have to deal with scaling
     @FXML private Canvas gameCanvas;
     private GraphicsContext graphicsContext;
-    private double gameBarHeight;
+    private GameProportions gameBar = new GameProportions();
+
     private GameController gameController = new GameController();
     private boolean downPressed;
     private boolean upPressed;
@@ -195,6 +195,7 @@ public class GameViewController extends ViewController {
     }
 
     private void calc16to9Proportions() {
+        //todo auslagern
         double proportionGame = 9;
         double proportionGameBar = 0.5;
         double proportionY = proportionGame + proportionGameBar;
@@ -210,7 +211,8 @@ public class GameViewController extends ViewController {
             width = height * proportionX / proportionY;
         }
 
-        gameBarHeight = height * (proportionGameBar / proportionY);
+        gameBar.setInfoBarHeight(height * (proportionGameBar / proportionY));
+        gameBar.setWidth(width);
 
         if(resizeTask != null){
             resizeTask.cancel();
@@ -225,7 +227,7 @@ public class GameViewController extends ViewController {
             public void run() {
                 Platform.runLater(()->{
                     gameCanvas.setWidth(finalWidth);
-                    gameCanvas.setHeight(finalHeight + gameBarHeight);
+                    gameCanvas.setHeight(finalHeight + gameBar.getInfoBarHeight());
 
                     gameController.setViewport((int) finalWidth, (int) (finalHeight * proportionGame / proportionY));
                 });
@@ -262,7 +264,7 @@ public class GameViewController extends ViewController {
     * */
     private void showLoadingScreen() {
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameBar.getFontSize()));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
 
         loadingAnimation = new AnimationTimer() {
@@ -311,40 +313,36 @@ public class GameViewController extends ViewController {
     }
 
     private void displayCoinsAndScore(int coins, int score) {
-        double paddingTopPercent = 0.1;
-        double fontSize = gameBarHeight * (1 - 2 * paddingTopPercent);
-        double textWidth = fontSize * 5; // todo reicht für 7-stellige Zahlen -> genug?
-        double xPositionReference = gameCanvas.getWidth();
-        double yPosition = gameCanvas.getHeight() - gameBarHeight - fontSize;
-        double marginRightImage = 10;
-        double marginRight = 30;
+        double xPositionReference = gameBar.getWidth();
+        double yPosition = gameBar.getYPosition();
+
         BufferedImage image = null;
         try {
             image = visualManager.getImage(UIElement.COIN_COUNT.getClass());
             xPositionReference -= image.getWidth();
             graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
-                    (gameCanvas.getWidth() - image.getWidth() - marginRightImage), yPosition, image.getWidth(), image.getHeight());
+                    (gameBar.getWidth() - image.getWidth() - gameBar.getInfoBarMarginRightImage()),
+                    yPosition, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
             // todo handle
             e.printStackTrace();
         }
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, fontSize));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameBar.getFontSize()));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
-        graphicsContext.fillText(String.valueOf(coins), xPositionReference - marginRight, yPosition, textWidth);
-        graphicsContext.fillText(String.valueOf(score), xPositionReference - textWidth - marginRight, yPosition, textWidth);
+        xPositionReference -= gameBar.getInfoBarMarginRightText();
+        double textWidth = gameBar.getTextWidth(coins);
+        graphicsContext.fillText(String.valueOf(coins), xPositionReference, yPosition, textWidth);
+        xPositionReference -= (gameBar.getInfoBarMarginRightText() + textWidth);
+        graphicsContext.fillText(String.valueOf(score), xPositionReference, yPosition, textWidth);
     }
 
     private void displayInformation(String info) {
-        double paddingTopPercent = 0.1;
-        double fontSize = gameBarHeight * (1 - 2 * paddingTopPercent);
-        double xPosition = gameCanvas.getWidth() / 2;
-        double yPosition = gameCanvas.getHeight() - gameBarHeight - fontSize;
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, fontSize));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameBar.getFontSize()));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
-        graphicsContext.fillText(info, xPosition, yPosition);
+        graphicsContext.fillText(info, gameBar.getWidth() / 2, gameBar.getYPosition());
     }
 
     private void removeKeyHandlers() {
