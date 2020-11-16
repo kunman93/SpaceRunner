@@ -4,7 +4,7 @@ public enum VisualScaling {
     SPACE_SHIP(0.1),
     COIN(0.1),
     COIN_COUNT(0.05),
-    UFO(0.2),
+    UFO(0.15),
     ASTEROID(0.2),
     ROCKET(0.1);
 

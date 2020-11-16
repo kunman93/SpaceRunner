@@ -37,7 +37,7 @@ public class UFO extends Obstacle {
 
     private double sinWave(double currentXPos) {
         try {
-            return 0.4 * Math.sin(currentXPos * 5 + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
+            return 0.35 * Math.sin(currentXPos * 5 + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
         } catch (VisualNotSetException e) {
             e.printStackTrace();
         }
