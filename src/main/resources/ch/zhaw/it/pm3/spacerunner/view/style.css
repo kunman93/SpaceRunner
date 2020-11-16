@@ -99,14 +99,6 @@ Slider .axis .axis-minor-tick-mark {
     -fx-background-color: transparent;
 }
 
-ListView {
-    -fx-pref-height: 1000;
-}
-
-TabPane{
-    -fx-pref-width: 200;
-}
-
 .shop,
 .shop TabPane,
 .shop ListView {
@@ -122,7 +114,7 @@ TabPane{
     -fx-background-color: transparent;
     -fx-border-color: white;
     -fx-border-width: 1 0 0 0;
-    -fx-pref-height: 65; /* Button(Padding: 20; Font: 20) + Cell-Padding: 20 - 5*/
+    -fx-pref-height: 120; /* Button(Padding: 20; Font: 20) + Cell-Padding: 20 - 5*/
     -fx-padding: 10 0 0 0;
 }
 
@@ -135,26 +127,8 @@ TabPane{
     -fx-alignment: CENTER;
     -fx-pref-height: 30;
     -fx-font-size: 20;
+    -fx-pref-width: 150;
 }
-
-.shopContentCell,
-.shopContentCell GridPane {
-
-}
-
-
-/*
-.shopContentCell {
-    -fx-spacing: 20;
-}*/
-
-.shopContentCell .imageView {
-    -fx-background-color: red;
-}
-/*
-.shopContentCell .priceLabel{
-    -fx-pref-width: 100;
-}*/
 
 .dialog {
     -fx-background-image: url("../images/background.jpg");

@@ -16,15 +16,15 @@
     </columnConstraints>
     <rowConstraints>
         <RowConstraints percentHeight="5" />
-        <RowConstraints percentHeight="20" />
-        <RowConstraints percentHeight="55" />
+        <RowConstraints percentHeight="10" />
+        <RowConstraints percentHeight="65" />
         <RowConstraints percentHeight="5" />
         <RowConstraints percentHeight="15" />
         <RowConstraints percentHeight="5" />
     </rowConstraints>
     <children>
-        <Label fx:id="collectedCoinsLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="playerMoney"/>
-        <TabPane fx:id="tabPane" styleClass="shop" side="LEFT" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Label fx:id="collectedCoinsLabel" GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="playerMoney"/>
+        <TabPane fx:id="tabPane" styleClass="shop" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <tabs>
                 <Tab text="UPGRADES">
                     <content>

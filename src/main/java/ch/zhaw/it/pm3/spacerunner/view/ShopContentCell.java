@@ -2,17 +2,16 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.*;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClipListener;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -35,13 +34,13 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     private final Set<ShopContentCellListener> shopContentCellListeners = new HashSet<>();
 
-    private HBox shopContentHBox = new HBox();
-    private GridPane contentWrapper = new GridPane();
-    private ImageView contentImageView = new ImageView();
-    private Label contentTitelLabel = new Label();
-    private Label contentPriceLabel = new Label();
-    private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
-    private Button activateButton = new Button(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
+    @FXML private GridPane cellContent;
+    @FXML private GridPane verticalSeparation;
+    @FXML private ImageView contentImageView = new ImageView();
+    @FXML private Label contentTitelLabel = new Label();
+    @FXML private Label contentPriceLabel = new Label();
+    @FXML private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
+    @FXML private Button activateButton = new Button(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
     private static PlayerProfile playerProfile;
     private static Set<ContentId> purchasedContentIds = new HashSet<>();
     private static Set<ContentId> activeContentIds = new HashSet<>();
@@ -57,20 +56,20 @@ public class ShopContentCell extends ListCell<ShopContent> {
             //TODO
             throw new RuntimeException(e);
         }
-        shopContentHBox = fxmlLoader.getRoot();
+        cellContent = fxmlLoader.getRoot();
 
         setUpUI();
     }
 
     private void setUpUI(){
-        contentWrapper = (GridPane) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentWrapper")).collect(Collectors.toList()).get(0);
-        contentImageView = (ImageView) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
-        contentTitelLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
-        contentPriceLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
-        buyButton = (Button) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
-        activateButton = (Button) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("activateButton")).collect(Collectors.toList()).get(0);
-
-
+        contentImageView = (ImageView) cellContent.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
+        verticalSeparation = (GridPane) cellContent.getChildren().stream().filter((child) -> child.getId().equals("verticalSeparation")).collect(Collectors.toList()).get(0);
+        contentTitelLabel = (Label) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
+        contentPriceLabel = (Label) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
+        buyButton = (Button) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
+        GridPane.setFillWidth(buyButton, true);
+        GridPane.setFillHeight(buyButton, true);
+        activateButton = (Button) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("activateButton")).collect(Collectors.toList()).get(0);
     }
 
     /**
@@ -90,7 +89,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
             setUpActivateButton();
             processShopping();
 
-            setGraphic(shopContentHBox);
+            setGraphic(cellContent);
         }
     }
 
@@ -247,7 +246,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
-        alert.setContentText("Not enough coins! You need atleast " + getAmountOfCoinsNeedToBuyContent() + " coins.");
+        alert.setContentText("Not enough coins! You need at least " + getAmountOfCoinsNeedToBuyContent() + " coins.");
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
