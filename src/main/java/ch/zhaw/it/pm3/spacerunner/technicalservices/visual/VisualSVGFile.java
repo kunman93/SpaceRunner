@@ -19,8 +19,8 @@ public enum VisualSVGFile implements FileResource {
     DOUBLE_DURATION_COIN_UPGRADE("2.svg"),
     SPACE_SHIP_SKIN_1("3.svg"),
     SPACE_SHIP_SKIN_2("4.svg"),
-    LOADING_SPINNER("loading-spinner.svg");
-
+    LOADING_SPINNER("loading-spinner.svg"),
+    POWERUP("PowerUp.svg");
 
     private String fileName;
 
