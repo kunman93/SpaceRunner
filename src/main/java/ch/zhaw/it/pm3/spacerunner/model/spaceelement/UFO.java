@@ -11,9 +11,15 @@ public class UFO extends Obstacle {
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
     private VisualManager visualManager = VisualManager.getInstance();
     private VelocityManager velocityManager = VelocityManager.getInstance();
+    private double waveOffset = 0;
 
     public UFO(Point2D.Double startPosition) {
         super(startPosition);
+    }
+
+    public UFO(Point2D.Double startPosition, double waveOffset) {
+        super(startPosition);
+        this.waveOffset = waveOffset;
     }
 
     @Override
@@ -32,7 +38,7 @@ public class UFO extends Obstacle {
 
     private double sinWave(double currentXPos) {
         try {
-            return 0.25 * Math.sin(currentXPos * 5 + 1) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
+            return 0.25 * Math.sin(currentXPos * 5 + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
         } catch (VisualNotSetException e) {
             e.printStackTrace();
         }

@@ -2,7 +2,6 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
@@ -10,7 +9,6 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 
@@ -267,7 +265,7 @@ public class GameController {
 
     private void generatePreset(Preset preset) {
         Collections.addAll(elements, preset.getElementsInPreset());
-        remainingDistanceUntilNextPreset = preset.getPresetSize();
+        remainingDistanceUntilNextPreset = preset.getPresetTimeUntilOnScreen();
         new Thread(()->{
             elementPreset.regeneratePresets();
         }).start();

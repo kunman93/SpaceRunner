@@ -9,23 +9,23 @@ import java.util.Map;
 
 public class Preset implements Cloneable {
     SpaceElement[] elementsInPreset;
-    double presetSize;
+    double timeUntilEntirePresetOnScreen;
 
     VisualManager visualManager = VisualManager.getInstance();
     VelocityManager velocityManager = VelocityManager.getInstance();
 
     public Preset(SpaceElement[] elements) {
         elementsInPreset = elements;
-        presetSize = calculateSize();
+        timeUntilEntirePresetOnScreen = calculateSize();
     }
 
     private double calculateSize() {
         try {
-            double maxDistance = 0;
+            double maxTime = 0;
             for (SpaceElement e : elementsInPreset) {
-                maxDistance = Math.max(maxDistance, (1 - (e.getRelativePosition().x + visualManager.getElementRelativeWidth(e.getClass()))) / velocityManager.getRelativeVelocity(e.getClass()).x);
+                maxTime = Math.max(maxTime, (1 - (e.getRelativePosition().x + visualManager.getElementRelativeWidth(e.getClass()))) / velocityManager.getRelativeVelocity(e.getClass()).x);
             }
-            return maxDistance;
+            return maxTime;
         } catch (VisualNotSetException | VelocityNotSetException e) {
             e.printStackTrace();
         }
@@ -36,7 +36,7 @@ public class Preset implements Cloneable {
         return elementsInPreset;
     }
 
-    public double getPresetSize() {
-        return presetSize;
+    public double getPresetTimeUntilOnScreen() {
+        return timeUntilEntirePresetOnScreen;
     }
 }
