@@ -60,7 +60,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void setUpUI(){
-        contentWrapper = (GridPane) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("imageWrapper")).collect(Collectors.toList()).get(0);
+        contentWrapper = (GridPane) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentWrapper")).collect(Collectors.toList()).get(0);
         contentImageView = (ImageView) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
         contentTitelLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
         contentPriceLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);

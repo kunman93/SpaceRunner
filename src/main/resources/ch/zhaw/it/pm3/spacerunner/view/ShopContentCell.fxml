@@ -8,7 +8,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <HBox fx:id="shopContentHBox" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" styleClass="shopContentCell">
-    <GridPane fx:id="imageWrapper" prefWidth="100">
+    <GridPane fx:id="contentWrapper" prefWidth="100">
         <columnConstraints>
             <ColumnConstraints percentWidth="20" />
             <ColumnConstraints percentWidth="20" />
