@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.image.ImageView?>
-<HBox fx:id="shopContentHBox" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx">
-    <ImageView fx:id="contentImageView"></ImageView>
+<HBox fx:id="shopContentHBox" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" styleClass="shopContentCell">
+    <ImageView fx:id="contentImageView" ></ImageView>
     <Label fx:id="contentTitelLabel"></Label>
-    <Label fx:id="contentPriceLabel"></Label>
+    <Label fx:id="contentPriceLabel" styleClass="priceLabel"></Label>
     <Button fx:id="buyButton"></Button>
     <Button fx:id="activateButton"></Button>
 </HBox>

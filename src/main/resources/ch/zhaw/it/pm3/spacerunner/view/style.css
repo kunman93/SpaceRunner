@@ -111,19 +111,28 @@ ListView {
 .shop .list-cell {
     -fx-background-color: transparent;
     -fx-border-color: white;
-    -fx-border-width: 2 0 0 0;
+    -fx-border-width: 1 0 0 0;
     -fx-pref-height: 65; /* Button(Padding: 20; Font: 20) + Cell-Padding: 20 - 5*/
     -fx-padding: 10 0 0 0;
 }
 
 .shop .list-cell Label {
-    -fx-pref-width: 200;
     -fx-font-size: 20;
+    -fx-pref-width: 10em;
+    -fx-padding: 10 0 0 0;
 }
 
 .shop .list-cell Button {
     -fx-alignment: CENTER;
-    -fx-pref-width: 200;
+    -fx-pref-width: 150;
     -fx-pref-height: 30;
     -fx-font-size: 20;
+}
+
+.shopContentCell {
+    -fx-spacing: 20;
+}
+
+.shopContentCell .priceLabel{
+    -fx-pref-width: 200;
 }

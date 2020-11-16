@@ -7,11 +7,13 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -31,7 +33,6 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private static final String ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "activate";
     private static final String DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "deactivate";
 
-    private GridPane pane = new GridPane();
     private HBox shopContentHBox = new HBox();
     private ImageView contentImageView = new ImageView();
     private Label contentTitelLabel = new Label();
@@ -56,8 +57,6 @@ public class ShopContentCell extends ListCell<ShopContent> {
         shopContentHBox = fxmlLoader.getRoot();
 
         setUpUI();
-
-        //shopContentHBox.setHgrow(pane, Priority.ALWAYS);
     }
 
     private void setUpUI(){
@@ -93,6 +92,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
         Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
         contentImageView.setImage(imageOfContent);
+        contentImageView.setEffect(new DropShadow(20, Color.RED));
         contentTitelLabel.setText(this.content.getTitle());
         contentPriceLabel.setText("Price: " + this.content.getPrice());
     }
@@ -119,6 +119,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
             if(contentIsAPlayerModel()) {
                 spaceShipModelIsAlreadySelected = true;
             }
+        }else{
+            activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
         }
 
         if(spaceShipModelIsAlreadySelected) {
@@ -203,7 +205,6 @@ public class ShopContentCell extends ListCell<ShopContent> {
         alert.setTitle("Confirm Purchase");
         alert.setHeaderText(null);
         alert.setContentText("Do you really want to buy " + content.getTitle());
-
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             buy();
