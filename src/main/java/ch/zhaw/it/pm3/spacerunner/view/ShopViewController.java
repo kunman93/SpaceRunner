@@ -9,17 +9,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 
+import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * controller for shop view
  * */
-public class ShopViewController extends ViewController {
+public class ShopViewController extends ViewController implements ShopContentCellListener {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
     @FXML private TabPane tabPane;
     @FXML private ListView<ShopContent> listViewForUpgrades;
     @FXML private ListView<ShopContent> listViewForSkins;
+    @FXML private Label collectedCoinsLabel;
 
     @FXML public void showMenu() {
         getMain().setFXMLView(FXMLFile.MENU);
@@ -28,6 +30,7 @@ public class ShopViewController extends ViewController {
     // https://stackoverflow.com/questions/19588029/customize-listview-in-javafx-with-fxml
     @Override
     public void initialize() {
+        collectedCoinsLabel.setText("Coins: " + persistenceUtil.loadProfile().getCoins());
         List<ShopContent> shopContents = persistenceUtil.loadShopContent();
         //TODO: eventually use HashSet
         List<ShopContent> upgrades = new ArrayList<>();
@@ -46,15 +49,27 @@ public class ShopViewController extends ViewController {
 
         observableListOfUpgrades.setAll(upgrades);
         listViewForUpgrades.setItems(observableListOfUpgrades);
-        listViewForUpgrades.setCellFactory(shopContentListView -> new ShopContentCell());
+        listViewForUpgrades.setCellFactory(shopContentListView -> {
+            ShopContentCell shopContentCell = new ShopContentCell();
+            shopContentCell.addListener(this);
+            return shopContentCell;
+        });
 
         observableListOfSkins.setAll(skins);
         listViewForSkins.setItems(observableListOfSkins);
-        listViewForSkins.setCellFactory(shopContentListView -> new ShopContentCell());
+        listViewForSkins.setCellFactory(shopContentListView -> {
+            ShopContentCell shopContentCell = new ShopContentCell();
+            shopContentCell.addListener(this);
+            return shopContentCell;
+        });
     }
 
     public void updateList() {
         initialize();
     }
 
+    @Override
+    public void purchasedItem() {
+        collectedCoinsLabel.setText("Coins: " + persistenceUtil.loadProfile().getCoins());
+    }
 }

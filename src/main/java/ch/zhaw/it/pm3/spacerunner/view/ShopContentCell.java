@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClipListener;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
@@ -32,6 +33,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private static final String ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "activate";
     private static final String DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "deactivate";
 
+    private final Set<ShopContentCellListener> shopContentCellListeners = new HashSet<>();
+
     private HBox shopContentHBox = new HBox();
     private GridPane contentWrapper = new GridPane();
     private ImageView contentImageView = new ImageView();
@@ -60,7 +63,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void setUpUI(){
-        contentWrapper = (GridPane) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("imageWrapper")).collect(Collectors.toList()).get(0);
+        contentWrapper = (GridPane) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentWrapper")).collect(Collectors.toList()).get(0);
         contentImageView = (ImageView) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
         contentTitelLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
         contentPriceLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
@@ -229,6 +232,15 @@ public class ShopContentCell extends ListCell<ShopContent> {
         buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
         buyButton.setDisable(true);
         activateButton.setDisable(false);
+        shopContentCellListeners.forEach(ShopContentCellListener::purchasedItem);
+    }
+
+    public void addListener(ShopContentCellListener shopContentCellListener) {
+        shopContentCellListeners.add(shopContentCellListener);
+    }
+
+    public void removeListener(ShopContentCellListener shopContentCellListener) {
+        shopContentCellListeners.remove(shopContentCellListener);
     }
 
     private void showFailedToPurchaseContentAlertDialogue() {
