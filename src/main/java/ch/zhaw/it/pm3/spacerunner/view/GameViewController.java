@@ -24,13 +24,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 public class GameViewController extends ViewController {
 
@@ -45,7 +43,7 @@ public class GameViewController extends ViewController {
     private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
-    private EventHandler startGameKeyHandler = new EventHandler<KeyEvent>(){
+    private EventHandler<KeyEvent> startGameKeyHandler = new EventHandler<KeyEvent>(){
         @Override
         public void handle(KeyEvent event) {
             if(event.getCode() == KeyCode.SPACE){
@@ -57,21 +55,21 @@ public class GameViewController extends ViewController {
         }
     };
 
+    private FXMLImageProxy fxmlImageProxy = FXMLImageProxy.getProxy();
+
     private AnimationTimer gameLoop;
     private AnimationTimer loadingAnimation;
 
     private Timer resizeTimer = new Timer("ResizeTimer");
     private TimerTask resizeTask = null;
 
-    private long lastUpdate;
-    private int framesCount = 0;
-    private long framesTimestamp = 0;
-    private long lastProcessingTime = 0;
 
     private boolean isLoaded = false;
     private final VisualManager visualManager = VisualManager.getInstance();
 
-
+    private long lastUpdate = 0;
+    //Used to overperform a little bit. if we dont have this we dont reach the required fps (has to do with some internal AnimationTimer stuff)
+    private final long FRAME_TIME_DELTA = 2_000_000;
 
     @Override
     public void initialize() {
@@ -97,58 +95,41 @@ public class GameViewController extends ViewController {
 
         showLoadingScreen();
 
-        //TODO: Thread is required for loading screen but its ugly
         new Thread(()->{
             gameController.initialize();
 
-            int fps = gameController.getFps();
-            long timeForFrameNano = 1_000_000_000 / fps;
-            framesTimestamp = 0;
+            int fps_config = gameController.getFps();
+            long timeForFrameNano = (1_000_000_000 / fps_config) - FRAME_TIME_DELTA;
 
             isLoaded = true;
 
             updateGameFrame();
             gameController.togglePause();
 
-            //TODO: not displayed yet
-
-
-
-
             primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
 
+            lastUpdate = System.nanoTime();
             gameLoop = new AnimationTimer()
             {
+                private FPSTracker fpsTracker = new FPSTracker();
+
                 public void handle(long currentNanoTime)
                 {
-                    if (currentNanoTime - lastUpdate >= (timeForFrameNano - lastProcessingTime)) {
-                        lastUpdate = currentNanoTime;
-                        try{
-                            framesCount++;
-                            updateGameFrame();
+                    if (currentNanoTime - lastUpdate >= timeForFrameNano) {
+                        updateGameFrame();
 
-                            lastProcessingTime = (System.nanoTime() - currentNanoTime);
-                            //System.out.println("Processing took " + lastProcessingTime / 1000000);
-
-                            if (gameController.isPaused()) {
-                                if (gameController.getScore() == 0) {
-                                    displayInformation("press SPACE to start");
-                                } else {
-                                    displayInformation("press SPACE to continue");
-                                }
+                        if (gameController.isPaused()) {
+                            if (gameController.getScore() == 0) {
+                                displayInformation("press SPACE to start");
+                            } else {
+                                displayInformation("press P to continue");
                             }
-
-                            //Platform.runLater(() -> );
-                            if(currentNanoTime - framesTimestamp >= 1000_000_000){
-                                System.out.println("Current FPS " + framesCount);
-                                framesTimestamp = currentNanoTime;
-                                framesCount = 0;
-                            }
-                        }catch(Exception e){
-                            e.printStackTrace();
                         }
-                    }
 
+                        fpsTracker.track(currentNanoTime);
+
+                        lastUpdate = System.nanoTime();
+                    }
                 }
             };
             gameLoop.start();
@@ -295,20 +276,22 @@ public class GameViewController extends ViewController {
     }
 
 
-    public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
+    private void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         for (SpaceElement spaceElement : spaceElements) {
             Point2D.Double position = spaceElement.getRelativePosition();
             Image image = null;
             try {
-                image = SwingFXUtils.toFXImage(visualManager.getImage(spaceElement.getClass()), null);
+                image = fxmlImageProxy.getFXMLImage(spaceElement.getClass());
             } catch (VisualNotSetException e) {
                 e.printStackTrace();
                 //TODO: handle
             }
+
             graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
-            //TODO: possible memory leak
         }
     }
+
+
 
     private void displayCoinsAndScore(int coins, int score) {
         double paddingTopPercent = 0.1;
@@ -320,7 +303,7 @@ public class GameViewController extends ViewController {
         double marginRight = 30;
         BufferedImage image = null;
         try {
-            image = visualManager.getImage(UIElement.COIN_COUNT.getClass());
+            image = visualManager.getImage(UIVisualElement.COIN_COUNT.getClass());
             xPositionReference -= image.getWidth();
             graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
                     (gameCanvas.getWidth() - image.getWidth() - marginRightImage), yPosition, image.getWidth(), image.getHeight());
@@ -354,7 +337,7 @@ public class GameViewController extends ViewController {
 
     private void initializeUiElements(){
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
-        visualManager.loadAndSetAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation);
+        visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT.getClass(), coinAnimation);
     }
 
 }

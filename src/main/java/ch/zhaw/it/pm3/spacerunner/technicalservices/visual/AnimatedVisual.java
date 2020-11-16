@@ -22,6 +22,10 @@ public class AnimatedVisual {
         return visualSVGAnimationFiles;
     }
 
+    public Visual[] getVisuals() {
+        return visuals;
+    }
+
     public void setVisuals(Visual[] visuals) {
         this.visuals = visuals;
     }

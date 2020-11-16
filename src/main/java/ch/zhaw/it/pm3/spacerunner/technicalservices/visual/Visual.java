@@ -1,9 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 import java.awt.image.BufferedImage;
-
 public class Visual{
-    private BufferedImage image;
+    private BufferedImage bufferedImage;
     private VisualSVGFile visualSVGFile;
     private VisualFile visualFile;
     private VisualScaling visualScaling;
@@ -64,12 +63,12 @@ public class Visual{
         return resizeHeight;
     }
 
-    public BufferedImage getImage() {
-        return image;
+    public BufferedImage getBufferedImage() {
+        return bufferedImage;
     }
 
-    public void setImage(BufferedImage image) {
-        this.image = image;
+    public void setBufferedImage(BufferedImage bufferedImage) {
+        this.bufferedImage = bufferedImage;
     }
 
     public void setVisualFile(VisualSVGFile visualFile) {

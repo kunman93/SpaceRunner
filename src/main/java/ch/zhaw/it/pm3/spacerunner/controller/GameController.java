@@ -13,6 +13,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GameController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
@@ -41,7 +42,7 @@ public class GameController {
     private SpaceShip spaceShip;
 
     //TODO: ConcurrentHashSet??
-    //Set<String> mySet = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+    //private Set<SpaceElement> elements = Collections.newSetFromMap(new ConcurrentHashMap<SpaceElement, Boolean>());
     private Set<SpaceElement> elements = new HashSet<>();
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;

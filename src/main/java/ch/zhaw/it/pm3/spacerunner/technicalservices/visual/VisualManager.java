@@ -5,10 +5,7 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class VisualManager{
     private VisualUtil visualUtil = VisualUtil.getInstance();
@@ -19,7 +16,7 @@ public class VisualManager{
     private Map<Class<? extends VisualElement>, Visual> visualList = new HashMap<>();
     private Map<Class<? extends VisualElement>, AnimatedVisual> animatedVisualList = new HashMap<>();
 
-
+    private final Set<VisualManagerListener> visualManagerListeners = new HashSet<>();
 
     public static VisualManager getInstance(){
         return instance;
@@ -31,6 +28,9 @@ public class VisualManager{
     }
 
     public void loadGameElementVisuals(){
+        visualManagerListeners.forEach(VisualManagerListener::clear);
+
+
         instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
         instance.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
         instance.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
@@ -43,6 +43,7 @@ public class VisualManager{
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
         instance.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
+
     }
 
     public double getElementRelativeHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
@@ -71,11 +72,20 @@ public class VisualManager{
                 image = visualUtil.resizeImage(image, visual.getResizeWidth(), visual.getResizeHeight());
             }
         }
-        visual.setImage(image);
+
+
+        visual.setBufferedImage(image);
+
+        BufferedImage changedImage = image;
+        visualManagerListeners.forEach((visualManagerListener)->{
+            visualManagerListener.bufferedImageChanged(changedImage);
+        });
 
         synchronized (this){
             visualList.put(elementClass, visual);
         }
+
+
     }
 
     private BufferedImage flipVisual(boolean flipHorizontally, boolean flipVertically, BufferedImage image) {
@@ -105,7 +115,11 @@ public class VisualManager{
         List<Visual> visuals = new ArrayList<>();
         for(VisualSVGFile svgFile : svgFiles){
             Visual currentVisual = new Visual(svgFile, animatedVisual.getVisualScaling());
-            currentVisual.setImage(getSVGBufferedImage(svgFile, animatedVisual.getVisualScaling()));
+            currentVisual.setBufferedImage(getSVGBufferedImage(svgFile, animatedVisual.getVisualScaling()));
+            BufferedImage changedImage = currentVisual.getBufferedImage();
+            visualManagerListeners.forEach((visualManagerListener)->{
+                visualManagerListener.bufferedImageChanged(changedImage);
+            });
             visuals.add(currentVisual);
         }
         animatedVisual.setVisuals(visuals.toArray(Visual[]::new));
@@ -115,7 +129,7 @@ public class VisualManager{
     }
 
     public BufferedImage getImage(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
-        return getVisual(elementClass).getImage();
+        return getVisual(elementClass).getBufferedImage();
     }
 
     private Visual getVisual(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
@@ -170,5 +184,14 @@ public class VisualManager{
             loadAndSetAnimatedVisual(classVisualEntry.getKey(), classVisualEntry.getValue());
         }
     }
+
+    public void addListener(VisualManagerListener visualManagerListener) {
+        visualManagerListeners.add(visualManagerListener);
+    }
+
+    public void removeListener(VisualManagerListener visualManagerListener) {
+        visualManagerListeners.remove(visualManagerListener);
+    }
+
 
 }
