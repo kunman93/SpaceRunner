@@ -11,7 +11,7 @@ import java.awt.geom.Point2D;
 
 public class SpaceShip extends SpaceElement {
     private boolean hasCrashed;
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private final VelocityManager velocityManager = VelocityManager.getInstance();
     private final VisualManager visualManager = VisualManager.getInstance();
 
     public SpaceShip(Point2D.Double startPosition){
@@ -57,6 +57,7 @@ public class SpaceShip extends SpaceElement {
         try {
             relativeHeight = visualManager.getElementRelativeHeight(this.getClass());
         } catch (VisualNotSetException e) {
+            //TODO: Handle
             e.printStackTrace();
         }
         Point2D.Double position = getRelativePosition();

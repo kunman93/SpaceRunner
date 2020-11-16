@@ -20,7 +20,7 @@ public class ElementPreset {
                 new Preset(new SpaceElement[]{new Asteroid(new Point2D.Double(1,0))}),
                 new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1, .5)), new Coin(new Point2D.Double(1.2, .5)), new Coin(new Point2D.Double(1.4, .5)), new Coin(new Point2D.Double(1.6, .5))}),
                 new Preset(new SpaceElement[]{new UFO(new Point2D.Double(1,0)), new UFO(new Point2D.Double(1,0), 0.5)}),
-                new Preset(new SpaceElement[]{new Rocket(new Point2D.Double(1,.2))})
+                new Preset(new SpaceElement[]{new Rocket(new Point2D.Double(1,0.2))})
         };
     }
 
