@@ -55,7 +55,7 @@ public class VisualManager{
 
         visualManager.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
         visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-        visualManager.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.ASTEROID));
+        visualManager.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.POWERUP, VisualScaling.ASTEROID));
 
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);
         background.setIsBackground(true);
