@@ -17,8 +17,13 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GameController {
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
-    private GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
+    //TODO: make all final Manager and Util
+    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
+    private final VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
+    private final PowerUpManager powerUpManager = new PowerUpManager();
+
 
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
@@ -26,10 +31,6 @@ public class GameController {
     private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
     private double remainingDistanceUntilNextPreset = 0.1;
 
-    //TODO: make all final Manager and Util
-    private final VisualManager visualManager = VisualManager.getManager();
-    private final VelocityManager velocityManager = VelocityManager.getManager();
-    private final PowerUpManager powerUpManager = new PowerUpManager();
 
     private boolean isPaused = false;
     private int collectedCoins = 0;
@@ -294,7 +295,6 @@ public class GameController {
         }
         try {
             Thread.sleep(500);
-            //TODO: show explosion??
         } catch (Exception e){
             //IGNORE ON PURPOSE
         }
