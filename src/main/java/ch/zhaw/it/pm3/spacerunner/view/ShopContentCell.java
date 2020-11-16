@@ -201,10 +201,18 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void showPurchaseContentConfirmationDialogue(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        ButtonType yesButtonType = new ButtonType("Purchase", ButtonBar.ButtonData.OK_DONE);
+        ButtonType noButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"",yesButtonType,noButtonType);
         alert.setTitle("Confirm Purchase");
         alert.setHeaderText(null);
-        alert.setContentText("Do you really want to buy " + content.getTitle());
+        alert.setContentText("Do you really want to buy " + content.getTitle() + "?");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("style.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog");
+
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             buy();
@@ -224,7 +232,13 @@ public class ShopContentCell extends ListCell<ShopContent> {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
-        alert.setContentText("Not enough coins! You need atleast " + getAmountOfCoinsNeedToBuyContent() + " coins");
+        alert.setContentText("Not enough coins! You need atleast " + getAmountOfCoinsNeedToBuyContent() + " coins.");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                getClass().getResource("style.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog");
+
         alert.showAndWait();
     }
 

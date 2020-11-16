@@ -136,3 +136,19 @@ ListView {
 .shopContentCell .priceLabel{
     -fx-pref-width: 200;
 }
+
+.dialog {
+    -fx-background-image: url("../images/background.jpg");
+    -fx-background-color: transparent;
+}
+
+.dialog > .label{
+    -fx-font-size: 20;
+    -fx-text-fill: WHITE;
+}
+
+.dialog .button{
+    -fx-font-size: 20;
+    -fx-pref-width: 120;
+    -fx-pref-height: 15;
+}
