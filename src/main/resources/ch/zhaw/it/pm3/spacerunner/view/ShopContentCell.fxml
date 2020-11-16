@@ -8,9 +8,21 @@
 
 <?import javafx.scene.image.ImageView?>
 <HBox fx:id="shopContentHBox" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" styleClass="shopContentCell">
-    <ImageView fx:id="contentImageView" ></ImageView>
-    <Label fx:id="contentTitelLabel"></Label>
-    <Label fx:id="contentPriceLabel" styleClass="priceLabel"></Label>
-    <Button fx:id="buyButton"></Button>
-    <Button fx:id="activateButton"></Button>
+    <GridPane fx:id="imageWrapper" prefWidth="100">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="20" />
+            <ColumnConstraints percentWidth="20" />
+            <ColumnConstraints percentWidth="20" />
+            <ColumnConstraints percentWidth="20" />
+            <ColumnConstraints percentWidth="20" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="100" />
+        </rowConstraints>
+        <ImageView fx:id="contentImageView" GridPane.columnIndex="0"></ImageView>
+        <Label fx:id="contentTitelLabel" GridPane.columnIndex="1"></Label>
+        <Label fx:id="contentPriceLabel" GridPane.columnIndex="2" styleClass="priceLabel"></Label>
+        <Button fx:id="buyButton" GridPane.columnIndex="3"></Button>
+        <Button fx:id="activateButton" GridPane.columnIndex="4"></Button>
+    </GridPane>
 </HBox>

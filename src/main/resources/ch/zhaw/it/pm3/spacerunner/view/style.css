@@ -103,6 +103,10 @@ ListView {
     -fx-pref-height: 1000;
 }
 
+TabPane{
+    -fx-pref-width: 200;
+}
+
 .shop,
 .shop TabPane,
 .shop ListView {
@@ -118,24 +122,28 @@ ListView {
 
 .shop .list-cell Label {
     -fx-font-size: 20;
-    -fx-pref-width: 10em;
+    /*-fx-pref-width: 200;*/
     -fx-padding: 10 0 0 0;
 }
 
 .shop .list-cell Button {
     -fx-alignment: CENTER;
-    -fx-pref-width: 150;
+    /*-fx-pref-width: 150;*/
     -fx-pref-height: 30;
     -fx-font-size: 20;
 }
-
+/*
 .shopContentCell {
     -fx-spacing: 20;
-}
+}*/
 
-.shopContentCell .priceLabel{
-    -fx-pref-width: 200;
+.shopContentCell .imageView{
+    -fx-background-color: red;
 }
+/*
+.shopContentCell .priceLabel{
+    -fx-pref-width: 100;
+}*/
 
 .dialog {
     -fx-background-image: url("../images/background.jpg");

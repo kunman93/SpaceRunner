@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -34,6 +33,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private static final String DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "deactivate";
 
     private HBox shopContentHBox = new HBox();
+    private GridPane contentWrapper = new GridPane();
     private ImageView contentImageView = new ImageView();
     private Label contentTitelLabel = new Label();
     private Label contentPriceLabel = new Label();
@@ -60,11 +60,12 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void setUpUI(){
-        contentImageView = (ImageView) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
-        contentTitelLabel = (Label) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
-        contentPriceLabel = (Label) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
-        buyButton = (Button) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
-        activateButton = (Button) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("activateButton")).collect(Collectors.toList()).get(0);
+        contentWrapper = (GridPane) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("imageWrapper")).collect(Collectors.toList()).get(0);
+        contentImageView = (ImageView) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
+        contentTitelLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
+        contentPriceLabel = (Label) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
+        buyButton = (Button) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
+        activateButton = (Button) contentWrapper.getChildren().stream().filter((child) -> child.getId().equals("activateButton")).collect(Collectors.toList()).get(0);
     }
 
     /**
