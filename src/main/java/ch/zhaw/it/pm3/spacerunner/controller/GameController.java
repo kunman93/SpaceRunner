@@ -14,6 +14,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager
 
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GameController {
     private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
@@ -25,6 +26,9 @@ public class GameController {
     private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
     private double remainingDistanceUntilNextPreset = 0.1;
 
+    //TODO: make all final Manager and Util
+    private final VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
 
     private boolean isPaused = false;
     private int collectedCoins = 0;
@@ -36,19 +40,12 @@ public class GameController {
     private SpaceWorld background = null;
     private SpaceShip spaceShip;
 
-    //TODO: ConcurrentHashSet??
-    //private Set<SpaceElement> elements = Collections.newSetFromMap(new ConcurrentHashMap<SpaceElement, Boolean>());
-    private Set<SpaceElement> elements = new HashSet<>();
+    //TODO: ConcurrentHashSet -> TEST
+    private Set<SpaceElement> elements = ConcurrentHashMap.newKeySet();
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
 
-
-
-    private final VisualManager visualManager = VisualManager.getManager();
-    private final VelocityManager velocityManager = VelocityManager.getManager();
-
     private Map<PowerUpType, Integer> activePowerUps = new HashMap<>();
-//    private Map<PowerUpType, Long> powerUpTimers = new HashMap<>();
     private final int GENERAL_POWERUP_PROBABILITY = 33;
     private final int GENERAL_POWERUP_COOLDOWN = 5000;
     private long lastUpdate = 0;
@@ -416,9 +413,8 @@ public class GameController {
 
     }
 
-    private Map<PowerUp, Boolean> getActivePowerUps(){
-        //TODO: rico implement what for? activePowerUps exists
-        return null;
+    public Map<PowerUpType, Integer> getActivePowerUps(){
+        return Collections.unmodifiableMap(activePowerUps);
     }
 
     protected SpaceShip getSpaceShip() {
