@@ -53,23 +53,25 @@ public class SpaceShip extends SpaceElement {
      * @param direction The direction of movement (UP,DOWN or NONE)
      */
     public void moveSpaceShip(SpaceShipDirection direction, long timeInMillis) {
+        double relativeHeight = 0;
+        try {
+            relativeHeight = visualManager.getElementRelativeHeight(this.getClass());
+        } catch (VisualNotSetException e) {
+            e.printStackTrace();
+        }
         Point2D.Double position = getRelativePosition();
         switch (direction) {
             case UP:
                 if (position.y <= 0.0){
+                    setRelativePosition(new Point2D.Double(position.x, 0.0));
                     return;
                 }
                 directMove(direction, position, timeInMillis);
                 break;
             case DOWN:
-                try {
-                    //TODO: fix spaceship out of view
-                    if (position.y + visualManager.getElementRelativeHeight(this.getClass()) >= 1.0) {
-                        return;
-                    }
-                } catch (VisualNotSetException e) {
-                    //TODO: handle
-                    e.printStackTrace();
+                if (position.y + relativeHeight >= 1.0) {
+                    setRelativePosition(new Point2D.Double(position.x - relativeHeight, 1.0));
+                    return;
                 }
                 directMove(direction, position, timeInMillis);
                 break;
