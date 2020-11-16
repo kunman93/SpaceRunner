@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

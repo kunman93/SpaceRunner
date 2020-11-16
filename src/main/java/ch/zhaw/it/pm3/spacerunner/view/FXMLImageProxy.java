@@ -1,8 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualElement;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManagerListener;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualElement;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManagerListener;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;

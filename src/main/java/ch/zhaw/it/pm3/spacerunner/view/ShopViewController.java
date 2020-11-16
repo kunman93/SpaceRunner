@@ -1,8 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ItemType;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ShopContent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

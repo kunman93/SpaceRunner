@@ -1,4 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.manager.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import org.junit.jupiter.api.*;

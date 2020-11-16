@@ -1,9 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.*;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;

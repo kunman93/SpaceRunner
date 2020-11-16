@@ -1,11 +1,11 @@
 package ch.zhaw.it.pm3.spacerunner;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 
 import ch.zhaw.it.pm3.spacerunner.view.ViewController;
 import javafx.application.Application;

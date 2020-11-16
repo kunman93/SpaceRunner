@@ -1,8 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualFile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualSVGFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
 import org.junit.jupiter.api.Test;
 

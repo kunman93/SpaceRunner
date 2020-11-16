@@ -1,8 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;

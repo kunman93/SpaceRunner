@@ -2,13 +2,15 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.manager.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
 import java.awt.geom.Point2D;
 import java.util.*;
