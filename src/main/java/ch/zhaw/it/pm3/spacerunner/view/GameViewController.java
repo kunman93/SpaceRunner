@@ -88,7 +88,6 @@ public class GameViewController extends ViewController {
         pressedHandler = createPressReleaseKeyHandler(true);
         releasedHandler = createPressReleaseKeyHandler(false);
 
-        System.out.println("Adding handlers");
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
         primaryStage.setOnCloseRequest(handleCloseWindowEvent());
@@ -120,9 +119,9 @@ public class GameViewController extends ViewController {
 
                         if (gameController.isPaused()) {
                             if (gameController.getScore() == 0) {
-                                displayInformation("press SPACE to start");
+                                displayInformation("Press SPACE to start");
                             } else {
-                                displayInformation("press P to continue");
+                                displayInformation("Press P to continue");
                             }
                         }
 
@@ -148,6 +147,7 @@ public class GameViewController extends ViewController {
 
         if(gameOver){
             removeKeyHandlers();
+            removeWindowSizeListeners();
             if(gameLoop != null){
                 gameLoop.stop();
                 setGameDataCache(new GameDataCache(gameController.getCollectedCoins(), gameController.getScore()));
