@@ -29,6 +29,7 @@ public class GameController {
     //TODO: make all final Manager and Util
     private final VisualManager visualManager = VisualManager.getManager();
     private final VelocityManager velocityManager = VelocityManager.getManager();
+    private final PowerUpManager powerUpManager = new PowerUpManager();
 
     private boolean isPaused = false;
     private int collectedCoins = 0;
@@ -45,9 +46,8 @@ public class GameController {
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
 
-    private Map<PowerUpType, Integer> activePowerUps = new HashMap<>();
-    private final int GENERAL_POWERUP_PROBABILITY = 33;
     private final int GENERAL_POWERUP_COOLDOWN = 5000;
+
     private long lastUpdate = 0;
 
     //TODO: information expert verletzung bei laden der bilder im voraus (wegen laggs).
@@ -83,23 +83,6 @@ public class GameController {
         }
     }
 
-    private void generatePowerUps() {
-        int x = (int) Math.floor(Math.random()*100);
-        if (x < GENERAL_POWERUP_PROBABILITY) {
-            int sum = 0;
-            for (PowerUpType p : PowerUpType.values()) {
-                sum += p.getProbabilityPercent();
-            }
-            x = (int) Math.floor(Math.random()*sum);
-            int secondSum = 0;
-            for (PowerUpType p : PowerUpType.values()) {
-                if (x < p.getProbabilityPercent() + secondSum){
-                    elements.add(new PowerUp(new Point2D.Double(1,Math.random()*0.8+0.1), p));
-                    break;
-                }
-            }
-        }
-    }
 
     private void updateElementsSpeed() {
         velocityManager.accelerateAll(new Point2D.Double(-RELATIVE_GAME_SPEED_INCREASE_PER_SECOND, RELATIVE_GAME_SPEED_INCREASE_PER_SECOND));
@@ -188,7 +171,7 @@ public class GameController {
             @Override
             public void run() {
                 if (!isPaused){
-                    generatePowerUps();
+                    elements.add(powerUpManager.generatePowerUps());
                 }
             }
         };
@@ -336,14 +319,16 @@ public class GameController {
     }
 
     private void collisionWithObstacle(Obstacle o){
-        if (!powerUpDecrement(PowerUpType.SHIELD)){
+        if (powerUpManager.hasShield()){
+            elements.remove(o);
+            powerUpManager.removeShield();
+        } else {
             endRun();
         }
-        elements.remove(o);
     }
 
     private void collisionWithCoin(Coin c){
-        collectedCoins += 1 * Math.pow(2, activePowerUps.getOrDefault(PowerUpType.DOUBLECOINS, 0));
+        collectedCoins += 1 * Math.pow(2, powerUpManager.getCoinMultiplicator());
         score += 25;
         elements.remove(c);
         new Thread(()->{
@@ -356,65 +341,14 @@ public class GameController {
     }
 
     private void collisionWithPowerUp(PowerUp p){
-        processPowerUp(p);
+        p.activatePowerUp();
         elements.remove(p);
         score += 10;
     }
 
-    private void powerUpIncrement(PowerUpType t){
-        if (activePowerUps.containsKey(t)) {
-            activePowerUps.put(t, activePowerUps.get(t) + 1);
-        } else {
-            activePowerUps.put(t, 1);
-        }
-    }
 
-    /**
-     * true if it could be decremented else false
-     * @param t
-     * @return
-     */
-    private boolean powerUpDecrement(PowerUpType t){
-        if (activePowerUps.containsKey(t)){
-            activePowerUps.put(t, activePowerUps.get(t)-1);
-            if (activePowerUps.get(t) <= 0){
-                activePowerUps.remove(t);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private void createPowerUpTimer(PowerUpType t){
-        gameTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                powerUpDecrement(t);
-            }
-        }, t.getDuration());
-    }
-
-    private void processPowerUp(PowerUp p) {
-        if (p.getType().equals(PowerUpType.DOUBLECOINS)) {
-            powerUpIncrement(PowerUpType.DOUBLECOINS);
-            createPowerUpTimer(PowerUpType.DOUBLECOINS);
-        } else if (p.getType().equals(PowerUpType.SHIELD)) {
-            // ToDo if only one shield can be active it would be diffrent
-//            powerUpIncrement(PowerUpType.SHIELD);
-            if (activePowerUps.containsKey(PowerUpType.SHIELD)) {
-                //maybe sth else
-            } else {
-                activePowerUps.put(PowerUpType.SHIELD, 1);
-            }
-        } else {
-            //ToDo unknown PowerUp
-        }
-
-    }
-
-    public Map<PowerUpType, Integer> getActivePowerUps(){
-        return Collections.unmodifiableMap(activePowerUps);
+    public Map<PowerUp, Integer> getActivePowerUps(){
+        return Collections.unmodifiableMap(powerUpManager.getActivePowerUps());
     }
 
     protected SpaceShip getSpaceShip() {
