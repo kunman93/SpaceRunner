@@ -122,22 +122,27 @@ TabPane{
 
 .shop .list-cell Label {
     -fx-font-size: 20;
-    /*-fx-pref-width: 200;*/
     -fx-padding: 10 0 0 0;
 }
 
 .shop .list-cell Button {
     -fx-alignment: CENTER;
-    /*-fx-pref-width: 150;*/
     -fx-pref-height: 30;
     -fx-font-size: 20;
 }
+
+.shopContentCell,
+.shopContentCell GridPane {
+
+}
+
+
 /*
 .shopContentCell {
     -fx-spacing: 20;
 }*/
 
-.shopContentCell .imageView{
+.shopContentCell .imageView {
     -fx-background-color: red;
 }
 /*

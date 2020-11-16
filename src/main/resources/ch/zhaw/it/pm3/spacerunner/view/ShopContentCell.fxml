@@ -10,19 +10,20 @@
 <HBox fx:id="shopContentHBox" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" styleClass="shopContentCell">
     <GridPane fx:id="imageWrapper" prefWidth="100">
         <columnConstraints>
+            <ColumnConstraints percentWidth="10" />
+            <ColumnConstraints percentWidth="30" />
             <ColumnConstraints percentWidth="20" />
-            <ColumnConstraints percentWidth="20" />
-            <ColumnConstraints percentWidth="20" />
-            <ColumnConstraints percentWidth="20" />
-            <ColumnConstraints percentWidth="20" />
+            <ColumnConstraints percentWidth="17" />
+            <ColumnConstraints percentWidth="6" />
+            <ColumnConstraints percentWidth="17" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints percentHeight="100" />
+            <RowConstraints percentHeight="100" valignment="CENTER"/>
         </rowConstraints>
-        <ImageView fx:id="contentImageView" GridPane.columnIndex="0"></ImageView>
-        <Label fx:id="contentTitelLabel" GridPane.columnIndex="1"></Label>
-        <Label fx:id="contentPriceLabel" GridPane.columnIndex="2" styleClass="priceLabel"></Label>
-        <Button fx:id="buyButton" GridPane.columnIndex="3"></Button>
-        <Button fx:id="activateButton" GridPane.columnIndex="4"></Button>
+        <ImageView fx:id="contentImageView" GridPane.columnIndex="0"/>
+        <Label fx:id="contentTitelLabel" GridPane.columnIndex="1"/>
+        <Label fx:id="contentPriceLabel" GridPane.columnIndex="2" styleClass="priceLabel"/>
+        <Button fx:id="buyButton" GridPane.columnIndex="3"/>
+        <Button fx:id="activateButton" GridPane.columnIndex="4"/>
     </GridPane>
 </HBox>

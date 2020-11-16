@@ -1,21 +1,16 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ContentId;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * controller for shop view
@@ -26,8 +21,7 @@ public class ShopViewController extends ViewController {
     @FXML private ListView<ShopContent> listViewForUpgrades;
     @FXML private ListView<ShopContent> listViewForSkins;
 
-    @FXML
-    public void showMenu() {
+    @FXML public void showMenu() {
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
