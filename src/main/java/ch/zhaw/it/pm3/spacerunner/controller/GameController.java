@@ -103,7 +103,7 @@ public class GameController {
             int secondSum = 0;
             for (PowerUpType p : PowerUpType.values()) {
                 if (x < p.getProbabilityPercent() + secondSum){
-                    elements.add(new PowerUp(new Point2D.Double(1,0.5), p));
+                    elements.add(new PowerUp(new Point2D.Double(1,Math.random()*0.8+0.1), p));
                     break;
                 }
             }
@@ -181,11 +181,6 @@ public class GameController {
         gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
         gameSpeedTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWERUP_COOLDOWN);
 
-        //TODO: PowerupTimer and Task (Every "3" seconds)
-        //TODO: Roll -> 0-100
-        // 0 - 10 => Double Coins
-        // 10 - 20 => Shield
-
         gameOver = false;
 
         playerProfile = persistenceUtil.loadProfile();
@@ -200,8 +195,6 @@ public class GameController {
 
         collectedCoins = 0;
     }
-
-
 
     private TimerTask getPowerUpGeneratorTask(){
         return new TimerTask() {
@@ -263,8 +256,6 @@ public class GameController {
     private void generateObstacles() {
         if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
             generatePreset(elementPreset.getRandomPreset());
-
-
         }
     }
 
@@ -303,10 +294,45 @@ public class GameController {
         spaceShip.crash();
         gameSpeedTimer.cancel();
         gameOver = true;
+        if(playerProfile.isAudioEnabled()){
+            //ToDo why not one try-catch
+            new Thread(()->{
+                try {
+                    SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
+                    explosion.addListener(() -> {
+                        try {
+                            SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
+                            gameOverVoice.addListener(()->{
+                                try {
+                                    gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
+                                }  catch (Exception e){
+                                    //IGNORE ON PURPOSE
+                                }
+                            });
+                            gameOverVoice.play();
+                            gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
+                        } catch (Exception e){
+                            //IGNORE ON PURPOSE
+                        }
+                    });
+                    explosion.play();
+
+                } catch (Exception e){
+                    //IGNORE ON PURPOSE
+                }
+            }).start();
+        }
+        try {
+            Thread.sleep(500);
+            //TODO: show explosion??
+        } catch (Exception e){
+            //IGNORE ON PURPOSE
+        }
+        saveGame();
     }
 
     /**
-     * exevutes effects depending on type of spaceElement
+     * executes effects depending on type of spaceElement
      *
      * @param spaceElement
      */
@@ -314,67 +340,38 @@ public class GameController {
         if (spaceElement == null) return;
 
         if (spaceElement instanceof Obstacle) {
-            if (!powerUpDecrement(PowerUpType.SHIELD)){
-                endRun();
-            }
+            collisionWithObstacle((Obstacle) spaceElement);
+        } else if (spaceElement instanceof Coin) {
+            collisionWithCoin((Coin) spaceElement);
+        } else if (spaceElement instanceof PowerUp) {
+            collisionWithPowerUp((PowerUp) spaceElement);
+        }
+    }
 
-            if(playerProfile.isAudioEnabled()){
-                new Thread(()->{
-                    try {
-                        SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
-                        explosion.addListener(() -> {
-                            try {
-                                SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
-                                gameOverVoice.addListener(()->{
-                                    try {
-                                        gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
-                                    }  catch (Exception e){
-                                        //IGNORE ON PURPOSE
-                                    }
-                                });
-                                gameOverVoice.play();
-                                gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
-                            } catch (Exception e){
-                                //IGNORE ON PURPOSE
-                            }
-                        });
-                        explosion.play();
+    private void collisionWithObstacle(Obstacle o){
+        if (!powerUpDecrement(PowerUpType.SHIELD)){
+            endRun();
+        }
+        elements.remove(o);
+    }
 
-                    } catch (Exception e){
-                        //IGNORE ON PURPOSE
-                    }
-                }).start();
-            }
+    private void collisionWithCoin(Coin c){
+        collectedCoins += 1 * Math.pow(2, activePowerUps.getOrDefault(PowerUpType.DOUBLECOINS, 0));
+        score += 25;
+        elements.remove(c);
+        new Thread(()->{
             try {
-                Thread.sleep(500);
-                //TODO: show explosion??
+                gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
             } catch (Exception e){
                 //IGNORE ON PURPOSE
             }
-            spaceShip.crash();
-            gameSpeedTimer.cancel();
-            gameOver = true;
-            saveGame();
+        }).start();
+    }
 
-        } else if (spaceElement instanceof Coin) {
-            collectedCoins += 1 * Math.pow(2, activePowerUps.getOrDefault(PowerUpType.DOUBLECOINS, 0));
-            score = score + 25;
-            elements.remove(spaceElement);
-            new Thread(()->{
-                try {
-                    gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
-                } catch (Exception e){
-                    //IGNORE ON PURPOSE
-                }
-            }).start();
-        } else if (spaceElement instanceof PowerUp) {
-            processPowerUp((PowerUp) spaceElement);
-            elements.remove(spaceElement);
-            score = score + 10;
-
-            // spaceElement.getEffect(); //ToDo one of the two
-            // handlePowerUp(spaceElement)
-        }
+    private void collisionWithPowerUp(PowerUp p){
+        processPowerUp(p);
+        elements.remove(p);
+        score += 10;
     }
 
     private void powerUpIncrement(PowerUpType t){
@@ -386,7 +383,7 @@ public class GameController {
     }
 
     /**
-     * true if it could have been decremented else false
+     * true if it could be decremented else false
      * @param t
      * @return
      */
@@ -430,7 +427,7 @@ public class GameController {
     }
 
     private Map<PowerUp, Boolean> getActivePowerUps(){
-        //TODO: rico implement
+        //TODO: rico implement what for? activePowerUps exists
         return null;
     }
 
@@ -441,6 +438,4 @@ public class GameController {
     private void updateHighScore(long timeSinceLastUpdate) {
         score = score + (int)(timeSinceLastUpdate/10);
     }
-
-
 }
