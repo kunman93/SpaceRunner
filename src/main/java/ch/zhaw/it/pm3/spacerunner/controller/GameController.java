@@ -262,8 +262,6 @@ public class GameController {
     private void generateObstacles() {
         if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
             generatePreset(elementPreset.getRandomPreset());
-
-
         }
     }
 
@@ -283,7 +281,7 @@ public class GameController {
             element.move(timeSinceLastUpdate);
         }
         background.move(timeSinceLastUpdate);
-        remainingDistanceUntilNextPreset -= timeSinceLastUpdate/1000.0 * HorizontalSpeed.BACKGROUND.getSpeed();
+        remainingDistanceUntilNextPreset -= timeSinceLastUpdate/1000.0;
     }
 
     /**
