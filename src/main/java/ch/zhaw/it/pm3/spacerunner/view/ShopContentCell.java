@@ -201,9 +201,9 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void showPurchaseContentConfirmationDialogue(){
-        ButtonType yesButtonType = new ButtonType("Purchase", ButtonBar.ButtonData.OK_DONE);
-        ButtonType noButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"",yesButtonType,noButtonType);
+        ButtonType purchaseButtonType = new ButtonType("Purchase", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"",purchaseButtonType,cancelButtonType);
         alert.setTitle("Confirm Purchase");
         alert.setHeaderText(null);
         alert.setContentText("Do you really want to buy " + content.getTitle() + "?");
@@ -214,7 +214,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         dialogPane.getStyleClass().add("dialog");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == purchaseButtonType){
             buy();
         }
     }
