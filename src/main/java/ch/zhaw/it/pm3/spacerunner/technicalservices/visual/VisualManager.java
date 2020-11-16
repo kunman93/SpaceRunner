@@ -35,6 +35,7 @@ public class VisualManager{
         instance.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
         instance.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
         instance.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.ASTEROID));
+        instance.loadAndSetVisual(Rocket.class, new Visual(VisualSVGFile.ROCKET_1, VisualScaling.ROCKET));
 
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);
         background.setIsBackground(true);

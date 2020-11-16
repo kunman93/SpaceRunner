@@ -23,7 +23,7 @@ public class GameController {
     private Timer gameSpeedTimer;
 
     private double remainingDistanceUntilNextPreset = 0.1;
-    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
+    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.45;
 
 
     private boolean isPaused = false;

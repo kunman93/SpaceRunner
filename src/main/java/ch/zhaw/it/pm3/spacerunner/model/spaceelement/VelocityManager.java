@@ -30,6 +30,7 @@ public class VelocityManager {
         instance.setVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
         instance.setVelocity(PowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
         instance.setVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        instance.setVelocity(Rocket.class, new Point2D.Double(-HorizontalSpeed.ROCKET.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
     }
 
     public synchronized void setVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity){

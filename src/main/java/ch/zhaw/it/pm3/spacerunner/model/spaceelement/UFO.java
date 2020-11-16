@@ -3,7 +3,6 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class UFO extends Obstacle {
@@ -38,7 +37,7 @@ public class UFO extends Obstacle {
 
     private double sinWave(double currentXPos) {
         try {
-            return 0.25 * Math.sin(currentXPos * 5 + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
+            return 0.4 * Math.sin(currentXPos * 5 + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
         } catch (VisualNotSetException e) {
             e.printStackTrace();
         }
