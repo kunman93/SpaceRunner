@@ -266,9 +266,6 @@ public class GameController {
     private void generatePreset(Preset preset) {
         Collections.addAll(elements, preset.getElementsInPreset());
         remainingDistanceUntilNextPreset = preset.getPresetTimeUntilOnScreen();
-        new Thread(()->{
-            elementPreset.regeneratePresets();
-        }).start();
     }
 
     /**
