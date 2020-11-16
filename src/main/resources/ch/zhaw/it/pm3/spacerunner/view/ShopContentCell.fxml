@@ -6,10 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
 <HBox fx:id="shopContentHBox" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx">
-    <Label fx:id="contentTitelLabel"> </Label>
-    <Label fx:id="contentPriceLabel"> </Label>
+    <ImageView fx:id="contentImageView"></ImageView>
+    <Label fx:id="contentTitelLabel"></Label>
+    <Label fx:id="contentPriceLabel"></Label>
     <Button fx:id="buyButton"></Button>
     <Button fx:id="activateButton"></Button>
-
 </HBox>
