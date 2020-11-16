@@ -4,5 +4,7 @@ public enum PresetType {
     ASTERIOD,
     COINS_LINE,
     UFOS_MIRRORED,
-    ROCKET
+    ROCKET,
+    COINS_ARROW,
+    COINS_RANDOM
 }
