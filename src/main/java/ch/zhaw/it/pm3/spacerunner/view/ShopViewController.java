@@ -25,6 +25,7 @@ public class ShopViewController extends ViewController {
     @FXML private TabPane tabPane;
     @FXML private ListView<ShopContent> listViewForUpgrades;
     @FXML private ListView<ShopContent> listViewForSkins;
+    @FXML private Label collectedCoinsLabel;
 
     @FXML
     public void showMenu() {
@@ -34,6 +35,8 @@ public class ShopViewController extends ViewController {
     // https://stackoverflow.com/questions/19588029/customize-listview-in-javafx-with-fxml
     @Override
     public void initialize() {
+        collectedCoinsLabel.setText("Collected Coins: " + persistenceUtil.loadProfile().getCoins());
+
         List<ShopContent> shopContents = persistenceUtil.loadShopContent();
         //TODO: eventually use HashSet
         List<ShopContent> upgrades = new ArrayList<>();
