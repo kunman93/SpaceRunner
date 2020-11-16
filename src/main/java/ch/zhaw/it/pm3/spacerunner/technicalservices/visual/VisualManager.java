@@ -2,16 +2,18 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class VisualManager{
     private VisualUtil visualUtil = VisualUtil.getInstance();
+    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
 
     private int height = 500;
     private int width = 500;
@@ -31,7 +33,17 @@ public class VisualManager{
     }
 
     public void loadGameElementVisuals(){
-        instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+        PlayerProfile playerProfile = persistenceUtil.loadProfile();
+        Set<ShopContent> activeShopContents = playerProfile.getActiveShopContent();
+
+        for(ShopContent activeShopContent : activeShopContents){
+            if(activeShopContent.getItemType() == ItemType.PLAYER_MODEL){
+                instance.loadAndSetVisual(SpaceShip.class, new Visual(activeShopContent.getImageId(), VisualScaling.SPACE_SHIP, false, false));
+            }else{
+                instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+            }
+        }
+
         instance.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
         instance.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
         instance.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.ASTEROID));
