@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class PersistenceUtil {
     // Singleton pattern
-    private static final PersistenceUtil instance = new PersistenceUtil();
+    private static final PersistenceUtil persistenceUtil = new PersistenceUtil();
 
     private static final Gson gson = new Gson();
 
@@ -29,7 +29,7 @@ public class PersistenceUtil {
     private PersistenceUtil(){}
 
     public static PersistenceUtil getUtil(){
-        return instance;
+        return persistenceUtil;
     }
 
 

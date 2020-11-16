@@ -2,10 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.AnimatedVisual;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.Visual;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +10,10 @@ import java.util.Map;
 public class VelocityManager {
 
     private Map<Class<? extends SpaceElement>, Point2D.Double> velocityMap = new HashMap<>();
-    private static VelocityManager instance = new VelocityManager();
+    private static VelocityManager velocityManager = new VelocityManager();
 
     public static VelocityManager getManager(){
-        return instance;
+        return velocityManager;
     }
 
     private VelocityManager(){
@@ -24,12 +21,12 @@ public class VelocityManager {
     }
 
     public void setupGameElementVelocity(){
-        instance.setVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        instance.setVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.UFO.getSpeed()));
-        instance.setVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
-        instance.setVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
-        instance.setVelocity(PowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        instance.setVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.UFO.getSpeed()));
+        velocityManager.setVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
+        velocityManager.setVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
+        velocityManager.setVelocity(PowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
     }
 
     public synchronized void setVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity){

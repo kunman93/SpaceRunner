@@ -20,9 +20,8 @@ public class GameController {
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
 
-
-    private double remainingDistanceUntilNextPreset = 0.1;
     private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
+    private double remainingDistanceUntilNextPreset = 0.1;
 
 
     private boolean isPaused = false;

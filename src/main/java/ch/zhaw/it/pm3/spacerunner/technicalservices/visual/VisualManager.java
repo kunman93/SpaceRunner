@@ -12,14 +12,14 @@ public class VisualManager{
 
     private int height = 500;
     private int width = 500;
-    private static VisualManager instance = new VisualManager();
+    private static VisualManager visualManager = new VisualManager();
     private Map<Class<? extends VisualElement>, Visual> visualList = new HashMap<>();
     private Map<Class<? extends VisualElement>, AnimatedVisual> animatedVisualList = new HashMap<>();
 
     private final Set<VisualManagerListener> visualManagerListeners = new HashSet<>();
 
     public static VisualManager getManager(){
-        return instance;
+        return visualManager;
     }
 
 
@@ -31,18 +31,18 @@ public class VisualManager{
         visualManagerListeners.forEach(VisualManagerListener::clear);
 
 
-        instance.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
-        instance.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
-        instance.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-        instance.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.POWERUP, VisualScaling.POWERUP));
+        visualManager.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+        visualManager.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
+        visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
+        visualManager.loadAndSetVisual(PowerUp.class, new Visual(VisualSVGFile.POWERUP, VisualScaling.POWERUP));
 
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);
         background.setIsBackground(true);
-        instance.loadAndSetVisual(SpaceWorld.class, background);
-        instance.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
+        visualManager.loadAndSetVisual(SpaceWorld.class, background);
+        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
-        instance.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
+        visualManager.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
 
     }
 

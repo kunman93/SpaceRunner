@@ -11,14 +11,14 @@ import java.net.URL;
 public class GameSoundUtil{
 
     private SoundUtil soundUtil = SoundUtil.getInstance();
-    private static GameSoundUtil instance = new GameSoundUtil();
+    private static GameSoundUtil gameSoundUtil = new GameSoundUtil();
 
     private GameSoundUtil(){
 
     }
 
     public static GameSoundUtil getUtil() {
-        return instance;
+        return gameSoundUtil;
     }
 
     public SoundClip loadClip(GameSound soundFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
