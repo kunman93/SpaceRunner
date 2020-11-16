@@ -70,7 +70,7 @@ public class SpaceShip extends SpaceElement {
                 break;
             case DOWN:
                 if (position.y + relativeHeight >= 1.0) {
-                    setRelativePosition(new Point2D.Double(position.x - relativeHeight, 1.0));
+                    setRelativePosition(new Point2D.Double(position.x, 1.0 - relativeHeight));
                     return;
                 }
                 directMove(direction, position, timeInMillis);
