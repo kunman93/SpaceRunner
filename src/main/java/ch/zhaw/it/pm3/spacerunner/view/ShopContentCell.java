@@ -33,6 +33,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     private GridPane pane = new GridPane();
     private HBox shopContentHBox = new HBox();
+    private ImageView contentImageView = new ImageView();
     private Label contentTitelLabel = new Label();
     private Label contentPriceLabel = new Label();
     private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
@@ -44,7 +45,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private ShopContent content;
 
     public ShopContentCell() {
-        FXMLLoader fxmlLoader = new FXMLLoader(SpaceRunnerApp.class.getResource("view/ShopContentCell.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SpaceRunnerApp.class.getResource(FXMLFile.SHOP_CONTENT_CELL.getFileName()));
         fxmlLoader.setController(this);
         try {
             fxmlLoader.load();
@@ -56,10 +57,11 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
         setUpUI();
 
-        shopContentHBox.setHgrow(pane, Priority.ALWAYS);
+        //shopContentHBox.setHgrow(pane, Priority.ALWAYS);
     }
 
     private void setUpUI(){
+        contentImageView = (ImageView) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
         contentTitelLabel = (Label) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
         contentPriceLabel = (Label) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
         buyButton = (Button) shopContentHBox.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
@@ -84,15 +86,13 @@ public class ShopContentCell extends ListCell<ShopContent> {
             processShopping();
 
             setGraphic(shopContentHBox);
-            // setGraphic(new ImageView().setImage(new Image("...")))
         }
     }
 
     private void setUpImageAndLabelsOfContent() {
-        //TODO always loading images, this might be bad
         VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
         Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
-        //pane.add(new ImageView(imageOfContent), 0, 0);
+        contentImageView.setImage(imageOfContent);
         contentTitelLabel.setText(this.content.getTitle());
         contentPriceLabel.setText("Price: " + this.content.getPrice());
     }
