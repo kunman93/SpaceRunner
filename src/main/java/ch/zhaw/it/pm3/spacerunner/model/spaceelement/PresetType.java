@@ -6,5 +6,6 @@ public enum PresetType {
     UFOS_MIRRORED,
     ROCKET,
     COINS_ARROW,
-    COINS_RANDOM_LINE
+    COINS_RANDOM_LINE,
+    COINS_SQUARE
 }

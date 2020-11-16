@@ -31,6 +31,9 @@ public class ElementPreset {
             case COINS_RANDOM_LINE:
                 y = (Math.random() * (1.0 - 2 * visualManager.getElementRelativeHeight(Coin.class)) + visualManager.getElementRelativeHeight(Coin.class));
                 return new Preset(randomCoinLine(y));
+            case COINS_SQUARE:
+                y = (Math.random() * (1.0 - 2 * visualManager.getElementRelativeHeight(Coin.class)) + visualManager.getElementRelativeHeight(Coin.class));
+                return new Preset(randomCoinSquare(y));
         }
         return null;
     }
@@ -54,6 +57,22 @@ public class ElementPreset {
         for (int i = 1; i <= count; i++) {
             spaceElements[i-1] = new Coin(new Point2D.Double(x,y));
             x = x + 0.1;
+        }
+        return spaceElements;
+    }
+
+    private SpaceElement[] randomCoinSquare(double y) {
+        int count = (int) ((Math.random() * (6-2)) + 2);
+        SpaceElement[] spaceElements = new SpaceElement[count * count];
+        int index = 0;
+        for (int i = 1; i <= count; i++) {
+            double x = 1.0;
+            for (int j = 1; j <= count; j++) {
+                spaceElements[index] = new Coin(new Point2D.Double(x,y));
+                x = x + 0.1;
+                index++;
+            }
+            y = y + 0.1;
         }
         return spaceElements;
     }
