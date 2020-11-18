@@ -3,7 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup;
 import java.awt.geom.Point2D;
 import java.util.*;
 
-public class PowerUpManager implements PowerUpListener{
+public class ActivatedPowerUpManager implements PowerUpListener{
 
     private final int GENERAL_POWER_UP_PROBABILITY = 33;
     private Map<Class<? extends PowerUp>,PowerUp> activePowerUps = new HashMap<>();

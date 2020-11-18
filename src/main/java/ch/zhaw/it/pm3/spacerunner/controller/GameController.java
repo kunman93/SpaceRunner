@@ -4,7 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUpManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ActivatedPowerUpManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
@@ -24,7 +24,7 @@ public class GameController {
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
     private final VisualManager visualManager = VisualManager.getManager();
     private final VelocityManager velocityManager = VelocityManager.getManager();
-    private final PowerUpManager powerUpManager = new PowerUpManager();
+    private final ActivatedPowerUpManager activatedPowerUpManager = new ActivatedPowerUpManager();
 
 
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
@@ -174,7 +174,7 @@ public class GameController {
             @Override
             public void run() {
                 if (!isPaused){
-                    PowerUp powerUp = powerUpManager.generatePowerUps();
+                    PowerUp powerUp = activatedPowerUpManager.generatePowerUps();
                     if(powerUp != null){
                         elements.add(powerUp);
                     }
@@ -324,16 +324,16 @@ public class GameController {
     }
 
     private void collisionWithObstacle(Obstacle o){
-        if (powerUpManager.hasShield()){
+        if (activatedPowerUpManager.hasShield()){
             elements.remove(o);
-            powerUpManager.removeShield();
+            activatedPowerUpManager.removeShield();
         } else {
             endRun();
         }
     }
 
     private void collisionWithCoin(Coin c){
-        collectedCoins += 1 * Math.pow(2, powerUpManager.getCoinMultiplicator());
+        collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
         score += 25;
         elements.remove(c);
         new Thread(()->{
@@ -346,7 +346,7 @@ public class GameController {
     }
 
     private void collisionWithPowerUp(PowerUp p){
-        powerUpManager.addPowerUp(p);
+        activatedPowerUpManager.addPowerUp(p);
         p.activatePowerUp();
         elements.remove(p);
         score += 10;
@@ -354,7 +354,7 @@ public class GameController {
 
 
     public Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps(){
-        return Collections.unmodifiableMap(powerUpManager.getActivePowerUps());
+        return Collections.unmodifiableMap(activatedPowerUpManager.getActivePowerUps());
     }
 
     protected SpaceShip getSpaceShip() {
