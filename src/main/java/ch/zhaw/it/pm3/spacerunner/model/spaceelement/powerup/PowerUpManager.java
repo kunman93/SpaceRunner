@@ -74,7 +74,7 @@ public class PowerUpManager implements PowerUpListener{
 
     @Override
     public void powerUpFinished(PowerUp powerUp) {
-        activePowerUps.remove(powerUp);
+        activePowerUps.remove(powerUp.getClass());
         powerUp.removeListener(this);
     }
 }
