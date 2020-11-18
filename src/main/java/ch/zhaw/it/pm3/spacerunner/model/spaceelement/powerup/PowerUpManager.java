@@ -27,8 +27,7 @@ public class PowerUpManager implements PowerUpListener{
                     PowerUp powerUp;
                     try {
                         powerUp = probability.getKey().getConstructor(Point2D.Double.class).newInstance(new Point2D.Double(1,Math.random()*0.8+0.1));
-                        addPowerUp(powerUp);
-                        return powerUp;      
+                        return powerUp;
                      } catch (Exception e) {
                         // TODO: handle and logger
                         return null;
@@ -40,7 +39,7 @@ public class PowerUpManager implements PowerUpListener{
         return null;
     }
 
-    private void addPowerUp(PowerUp powerUp){
+    public void addPowerUp(PowerUp powerUp){
         if(activePowerUps.containsKey(powerUp.getClass())){
             activePowerUps.get(powerUp.getClass()).incrementPowerUpMultiplier();
         }else{

@@ -346,6 +346,7 @@ public class GameController {
     }
 
     private void collisionWithPowerUp(PowerUp p){
+        powerUpManager.addPowerUp(p);
         p.activatePowerUp();
         elements.remove(p);
         score += 10;
