@@ -6,8 +6,8 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed;
 public enum VerticalSpeed {
     ZERO(0),
     ASTEROID(0.3),
-    SPACE_SHIP(0.8),
-    UFO(0.4);
+    SPACE_SHIP(1),
+    UFO(3);
 
 
     private double speed;

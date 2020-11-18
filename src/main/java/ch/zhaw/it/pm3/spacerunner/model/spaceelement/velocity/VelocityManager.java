@@ -32,6 +32,8 @@ public class VelocityManager {
         velocityManager.setVelocity(ShieldPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
         velocityManager.setVelocity(DoubleCoinsPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
         velocityManager.setVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setVelocity(Rocket.class, new Point2D.Double(-HorizontalSpeed.ROCKET.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+
     }
 
     public synchronized void setVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity){
