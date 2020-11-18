@@ -71,6 +71,9 @@ public class GameViewController extends ViewController {
         }
     };
 
+    private boolean wasPausedBeforeResize = false;
+    private boolean isResizing = false;
+
     private FXMLImageProxy fxmlImageProxy = FXMLImageProxy.getProxy();
 
     private AnimationTimer gameLoop;
@@ -210,6 +213,14 @@ public class GameViewController extends ViewController {
 
         gameBarHeight = height * (proportionGameBar / proportionY);
 
+        if(!wasPausedBeforeResize && !isResizing){
+            isResizing = true;
+            wasPausedBeforeResize = gameController.isPaused();
+            if(!wasPausedBeforeResize){
+                gameController.togglePause();
+            }
+        }
+
         if(resizeTask != null){
             resizeTask.cancel();
         }
@@ -226,6 +237,11 @@ public class GameViewController extends ViewController {
                     gameCanvas.setHeight(finalHeight + gameBarHeight);
 
                     gameController.setViewport((int) finalWidth, (int) (finalHeight * proportionGame / proportionY));
+                    if(!wasPausedBeforeResize){
+                        gameController.togglePause();
+                    }
+                    isResizing = false;
+                    wasPausedBeforeResize = false;
                 });
             }
 
