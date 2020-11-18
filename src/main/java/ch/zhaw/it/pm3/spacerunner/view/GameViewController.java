@@ -62,6 +62,14 @@ public class GameViewController extends ViewController {
             }
         }
     };
+    private EventHandler<KeyEvent> pauseGameKeyHandler = new EventHandler<KeyEvent>(){
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.getCode() == KeyCode.P){
+                gameController.togglePause();
+            }
+        }
+    };
 
     private FXMLImageProxy fxmlImageProxy = FXMLImageProxy.getProxy();
 
@@ -98,6 +106,7 @@ public class GameViewController extends ViewController {
 
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pauseGameKeyHandler);
         primaryStage.setOnCloseRequest(handleCloseWindowEvent());
 
         showLoadingScreen();
@@ -341,6 +350,7 @@ public class GameViewController extends ViewController {
     private void removeKeyHandlers() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+        primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pauseGameKeyHandler);
     }
 
     private void initializeUiElements(){
