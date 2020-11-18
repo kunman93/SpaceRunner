@@ -44,6 +44,10 @@ public class PowerUpManager implements PowerUpListener{
     private void addPowerUp(PowerUp powerUp){
         if(activePowerUps.containsKey(powerUp.getClass())){
             activePowerUps.get(powerUp.getClass()).incrementPowerUpMultiplier();
+        }else{
+             activePowerUps.put(powerUp.getClass(), powerUp);
+             powerUp.addListener(this);
+             powerUp.activatePowerUp();
         }
     }
 

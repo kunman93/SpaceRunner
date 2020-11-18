@@ -1,5 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.manager.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import org.junit.jupiter.api.*;
 
 import java.awt.*;
