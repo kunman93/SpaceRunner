@@ -198,15 +198,7 @@ public class GameController {
 
 
     public void setViewport(int width, int height) {
-        boolean wasPaused = isPaused;
-        if(!wasPaused){
-            isPaused = true;
-        }
         this.visualManager.setViewport(width, height);
-
-        if(!wasPaused){
-            isPaused = false;
-        }
     }
 
       /**
