@@ -44,7 +44,9 @@ public class GameViewController extends ViewController {
     //TODO: Canvas has to be a fixed height and width so we dont have to deal with scaling
     @FXML private Canvas gameCanvas;
     private GraphicsContext graphicsContext;
-    private double gameBarHeight;
+    private GameViewPort gameViewPort = null;
+    private GameProportionUtil gameProportionUtil = GameProportionUtil.getUtil();
+
     private GameController gameController = new GameController();
     private boolean downPressed;
     private boolean upPressed;
@@ -84,6 +86,11 @@ public class GameViewController extends ViewController {
 
 
     private boolean isLoaded = false;
+    private final VisualManager visualManager = VisualManager.getInstance();
+
+    private final double infoBarPaddingPercent = 0.1; // todo capital
+    private final double infoBarMarginRightImage = 10;
+    private final double infoBarMarginRightText = 30;
     private final VisualManager visualManager = VisualManager.getManager();
 
     private long lastUpdate = 0;
@@ -97,8 +104,10 @@ public class GameViewController extends ViewController {
 
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
+        gameViewPort = gameProportionUtil.calcProportions(primaryStage.getWidth(), primaryStage.getHeight());
 
-        calc16to9Proportions();
+
+        resize();
         addWindowSizeListeners();
 
 
@@ -178,10 +187,10 @@ public class GameViewController extends ViewController {
 
     private void addWindowSizeListeners() {
         primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-            calc16to9Proportions();
+            resize();
         });
         primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            calc16to9Proportions();
+            resize();
         });
     }
 
@@ -195,23 +204,7 @@ public class GameViewController extends ViewController {
         };
     }
 
-    private void calc16to9Proportions() {
-        double proportionGame = 9;
-        double proportionGameBar = 0.5;
-        double proportionY = proportionGame + proportionGameBar;
-        double proportionX = 16;
-
-        double appBarHeight = 40;
-
-        double height = primaryStage.getHeight() - appBarHeight;
-        double width = primaryStage.getWidth();
-        if (width / proportionX < height / proportionY) {
-            height = width * proportionY / proportionX;
-        } else if (width / proportionX > height / proportionY) {
-            width = height * proportionX / proportionY;
-        }
-
-        gameBarHeight = height * (proportionGameBar / proportionY);
+    private void resize() {
 
         if(!wasPausedBeforeResize && !isResizing){
             isResizing = true;
@@ -225,18 +218,21 @@ public class GameViewController extends ViewController {
             resizeTask.cancel();
         }
 
+        double appBarHeight = 40;
+
+        gameViewPort = gameProportionUtil.calcProportions(primaryStage.getWidth(), primaryStage.getHeight() - appBarHeight);
+
         //needed for scheduler
-        double finalWidth = width;
-        double finalHeight = height;
+        double finalWidth = gameViewPort.getGameWidth();
+        double finalHeight = gameViewPort.getGameHeight();
 
         resizeTask = new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(()->{
                     gameCanvas.setWidth(finalWidth);
-                    gameCanvas.setHeight(finalHeight + gameBarHeight);
-
-                    gameController.setViewport((int) finalWidth, (int) (finalHeight * proportionGame / proportionY));
+                    gameCanvas.setHeight(finalHeight + gameViewPort.getInfoBarHeight());
+                    gameController.setViewport((int) finalWidth, (int) finalHeight);
                     if(!wasPausedBeforeResize){
                         gameController.togglePause();
                     }
@@ -276,7 +272,7 @@ public class GameViewController extends ViewController {
     * */
     private void showLoadingScreen() {
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, 40));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
 
         loadingAnimation = new AnimationTimer() {
@@ -327,40 +323,46 @@ public class GameViewController extends ViewController {
 
 
     private void displayCoinsAndScore(int coins, int score) {
-        double paddingTopPercent = 0.1;
-        double fontSize = gameBarHeight * (1 - 2 * paddingTopPercent);
-        double textWidth = fontSize * 5; // todo reicht für 7-stellige Zahlen -> genug?
-        double xPositionReference = gameCanvas.getWidth();
-        double yPosition = gameCanvas.getHeight() - gameBarHeight - fontSize;
-        double marginRightImage = 10;
-        double marginRight = 30;
+        double xPositionReference = gameViewPort.getGameWidth();
+        double infoBarYPosition = gameViewPort.getGameHeight();
+
+
+
+        graphicsContext.setFill(Color.DARKGRAY);
+        graphicsContext.fillRect(0, infoBarYPosition, gameViewPort.getGameWidth(), gameViewPort.getInfoBarHeight());
+
+        System.out.println(gameViewPort.getGameHeight());
+        System.out.println(gameViewPort.getInfoBarHeight());
+        System.out.println(primaryStage.getHeight());
+
+
         BufferedImage image = null;
         try {
             image = visualManager.getImage(UIVisualElement.COIN_COUNT.getClass());
             xPositionReference -= image.getWidth();
             graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
-                    (gameCanvas.getWidth() - image.getWidth() - marginRightImage), yPosition, image.getWidth(), image.getHeight());
+                    (gameViewPort.getGameWidth() - image.getWidth() - infoBarMarginRightImage),
+                    infoBarYPosition, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
             // todo handle
             e.printStackTrace();
         }
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, fontSize));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
-        graphicsContext.fillText(String.valueOf(coins), xPositionReference - marginRight, yPosition, textWidth);
-        graphicsContext.fillText(String.valueOf(score), xPositionReference - textWidth - marginRight, yPosition, textWidth);
+        xPositionReference -= infoBarMarginRightText;
+        double textWidth = gameProportionUtil.getTextWidth(coins,gameViewPort.getInfoBarHeight(),infoBarPaddingPercent);
+        graphicsContext.fillText(String.valueOf(coins), xPositionReference, infoBarYPosition, textWidth);
+        xPositionReference -= (infoBarMarginRightText + textWidth);
+        graphicsContext.fillText(String.valueOf(score), xPositionReference, infoBarYPosition, textWidth);
     }
 
     private void displayInformation(String info) {
-        double paddingTopPercent = 0.1;
-        double fontSize = gameBarHeight * (1 - 2 * paddingTopPercent);
-        double xPosition = gameCanvas.getWidth() / 2;
-        double yPosition = gameCanvas.getHeight() - gameBarHeight - fontSize;
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, fontSize));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
-        graphicsContext.fillText(info, xPosition, yPosition);
+        graphicsContext.fillText(info, gameViewPort.getGameWidth() / 2, gameViewPort.getGameHeight());
     }
 
     private void removeKeyHandlers() {
