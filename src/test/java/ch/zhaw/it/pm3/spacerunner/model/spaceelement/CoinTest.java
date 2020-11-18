@@ -1,4 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import org.junit.jupiter.api.*;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ class CoinTest {
 
     //TODO: Do we need this test?
     //TODO: move is implemented in SpaceElement (Coin has no special movement)
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     @BeforeEach
     void setUp() {

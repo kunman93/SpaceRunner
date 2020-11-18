@@ -1,4 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import org.junit.jupiter.api.*;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpaceShipTest {
     private SpaceShip ship;
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     @BeforeEach
     void setUp() {

@@ -8,6 +8,7 @@ public enum FXMLFile implements FileResource {
     GAME_ENDED("gameEnded.fxml"),
     HELP("help.fxml"),
     SHOP("shop.fxml"),
+    SHOP_CONTENT_CELL("ShopContentCell.fxml"),
     SETTINGS("settings.fxml");
 
     private String filename;

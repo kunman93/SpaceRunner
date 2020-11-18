@@ -1,13 +1,13 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 public class Preset {
     SpaceElement[] elementsInPreset;
     double presetSize;
 
-    VisualManager visualManager = VisualManager.getInstance();
+    VisualManager visualManager = VisualManager.getManager();
 
     public Preset(SpaceElement[] elements) {
         elementsInPreset = elements;

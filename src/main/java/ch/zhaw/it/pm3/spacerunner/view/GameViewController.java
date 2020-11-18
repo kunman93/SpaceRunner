@@ -4,7 +4,15 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.GameDataCache;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.performance.FPSTracker;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.AnimatedVisual;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.UIVisualElement;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -30,7 +38,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class GameViewController extends ViewController {
 
     private VisualUtil visualUtil = VisualUtil.getInstance();
@@ -46,7 +53,7 @@ public class GameViewController extends ViewController {
     private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
-    private EventHandler startGameKeyHandler = new EventHandler<KeyEvent>(){
+    private EventHandler<KeyEvent> startGameKeyHandler = new EventHandler<KeyEvent>(){
         @Override
         public void handle(KeyEvent event) {
             if(event.getCode() == KeyCode.SPACE){
@@ -57,6 +64,19 @@ public class GameViewController extends ViewController {
             }
         }
     };
+    private EventHandler<KeyEvent> pauseGameKeyHandler = new EventHandler<KeyEvent>(){
+        @Override
+        public void handle(KeyEvent event) {
+            if(event.getCode() == KeyCode.P){
+                gameController.togglePause();
+            }
+        }
+    };
+
+    private boolean wasPausedBeforeResize = false;
+    private boolean isResizing = false;
+
+    private FXMLImageProxy fxmlImageProxy = FXMLImageProxy.getProxy();
 
     private AnimationTimer gameLoop;
     private AnimationTimer loadingAnimation;
@@ -64,10 +84,6 @@ public class GameViewController extends ViewController {
     private Timer resizeTimer = new Timer("ResizeTimer");
     private TimerTask resizeTask = null;
 
-    private long lastUpdate;
-    private int framesCount = 0;
-    private long framesTimestamp = 0;
-    private long lastProcessingTime = 0;
 
     private boolean isLoaded = false;
     private final VisualManager visualManager = VisualManager.getInstance();
@@ -75,7 +91,11 @@ public class GameViewController extends ViewController {
     private final double infoBarPaddingPercent = 0.1; // todo capital
     private final double infoBarMarginRightImage = 10;
     private final double infoBarMarginRightText = 30;
+    private final VisualManager visualManager = VisualManager.getManager();
 
+    private long lastUpdate = 0;
+    //Used to overperform a little bit. if we dont have this we dont reach the required fps (has to do with some internal AnimationTimer stuff)
+    private final long FRAME_TIME_DELTA = 2_000_000;
 
     @Override
     public void initialize() {
@@ -96,65 +116,48 @@ public class GameViewController extends ViewController {
         pressedHandler = createPressReleaseKeyHandler(true);
         releasedHandler = createPressReleaseKeyHandler(false);
 
-        System.out.println("Adding handlers");
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, pauseGameKeyHandler);
         primaryStage.setOnCloseRequest(handleCloseWindowEvent());
 
         showLoadingScreen();
 
-        //TODO: Thread is required for loading screen but its ugly
         new Thread(()->{
             gameController.initialize();
 
-            int fps = gameController.getFps();
-            long timeForFrameNano = 1_000_000_000 / fps;
-            framesTimestamp = 0;
+            int fps_config = gameController.getFps();
+            long timeForFrameNano = (1_000_000_000 / fps_config) - FRAME_TIME_DELTA;
 
             isLoaded = true;
 
             updateGameFrame();
             gameController.togglePause();
 
-            //TODO: not displayed yet
-
-
-
-
             primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
 
+            lastUpdate = System.nanoTime();
             gameLoop = new AnimationTimer()
             {
+                private FPSTracker fpsTracker = new FPSTracker();
+
                 public void handle(long currentNanoTime)
                 {
-                    if (currentNanoTime - lastUpdate >= (timeForFrameNano - lastProcessingTime)) {
-                        lastUpdate = currentNanoTime;
-                        try{
-                            framesCount++;
-                            updateGameFrame();
+                    if (currentNanoTime - lastUpdate >= timeForFrameNano) {
+                        updateGameFrame();
 
-                            lastProcessingTime = (System.nanoTime() - currentNanoTime);
-                            //System.out.println("Processing took " + lastProcessingTime / 1000000);
-
-                            if (gameController.isPaused()) {
-                                if (gameController.getScore() == 0) {
-                                    displayInformation("press SPACE to start");
-                                } else {
-                                    displayInformation("press SPACE to continue");
-                                }
+                        if (gameController.isPaused()) {
+                            if (gameController.getScore() == 0) {
+                                displayInformation("Press SPACE to start");
+                            } else {
+                                displayInformation("Press P to continue");
                             }
-
-                            //Platform.runLater(() -> );
-                            if(currentNanoTime - framesTimestamp >= 1000_000_000){
-                                System.out.println("Current FPS " + framesCount);
-                                framesTimestamp = currentNanoTime;
-                                framesCount = 0;
-                            }
-                        }catch(Exception e){
-                            e.printStackTrace();
                         }
-                    }
 
+                        fpsTracker.track(currentNanoTime);
+
+                        lastUpdate = System.nanoTime();
+                    }
                 }
             };
             gameLoop.start();
@@ -173,6 +176,7 @@ public class GameViewController extends ViewController {
 
         if(gameOver){
             removeKeyHandlers();
+            removeWindowSizeListeners();
             if(gameLoop != null){
                 gameLoop.stop();
                 setGameDataCache(new GameDataCache(gameController.getCollectedCoins(), gameController.getScore()));
@@ -202,6 +206,14 @@ public class GameViewController extends ViewController {
 
     private void resize() {
 
+        if(!wasPausedBeforeResize && !isResizing){
+            isResizing = true;
+            wasPausedBeforeResize = gameController.isPaused();
+            if(!wasPausedBeforeResize){
+                gameController.togglePause();
+            }
+        }
+
         if(resizeTask != null){
             resizeTask.cancel();
         }
@@ -220,8 +232,12 @@ public class GameViewController extends ViewController {
                 Platform.runLater(()->{
                     gameCanvas.setWidth(finalWidth);
                     gameCanvas.setHeight(finalHeight + gameViewPort.getInfoBarHeight());
-
                     gameController.setViewport((int) finalWidth, (int) finalHeight);
+                    if(!wasPausedBeforeResize){
+                        gameController.togglePause();
+                    }
+                    isResizing = false;
+                    wasPausedBeforeResize = false;
                 });
             }
 
@@ -289,20 +305,22 @@ public class GameViewController extends ViewController {
     }
 
 
-    public void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
+    private void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         for (SpaceElement spaceElement : spaceElements) {
             Point2D.Double position = spaceElement.getRelativePosition();
             Image image = null;
             try {
-                image = SwingFXUtils.toFXImage(visualManager.getImage(spaceElement.getClass()), null);
+                image = fxmlImageProxy.getFXMLImage(spaceElement.getClass());
             } catch (VisualNotSetException e) {
                 e.printStackTrace();
                 //TODO: handle
             }
+
             graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
-            //TODO: possible memory leak
         }
     }
+
+
 
     private void displayCoinsAndScore(int coins, int score) {
         double xPositionReference = gameViewPort.getGameWidth();
@@ -320,7 +338,7 @@ public class GameViewController extends ViewController {
 
         BufferedImage image = null;
         try {
-            image = visualManager.getImage(UIElement.COIN_COUNT.getClass());
+            image = visualManager.getImage(UIVisualElement.COIN_COUNT.getClass());
             xPositionReference -= image.getWidth();
             graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
                     (gameViewPort.getGameWidth() - image.getWidth() - infoBarMarginRightImage),
@@ -350,11 +368,12 @@ public class GameViewController extends ViewController {
     private void removeKeyHandlers() {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+        primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pauseGameKeyHandler);
     }
 
     private void initializeUiElements(){
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
-        visualManager.loadAndSetAnimatedVisual(UIElement.COIN_COUNT.getClass(), coinAnimation);
+        visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT.getClass(), coinAnimation);
     }
 
 }

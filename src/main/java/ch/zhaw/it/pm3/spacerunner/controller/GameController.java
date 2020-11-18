@@ -2,65 +2,55 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ActivatedPowerUpManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSound;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.GameSoundUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.SoundClip;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GameController {
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getInstance();
-    private GameSoundUtil gameSoundUtil = GameSoundUtil.getInstance();
+    //TODO: make all final Manager and Util
+    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
+    private final VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
+    private final ActivatedPowerUpManager activatedPowerUpManager = new ActivatedPowerUpManager();
 
 
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
-    private final double HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND = 0.05;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
 
-    private Timer gameSpeedTimer;
-
-    private double remainingDistanceUntilNextPreset = 0.1;
     private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
+    private double remainingDistanceUntilNextPreset = 0.1;
 
 
     private boolean isPaused = false;
+    private int collectedCoins = 0;
+    private int score = 0;
+    private int fps = 60;
+    private boolean gameOver = false;
 
-    private int collectedCoins;
-    private int score;
-
-    private int fps;
-
+    private Timer gameTimer;
     private SpaceWorld background = null;
-
-    private double horizontalGameSpeed;
-
-
     private SpaceShip spaceShip;
 
-    //TODO: ConcurrentHashSet??
-    //Set<String> mySet = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
-    private Set<SpaceElement> elements = new HashSet<>();
+    //TODO: ConcurrentHashSet -> TEST
+    private Set<SpaceElement> elements = ConcurrentHashMap.newKeySet();
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
 
-    private boolean gameOver = false;
-
-    private int width = 0;
-    private int height = 0;
-
-    private final VisualManager visualManager = VisualManager.getInstance();
-    private final VelocityManager velocityManager = VelocityManager.getInstance();
-
-    private Map<PowerUpType, Integer> activePowerUps = new HashMap<>();
-//    private Map<PowerUpType, Long> powerUpTimers = new HashMap<>();
-    private final int GENERAL_POWERUP_PROBABILITY = 33;
     private final int GENERAL_POWERUP_COOLDOWN = 5000;
+
     private long lastUpdate = 0;
 
     //TODO: information expert verletzung bei laden der bilder im voraus (wegen laggs).
@@ -74,8 +64,6 @@ public class GameController {
     }
 
     public void processFrame(boolean upPressed, boolean downPressed) {
-        // System.out.println("Processing took " + lastProcessingTime / 1000000);
-
         long timeSinceLastUpdate = millisSinceLastProcessing();
 
         if (!isPaused) {
@@ -98,23 +86,6 @@ public class GameController {
         }
     }
 
-    private void generatePowerUps() {
-        int x = (int) Math.floor(Math.random()*100);
-        if (x < GENERAL_POWERUP_PROBABILITY) {
-            int sum = 0;
-            for (PowerUpType p : PowerUpType.values()) {
-                sum += p.getProbabilityPercent();
-            }
-            x = (int) Math.floor(Math.random()*sum);
-            int secondSum = 0;
-            for (PowerUpType p : PowerUpType.values()) {
-                if (x < p.getProbabilityPercent() + secondSum){
-                    elements.add(new PowerUp(new Point2D.Double(1,0.5), p));
-                    break;
-                }
-            }
-        }
-    }
 
     private void updateElementsSpeed() {
         velocityManager.accelerateAll(new Point2D.Double(-RELATIVE_GAME_SPEED_INCREASE_PER_SECOND, RELATIVE_GAME_SPEED_INCREASE_PER_SECOND));
@@ -180,46 +151,33 @@ public class GameController {
      * Initializes the class variables
      */
     public void initialize() {
-
-        //TODO: check if 16:9 view
-
         velocityManager.setupGameElementVelocity();
         visualManager.loadGameElementVisuals();
 
-        gameSpeedTimer = new Timer("GameSpeedTimer");
-        gameSpeedTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
-        gameSpeedTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWERUP_COOLDOWN);
-
-        //TODO: PowerupTimer and Task (Every "3" seconds)
-        //TODO: Roll -> 0-100
-        // 0 - 10 => Double Coins
-        // 10 - 20 => Shield
-
-        gameOver = false;
+        gameTimer = new Timer("GameSpeedTimer");
+        gameTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
+        gameTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWERUP_COOLDOWN);
 
         playerProfile = persistenceUtil.loadProfile();
 
         elementPreset = new ElementPreset();
 
-        elements = new HashSet<>();
-        //TODO: eventuall give horizontalGameSpeed as paramter, implement a setHorizontalGameSpeed-Method
         background = new SpaceWorld(new Point2D.Double(0, 0));
         spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
 
-        collectedCoins = 0;
-        horizontalGameSpeed = 1;
     }
-
-
 
     private TimerTask getPowerUpGeneratorTask(){
         return new TimerTask() {
             @Override
             public void run() {
                 if (!isPaused){
-                    generatePowerUps();
+                    PowerUp powerUp = activatedPowerUpManager.generatePowerUps();
+                    if(powerUp != null){
+                        elements.add(powerUp);
+                    }
                 }
             }
         };
@@ -229,7 +187,6 @@ public class GameController {
         return new TimerTask() {
             public void run() {
                 if(!isPaused){
-                    horizontalGameSpeed += HORIZONTAL_GAME_SPEED_INCREASE_PER_SECOND;
                     updateElementsSpeed();
                 }
 
@@ -241,20 +198,7 @@ public class GameController {
 
 
     public void setViewport(int width, int height) {
-        this.height = height;
-        this.width = width;
-        boolean wasPaused = isPaused;
-        if(!wasPaused){
-            isPaused = true;
-        }
         this.visualManager.setViewport(width, height);
-
-        if(!wasPaused){
-            isPaused = false;
-        }
-
-        //TODO: Update Images and hitboxes
-        //TODO: UFO, ElementPreset
     }
 
       /**
@@ -280,8 +224,6 @@ public class GameController {
     private void generateObstacles() {
         if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
             generatePreset(elementPreset.getRandomPreset());
-
-
         }
     }
 
@@ -318,12 +260,46 @@ public class GameController {
 
     private void endRun(){
         spaceShip.crash();
-        gameSpeedTimer.cancel();
+        gameTimer.cancel();
         gameOver = true;
+        if(playerProfile.isAudioEnabled()){
+            //ToDo why not one try-catch
+            new Thread(()->{
+                try {
+                    SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
+                    explosion.addListener(() -> {
+                        try {
+                            SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
+                            gameOverVoice.addListener(()->{
+                                try {
+                                    gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
+                                }  catch (Exception e){
+                                    //IGNORE ON PURPOSE
+                                }
+                            });
+                            gameOverVoice.play();
+                            gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
+                        } catch (Exception e){
+                            //IGNORE ON PURPOSE
+                        }
+                    });
+                    explosion.play();
+
+                } catch (Exception e){
+                    //IGNORE ON PURPOSE
+                }
+            }).start();
+        }
+        try {
+            Thread.sleep(500);
+        } catch (Exception e){
+            //IGNORE ON PURPOSE
+        }
+        saveGame();
     }
 
     /**
-     * exevutes effects depending on type of spaceElement
+     * executes effects depending on type of spaceElement
      *
      * @param spaceElement
      */
@@ -331,124 +307,46 @@ public class GameController {
         if (spaceElement == null) return;
 
         if (spaceElement instanceof Obstacle) {
-            if (!powerUpDecrement(PowerUpType.SHIELD)){
-                endRun();
-            }
+            collisionWithObstacle((Obstacle) spaceElement);
+        } else if (spaceElement instanceof Coin) {
+            collisionWithCoin((Coin) spaceElement);
+        } else if (spaceElement instanceof PowerUp) {
+            collisionWithPowerUp((PowerUp) spaceElement);
+        }
+    }
 
-            if(playerProfile.isAudioEnabled()){
-                new Thread(()->{
-                    try {
-                        SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
-                        explosion.addListener(() -> {
-                            try {
-                                SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
-                                gameOverVoice.addListener(()->{
-                                    try {
-                                        gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
-                                    }  catch (Exception e){
-                                        //IGNORE ON PURPOSE
-                                    }
-                                });
-                                gameOverVoice.play();
-                                gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
-                            } catch (Exception e){
-                                //IGNORE ON PURPOSE
-                            }
-                        });
-                        explosion.play();
+    private void collisionWithObstacle(Obstacle o){
+        if (activatedPowerUpManager.hasShield()){
+            elements.remove(o);
+            activatedPowerUpManager.removeShield();
+        } else {
+            endRun();
+        }
+    }
 
-                    } catch (Exception e){
-                        //IGNORE ON PURPOSE
-                    }
-                }).start();
-            }
+    private void collisionWithCoin(Coin c){
+        collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
+        score += 25;
+        elements.remove(c);
+        new Thread(()->{
             try {
-                Thread.sleep(500);
-                //TODO: show explosion??
+                gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
             } catch (Exception e){
                 //IGNORE ON PURPOSE
             }
-            spaceShip.crash();
-            gameSpeedTimer.cancel();
-            gameOver = true;
-            saveGame();
-
-        } else if (spaceElement instanceof Coin) {
-            collectedCoins += 1 * Math.pow(2, activePowerUps.getOrDefault(PowerUpType.DOUBLECOINS, 0));
-            score = score + 25;
-            elements.remove(spaceElement);
-            new Thread(()->{
-                try {
-                    gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
-                } catch (Exception e){
-                    //IGNORE ON PURPOSE
-                }
-            }).start();
-        } else if (spaceElement instanceof PowerUp) {
-            processPowerUp((PowerUp) spaceElement);
-            elements.remove(spaceElement);
-            score = score + 10;
-
-            // spaceElement.getEffect(); //ToDo one of the two
-            // handlePowerUp(spaceElement)
-        }
+        }).start();
     }
 
-    private void powerUpIncrement(PowerUpType t){
-        if (activePowerUps.containsKey(t)) {
-            activePowerUps.put(t, activePowerUps.get(t) + 1);
-        } else {
-            activePowerUps.put(t, 1);
-        }
+    private void collisionWithPowerUp(PowerUp p){
+        activatedPowerUpManager.addPowerUp(p);
+        p.activatePowerUp();
+        elements.remove(p);
+        score += 10;
     }
 
-    /**
-     * true if it could have been decremented else false
-     * @param t
-     * @return
-     */
-    private boolean powerUpDecrement(PowerUpType t){
-        if (activePowerUps.containsKey(t)){
-            activePowerUps.put(t, activePowerUps.get(t)-1);
-            if (activePowerUps.get(t) <= 0){
-                activePowerUps.remove(t);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    private void createPowerUpTimer(PowerUpType t){
-        gameSpeedTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                powerUpDecrement(t);
-            }
-        }, t.getDuration());
-    }
-
-    private void processPowerUp(PowerUp p) {
-        if (p.getType().equals(PowerUpType.DOUBLECOINS)) {
-            powerUpIncrement(PowerUpType.DOUBLECOINS);
-            createPowerUpTimer(PowerUpType.DOUBLECOINS);
-        } else if (p.getType().equals(PowerUpType.SHIELD)) {
-            // ToDo if only one shield can be active it would be diffrent
-//            powerUpIncrement(PowerUpType.SHIELD);
-            if (activePowerUps.containsKey(PowerUpType.SHIELD)) {
-                //maybe sth else
-            } else {
-                activePowerUps.put(PowerUpType.SHIELD, 1);
-            }
-        } else {
-            //ToDo unknown PowerUp
-        }
-
-    }
-
-    private Map<PowerUp, Boolean> getActivePowerUps(){
-        //TODO: rico implement
-        return null;
+    public Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps(){
+        return Collections.unmodifiableMap(activatedPowerUpManager.getActivePowerUps());
     }
 
     protected SpaceShip getSpaceShip() {
@@ -458,6 +356,4 @@ public class GameController {
     private void updateHighScore(long timeSinceLastUpdate) {
         score = score + (int)(timeSinceLastUpdate/10);
     }
-
-
 }

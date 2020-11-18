@@ -1,5 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import org.junit.jupiter.api.*;
 
 import java.awt.*;
@@ -9,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SpaceElementTest {
     SpaceElement element;
-    private VisualManager visualManager = VisualManager.getInstance();
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VisualManager visualManager = VisualManager.getManager();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     //TODO: Changed to coin cause SpaceElement does not really work with the manager... is this ok?
 

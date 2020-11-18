@@ -1,9 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetException;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class SpaceWorld extends SpaceElement{
@@ -11,8 +12,8 @@ public class SpaceWorld extends SpaceElement{
         super(startPosition);
     }
 
-    private VisualManager visualManager = VisualManager.getInstance();
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VisualManager visualManager = VisualManager.getManager();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     @Override
     public void move(long timeInMillis) {

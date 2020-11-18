@@ -1,16 +1,16 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class UFO extends Obstacle {
 
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
-    private VisualManager visualManager = VisualManager.getInstance();
-    private VelocityManager velocityManager = VelocityManager.getInstance();
+    private VisualManager visualManager = VisualManager.getManager();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     public UFO(Point2D.Double startPosition) {
         super(startPosition);
