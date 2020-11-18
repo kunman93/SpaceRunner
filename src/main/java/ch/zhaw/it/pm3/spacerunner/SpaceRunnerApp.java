@@ -37,7 +37,7 @@ public class SpaceRunnerApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Space Runner");
         ViewController.setMain(this);
-        setFXMLView(FXMLFile.HELP);
+        setFXMLView(FXMLFile.MENU);
 
 
         gameSoundUtil.setVolume(persistenceUtil.getSoundVolume());
@@ -56,7 +56,6 @@ public class SpaceRunnerApp extends Application {
             Font.loadFont(a.toString().replace("%20", " "), 10);
 
             Pane rootPane = loader.load();
-            ViewController windowViewController = loader.getController();
             Scene scene = new Scene(rootPane);
             primaryStage.setScene(scene);
 
