@@ -2,15 +2,16 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
+
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ActivatedPowerUpManager;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
+
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
@@ -30,8 +31,9 @@ public class GameController {
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
     private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
 
-    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.2;
+
     private double remainingDistanceUntilNextPreset = 0.1;
+    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.45;
 
 
     private boolean isPaused = false;
@@ -229,10 +231,7 @@ public class GameController {
 
     private void generatePreset(Preset preset) {
         Collections.addAll(elements, preset.getElementsInPreset());
-        remainingDistanceUntilNextPreset = preset.getPresetSize();
-        new Thread(()->{
-            elementPreset.regeneratePresets();
-        }).start();
+        remainingDistanceUntilNextPreset = preset.getPresetTimeUntilOnScreen();
     }
 
     /**
@@ -243,13 +242,15 @@ public class GameController {
             element.move(timeSinceLastUpdate);
         }
         background.move(timeSinceLastUpdate);
-        remainingDistanceUntilNextPreset -= timeSinceLastUpdate/1000.0 * HorizontalSpeed.BACKGROUND.getSpeed();
+        remainingDistanceUntilNextPreset -= timeSinceLastUpdate/1000.0;
     }
 
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
     private SpaceElement detectCollision() {
+
+        //TODO: should we consider multi collision
         for (SpaceElement spaceElement : elements) {
             if (spaceShip.doesCollide(spaceElement)) {
                 return spaceElement;

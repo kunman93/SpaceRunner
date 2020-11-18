@@ -1,29 +1,34 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
-public class Preset {
-    SpaceElement[] elementsInPreset;
-    double presetSize;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-    VisualManager visualManager = VisualManager.getManager();
+public class Preset implements Cloneable {
+    private SpaceElement[] elementsInPreset;
+    private double timeUntilEntirePresetOnScreen;
+
+    private VisualManager visualManager = VisualManager.getManager();
+    private VelocityManager velocityManager = VelocityManager.getManager();
 
     public Preset(SpaceElement[] elements) {
         elementsInPreset = elements;
-        presetSize = calculateSize();
+        timeUntilEntirePresetOnScreen = calculateSize();
     }
 
     private double calculateSize() {
         try {
-            double minPosition = Double.MAX_VALUE;
-            double maxPosition = Double.MIN_VALUE;
-            for (SpaceElement element : elementsInPreset) {
-                minPosition = Math.min(element.getRelativePosition().x, minPosition);
-                maxPosition = Math.max(element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()), maxPosition);
+            double maxTime = 0;
+            for (SpaceElement e : elementsInPreset) {
+                maxTime = Math.max(maxTime, (1 - (e.getRelativePosition().x + visualManager.getElementRelativeWidth(e.getClass()))) / velocityManager.getRelativeVelocity(e.getClass()).x);
             }
-            return maxPosition - minPosition;
-        } catch (VisualNotSetException e) {
+            return maxTime;
+        } catch (VisualNotSetException | VelocityNotSetException e) {
             e.printStackTrace();
         }
         return 0;
@@ -33,7 +38,7 @@ public class Preset {
         return elementsInPreset;
     }
 
-    public double getPresetSize() {
-        return presetSize;
+    public double getPresetTimeUntilOnScreen() {
+        return timeUntilEntirePresetOnScreen;
     }
 }

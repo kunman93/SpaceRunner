@@ -60,6 +60,7 @@ public class VisualManager{
         visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
         visualManager.loadAndSetVisual(DoubleCoinsPowerUp.class, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWERUP));
         visualManager.loadAndSetVisual(ShieldPowerUp.class, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWERUP));
+        visualManager.loadAndSetVisual(Rocket.class, new Visual(VisualSVGFile.ROCKET_1, VisualScaling.ROCKET));
 
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);
         background.setIsBackground(true);

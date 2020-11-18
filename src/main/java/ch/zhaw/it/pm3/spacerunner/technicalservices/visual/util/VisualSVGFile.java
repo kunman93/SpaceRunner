@@ -21,7 +21,8 @@ public enum VisualSVGFile implements FileResource {
     SPACE_SHIP_SKIN_2("4.svg"),
     LOADING_SPINNER("loading-spinner.svg"),
     DOUBLE_COIN_POWER_UP("powerup/double-coin-powerup.svg"),
-    SHIELD_POWER_UP("powerup/shield-powerup.svg");
+    SHIELD_POWER_UP("powerup/shield-powerup.svg"),
+    ROCKET_1("rocket.svg");
 
     private String fileName;
 

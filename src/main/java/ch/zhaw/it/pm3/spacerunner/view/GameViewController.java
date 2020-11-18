@@ -86,7 +86,6 @@ public class GameViewController extends ViewController {
 
 
     private boolean isLoaded = false;
-    private final VisualManager visualManager = VisualManager.getInstance();
 
     private final double infoBarPaddingPercent = 0.1; // todo capital
     private final double infoBarMarginRightImage = 10;
