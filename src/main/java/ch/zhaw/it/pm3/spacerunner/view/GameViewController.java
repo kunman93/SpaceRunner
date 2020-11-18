@@ -330,9 +330,6 @@ public class GameViewController extends ViewController {
         graphicsContext.setFill(Color.DARKGRAY);
         graphicsContext.fillRect(0, infoBarYPosition, gameViewPort.getGameWidth(), gameViewPort.getInfoBarHeight());
 
-        System.out.println(gameViewPort.getGameHeight());
-        System.out.println(gameViewPort.getInfoBarHeight());
-        System.out.println(primaryStage.getHeight());
 
 
         BufferedImage image = null;
