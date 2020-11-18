@@ -67,8 +67,7 @@ public class PersistenceUtil {
             playerProfile = new PlayerProfile();
         }
 
-        //TODO: implement
-        playerProfile.setActiveShopContent(loadPurchasedContent(playerProfile.getPurchasedContentIds()));
+        playerProfile.setActiveShopContent(loadActiveContent(playerProfile.getActiveContentIds()));
 
         return playerProfile;
     }
@@ -125,6 +124,16 @@ public class PersistenceUtil {
         } catch (IOException e) {
             throw e;
         }
+    }
+
+    //TODO: JavaDOC
+    private Set<ShopContent> loadActiveContent(Set<ContentId> activeContentIds) {
+        List<ShopContent> shopContentList = loadShopContent();
+        return shopContentList.stream().filter((shopContent)->{
+            return activeContentIds.stream().anyMatch((purchasedContentId) ->{
+                return purchasedContentId == shopContent.getContentId();
+            });
+        }).collect(Collectors.toSet());
     }
 
     //TODO: JavaDOC
