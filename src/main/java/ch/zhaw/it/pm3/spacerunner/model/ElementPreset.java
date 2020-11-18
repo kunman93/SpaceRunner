@@ -80,7 +80,7 @@ public class ElementPreset {
             double x = 1.0;
             for (int j = 0; j < count; j++) {
                 spaceElements[index] = new Coin(new Point2D.Double(x,y));
-                x = x + coinWidth;
+                x = x + 2 * coinWidth;
                 index++;
             }
             y = y + coinHeight;
