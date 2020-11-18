@@ -3,6 +3,8 @@ package ch.zhaw.it.pm3.spacerunner.controller;
 import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.manager.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUpManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
@@ -350,7 +352,7 @@ public class GameController {
     }
 
 
-    public Map<PowerUp, Integer> getActivePowerUps(){
+    public Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps(){
         return Collections.unmodifiableMap(powerUpManager.getActivePowerUps());
     }
 
