@@ -250,6 +250,8 @@ public class GameController {
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
     private SpaceElement detectCollision() {
+
+        //TODO: should we consider multi collision
         for (SpaceElement spaceElement : elements) {
             if (spaceShip.doesCollide(spaceElement)) {
                 return spaceElement;
