@@ -6,7 +6,6 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ActivatedPowerUpManager;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
