@@ -4,7 +4,6 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.DoubleCoinsPowerUp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ShieldPowerUp;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
@@ -59,8 +58,8 @@ public class VisualManager{
 
         visualManager.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
         visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-        visualManager.loadAndSetVisual(DoubleCoinsPowerUp.class, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWERUP));
-        visualManager.loadAndSetVisual(ShieldPowerUp.class, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWERUP));
+        visualManager.loadAndSetVisual(DoubleCoinsPowerUp.class, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP));
+        visualManager.loadAndSetVisual(ShieldPowerUp.class, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP));
         visualManager.loadAndSetVisual(Rocket.class, new Visual(VisualSVGFile.ROCKET_1, VisualScaling.ROCKET));
 
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);

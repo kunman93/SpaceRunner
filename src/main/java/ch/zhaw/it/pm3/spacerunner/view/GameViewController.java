@@ -4,13 +4,9 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.GameDataCache;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.performance.FPSTracker;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.AnimatedVisual;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.UIVisualElement;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
@@ -36,6 +32,7 @@ import javafx.stage.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -93,8 +90,8 @@ public class GameViewController extends ViewController {
     private boolean isLoaded = false;
 
     private final double infoBarPaddingPercent = 0.1; // todo capital
-    private final double infoBarMarginRightImage = 10;
-    private final double infoBarMarginRightText = 30;
+    private final double infoBarImageMargin = 10;
+    private final double infoBarTextMargin = 30;
     private final VisualManager visualManager = VisualManager.getManager();
 
     private long lastUpdate = 0;
@@ -174,6 +171,7 @@ public class GameViewController extends ViewController {
         clearCanvas();
         displayUpdatedSpaceElements(gameController.getGameElements());
         displayCoinsAndScore(gameController.getCollectedCoins(), gameController.getScore());
+        displayActivatedPowerUps(gameController.getActivePowerUps());
 
         boolean gameOver = gameController.isGameOver();
 
@@ -322,7 +320,7 @@ public class GameViewController extends ViewController {
 
 
 
-    private void displayCoinsAndScore(int coins, int score) {
+    private void displayCoinsAndScore(int coins, int score) { //todo aufteilen
         double xPositionReference = gameViewPort.getGameWidth();
         double infoBarYPosition = gameViewPort.getGameHeight();
 
@@ -334,12 +332,12 @@ public class GameViewController extends ViewController {
         logger.log(Level.INFO, "Infobar Height is: {0}", gameViewPort.getInfoBarHeight());
         logger.log(Level.INFO, "Total Height is: {0}", primaryStage.getHeight());
 
-        BufferedImage image = null;
+        Image image = null;
+
         try {
-            image = visualManager.getImage(UIVisualElement.COIN_COUNT.getClass());
+            image = fxmlImageProxy.getFXMLImage(UIVisualElement.COIN_COUNT.getClass());
             xPositionReference -= image.getWidth();
-            graphicsContext.drawImage(SwingFXUtils.toFXImage(image, null),
-                    (gameViewPort.getGameWidth() - image.getWidth() - infoBarMarginRightImage),
+            graphicsContext.drawImage(image, (gameViewPort.getGameWidth() - image.getWidth() - infoBarImageMargin),
                     infoBarYPosition, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
             // todo handle
@@ -350,11 +348,41 @@ public class GameViewController extends ViewController {
         graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
-        xPositionReference -= infoBarMarginRightText;
+        xPositionReference -= infoBarTextMargin;
         double textWidth = gameProportionUtil.getTextWidth(coins,gameViewPort.getInfoBarHeight(),infoBarPaddingPercent);
         graphicsContext.fillText(String.valueOf(coins), xPositionReference, infoBarYPosition, textWidth);
-        xPositionReference -= (infoBarMarginRightText + textWidth);
+        xPositionReference -= (infoBarTextMargin + textWidth);
         graphicsContext.fillText(String.valueOf(score), xPositionReference, infoBarYPosition, textWidth);
+    }
+
+    private void displayActivatedPowerUps(Map<Class<? extends PowerUp>, PowerUp> activePowerUps) {
+        double xPositionReference = 0;
+        double infoBarYPosition = gameViewPort.getGameHeight();
+
+        Image image = null;
+        for (Map.Entry<Class<? extends PowerUp>, PowerUp> classPowerUpEntry : activePowerUps.entrySet()) {
+            UIVisualElement uiVisualElement = null;
+            if (DoubleCoinsPowerUp.class.equals(classPowerUpEntry.getKey())) {
+                uiVisualElement = UIVisualElement.DOUBLE_COIN_POWER_UP;
+            } else if (ShieldPowerUp.class.equals(classPowerUpEntry.getKey())) {
+                uiVisualElement = UIVisualElement.SHIELD_POWER_UP;
+            }
+
+            if (uiVisualElement == null) {
+                throw new NullPointerException("Power Up was not converted properly to UIVisualElement (forgot to add?)");
+            }
+            try {
+                image = fxmlImageProxy.getFXMLImage(uiVisualElement.getClass());
+                xPositionReference += image.getWidth();
+                graphicsContext.drawImage(image, infoBarImageMargin + xPositionReference,
+                        infoBarYPosition, image.getWidth(), image.getHeight());
+            } catch (VisualNotSetException e) {
+                // todo handle
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     private void displayInformation(String info) {
@@ -370,8 +398,11 @@ public class GameViewController extends ViewController {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pauseGameKeyHandler);
     }
 
+    //todo problem with enum class
     private void initializeUiElements(){
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
         visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT.getClass(), coinAnimation);
+        visualManager.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP.getClass(), new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
+        visualManager.loadAndSetVisual(UIVisualElement.SHIELD_POWER_UP.getClass(), new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP_UI));
     }
 }
