@@ -10,8 +10,8 @@ public class ActivatedPowerUpManager implements PowerUpListener{
     private Logger logger = Logger.getLogger(ActivatedPowerUpManager.class.getName());
 
     private final int GENERAL_POWER_UP_PROBABILITY = 33;
-    private Map<Class<? extends PowerUp>,PowerUp> activePowerUps = new HashMap<>();
-    private Map<Class<? extends PowerUp>, Integer> probabilities = new HashMap<>() {{
+    private final Map<Class<? extends PowerUp>,PowerUp> activePowerUps = new HashMap<>();
+    private final Map<Class<? extends PowerUp>, Integer> probabilities = new HashMap<>() {{
         put(DoubleCoinsPowerUp.class, 10);
         put(ShieldPowerUp.class, 15);
     }};
@@ -20,9 +20,13 @@ public class ActivatedPowerUpManager implements PowerUpListener{
         int x = (int) Math.floor(Math.random()*100);
         if (x < GENERAL_POWER_UP_PROBABILITY) {
             int sum = 0;
+
             for (Map.Entry<Class<? extends PowerUp>, Integer> probability : probabilities.entrySet()) {
                 sum += probability.getValue();
             }
+
+
+
             x = (int) Math.floor(Math.random()*sum);
             int secondSum = 0;
 
@@ -44,7 +48,7 @@ public class ActivatedPowerUpManager implements PowerUpListener{
         return null;
     }
 
-    public void addPowerUp(PowerUp powerUp){
+    public synchronized void addPowerUp(PowerUp powerUp){
         if(activePowerUps.containsKey(powerUp.getClass())){
             activePowerUps.get(powerUp.getClass()).incrementPowerUpMultiplier();
         }else{
@@ -54,19 +58,19 @@ public class ActivatedPowerUpManager implements PowerUpListener{
         }
     }
 
-    public Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps() {
+    public synchronized Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps() {
         return activePowerUps;
     }
 
-    public boolean hasShield(){
+    public synchronized boolean hasShield(){
         return activePowerUps.containsKey(ShieldPowerUp.class);
     }
 
-    public void removeShield(){
+    public synchronized void removeShield(){
         activePowerUps.remove(ShieldPowerUp.class);
     }
 
-    public int getCoinMultiplicator(){
+    public synchronized int getCoinMultiplicator(){
         if(activePowerUps.containsKey(DoubleCoinsPowerUp.class)){
             return activePowerUps.get(DoubleCoinsPowerUp.class).getMultiplier();
         }else{
@@ -81,7 +85,7 @@ public class ActivatedPowerUpManager implements PowerUpListener{
     }
 
     @Override
-    public void powerUpFinished(PowerUp powerUp) {
+    public synchronized void powerUpFinished(PowerUp powerUp) {
         activePowerUps.remove(powerUp.getClass());
         powerUp.removeListener(this);
     }
