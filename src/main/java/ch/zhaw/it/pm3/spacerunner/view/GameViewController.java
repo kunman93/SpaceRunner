@@ -329,10 +329,6 @@ public class GameViewController extends ViewController {
         graphicsContext.setFill(Color.DARKGRAY);
         graphicsContext.fillRect(0, infoBarYPosition, gameViewPort.getGameWidth(), gameViewPort.getInfoBarHeight());
 
-        logger.log(Level.INFO, "Game Height is: {0}", gameViewPort.getGameHeight());
-        logger.log(Level.INFO, "Infobar Height is: {0}", gameViewPort.getInfoBarHeight());
-        logger.log(Level.INFO, "Total Height is: {0}", primaryStage.getHeight());
-
         Image image = null;
 
         try {
