@@ -31,13 +31,7 @@ public class ElementPreset {
             case ROCKET_RANDOM_THREE:
                 return new Preset(randomRocket());
             case COINS_ARROW:
-                double coinHeight = visualManager.getElementRelativeHeight(Coin.class);
-                double coinWidth = visualManager.getElementRelativeWidth(Coin.class);
-                y = (Math.random() * (1.0 - 6 * coinHeight)) + 3 * coinHeight;
-                return new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1,y)), new Coin(new Point2D.Double(1+2*coinWidth,y+coinHeight)),
-                        new Coin(new Point2D.Double(1+2*coinWidth,y-coinHeight)), new Coin(new Point2D.Double(1+4*coinWidth,y+2*coinHeight)),
-                        new Coin(new Point2D.Double(1+4*coinWidth,y-2*coinHeight)), new Coin(new Point2D.Double(1+2*coinWidth,y)),
-                        new Coin(new Point2D.Double(1+4*coinWidth,y)), new Coin(new Point2D.Double(1+6*coinWidth,y)), new Coin(new Point2D.Double(1+8*coinWidth,y))});
+                return new Preset(coinArrow());
             case COINS_RANDOM_LINE:
                 return new Preset(randomCoinLine());
             case COINS_RANDOM_SQUARE:
@@ -104,5 +98,15 @@ public class ElementPreset {
             x = x + 2 * visualManager.getElementRelativeWidth(Rocket.class);
         }
         return spaceElements;
+    }
+
+    private SpaceElement[] coinArrow() throws VisualNotSetException {
+        double coinHeight = visualManager.getElementRelativeHeight(Coin.class);
+        double coinWidth = visualManager.getElementRelativeWidth(Coin.class);
+        double y = (Math.random() * (1.0 - 6 * coinHeight)) + 3 * coinHeight;
+        return new SpaceElement[]{new Coin(new Point2D.Double(1,y)), new Coin(new Point2D.Double(1+2*coinWidth,y+coinHeight)),
+                new Coin(new Point2D.Double(1+2*coinWidth,y-coinHeight)), new Coin(new Point2D.Double(1+4*coinWidth,y+2*coinHeight)),
+                new Coin(new Point2D.Double(1+4*coinWidth,y-2*coinHeight)), new Coin(new Point2D.Double(1+2*coinWidth,y)),
+                new Coin(new Point2D.Double(1+4*coinWidth,y)), new Coin(new Point2D.Double(1+6*coinWidth,y)), new Coin(new Point2D.Double(1+8*coinWidth,y))};
     }
 }
