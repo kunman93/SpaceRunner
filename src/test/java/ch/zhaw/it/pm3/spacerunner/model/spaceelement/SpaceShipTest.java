@@ -13,7 +13,7 @@ public class SpaceShipTest {
     private SpaceShip ship;
     private VelocityManager velocityManager = VelocityManager.getManager();
 
-    @BeforeEach
+    /*@BeforeEach
     void setUp() {
         ship = new SpaceShip(new Point(0,0));
         velocityManager.setWidth(100);
@@ -37,6 +37,6 @@ public class SpaceShipTest {
         assertEquals(new Point(0,2), ship.getRelativePosition());
         ship.directMoveDown();
         assertEquals(new Point(0,4), ship.getRelativePosition());
-    }
+    }*/
 
 }

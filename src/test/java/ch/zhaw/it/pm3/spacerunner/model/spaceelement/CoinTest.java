@@ -16,20 +16,12 @@ class CoinTest {
 
     @BeforeEach
     void setUp() {
-        coin1 = new Coin(new Point(200,100));
-        //coin1.setVelocity(new Point(-3,0));
-        velocityManager.setHeight(100);
-        velocityManager.setWidth(100);
-        velocityManager.setVelocity(Coin.class, new Point2D.Double(-0.03, 0));
+        coin1 = new Coin(new Point2D.Double(1,0.5));
 
     }
 
     @Test
     void moveTest(){
-        assertEquals(new Point(200,100), coin1.getRelativePosition());
-        coin1.move();
-        assertEquals(new Point(197,100), coin1.getRelativePosition());
-        coin1.move();
-        assertEquals(new Point(194,100), coin1.getRelativePosition());
+
     }
 }
