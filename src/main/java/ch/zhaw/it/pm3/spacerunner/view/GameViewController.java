@@ -332,7 +332,7 @@ public class GameViewController extends ViewController {
         Image image = null;
 
         try {
-            image = fxmlImageProxy.getFXMLImage(UIVisualElement.COIN_COUNT.getClass());
+            image = fxmlImageProxy.getFXMLImage(UIVisualElement.COIN_COUNT);
             xPositionReference -= image.getWidth();
             graphicsContext.drawImage(image, (gameViewPort.getGameWidth() - image.getWidth() - infoBarImageMargin),
                     infoBarYPosition, image.getWidth(), image.getHeight());
@@ -357,18 +357,18 @@ public class GameViewController extends ViewController {
 
         Image image = null;
         for (Map.Entry<Class<? extends PowerUp>, PowerUp> classPowerUpEntry : activePowerUps.entrySet()) {
-            UIVisualElement uiVisualElement = null;
+            Class<? extends VisualElement> uiVisualElementClass = null;
             if (DoubleCoinsPowerUp.class.equals(classPowerUpEntry.getKey())) {
-                uiVisualElement = UIVisualElement.DOUBLE_COIN_POWER_UP;
+                uiVisualElementClass = UIVisualElement.DOUBLE_COIN_POWER_UP;
             } else if (ShieldPowerUp.class.equals(classPowerUpEntry.getKey())) {
-                uiVisualElement = UIVisualElement.SHIELD_POWER_UP;
+                uiVisualElementClass = UIVisualElement.SHIELD_POWER_UP;
             }
 
-            if (uiVisualElement == null) {
+            if (uiVisualElementClass == null) {
                 throw new NullPointerException("Power Up was not converted properly to UIVisualElement (forgot to add?)");
             }
             try {
-                image = fxmlImageProxy.getFXMLImage(uiVisualElement.getClass());
+                image = fxmlImageProxy.getFXMLImage(uiVisualElementClass);
                 xPositionReference += image.getWidth();
                 graphicsContext.drawImage(image, infoBarImageMargin + xPositionReference,
                         infoBarYPosition, image.getWidth(), image.getHeight());
@@ -397,9 +397,9 @@ public class GameViewController extends ViewController {
     //todo problem with enum class
     private void initializeUiElements(){
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
-        visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT.getClass(), coinAnimation);
-        visualManager.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP.getClass(), new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
-        visualManager.loadAndSetVisual(UIVisualElement.SHIELD_POWER_UP.getClass(), new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP_UI));
+        visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
+        visualManager.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
+        visualManager.loadAndSetVisual(UIVisualElement.SHIELD_POWER_UP, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP_UI));
     }
 
 }
