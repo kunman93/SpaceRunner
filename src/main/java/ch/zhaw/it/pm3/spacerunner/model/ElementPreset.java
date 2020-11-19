@@ -22,7 +22,7 @@ public class ElementPreset {
                 y = Math.random() * (1.0 - visualManager.getElementRelativeHeight(Asteroid.class));
                 return new Preset(new SpaceElement[]{new Asteroid(new Point2D.Double(1,y))});
             case UFO_SINGLE:
-                return new Preset(new SpaceElement[]{new UFO(new Point2D.Double(1,0.5))});
+                return new Preset(new SpaceElement[]{new UFO(new Point2D.Double(1,0))});
             case UFOS_MIRRORED:
                 return new Preset(new SpaceElement[]{new UFO(new Point2D.Double(1,0)), new UFO(new Point2D.Double(1,0), 0.5)});
             case ROCKET:

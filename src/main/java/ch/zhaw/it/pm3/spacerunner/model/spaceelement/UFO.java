@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
@@ -44,7 +45,7 @@ public class UFO extends Obstacle {
 
     private double sinWave(double currentXPos) {
         try {
-            return 0.35 * Math.sin(currentXPos * 3 + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
+            return 0.35 * Math.sin(currentXPos * VerticalSpeed.UFO.getSpeed() + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
         } catch (VisualNotSetException e) {
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", UFO.class);
             e.printStackTrace();
