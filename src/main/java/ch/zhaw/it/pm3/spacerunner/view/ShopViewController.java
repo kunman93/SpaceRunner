@@ -19,7 +19,7 @@ import java.util.List;
  * controller for shop view
  * */
 public class ShopViewController extends ViewController implements ShopContentCellListener {
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
 
     @FXML private TabPane tabPane;
     @FXML private ListView<ShopContent> listViewForUpgrades;

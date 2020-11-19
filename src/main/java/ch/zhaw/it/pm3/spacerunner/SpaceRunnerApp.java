@@ -29,8 +29,8 @@ public class SpaceRunnerApp extends Application {
     private Logger logger = Logger.getLogger(SpaceRunnerApp.class.getName());
 
     private Stage primaryStage;
-    private GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
+    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
     private SoundClip backgroundMusic;
 
     public static void main(String[] args) {

@@ -22,12 +22,13 @@ import java.util.logging.Logger;
 
 public class VisualManager{
 
-    private VisualUtil visualUtil = VisualUtil.getInstance();
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final VisualUtil visualUtil = VisualUtil.getInstance();
+    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+
+    private final static VisualManager visualManager = new VisualManager();
 
     private int height = 500;
     private int width = 500;
-    private static VisualManager visualManager = new VisualManager();
     private Map<Class<? extends VisualElement>, Visual> visualList = new HashMap<>();
     private Map<Class<? extends VisualElement>, AnimatedVisual> animatedVisualList = new HashMap<>();
 

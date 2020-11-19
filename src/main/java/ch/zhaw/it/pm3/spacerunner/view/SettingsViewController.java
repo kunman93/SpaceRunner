@@ -9,8 +9,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 public class SettingsViewController extends ViewController {
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
-    private SoundUtil soundUtil = SoundUtil.getInstance();
+    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final SoundUtil soundUtil = SoundUtil.getInstance();
     public Button homeButton;
     public TextField playerName;
     public Slider soundVolume;
