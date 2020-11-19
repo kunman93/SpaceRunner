@@ -6,7 +6,6 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.DoubleCoinsPowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ShieldPowerUp;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
@@ -15,7 +14,6 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class VisualManager{
 

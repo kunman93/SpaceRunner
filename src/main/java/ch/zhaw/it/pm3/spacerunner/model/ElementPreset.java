@@ -2,7 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.model;
 
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
 import java.awt.geom.Point2D;

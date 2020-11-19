@@ -8,7 +8,6 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.DoubleCoinsPowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ShieldPowerUp;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.performance.FPSTracker;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.*;
 import javafx.animation.AnimationTimer;

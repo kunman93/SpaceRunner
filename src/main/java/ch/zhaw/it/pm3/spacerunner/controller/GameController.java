@@ -13,8 +13,8 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 
 import java.awt.geom.Point2D;
 import java.util.*;

@@ -3,7 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 
 import java.awt.geom.Point2D;
 import java.util.logging.Level;

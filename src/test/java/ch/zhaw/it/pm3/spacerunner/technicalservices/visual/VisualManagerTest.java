@@ -1,10 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.Coin;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.AnimatedVisual;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
 import org.junit.jupiter.api.BeforeEach;
