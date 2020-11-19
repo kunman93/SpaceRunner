@@ -38,7 +38,47 @@ public class PersistenceUtil {
         return persistenceUtil;
     }
 
+    public void deactivateContent(ContentId contentId){
+        PlayerProfile profile = loadProfile();
+        profile.deactivateContent(contentId);
+        saveProfile(profile);
+    }
 
+    public void activateContent(ContentId contentId){
+        PlayerProfile profile = loadProfile();
+        profile.activateContent(contentId);
+        saveProfile(profile);
+    }
+
+    public int getAmountOfCoinsNeedToBuyContent(int price){
+        PlayerProfile profile = loadProfile();
+        if(profile.getCoins() >= price){
+            return 0;
+        }
+        return price - profile.getCoins();
+    }
+
+    public boolean playerHasEnoughCoinsToBuy(int price) {
+        PlayerProfile profile = loadProfile();
+        return profile.getCoins() >= price;
+    }
+
+    public void buyContent(ContentId contentId, int price){
+        PlayerProfile profile = loadProfile();
+        profile.setCoins(profile.getCoins() - price);
+        profile.addContent(contentId);
+        saveProfile(profile);
+    }
+
+    public boolean contentIsActive(ContentId contentId) {
+        PlayerProfile profile = loadProfile();
+        return profile.getActiveContentIds().contains(contentId);
+    }
+
+    public boolean contentIsPurchased(ContentId contentId) {
+        PlayerProfile profile = loadProfile();
+        return profile.getPurchasedContentIds().contains(contentId);
+    }
 
     //TODO: JavaDOC and name
     public int getSoundVolume(){

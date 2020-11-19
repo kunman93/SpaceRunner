@@ -47,9 +47,6 @@ public class ShopContentCell extends ListCell<ShopContent> {
     @FXML private Label contentPriceLabel = new Label();
     @FXML private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
     @FXML private Button activateButton = new Button(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
-    private static PlayerProfile playerProfile;
-    private static Set<ContentId> purchasedContentIds = new HashSet<>();
-    private static Set<ContentId> activeContentIds = new HashSet<>();
     private static boolean spaceShipModelIsAlreadySelected;
     private ShopContent content;
 
@@ -91,7 +88,6 @@ public class ShopContentCell extends ListCell<ShopContent> {
         if(this.content != null) {
             setUpImageAndLabelsOfContent();
 
-            loadPlayerProfileAndContentIds();
             setUpBuyButton();
             setUpActivateButton();
             processShopping();
@@ -109,14 +105,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
         contentPriceLabel.setText("Price: " + this.content.getPrice());
     }
 
-    private void loadPlayerProfileAndContentIds() {
-        playerProfile = persistenceUtil.loadProfile();
-        purchasedContentIds = playerProfile.getPurchasedContentIds();
-        activeContentIds = playerProfile.getActiveContentIds();
-    }
-
     private void setUpBuyButton() {
-        if(contentIsPurchased()){
+        if(persistenceUtil.contentIsPurchased(content.getContentId())){
             buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
             buyButton.setDisable(true);
         }else{
@@ -126,7 +116,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void setUpActivateButton() {
-        if(contentIsActive()){
+        if(persistenceUtil.contentIsActive(content.getContentId())){
             activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
             if(contentIsAPlayerModel()) {
                 spaceShipModelIsAlreadySelected = true;
@@ -136,7 +126,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         }
 
         if(spaceShipModelIsAlreadySelected) {
-            if (!contentIsActive() && contentIsAPlayerModel()) {
+            if (!persistenceUtil.contentIsActive(content.getContentId()) && contentIsAPlayerModel()) {
                 activateButton.setDisable(true);
             } else if(contentIsAPlayerModel()){
                 activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
@@ -148,8 +138,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void processShopping() {
-        if(contentIsPurchased()) {
-            if (contentIsActive()) {
+        if(persistenceUtil.contentIsPurchased(content.getContentId())) {
+            if (persistenceUtil.contentIsActive(content.getContentId())) {
                 deactivatePurchasedContent();
             } else {
                 activatePurchasedContent();
@@ -179,8 +169,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void deactivateContentInPlayerProfile() {
-        playerProfile.deactivateContent(content.getContentId());
-        persistenceUtil.saveProfile(playerProfile);
+        persistenceUtil.deactivateContent(content.getContentId());
         activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
     }
 
@@ -196,15 +185,14 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void activateContentInPlayerProfile() {
-        playerProfile.activateContent(content.getContentId());
-        persistenceUtil.saveProfile(playerProfile);
+        persistenceUtil.activateContent(content.getContentId());
         activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
     }
 
     private void buyContent() {
         activateButton.setDisable(true);
         buyButton.setOnAction(event -> {
-            if(playerHasEnoughCoinsToBuy()){
+            if(persistenceUtil.playerHasEnoughCoinsToBuy(content.getPrice())){
                 showPurchaseContentConfirmationDialogue();
             }else{
                 showFailedToPurchaseContentAlertDialogue();
@@ -232,9 +220,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     private void buy() {
-        playerProfile.setCoins(getAmountDeducted());
-        playerProfile.addContent(content.getContentId());
-        persistenceUtil.saveProfile(playerProfile);
+        persistenceUtil.buyContent(content.getContentId(), content.getPrice());
         buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
         buyButton.setDisable(true);
         activateButton.setDisable(false);
@@ -245,6 +231,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         shopContentCellListeners.add(shopContentCellListener);
     }
 
+    //TODO: We should remove the listener at some time
     public void removeListener(ShopContentCellListener shopContentCellListener) {
         shopContentCellListeners.remove(shopContentCellListener);
     }
@@ -253,7 +240,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
-        alert.setContentText("Not enough coins! You need at least " + getAmountOfCoinsNeedToBuyContent() + " coins.");
+        alert.setContentText("Not enough coins! You need at least " + persistenceUtil.getAmountOfCoinsNeedToBuyContent(content.getPrice()) + " more coins.");
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
@@ -263,24 +250,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         alert.showAndWait();
     }
 
-    private int getAmountOfCoinsNeedToBuyContent(){
-        return content.getPrice() - playerProfile.getCoins();
-    }
 
-    private int getAmountDeducted() {
-        return playerProfile.getCoins() - content.getPrice();
-    }
 
-    private boolean playerHasEnoughCoinsToBuy() {
-        return playerProfile.getCoins() >= content.getPrice();
-    }
-
-    private boolean contentIsActive() {
-        return activeContentIds.contains(content.getContentId());
-    }
-
-    private boolean contentIsPurchased() {
-        return purchasedContentIds.contains(content.getContentId());
-    }
 }
 
