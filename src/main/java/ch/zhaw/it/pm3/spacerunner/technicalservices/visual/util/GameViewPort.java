@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.view;
+package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
 public class GameViewPort {
     private double gameWidth;

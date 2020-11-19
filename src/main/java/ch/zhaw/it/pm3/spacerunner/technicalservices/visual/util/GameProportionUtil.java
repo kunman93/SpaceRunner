@@ -1,6 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
-
-import ch.zhaw.it.pm3.spacerunner.view.GameViewPort;
+package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
 public class GameProportionUtil {
 
