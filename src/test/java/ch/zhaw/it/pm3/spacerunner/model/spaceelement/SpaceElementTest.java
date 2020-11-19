@@ -4,11 +4,9 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetExce
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import org.junit.jupiter.api.*;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 import static org.junit.jupiter.api.Assertions.*;
