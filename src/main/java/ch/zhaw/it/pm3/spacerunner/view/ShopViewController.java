@@ -1,6 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ItemType;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ShopContent;
 import javafx.collections.FXCollections;
@@ -19,7 +20,7 @@ import java.util.List;
  * controller for shop view
  * */
 public class ShopViewController extends ViewController implements ShopContentCellListener {
-    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
     @FXML private TabPane tabPane;
     @FXML private ListView<ShopContent> listViewForUpgrades;

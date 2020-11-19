@@ -30,7 +30,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     private Logger logger = Logger.getLogger(ShopContent.class.getName());
 
-    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
     private final VisualUtil visualUtil = VisualUtil.getInstance();
 
     private static final String BUY_TEXT_FOR_BUY_BUTTON = "buy";

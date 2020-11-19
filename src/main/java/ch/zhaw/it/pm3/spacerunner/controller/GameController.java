@@ -6,6 +6,7 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ActivatedPowerUpManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
@@ -26,7 +27,7 @@ public class GameController {
     private Logger logger = Logger.getLogger(GameController.class.getName());
 
     //TODO: make all final Manager and Util
-    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
     private final VisualManager visualManager = VisualManager.getManager();
     private final VelocityManager velocityManager = VelocityManager.getManager();

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Utility tool to persist data (load / save)
  */
-public class PersistenceUtil {
+public class PersistenceUtil implements Persistence {
 
     private Logger logger = Logger.getLogger(PersistenceUtil.class.getName());
 
@@ -38,18 +38,24 @@ public class PersistenceUtil {
         return persistenceUtil;
     }
 
+    //TODO: JavaDOC and name
+    @Override
     public void deactivateContent(ContentId contentId){
         PlayerProfile profile = loadProfile();
         profile.deactivateContent(contentId);
         saveProfile(profile);
     }
 
+    //TODO: JavaDOC and name
+    @Override
     public void activateContent(ContentId contentId){
         PlayerProfile profile = loadProfile();
         profile.activateContent(contentId);
         saveProfile(profile);
     }
 
+    //TODO: JavaDOC and name
+    @Override
     public int getAmountOfCoinsNeedToBuyContent(int price){
         PlayerProfile profile = loadProfile();
         if(profile.getCoins() >= price){
@@ -58,11 +64,15 @@ public class PersistenceUtil {
         return price - profile.getCoins();
     }
 
+    //TODO: JavaDOC and name
+    @Override
     public boolean playerHasEnoughCoinsToBuy(int price) {
         PlayerProfile profile = loadProfile();
         return profile.getCoins() >= price;
     }
 
+    //TODO: JavaDOC and name
+    @Override
     public void buyContent(ContentId contentId, int price){
         PlayerProfile profile = loadProfile();
         profile.setCoins(profile.getCoins() - price);
@@ -70,22 +80,28 @@ public class PersistenceUtil {
         saveProfile(profile);
     }
 
+    //TODO: JavaDOC and name
+    @Override
     public boolean contentIsActive(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         return profile.getActiveContentIds().contains(contentId);
     }
 
+    //TODO: JavaDOC and name
+    @Override
     public boolean contentIsPurchased(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         return profile.getPurchasedContentIds().contains(contentId);
     }
 
     //TODO: JavaDOC and name
+    @Override
     public int getSoundVolume(){
         return loadProfile().getVolume();
     }
 
     //TODO: JavaDOC and name
+    @Override
     public boolean isAudioEnabled(){
         return loadProfile().isAudioEnabled();
     }
@@ -96,6 +112,7 @@ public class PersistenceUtil {
      *
      * @return the player's profile (or a default profile if it doesn't exist)
      */
+    @Override
     public PlayerProfile loadProfile() {
         Path path = Path.of(GameFile.PROFILE.getFileName());
         PlayerProfile playerProfile = null;
@@ -143,6 +160,7 @@ public class PersistenceUtil {
      *
      * @param playerProfile player profile to save
      */
+    @Override
     public void saveProfile(PlayerProfile playerProfile) {
         if (playerProfile == null) {
             throw new IllegalArgumentException("null is not a legal argument for a player profile!");
@@ -196,6 +214,7 @@ public class PersistenceUtil {
     }
 
     //TODO: JavaDOC
+    @Override
     public List<ShopContent> loadShopContent() {
         Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {}.getType();
 

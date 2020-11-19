@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundUtil;
@@ -9,7 +10,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 public class SettingsViewController extends ViewController {
-    private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
     private final SoundUtil soundUtil = SoundUtil.getInstance();
     public Button homeButton;
     public TextField playerName;

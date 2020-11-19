@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
 import javafx.fxml.FXML;
@@ -14,9 +15,11 @@ public class GameEndedViewController extends ViewController {
     @FXML public Label name;
     @FXML public Label collectedCoins;
 
+    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+
     @Override
     public void initialize() {
-        PlayerProfile player = PersistenceUtil.getUtil().loadProfile();
+        PlayerProfile player = persistenceUtil.loadProfile();
         name.setText("Congratulation " + player.getPlayerName());
         score.setText("Score: " + getGameDataCache().getScore());
         collectedCoins.setText("Collected Coins: " + getGameDataCache().getCoins());
