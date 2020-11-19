@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * controller for shop view
- * */
+ * The ShopViewController is controller-class, which is responsible for shop-view (shop.fxml).
+ **/
 public class ShopViewController extends ViewController implements ShopContentCellListener {
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 

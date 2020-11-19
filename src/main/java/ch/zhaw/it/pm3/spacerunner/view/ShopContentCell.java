@@ -24,7 +24,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * class for each table row which contains various FXML elements
+ * Shop-view (shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
+ * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
  * */
 public class ShopContentCell extends ListCell<ShopContent> {
 
@@ -77,7 +78,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     /**
-     * called automatic from ListView by clicking somewhere
+     * called automatically from ListView by clicking somewhere
      * - changes button texts according to buying-state
      * */
     @Override
