@@ -5,7 +5,6 @@ public enum ItemType {
     PLAYER_MODEL(1);
 
 
-
     private final int value;
 
     ItemType(final int newValue) {

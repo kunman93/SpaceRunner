@@ -19,8 +19,10 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ShopContent
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class VisualManager{
+
     private VisualUtil visualUtil = VisualUtil.getInstance();
     private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
 
@@ -38,7 +40,6 @@ public class VisualManager{
 
 
     private VisualManager(){
-
     }
 
     public void loadGameElementVisuals(){
@@ -69,7 +70,6 @@ public class VisualManager{
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
         visualManager.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
-
     }
 
     public double getElementRelativeHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
@@ -110,8 +110,6 @@ public class VisualManager{
         synchronized (this){
             visualList.put(elementClass, visual);
         }
-
-
     }
 
     private BufferedImage flipVisual(boolean flipHorizontally, boolean flipVertically, BufferedImage image) {
@@ -133,7 +131,6 @@ public class VisualManager{
         URL imageURL = SpaceRunnerApp.class.getResource(imagePath.getFileName());
         return visualUtil.loadImage(imageURL);
     }
-
 
     public void loadAndSetAnimatedVisual(Class<? extends VisualElement> elementClass, AnimatedVisual animatedVisual){
         VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles().getAnimationVisuals();
@@ -169,7 +166,6 @@ public class VisualManager{
                 if(visual == null){
                     throw new VisualNotSetException("Visual for " + elementClass.toString() + " was not set!");
                 }
-
                 return visual;
             }
         }
@@ -184,7 +180,6 @@ public class VisualManager{
             return visualsForAnimation.getCurrentVisual();
         }
     }
-
 
     public synchronized void clear(){
         visualList = new HashMap<>();

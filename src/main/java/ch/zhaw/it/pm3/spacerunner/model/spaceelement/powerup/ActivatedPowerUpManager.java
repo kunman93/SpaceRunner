@@ -2,8 +2,12 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup;
 
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ActivatedPowerUpManager implements PowerUpListener{
+
+    private Logger logger = Logger.getLogger(ActivatedPowerUpManager.class.getName());
 
     private final int GENERAL_POWER_UP_PROBABILITY = 33;
     private Map<Class<? extends PowerUp>,PowerUp> activePowerUps = new HashMap<>();
@@ -30,6 +34,7 @@ public class ActivatedPowerUpManager implements PowerUpListener{
                         return powerUp;
                      } catch (Exception e) {
                         // TODO: handle and logger
+                        logger.log(Level.SEVERE, "Error in PowerUp generation");
                         return null;
                     }
 
@@ -72,6 +77,7 @@ public class ActivatedPowerUpManager implements PowerUpListener{
     @Override
     public void powerUpTimerChanged(double timeLeft) {
         //Ignored
+        logger.log(Level.INFO, "Not yet Implemented");
     }
 
     @Override

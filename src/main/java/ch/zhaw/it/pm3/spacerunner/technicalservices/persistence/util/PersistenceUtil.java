@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,12 +13,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
  * Utility tool to persist data (load / save)
  */
 public class PersistenceUtil {
+
+    private Logger logger = Logger.getLogger(PersistenceUtil.class.getName());
+
     // Singleton pattern
     private static final PersistenceUtil persistenceUtil = new PersistenceUtil();
 
@@ -60,6 +66,7 @@ public class PersistenceUtil {
                 playerProfile = loadAndDeserializeData(GameFile.PROFILE.getFileName(), PlayerProfile.class);
             } catch (IOException e) {
                 // TODO handle
+                logger.log(Level.SEVERE, "Unable to Load and / or Deserialize Data");
                 e.printStackTrace();
                 playerProfile = new PlayerProfile();
             }
@@ -105,6 +112,7 @@ public class PersistenceUtil {
             serializeAndSaveData(GameFile.PROFILE.getFileName(), playerProfile);
         } catch (IOException e) {
             // TODO handle
+            logger.log(Level.SEVERE, "Unable to Serialize and / or Data");
             e.printStackTrace();
         }
     }
@@ -122,6 +130,7 @@ public class PersistenceUtil {
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(data, writer);
         } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error opening File {0}", path);
             throw e;
         }
     }
@@ -155,10 +164,9 @@ public class PersistenceUtil {
             shopContentList = loadAndDeserializeData(GameFile.SHOP_CONTENT.getFileName(), listOfShopContentType);
         } catch (IOException e) {
             // TODO handle
+            logger.log(Level.SEVERE, "Error with Loading and / or Deserializing Data");
             e.printStackTrace();
         }
         return shopContentList;
     }
-
-
 }

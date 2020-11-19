@@ -6,6 +6,7 @@ public enum ContentId {
     SHIP_SKIN_1(2),
     SHIP_SKIN_2(3);
 
+
     private final int value;
 
     ContentId(final int newValue) {
@@ -13,5 +14,4 @@ public enum ContentId {
     }
 
     public int getValue() { return value; }
-
 }

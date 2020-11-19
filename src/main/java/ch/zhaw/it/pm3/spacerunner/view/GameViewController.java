@@ -4,6 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.controller.GameController;
 import ch.zhaw.it.pm3.spacerunner.model.GameDataCache;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.performance.FPSTracker;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.AnimatedVisual;
@@ -37,8 +38,12 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameViewController extends ViewController {
+
+    private Logger logger = Logger.getLogger(GameViewController.class.getName());
 
     private VisualUtil visualUtil = VisualUtil.getInstance();
     //TODO: Canvas has to be a fixed height and width so we dont have to deal with scaling
@@ -161,7 +166,6 @@ public class GameViewController extends ViewController {
             };
             gameLoop.start();
         }).start();
-
     }
 
 
@@ -244,7 +248,6 @@ public class GameViewController extends ViewController {
         };
 
         resizeTimer.schedule(resizeTask, 300);
-
     }
 
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
@@ -268,7 +271,7 @@ public class GameViewController extends ViewController {
 
     /*
     * https://stackoverflow.com/questions/45326525/how-to-show-a-loading-animation-in-javafx-application
-    * */
+    */
     private void showLoadingScreen() {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
@@ -291,9 +294,7 @@ public class GameViewController extends ViewController {
                             (gameCanvas.getHeight() + 80) / 2, gameCanvas.getWidth());
                     img = visualUtil.rotateImage(img, -1);
                     graphicsContext.drawImage(SwingFXUtils.toFXImage(img, null), (gameCanvas.getWidth() - 80) / 2, (gameCanvas.getHeight() - 160) / 2, 80, 80);
-
                 }
-
             }
         };
         loadingAnimation.start();
@@ -312,9 +313,9 @@ public class GameViewController extends ViewController {
                 image = fxmlImageProxy.getFXMLImage(spaceElement.getClass());
             } catch (VisualNotSetException e) {
                 e.printStackTrace();
+                logger.log(Level.SEVERE, "Visual for {0} wasn't set", spaceElement.getClass());
                 //TODO: handle
             }
-
             graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
         }
     }
@@ -326,14 +327,12 @@ public class GameViewController extends ViewController {
         double infoBarYPosition = gameViewPort.getGameHeight();
 
 
-
         graphicsContext.setFill(Color.DARKGRAY);
         graphicsContext.fillRect(0, infoBarYPosition, gameViewPort.getGameWidth(), gameViewPort.getInfoBarHeight());
 
-        System.out.println(gameViewPort.getGameHeight());
-        System.out.println(gameViewPort.getInfoBarHeight());
-        System.out.println(primaryStage.getHeight());
-
+        logger.log(Level.INFO, "Game Height is: {0}", gameViewPort.getGameHeight());
+        logger.log(Level.INFO, "Infobar Height is: {0}", gameViewPort.getInfoBarHeight());
+        logger.log(Level.INFO, "Total Height is: {0}", primaryStage.getHeight());
 
         BufferedImage image = null;
         try {
@@ -344,6 +343,7 @@ public class GameViewController extends ViewController {
                     infoBarYPosition, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
             // todo handle
+            logger.log(Level.SEVERE, "Visual for {0} wasn't set", UIVisualElement.COIN_COUNT.getClass());
             e.printStackTrace();
         }
         graphicsContext.setFill(Color.WHITE);
@@ -374,5 +374,4 @@ public class GameViewController extends ViewController {
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
         visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT.getClass(), coinAnimation);
     }
-
 }

@@ -6,8 +6,13 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
 import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ElementPreset {
+
+    private Logger logger = Logger.getLogger(ElementPreset.class.getName());
+
     VisualManager visualManager = VisualManager.getManager();
 
     private Preset generatePreset(PresetType p) throws VisualNotSetException {
@@ -36,6 +41,7 @@ public class ElementPreset {
             case COINS_SQUARE:
                 return new Preset(randomCoinSquare());
         }
+        logger.log(Level.WARNING, "No Case for this Preset Type: {0}", p.name());
         return null;
     }
 
@@ -45,6 +51,7 @@ public class ElementPreset {
         try {
             return generatePreset(PresetType.values()[index]);
         } catch (VisualNotSetException e) {
+            logger.log(Level.SEVERE, "Error with Preset generation");
             e.printStackTrace();
         }
 

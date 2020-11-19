@@ -13,9 +13,7 @@ public class GameSoundUtil{
     private SoundUtil soundUtil = SoundUtil.getInstance();
     private static GameSoundUtil gameSoundUtil = new GameSoundUtil();
 
-    private GameSoundUtil(){
-
-    }
+    private GameSoundUtil(){}
 
     public static GameSoundUtil getUtil() {
         return gameSoundUtil;
@@ -35,6 +33,4 @@ public class GameSoundUtil{
     public void setVolume(int volume) {
         soundUtil.setVolume(volume);
     }
-
-
 }

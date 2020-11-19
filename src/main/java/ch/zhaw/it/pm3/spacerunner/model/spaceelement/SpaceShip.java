@@ -8,8 +8,13 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SpaceShip extends SpaceElement {
+
+    private Logger logger = Logger.getLogger(SpaceShip.class.getName());
+
     private boolean hasCrashed;
 
     private final VelocityManager velocityManager = VelocityManager.getManager();
@@ -34,9 +39,9 @@ public class SpaceShip extends SpaceElement {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
             //TODO: handle
+            logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
             e.printStackTrace();
         }
-
 
         if(direction == SpaceShipDirection.UP){
             position.x -= timeInMillis/1000.0 * velocity.x;
@@ -60,6 +65,7 @@ public class SpaceShip extends SpaceElement {
             relativeHeight = visualManager.getElementRelativeHeight(this.getClass());
         } catch (VisualNotSetException e) {
             //TODO: Handle
+            logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
             e.printStackTrace();
         }
         Point2D.Double position = getRelativePosition();
@@ -80,5 +86,4 @@ public class SpaceShip extends SpaceElement {
                 break;
         }
     }
-
 }

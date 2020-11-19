@@ -4,6 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 
 import java.awt.image.BufferedImage;
+
 public class Visual{
     private BufferedImage bufferedImage;
     private VisualSVGFile visualSVGFile;
