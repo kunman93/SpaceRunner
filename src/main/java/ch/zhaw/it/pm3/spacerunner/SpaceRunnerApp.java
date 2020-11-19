@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
@@ -20,8 +21,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SpaceRunnerApp extends Application {
+
+    private Logger logger = Logger.getLogger(SpaceRunnerApp.class.getName());
 
     private Stage primaryStage;
     private GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
@@ -39,10 +44,8 @@ public class SpaceRunnerApp extends Application {
         ViewController.setMain(this);
         setFXMLView(FXMLFile.MENU);
 
-
         gameSoundUtil.setVolume(persistenceUtil.getSoundVolume());
         setupBackgroundMusic();
-
     }
 
     public void setFXMLView(FXMLFile source){
@@ -68,10 +71,10 @@ public class SpaceRunnerApp extends Application {
                 primaryStage.setMinWidth(width);
             }
         } catch (IOException e) {
-            //logger.log(Level.SEVERE, "!!!FILE NOT FOUND, CHECK FILEPATH!!!");
+            logger.log(Level.SEVERE, "File not Found");
             e.printStackTrace();
         } catch (Exception e) {
-            //logger.log(Level.SEVERE, "!!!INCOMPATIBLE DATE FORMAT!!!");
+            logger.log(Level.SEVERE, "Incompatible Date Format");
             e.printStackTrace();
         }
     }
@@ -96,15 +99,16 @@ public class SpaceRunnerApp extends Application {
             backgroundMusic.play();
         } catch (IOException e) {
             //TODO
+            logger.log(Level.SEVERE, "Error Loading Sound BACKGROUND_2");
             e.printStackTrace();
         } catch (UnsupportedAudioFileException e) {
             //TODO
+            logger.log(Level.SEVERE, "Sound BACKGROUND_2 has an Unsupported Type");
             e.printStackTrace();
         } catch (LineUnavailableException e) {
+            logger.log(Level.SEVERE, "Line wasn't available");
             //TODO
             e.printStackTrace();
         }
     }
-
-
 }

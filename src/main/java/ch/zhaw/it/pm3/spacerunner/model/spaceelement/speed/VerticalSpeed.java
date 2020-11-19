@@ -9,7 +9,6 @@ public enum VerticalSpeed {
     SPACE_SHIP(1),
     UFO(3);
 
-
     private double speed;
 
     VerticalSpeed(double speed){

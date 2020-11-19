@@ -38,7 +38,6 @@ public class GameProportionUtil {
         return getFontSize(height, percentage) * 5;
     }
 
-
     public double getFontSize(double height, double percentage) {
         return height * (1 - 2 * percentage);
     }
@@ -46,6 +45,4 @@ public class GameProportionUtil {
     private double calcInfoBarHeight(double height, double proportionY) {
         return height * (proportionGameBar / proportionY);
     }
-
-
 }

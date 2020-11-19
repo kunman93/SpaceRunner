@@ -11,7 +11,6 @@ public abstract class PowerUp extends SpaceElement {
     private TimerTask currentPowerUpTimerTask;
     private int multiplier = 1;
 
-
     public PowerUp(Point2D.Double startPosition) {
         super(startPosition);
     }

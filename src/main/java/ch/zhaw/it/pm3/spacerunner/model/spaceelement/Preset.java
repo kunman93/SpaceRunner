@@ -5,11 +5,13 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetExce
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Preset implements Cloneable {
+
+    private Logger logger = Logger.getLogger(Preset.class.getName());
+
     private SpaceElement[] elementsInPreset;
     private double timeUntilEntirePresetOnScreen;
 
@@ -28,7 +30,11 @@ public class Preset implements Cloneable {
                 maxTime = Math.max(maxTime, (1 - (e.getRelativePosition().x + visualManager.getElementRelativeWidth(e.getClass()))) / velocityManager.getRelativeVelocity(e.getClass()).x);
             }
             return maxTime;
-        } catch (VisualNotSetException | VelocityNotSetException e) {
+        } catch (VisualNotSetException e) {
+            logger.log(Level.SEVERE, "Visual for {0} wasn't set", e.getClass());
+            e.printStackTrace();
+        } catch (VelocityNotSetException e) {
+            logger.log(Level.SEVERE, "Velocity for {0} wasn't set", e.getClass());
             e.printStackTrace();
         }
         return 0;

@@ -22,7 +22,6 @@ public class PlayerProfile {
     public static boolean TEST = false;
 
 
-
     public PlayerProfile(){
         audioEnabled = true;
         volume = 100;
@@ -141,7 +140,5 @@ public class PlayerProfile {
         }else{
             return super.equals(o);
         }
-
-
     }
 }

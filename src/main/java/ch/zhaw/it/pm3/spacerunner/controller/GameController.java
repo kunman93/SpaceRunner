@@ -18,8 +18,13 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager
 import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameController {
+
+    private Logger logger = Logger.getLogger(GameController.class.getName());
+
     //TODO: make all final Manager and Util
     private final PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
@@ -168,7 +173,6 @@ public class GameController {
         spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
-
     }
 
     private TimerTask getPowerUpGeneratorTask(){
@@ -207,13 +211,14 @@ public class GameController {
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
-        System.out.println("Removing past drawables");
+        logger.log(Level.INFO, "Removing past drawables");
         elements.removeIf((SpaceElement element) ->
         {
             try {
                 return element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
                 //TODO: handle
+                logger.log(Level.SEVERE, "Visual of {0} wasn't set", element.getClass());
                 e.printStackTrace();
                 return true;
             }
@@ -264,7 +269,6 @@ public class GameController {
         gameTimer.cancel();
         gameOver = true;
         if(playerProfile.isAudioEnabled()){
-            //ToDo why not one try-catch
             new Thread(()->{
                 try {
                     SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
@@ -276,18 +280,21 @@ public class GameController {
                                     gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
                                 }  catch (Exception e){
                                     //IGNORE ON PURPOSE
+                                    logger.log(Level.WARNING, "Sound GAME_OVER_2 couldn't be loaded");
                                 }
                             });
                             gameOverVoice.play();
                             gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
                         } catch (Exception e){
                             //IGNORE ON PURPOSE
+                            logger.log(Level.WARNING, "Sound GAME_OVER_1 couldn't be loaded");
                         }
                     });
                     explosion.play();
 
                 } catch (Exception e){
                     //IGNORE ON PURPOSE
+                    logger.log(Level.WARNING, "Sound EXPLOSION couldn't be loaded");
                 }
             }).start();
         }
@@ -295,6 +302,7 @@ public class GameController {
             Thread.sleep(500);
         } catch (Exception e){
             //IGNORE ON PURPOSE
+            logger.log(Level.WARNING, "Thread wasn't able to sleep");
         }
         saveGame();
     }
@@ -313,6 +321,8 @@ public class GameController {
             collisionWithCoin((Coin) spaceElement);
         } else if (spaceElement instanceof PowerUp) {
             collisionWithPowerUp((PowerUp) spaceElement);
+        } else {
+            logger.log(Level.INFO, "Collision with unknown spaceElement");
         }
     }
 
@@ -334,6 +344,7 @@ public class GameController {
                 gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
             } catch (Exception e){
                 //IGNORE ON PURPOSE
+                logger.log(Level.WARNING, "Sound COIN_PICKUP couldn't be loaded");
             }
         }).start();
     }

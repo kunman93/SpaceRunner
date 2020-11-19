@@ -1,6 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
@@ -18,12 +19,17 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
  * class for each table row which contains various FXML elements
  * */
 public class ShopContentCell extends ListCell<ShopContent> {
+
+    private Logger logger = Logger.getLogger(ShopContent.class.getName());
+
     private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
     private VisualUtil visualUtil = VisualUtil.getInstance();
 
@@ -54,6 +60,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
             fxmlLoader.load();
         } catch (IOException e) {
             //TODO
+            logger.log(Level.SEVERE, "Error loading FXML");
             throw new RuntimeException(e);
         }
         cellContent = fxmlLoader.getRoot();

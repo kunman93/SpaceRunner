@@ -5,10 +5,14 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UFO extends Obstacle {
 
     //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
+
+    private Logger logger = Logger.getLogger(UFO.class.getName());
 
     private final VisualManager visualManager = VisualManager.getManager();
     private final VelocityManager velocityManager = VelocityManager.getManager();
@@ -42,6 +46,7 @@ public class UFO extends Obstacle {
         try {
             return 0.35 * Math.sin(currentXPos * 3 + 1 + 2*Math.PI*waveOffset) + 0.5 - 0.5 * visualManager.getElementRelativeHeight(UFO.class);
         } catch (VisualNotSetException e) {
+            logger.log(Level.SEVERE, "Visual for {0} wasn't set", UFO.class);
             e.printStackTrace();
         }
         return 0;

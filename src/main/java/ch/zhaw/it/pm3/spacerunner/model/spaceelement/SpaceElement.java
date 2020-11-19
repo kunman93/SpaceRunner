@@ -7,8 +7,12 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class SpaceElement implements VisualElement {
+
+    private Logger logger = Logger.getLogger(SpaceElement.class.getName());
 
     private VisualManager visualManager = VisualManager.getManager();
     private VelocityManager velocityManager = VelocityManager.getManager();
@@ -28,6 +32,7 @@ public abstract class SpaceElement implements VisualElement {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
             //TODO: handle
+            logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
             e.printStackTrace();
         }
 
@@ -53,6 +58,7 @@ public abstract class SpaceElement implements VisualElement {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
             //TODO: handle
+            logger.log(Level.SEVERE, "Velocity for {0} wasn't set");
             e.printStackTrace();
         }
 
@@ -76,6 +82,7 @@ public abstract class SpaceElement implements VisualElement {
                     || pointInObject(position.x + visualManager.getElementRelativeWidth(this.getClass()), position.y + visualManager.getElementRelativeHeight(this.getClass()), s);
         }catch(VisualNotSetException e){
             //TODO: handle
+            logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
             e.printStackTrace();
             return true;
         }
@@ -86,9 +93,9 @@ public abstract class SpaceElement implements VisualElement {
             return x > s.getRelativePosition().x && x < s.getRelativePosition().x + visualManager.getElementRelativeWidth(s.getClass()) && y > s.getRelativePosition().y && y < s.getRelativePosition().y + visualManager.getElementRelativeHeight(s.getClass());
         }catch(VisualNotSetException e){
             //TODO: handle
+            logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
             e.printStackTrace();
             return false;
         }
     }
-
 }

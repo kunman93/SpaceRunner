@@ -31,12 +31,11 @@ public class FXMLImageProxy implements VisualManagerListener {
 
         if(image != null){
             return image;
-        }else{
+        } else {
             Image fxmlImage =  SwingFXUtils.toFXImage(bufferedImage, null);
             fxmlImageClassMap.put(bufferedImage, fxmlImage);
             return fxmlImage;
         }
-
     }
 
     @Override
@@ -49,8 +48,4 @@ public class FXMLImageProxy implements VisualManagerListener {
         Image fxmlImage = SwingFXUtils.toFXImage(bufferedImage, null);
         fxmlImageClassMap.put(bufferedImage, fxmlImage);
     }
-
-
-
-
 }

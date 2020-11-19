@@ -15,7 +15,5 @@ public class ShieldPowerUp extends PowerUp{
     }
 
     @Override
-    public void activatePowerUp() {
-
-    }
+    public void activatePowerUp() {}
 }

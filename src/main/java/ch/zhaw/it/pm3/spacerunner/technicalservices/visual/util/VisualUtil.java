@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
@@ -18,8 +19,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VisualUtil {
+
+    private Logger logger = Logger.getLogger(VisualUtil.class.getName());
+
     // Singleton pattern
     private static final VisualUtil instance = new VisualUtil();
 
@@ -75,7 +81,6 @@ public class VisualUtil {
      */
     public BufferedImage resizeImage(BufferedImage inputImage, int scaledWidth, int scaledHeight){
 
-
         // creates output image
         BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, inputImage.getType());
 
@@ -125,11 +130,9 @@ public class VisualUtil {
             loadedImage = rasterize(new File(imageURL.getFile().replace("%20", " ")), height);
         } catch (IOException e) {
             e.printStackTrace();
+            logger.log(Level.SEVERE, "Error Rasterizing File");
             return null;
         }
-
-
-
         return loadedImage;
     }
 
@@ -184,6 +187,7 @@ public class VisualUtil {
             t.transcode(input, null);
         }
         catch (TranscoderException ex) {
+            logger.log(Level.SEVERE, "Couldn't convert {0}", svgFile);
             // Requires Java 6
             ex.printStackTrace();
             throw new IOException("Couldn't convert " + svgFile);
@@ -211,7 +215,6 @@ public class VisualUtil {
         return image;
     }
 
-
     public BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
         BufferedImage image = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
         AffineTransform trans = AffineTransform.getRotateInstance(deg, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
@@ -219,5 +222,4 @@ public class VisualUtil {
         op.filter(bufferedImage, image);
         return image;
     }
-
 }
