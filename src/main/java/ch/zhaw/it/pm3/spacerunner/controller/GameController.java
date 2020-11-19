@@ -34,11 +34,13 @@ public class GameController {
 
 
     private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
-    private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.0001;
+    private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.005;
 
 
     private double remainingDistanceUntilNextPreset = 0.1;
     private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.45;
+
+    private final int GENERAL_POWER_UP_COOLDOWN = 5000;
 
 
     private boolean isPaused = false;
@@ -56,7 +58,6 @@ public class GameController {
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
 
-    private final int GENERAL_POWERUP_COOLDOWN = 5000;
 
     private long lastUpdate = 0;
 
@@ -163,7 +164,7 @@ public class GameController {
 
         gameTimer = new Timer("GameSpeedTimer");
         gameTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
-        gameTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWERUP_COOLDOWN);
+        gameTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWER_UP_COOLDOWN);
 
         playerProfile = persistenceUtil.loadProfile();
 
