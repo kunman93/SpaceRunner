@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -203,6 +204,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         ButtonType purchaseButtonType = new ButtonType("Purchase", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"",purchaseButtonType,cancelButtonType);
+        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm Purchase");
         alert.setHeaderText(null);
         alert.setContentText("Do you really want to buy " + content.getTitle() + "?");
@@ -237,6 +239,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     private void showFailedToPurchaseContentAlertDialogue() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
         alert.setContentText("Not enough coins! You need at least " + persistenceUtil.getAmountOfCoinsNeededToBuyContent(content.getPrice()) + " more coins.");
