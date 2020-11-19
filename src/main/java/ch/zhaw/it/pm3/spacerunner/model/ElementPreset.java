@@ -18,7 +18,7 @@ public class ElementPreset {
     private Preset generatePreset(PresetType p) throws VisualNotSetException {
         double y;
         switch (p) {
-            case ASTERIOD:
+            case ASTEROID:
                 y = Math.random() * (1.0 - visualManager.getElementRelativeHeight(Asteroid.class));
                 return new Preset(new SpaceElement[]{new Asteroid(new Point2D.Double(1,y))});
             case UFO_SINGLE:
@@ -28,6 +28,8 @@ public class ElementPreset {
             case ROCKET:
                 y = Math.random() * (1.0 - visualManager.getElementRelativeHeight(Rocket.class));
                 return new Preset(new SpaceElement[]{new Rocket(new Point2D.Double(1,y))});
+            case ROCKET_RANDOM_THREE:
+                return new Preset(randomRocket());
             case COINS_ARROW:
                 double coinHeight = visualManager.getElementRelativeHeight(Coin.class);
                 double coinWidth = visualManager.getElementRelativeWidth(Coin.class);
@@ -38,7 +40,7 @@ public class ElementPreset {
                         new Coin(new Point2D.Double(1+4*coinWidth,y)), new Coin(new Point2D.Double(1+6*coinWidth,y)), new Coin(new Point2D.Double(1+8*coinWidth,y))});
             case COINS_RANDOM_LINE:
                 return new Preset(randomCoinLine());
-            case COINS_SQUARE:
+            case COINS_RANDOM_SQUARE:
                 return new Preset(randomCoinSquare());
         }
         logger.log(Level.WARNING, "No Case for this Preset Type: {0}", p.name());
@@ -72,7 +74,6 @@ public class ElementPreset {
 
     private SpaceElement[] randomCoinSquare() throws VisualNotSetException {
         double coinHeight = visualManager.getElementRelativeHeight(Coin.class);
-        double coinWidth = visualManager.getElementRelativeWidth(Coin.class);
 
         double y = Math.random() * (1.0 - coinHeight);
         int count = (int) ((Math.random() * (6-2)) + 2);
@@ -87,10 +88,20 @@ public class ElementPreset {
             double x = 1.0;
             for (int j = 0; j < count; j++) {
                 spaceElements[index] = new Coin(new Point2D.Double(x,y));
-                x = x + 2 * coinWidth;
+                x = x + 2 * visualManager.getElementRelativeWidth(Coin.class);
                 index++;
             }
             y = y + coinHeight;
+        }
+        return spaceElements;
+    }
+
+    private SpaceElement[] randomRocket() throws VisualNotSetException {
+        SpaceElement[] spaceElements = new SpaceElement[3];
+        double x = 1.0;
+        for (int i = 0; i < 3; i++) {
+            spaceElements[i] = new Rocket(new Point2D.Double(x,Math.random() * (1.0 - visualManager.getElementRelativeHeight(Rocket.class))));
+            x = x + 2 * visualManager.getElementRelativeWidth(Rocket.class);
         }
         return spaceElements;
     }

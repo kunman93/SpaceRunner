@@ -1,11 +1,12 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 public enum PresetType {
-    ASTERIOD,
-    UFOS_MIRRORED,
+    ASTEROID,
     UFO_SINGLE,
+    UFOS_MIRRORED,
     ROCKET,
+    ROCKET_RANDOM_THREE,
     COINS_ARROW,
     COINS_RANDOM_LINE,
-    COINS_SQUARE
+    COINS_RANDOM_SQUARE
 }
