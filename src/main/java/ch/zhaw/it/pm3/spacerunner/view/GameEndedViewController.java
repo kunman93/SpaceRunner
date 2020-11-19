@@ -14,12 +14,14 @@ public class GameEndedViewController extends ViewController {
     @FXML public Label name;
     @FXML public Label collectedCoins;
 
-    @Override
     public void initialize() {
-
         PlayerProfile player = PersistenceUtil.getUtil().loadProfile();
         name.setText("Congratulation " + player.getPlayerName());
-        score.setText("Score: " + getGameDataCache().getScore());
+        if (player.getHighScore() == getGameDataCache().getScore()) {
+            score.setText("new Highscore: " + getGameDataCache().getScore());
+        } else {
+            score.setText("score: " + getGameDataCache().getScore());
+        }
         collectedCoins.setText("Collected Coins: " + getGameDataCache().getCoins());
     }
 

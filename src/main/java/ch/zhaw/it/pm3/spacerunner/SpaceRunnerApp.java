@@ -4,9 +4,11 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.GameProportionUtil;
 import ch.zhaw.it.pm3.spacerunner.view.FXMLFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 
+import ch.zhaw.it.pm3.spacerunner.view.GameViewPort;
 import ch.zhaw.it.pm3.spacerunner.view.ViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +48,7 @@ public class SpaceRunnerApp extends Application {
     }
 
     public void setFXMLView(FXMLFile source){
-        double height = 515; // (800 * 9 / 16) + (800 * 0.5 / 16) - 40
+        double height = 490;
         double width = 800;
 
         try {
@@ -59,7 +61,7 @@ public class SpaceRunnerApp extends Application {
             Scene scene = new Scene(rootPane);
             primaryStage.setScene(scene);
 
-            if(primaryStage.getIcons().size() == 0) { // damit breite gleich bleibt beim laden neuer view
+            if(primaryStage.getIcons().size() == 0) { // used to maintain same height and avoid redundant operations
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
                 primaryStage.setHeight(height);

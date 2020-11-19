@@ -20,7 +20,6 @@ public class HelpViewController extends ViewController {
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
-    @Override
     public void initialize() {
         //helpContent.setText(helpText);
     }

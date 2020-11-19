@@ -14,16 +14,18 @@
     </columnConstraints>
     <rowConstraints>
         <RowConstraints percentHeight="5" />
-        <RowConstraints percentHeight="60" />
+        <RowConstraints percentHeight="10" />
+        <RowConstraints percentHeight="50" />
         <RowConstraints percentHeight="20" />
         <RowConstraints percentHeight="20" />
         <RowConstraints percentHeight="5" />
     </rowConstraints>
     <children>
-        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Button styleClass="help" text="?" alignment="TOP_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="1" onAction="#showHelp" GridPane.halignment="RIGHT" />
+        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <Label text="SPACE RUNNER" styleClass="title"/>
         </HBox>
-        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="menu">
+        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="menu">
             <columnConstraints>
                 <ColumnConstraints percentWidth="30" />
                 <ColumnConstraints percentWidth="5" />
@@ -37,7 +39,7 @@
             <children>
                     <HBox alignment="CENTER" GridPane.columnIndex="0">
                         <children>
-                            <Button fx:id="startGameButton" onAction="#showGame" text="START" >
+                            <Button onAction="#showGame" text="START" >
                                 <graphic>
                                     <HBox>
                                         <children>
@@ -50,12 +52,12 @@
                     </HBox>
                     <HBox alignment="CENTER" GridPane.columnIndex="2">
                         <children>
-                            <Button fx:id="shopButton" onAction="#showShop" text="SHOP" />
+                            <Button onAction="#showShop" text="SHOP" />
                         </children>
                     </HBox>
                     <HBox alignment="CENTER" GridPane.columnIndex="4">
                         <children>
-                            <Button fx:id="settingsButton" onAction="#showSettings" text="SETTINGS" />
+                            <Button onAction="#showSettings" text="SETTINGS" />
                         </children>
                     </HBox>
             </children>

@@ -20,11 +20,6 @@ public abstract class ViewController {
         return main;
     }
 
-    /**
-     * initializes values (e.g. setting default values in a text-box)
-     */
-    public abstract void initialize();
-
     public static GameDataCache getGameDataCache() {
         return gameDataCache;
     }

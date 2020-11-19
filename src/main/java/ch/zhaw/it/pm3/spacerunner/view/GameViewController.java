@@ -97,7 +97,6 @@ public class GameViewController extends ViewController {
     //Used to overperform a little bit. if we dont have this we dont reach the required fps (has to do with some internal AnimationTimer stuff)
     private final long FRAME_TIME_DELTA = 2_000_000;
 
-    @Override
     public void initialize() {
         initializeUiElements();
 
@@ -343,7 +342,7 @@ public class GameViewController extends ViewController {
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
         xPositionReference -= infoBarTextMargin;
-        double textWidth = gameProportionUtil.getTextWidth(coins,gameViewPort.getInfoBarHeight(),infoBarPaddingPercent);
+        double textWidth = gameProportionUtil.getTextWidth(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent);
         graphicsContext.fillText(String.valueOf(coins), xPositionReference, infoBarYPosition, textWidth);
         xPositionReference -= (infoBarTextMargin + textWidth);
         graphicsContext.fillText(String.valueOf(score), xPositionReference, infoBarYPosition, textWidth);
@@ -375,8 +374,6 @@ public class GameViewController extends ViewController {
                 e.printStackTrace();
             }
         }
-
-
     }
 
     private void displayInformation(String info) {
