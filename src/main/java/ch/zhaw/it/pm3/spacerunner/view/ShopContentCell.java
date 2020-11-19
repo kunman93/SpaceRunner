@@ -1,7 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
@@ -240,7 +239,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
-        alert.setContentText("Not enough coins! You need at least " + persistenceUtil.getAmountOfCoinsNeedToBuyContent(content.getPrice()) + " more coins.");
+        alert.setContentText("Not enough coins! You need at least " + persistenceUtil.getAmountOfCoinsNeededToBuyContent(content.getPrice()) + " more coins.");
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(

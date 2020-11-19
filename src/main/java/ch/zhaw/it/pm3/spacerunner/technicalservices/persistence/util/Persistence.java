@@ -10,7 +10,7 @@ public interface Persistence {
     void activateContent(ContentId contentId);
 
     //TODO: JavaDOC and name
-    int getAmountOfCoinsNeedToBuyContent(int price);
+    int getAmountOfCoinsNeededToBuyContent(int price);
 
     //TODO: JavaDOC and name
     boolean playerHasEnoughCoinsToBuy(int price);

@@ -56,7 +56,7 @@ public class PersistenceUtil implements Persistence {
 
     //TODO: JavaDOC and name
     @Override
-    public int getAmountOfCoinsNeedToBuyContent(int price){
+    public int getAmountOfCoinsNeededToBuyContent(int price){
         PlayerProfile profile = loadProfile();
         if(profile.getCoins() >= price){
             return 0;
