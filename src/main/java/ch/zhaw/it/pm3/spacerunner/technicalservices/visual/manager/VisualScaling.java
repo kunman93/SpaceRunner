@@ -11,8 +11,6 @@ public enum VisualScaling {
     ROCKET(0.1);
 
 
-
-
     private double scaling;
 
     VisualScaling(double scaling) {

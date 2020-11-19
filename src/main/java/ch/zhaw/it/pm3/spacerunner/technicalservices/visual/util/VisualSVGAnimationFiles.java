@@ -10,7 +10,6 @@ public enum VisualSVGAnimationFiles {
             VisualSVGFile.SHINEY_COIN_5,
             VisualSVGFile.SHINEY_COIN_6}, 125);
 
-
     private VisualSVGFile[] animationVisuals;
     private int animationStepTime;
 

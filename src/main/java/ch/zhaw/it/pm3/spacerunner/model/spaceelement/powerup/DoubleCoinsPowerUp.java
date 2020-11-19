@@ -9,7 +9,6 @@ public class DoubleCoinsPowerUp extends PowerUp{
         super(startPosition);
     }
 
-
     @Override
     public int getActiveTime() {
         return TIME_ACTIVE;

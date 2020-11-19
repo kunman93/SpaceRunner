@@ -6,6 +6,8 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.VisualNotSetException;
 
 import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SpaceWorld extends SpaceElement{
   public SpaceWorld(Point2D.Double startPosition) {
@@ -17,6 +19,9 @@ public class SpaceWorld extends SpaceElement{
 
     @Override
     public void move(long timeInMillis) {
+
+        Logger logger = Logger.getLogger(SpaceWorld.class.getName());
+
         Point2D.Double position = getRelativePosition();
 
         //TODO: Fix background visualManager.getWidth()
@@ -28,11 +33,12 @@ public class SpaceWorld extends SpaceElement{
             }
         } catch (VisualNotSetException e) {
             //TODO: handle
+            logger.log(Level.SEVERE, "Visual for {0} wasn't set", SpaceWorld.class);
             e.printStackTrace();
         } catch (VelocityNotSetException e) {
+            logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
             e.printStackTrace();
         }
-
         setRelativePosition(position);
     }
 }

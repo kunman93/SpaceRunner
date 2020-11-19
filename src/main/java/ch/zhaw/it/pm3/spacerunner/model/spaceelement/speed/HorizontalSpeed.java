@@ -12,7 +12,6 @@ public enum HorizontalSpeed {
     POWERUP(0.7),
     ROCKET(0.85);
 
-
     private double speed;
 
     HorizontalSpeed(double speed){

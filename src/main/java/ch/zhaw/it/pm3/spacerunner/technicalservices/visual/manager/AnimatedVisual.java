@@ -41,7 +41,6 @@ public class AnimatedVisual {
             }
             animationTimeStamp = System.currentTimeMillis();
         }
-
         return this.visuals[animationPointer];
     }
 

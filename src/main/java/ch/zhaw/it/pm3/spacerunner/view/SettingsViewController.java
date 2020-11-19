@@ -45,6 +45,5 @@ public class SettingsViewController extends ViewController {
                 homeButton.setDisable(false);
             }
         });
-
     }
 }

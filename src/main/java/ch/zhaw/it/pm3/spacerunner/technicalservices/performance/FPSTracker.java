@@ -1,6 +1,14 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.performance;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class FPSTracker {
+
+    private Logger logger = Logger.getLogger(FPSTracker.class.getName());
+
     private final long[] frameTimes = new long[100];
     private int frameTimeIndex = 0 ;
     private boolean arrayFilled = false ;
@@ -16,8 +24,7 @@ public class FPSTracker {
             long elapsedNanos = currentNanoTime - oldFrameTime;
             long elapsedNanosPerFrame = elapsedNanos / frameTimes.length;
             double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame;
-            System.out.println(String.format("Current frame rate: %.3f", frameRate));
+            logger.log(Level.INFO, String.format("Current frame rate: %.3f", frameRate));
         }
     }
-
 }
