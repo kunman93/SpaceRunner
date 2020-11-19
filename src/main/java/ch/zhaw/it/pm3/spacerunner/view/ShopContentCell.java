@@ -79,7 +79,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     /**
      * called automatically from ListView by clicking somewhere
-     * - changes button texts according to buying-state
+     * - changes buttons texts according to buying-state
      * */
     @Override
     public void updateItem(ShopContent content, boolean empty) {
@@ -252,8 +252,5 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
         alert.showAndWait();
     }
-
-
-
 }
 
