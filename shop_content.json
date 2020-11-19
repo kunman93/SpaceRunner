@@ -10,8 +10,8 @@
   },
   {
     "contentId": "DOUBLE_DURATION_COIN_UPGRADE",
-    "title": "Double duration of coin powerup",
-    "description": "Double duration of coin powerup",
+    "title": "Double duration of coin power-up",
+    "description": "Double duration of coin power-up",
     "price": 1000,
     "imageId":  "DOUBLE_DURATION_COIN_UPGRADE",
     "itemType": "UPGRADE"
