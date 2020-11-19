@@ -53,7 +53,6 @@ public class GameController {
     private SpaceWorld background = null;
     private SpaceShip spaceShip;
 
-    //TODO: ConcurrentHashSet -> TEST
     private Set<SpaceElement> elements = ConcurrentHashMap.newKeySet();
     private PlayerProfile playerProfile;
     private ElementPreset elementPreset;
