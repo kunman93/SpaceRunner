@@ -12,10 +12,10 @@ import java.util.logging.Logger;
 
 public abstract class SpaceElement implements VisualElement {
 
-    private Logger logger = Logger.getLogger(SpaceElement.class.getName());
+    private final Logger logger = Logger.getLogger(SpaceElement.class.getName());
 
-    private VisualManager visualManager = VisualManager.getManager();
-    private VelocityManager velocityManager = VelocityManager.getManager();
+    private final VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
     //todo: Idee: Object die alle variablen (position, width, length) umfasst
     private Point2D.Double position = new Point2D.Double(0, 0);
 
@@ -31,9 +31,7 @@ public abstract class SpaceElement implements VisualElement {
         try {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
-            //TODO: handle
             logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
-            e.printStackTrace();
         }
 
         position.x += (timeInMillis/1000.0) * velocity.x;
@@ -57,9 +55,7 @@ public abstract class SpaceElement implements VisualElement {
         try {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
-            //TODO: handle
             logger.log(Level.SEVERE, "Velocity for {0} wasn't set");
-            e.printStackTrace();
         }
 
         return new Point2D.Double(position.x + velocity.x, position.y + velocity.y);
@@ -81,9 +77,7 @@ public abstract class SpaceElement implements VisualElement {
                     || pointInObject(position.x + visualManager.getElementRelativeWidth(this.getClass()), position.y, s)
                     || pointInObject(position.x + visualManager.getElementRelativeWidth(this.getClass()), position.y + visualManager.getElementRelativeHeight(this.getClass()), s);
         }catch(VisualNotSetException e){
-            //TODO: handle
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
-            e.printStackTrace();
             return true;
         }
     }
@@ -92,9 +86,7 @@ public abstract class SpaceElement implements VisualElement {
         try {
             return x >= s.getRelativePosition().x && x <= s.getRelativePosition().x + visualManager.getElementRelativeWidth(s.getClass()) && y >= s.getRelativePosition().y && y <= s.getRelativePosition().y + visualManager.getElementRelativeHeight(s.getClass());
         }catch(VisualNotSetException e){
-            //TODO: handle
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
-            e.printStackTrace();
             return false;
         }
     }

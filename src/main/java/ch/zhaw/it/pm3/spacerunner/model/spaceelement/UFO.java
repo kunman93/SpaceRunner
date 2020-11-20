@@ -11,9 +11,7 @@ import java.util.logging.Logger;
 
 public class UFO extends Obstacle {
 
-    //TODO discuss how to set the speed and movement, eventually use strategy-Patter for different movements?
-
-    private Logger logger = Logger.getLogger(UFO.class.getName());
+    private final Logger logger = Logger.getLogger(UFO.class.getName());
 
     private final VisualManager visualManager = VisualManager.getManager();
     private final VelocityManager velocityManager = VelocityManager.getManager();

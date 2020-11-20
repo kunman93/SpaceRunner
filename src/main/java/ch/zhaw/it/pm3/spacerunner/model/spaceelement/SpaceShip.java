@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class SpaceShip extends SpaceElement {
 
-    private Logger logger = Logger.getLogger(SpaceShip.class.getName());
+    private final Logger logger = Logger.getLogger(SpaceShip.class.getName());
 
     private boolean hasCrashed;
 
@@ -38,9 +38,7 @@ public class SpaceShip extends SpaceElement {
         try {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
         } catch (VelocityNotSetException e) {
-            //TODO: handle
             logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
-            e.printStackTrace();
         }
 
         if(direction == SpaceShipDirection.UP){
@@ -64,9 +62,7 @@ public class SpaceShip extends SpaceElement {
         try {
             relativeHeight = visualManager.getElementRelativeHeight(this.getClass());
         } catch (VisualNotSetException e) {
-            //TODO: Handle
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
-            e.printStackTrace();
         }
         Point2D.Double position = getRelativePosition();
         switch (direction) {

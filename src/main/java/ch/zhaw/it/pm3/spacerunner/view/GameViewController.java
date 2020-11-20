@@ -40,10 +40,9 @@ import java.util.logging.Logger;
 
 public class GameViewController extends ViewController {
 
-    private Logger logger = Logger.getLogger(GameViewController.class.getName());
+    private final Logger logger = Logger.getLogger(GameViewController.class.getName());
+    private final VisualUtil visualUtil = VisualUtil.getUtil();
 
-    private VisualUtil visualUtil = VisualUtil.getInstance();
-    //TODO: Canvas has to be a fixed height and width so we dont have to deal with scaling
     @FXML private Canvas gameCanvas;
     private GraphicsContext graphicsContext;
     private GameViewPort gameViewPort = null;
@@ -310,9 +309,7 @@ public class GameViewController extends ViewController {
             try {
                 image = fxmlImageProxy.getFXMLImage(spaceElement.getClass());
             } catch (VisualNotSetException e) {
-                e.printStackTrace();
                 logger.log(Level.SEVERE, "Visual for {0} wasn't set", spaceElement.getClass());
-                //TODO: handle
             }
             graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
         }

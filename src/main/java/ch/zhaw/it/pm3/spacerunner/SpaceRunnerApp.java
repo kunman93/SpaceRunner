@@ -95,21 +95,15 @@ public class SpaceRunnerApp extends Application {
         }
 
         try {
-            backgroundMusic = gameSoundUtil.loadClip(GameSound.BACKGROUND_2);
+            backgroundMusic = gameSoundUtil.loadClip(GameSound.BACKGROUND);
             backgroundMusic.setLoop(true);
             backgroundMusic.play();
         } catch (IOException e) {
-            //TODO
-            logger.log(Level.SEVERE, "Error Loading Sound BACKGROUND_2");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error Loading Sound BACKGROUND");
         } catch (UnsupportedAudioFileException e) {
-            //TODO
             logger.log(Level.SEVERE, "Sound BACKGROUND_2 has an Unsupported Type");
-            e.printStackTrace();
         } catch (LineUnavailableException e) {
             logger.log(Level.SEVERE, "Line wasn't available");
-            //TODO
-            e.printStackTrace();
         }
     }
 }

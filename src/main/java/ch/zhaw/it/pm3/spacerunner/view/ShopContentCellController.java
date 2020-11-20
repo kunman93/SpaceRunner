@@ -32,7 +32,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     private Logger logger = Logger.getLogger(ShopContent.class.getName());
 
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
-    private final VisualUtil visualUtil = VisualUtil.getInstance();
+    private final VisualUtil visualUtil = VisualUtil.getUtil();
 
     private static final String BUY_TEXT_FOR_BUY_BUTTON = "buy";
     private static final String BOUGHT_TEXT_FOR_BUY_BUTTON = "bought";
@@ -57,7 +57,6 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         try {
             fxmlLoader.load();
         } catch (IOException e) {
-            //TODO
             logger.log(Level.SEVERE, "Error loading FXML");
             throw new RuntimeException(e);
         }

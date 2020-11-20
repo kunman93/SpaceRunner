@@ -14,8 +14,8 @@ public class SpaceWorld extends SpaceElement{
         super(startPosition);
     }
 
-    private VisualManager visualManager = VisualManager.getManager();
-    private VelocityManager velocityManager = VelocityManager.getManager();
+    private final VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
 
     @Override
     public void move(long timeInMillis) {
@@ -24,7 +24,6 @@ public class SpaceWorld extends SpaceElement{
 
         Point2D.Double position = getRelativePosition();
 
-        //TODO: Fix background visualManager.getWidth()
         try {
             if(position.x + visualManager.getElementRelativeWidth(SpaceWorld.class) < 1){
                 position.x = 0;
@@ -32,12 +31,9 @@ public class SpaceWorld extends SpaceElement{
                 position.x += (timeInMillis/1000.0 *velocityManager.getRelativeVelocity(this.getClass()).x);
             }
         } catch (VisualNotSetException e) {
-            //TODO: handle
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", SpaceWorld.class);
-            e.printStackTrace();
         } catch (VelocityNotSetException e) {
             logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
-            e.printStackTrace();
         }
         setRelativePosition(position);
     }

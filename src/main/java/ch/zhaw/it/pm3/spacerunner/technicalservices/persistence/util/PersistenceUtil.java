@@ -122,9 +122,7 @@ public class PersistenceUtil implements Persistence {
             try {
                 playerProfile = loadAndDeserializeData(GameFile.PROFILE.getFileName(), PlayerProfile.class);
             } catch (IOException e) {
-                // TODO handle
                 logger.log(Level.SEVERE, "Unable to Load and / or Deserialize Data");
-                e.printStackTrace();
                 playerProfile = new PlayerProfile();
             }
         } else {
@@ -169,9 +167,7 @@ public class PersistenceUtil implements Persistence {
         try {
             serializeAndSaveData(GameFile.PROFILE.getFileName(), playerProfile);
         } catch (IOException e) {
-            // TODO handle
-            logger.log(Level.SEVERE, "Unable to Serialize and / or Data");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Unable to Serialize and / or load Data");
         }
     }
 
@@ -188,7 +184,6 @@ public class PersistenceUtil implements Persistence {
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(data, writer);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error opening File {0}", path);
             throw e;
         }
     }
@@ -222,9 +217,7 @@ public class PersistenceUtil implements Persistence {
         try {
             shopContentList = loadAndDeserializeData(GameFile.SHOP_CONTENT.getFileName(), listOfShopContentType);
         } catch (IOException e) {
-            // TODO handle
             logger.log(Level.SEVERE, "Error with Loading and / or Deserializing Data");
-            e.printStackTrace();
         }
         return shopContentList;
     }

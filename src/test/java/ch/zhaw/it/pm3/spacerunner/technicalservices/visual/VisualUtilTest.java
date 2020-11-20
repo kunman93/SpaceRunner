@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class VisualUtilTest {
-    private VisualUtil visualUtil = VisualUtil.getInstance();
+    private VisualUtil visualUtil = VisualUtil.getUtil();
 
     @BeforeEach
     void setUp() {

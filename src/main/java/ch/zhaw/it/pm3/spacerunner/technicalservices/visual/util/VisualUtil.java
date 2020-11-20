@@ -1,6 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
@@ -27,15 +26,15 @@ public class VisualUtil {
     private Logger logger = Logger.getLogger(VisualUtil.class.getName());
 
     // Singleton pattern
-    private static final VisualUtil instance = new VisualUtil();
+    private static final VisualUtil visualUtil = new VisualUtil();
 
     /**
      * private constructor for the singleton-pattern
      */
     private VisualUtil(){}
 
-    public static VisualUtil getInstance(){
-        return instance;
+    public static VisualUtil getUtil(){
+        return visualUtil;
     }
 
     /**
@@ -128,7 +127,7 @@ public class VisualUtil {
         BufferedImage loadedImage = null;
         try {
             loadedImage = rasterize(new File(imageURL.getFile().replace("%20", " ")), height);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             logger.log(Level.SEVERE, "Error Rasterizing File");
             return null;

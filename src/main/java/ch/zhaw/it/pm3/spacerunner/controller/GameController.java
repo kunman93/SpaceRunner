@@ -27,7 +27,6 @@ public class GameController {
 
     private Logger logger = Logger.getLogger(GameController.class.getName());
 
-    //TODO: make all final Manager and Util
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
     private final VisualManager visualManager = VisualManager.getManager();
@@ -164,7 +163,7 @@ public class GameController {
         visualManager.loadGameElementVisuals();
 
         gameTimer = new Timer("GameSpeedTimer");
-        gameTimer.scheduleAtFixedRate(getGameSpeedTimerTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
+        gameTimer.scheduleAtFixedRate(getGameBackgroundTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
         gameTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWER_UP_COOLDOWN);
 
         playerProfile = persistenceUtil.loadProfile();
@@ -191,14 +190,13 @@ public class GameController {
         };
     }
 
-    private TimerTask getGameSpeedTimerTask() {
+    private TimerTask getGameBackgroundTask() {
         return new TimerTask() {
             public void run() {
                 if(!isPaused){
                     updateElementsSpeed();
                 }
 
-                //TODO: move into own task??
                 removePastDrawables();
             }
         };
@@ -219,9 +217,7 @@ public class GameController {
             try {
                 return element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()) < 0;
             } catch (VisualNotSetException e) {
-                //TODO: handle
                 logger.log(Level.SEVERE, "Visual of {0} wasn't set", element.getClass());
-                e.printStackTrace();
                 return true;
             }
         });
@@ -256,8 +252,6 @@ public class GameController {
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
      */
     private SpaceElement detectCollision() {
-
-        //TODO: should we consider multi collision
         for (SpaceElement spaceElement : elements) {
             if (spaceShip.doesCollide(spaceElement)) {
                 return spaceElement;

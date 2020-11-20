@@ -17,7 +17,7 @@ import java.util.*;
 
 public class VisualManager{
 
-    private final VisualUtil visualUtil = VisualUtil.getInstance();
+    private final VisualUtil visualUtil = VisualUtil.getUtil();
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
     private final static VisualManager visualManager = new VisualManager();

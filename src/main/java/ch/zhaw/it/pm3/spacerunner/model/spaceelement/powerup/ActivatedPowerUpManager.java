@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class ActivatedPowerUpManager implements PowerUpListener{
 
-    private Logger logger = Logger.getLogger(ActivatedPowerUpManager.class.getName());
+    private final Logger logger = Logger.getLogger(ActivatedPowerUpManager.class.getName());
 
     private final int GENERAL_POWER_UP_PROBABILITY = 33;
     private final Map<Class<? extends PowerUp>,PowerUp> activePowerUps = new HashMap<>();
@@ -37,7 +37,6 @@ public class ActivatedPowerUpManager implements PowerUpListener{
                         powerUp = probability.getKey().getConstructor(Point2D.Double.class).newInstance(new Point2D.Double(1,Math.random()*0.8+0.1));
                         return powerUp;
                      } catch (Exception e) {
-                        // TODO: handle and logger
                         logger.log(Level.SEVERE, "Error in PowerUp generation");
                         return null;
                     }
