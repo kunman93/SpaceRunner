@@ -10,7 +10,7 @@ import java.net.URL;
 
 public class GameSoundUtil {
 
-    private SoundUtil soundUtil = SoundUtil.getInstance();
+    private SoundUtil soundUtil = SoundUtil.getSoundUtil();
     private static GameSoundUtil gameSoundUtil = new GameSoundUtil();
 
     private GameSoundUtil() {

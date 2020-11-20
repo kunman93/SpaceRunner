@@ -3,6 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.ui;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +12,7 @@ import javafx.scene.control.TextField;
 
 public class SettingsViewController extends ViewController {
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
-    private final SoundUtil soundUtil = SoundUtil.getInstance();
+    private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
     public Button homeButton;
     public TextField playerName;
     public Slider soundVolume;
@@ -25,7 +26,7 @@ public class SettingsViewController extends ViewController {
         playerProfile.setAudioEnabled(soundVolume.getValue() > 0);
         playerProfile.setFps((int) framerate.getValue());
         persistenceUtil.saveProfile(playerProfile);
-        soundUtil.setVolume(playerProfile.getVolume());
+        gameSoundUtil.setVolume(playerProfile.getVolume());
         getMain().setupBackgroundMusic();
         getMain().setFXMLView(FXMLFile.MENU);
     }
