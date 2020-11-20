@@ -21,18 +21,27 @@ public class PresetTest {
     private final VisualManager visualManager = VisualManager.getManager();
     private final VelocityManager velocityManager = VelocityManager.getManager();
 
+    /**
+     * Sets Up the necessary velocity and visual of Coin, which is used to test Preset.
+     */
     @BeforeEach
     void setUp() {
         velocityManager.setupGameElementVelocity();
         visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
     }
 
+    /**
+     * Tests if the time it takes the Preset to be entirely onscreen is 0 if the SpaceElements are already onscreen.
+     */
     @Test
     void calculateTimeUntilOnScreenZeroTest() {
         preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(0,0))});
         assertEquals(0, preset.getPresetTimeUntilOnScreen());
     }
 
+    /**
+     * Tests if the correct time it takes for the Preset to be entirely onscreen is calculated when the Preset contains one SpaceElement.
+     */
     @Test
     void calculateTimeUntilOnScreenOneElementTest() {
         preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1,0))});
@@ -43,6 +52,9 @@ public class PresetTest {
         }
     }
 
+    /**
+     * Tests if the correct time it takes for the Preset to be entirely onscreen is calculated when the Preset contains multiple SpaceElements.
+     */
     @Test
     void calculateTimeUntilOnScreenMultipleElementsTest() {
         preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1,0)), new Coin(new Point2D.Double(2,0))});
