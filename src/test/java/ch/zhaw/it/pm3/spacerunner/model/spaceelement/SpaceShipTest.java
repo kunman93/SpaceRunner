@@ -18,12 +18,18 @@ public class SpaceShipTest {
     private VelocityManager velocityManager = VelocityManager.getManager();
     private VisualManager visualManager = VisualManager.getManager();
 
+    /**
+     * Sets Up the velocity and visual of SpaceShip.
+     */
     @BeforeEach
     void setUp() {
         velocityManager.setupGameElementVelocity();
         visualManager.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP));
     }
 
+    /**
+     * Tests if the SpaceShip moves UP to the correct position after 1 second (1000 millisecond) of movement.
+     */
     @Test
     void directMoveUp1SecTest() {
         spaceShip = new SpaceShip(new Point2D.Double(0,1));
@@ -35,6 +41,9 @@ public class SpaceShipTest {
         }
     }
 
+    /**
+     * Tests if the SpaceShip moves UP to the correct position after 1 millisecond of movement.
+     */
     @Test
     void directMoveUp1MillisTest() {
         spaceShip = new SpaceShip(new Point2D.Double(0,1));
@@ -46,6 +55,9 @@ public class SpaceShipTest {
         }
     }
 
+    /**
+     * Tests if the SpaceShip moves DOWN to the correct position after 1 second (1000 millisecond) of movement.
+     */
     @Test
     void directMoveDown1SecTest() {
         spaceShip = new SpaceShip(new Point2D.Double(0,0));
@@ -57,6 +69,9 @@ public class SpaceShipTest {
         }
     }
 
+    /**
+     * Tests if the SpaceShip moves DOWN to the correct position after 1 millisecond of movement.
+     */
     @Test
     void directMoveDown1MillisTest() {
         spaceShip = new SpaceShip(new Point2D.Double(0,0));
@@ -68,6 +83,9 @@ public class SpaceShipTest {
         }
     }
 
+    /**
+     * Tests that the SpaceShip doesnt exceed the bottom screen limit.
+     */
     @Test
     void directMoveDownPastScreenLimitTest() {
         spaceShip = new SpaceShip(new Point2D.Double(0,0));
@@ -80,6 +98,9 @@ public class SpaceShipTest {
         }
     }
 
+    /**
+     * Tests that the SpaceShip doesnt exceed the top screen limit.
+     */
     @Test
     void directMoveUpPastScreenLimitTest() {
         spaceShip = new SpaceShip(new Point2D.Double(0,0.5));
