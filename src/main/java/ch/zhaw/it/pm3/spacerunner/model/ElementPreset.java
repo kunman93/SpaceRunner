@@ -9,12 +9,18 @@ import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * In this class the different presets are created, which are can shown randomly in the game.
+ */
 public class ElementPreset {
 
     private Logger logger = Logger.getLogger(ElementPreset.class.getName());
 
     VisualManager visualManager = VisualManager.getManager();
 
+    /**
+     * Creates all cases of presets
+     */
     private Preset generatePreset(PresetType p) throws VisualNotSetException {
         double y;
         switch (p) {
@@ -41,6 +47,9 @@ public class ElementPreset {
         return null;
     }
 
+    /**
+     * Returns one of the random preset
+     */
     public synchronized Preset getRandomPreset() {
         int index = (int)Math.floor(Math.random() * (PresetType.values().length));
 
@@ -68,20 +77,23 @@ public class ElementPreset {
 
     private SpaceElement[] randomCoinSquare() throws VisualNotSetException {
         double coinHeight = visualManager.getElementRelativeHeight(Coin.class);
-
         double y = Math.random() * (1.0 - coinHeight);
-        int count = (int) ((Math.random() * (6-2)) + 2);
+        int squareSize = (int) ((Math.random() * (6-2)) + 2);
 
-        if (Double.compare(count * coinHeight + y, 1.0 - coinHeight) >= 0) {
+        if (Double.compare(squareSize * coinHeight + y, 1.0 - coinHeight) >= 0) {
            return new SpaceElement[]{new Coin(new Point2D.Double(1,y))};
         }
 
-        SpaceElement[] spaceElements = new SpaceElement[count * count];
+        return generateCoinSquare(coinHeight, y, squareSize);
+    }
+
+    private SpaceElement[] generateCoinSquare(double coinHeight, double y, int squareSize) throws VisualNotSetException {
+        SpaceElement[] spaceElements = new SpaceElement[squareSize * squareSize];
         int index = 0;
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < squareSize; i++) {
             double x = 1.0;
-            for (int j = 0; j < count; j++) {
-                spaceElements[index] = new Coin(new Point2D.Double(x,y));
+            for (int j = 0; j < squareSize; j++) {
+                spaceElements[index] = new Coin(new Point2D.Double(x, y));
                 x = x + 2 * visualManager.getElementRelativeWidth(Coin.class);
                 index++;
             }

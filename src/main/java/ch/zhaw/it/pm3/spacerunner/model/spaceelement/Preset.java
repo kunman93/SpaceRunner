@@ -8,6 +8,10 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetE
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * In this class preset, SpaceElements can be saved.
+ * The class calculates the relative width of this sequence of SpaceElements.
+ */
 public class Preset implements Cloneable {
 
     private Logger logger = Logger.getLogger(Preset.class.getName());
@@ -18,6 +22,11 @@ public class Preset implements Cloneable {
     private VisualManager visualManager = VisualManager.getManager();
     private VelocityManager velocityManager = VelocityManager.getManager();
 
+    /**
+     * Constructor for the class preset
+     *
+     * @param elements array with SpaceElements
+     */
     public Preset(SpaceElement[] elements) {
         elementsInPreset = elements;
         timeUntilEntirePresetOnScreen = calculateSize();

@@ -1,5 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
+/**
+ * Different types of presets
+ */
 public enum PresetType {
     ASTEROID,
     UFO_SINGLE,
