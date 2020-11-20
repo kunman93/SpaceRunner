@@ -4,7 +4,6 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import org.junit.jupiter.api.BeforeEach;
