@@ -314,7 +314,7 @@ public class GameViewController extends ViewController {
     }
 
 
-    private void displayCoinsAndScore(int coins, int score) { //todo aufteilen
+    private void displayCoinsAndScore(int coins, int score) {
         double xPositionReference = gameViewPort.getGameWidth();
         double infoBarYPosition = gameViewPort.getGameHeight();
 
