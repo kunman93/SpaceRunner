@@ -331,10 +331,9 @@ public class GameViewController extends ViewController {
             graphicsContext.drawImage(image, (gameViewPort.getGameWidth() - image.getWidth() - infoBarImageMargin),
                     infoBarYPosition, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
-            // todo handle
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", UIVisualElement.COIN_COUNT.getClass());
-            e.printStackTrace();
         }
+
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(), infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
@@ -368,8 +367,7 @@ public class GameViewController extends ViewController {
                 graphicsContext.drawImage(image, infoBarImageMargin + xPositionReference,
                         infoBarYPosition, image.getWidth(), image.getHeight());
             } catch (VisualNotSetException e) {
-                // todo handle
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Visual for {0} wasn't set", uiVisualElementClass.getSimpleName());
             }
         }
 
@@ -389,7 +387,6 @@ public class GameViewController extends ViewController {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pauseGameKeyHandler);
     }
 
-    //todo problem with enum class
     private void initializeUiElements() {
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
         visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
