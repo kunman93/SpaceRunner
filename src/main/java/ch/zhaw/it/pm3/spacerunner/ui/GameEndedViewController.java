@@ -22,11 +22,14 @@ public class GameEndedViewController extends ViewController {
 
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
-    @Override
     public void initialize() {
         PlayerProfile player = persistenceUtil.loadProfile();
         name.setText("Congratulation " + player.getPlayerName());
-        score.setText("Score: " + getGameDataCache().getScore());
+        if (player.getHighScore() == getGameDataCache().getScore()) {
+            score.setText("new Highscore: " + getGameDataCache().getScore());
+        } else {
+            score.setText("score: " + getGameDataCache().getScore());
+        }
         collectedCoins.setText("Collected Coins: " + getGameDataCache().getCoins());
     }
 

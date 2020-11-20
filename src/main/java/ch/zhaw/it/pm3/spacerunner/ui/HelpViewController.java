@@ -14,11 +14,9 @@ public class HelpViewController extends ViewController {
 
     @FXML
     public void showMenu() {
-        getMain().setupBackgroundMusic();
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
-    @Override
     public void initialize() {
         //helpContent.setText(helpText);
     }

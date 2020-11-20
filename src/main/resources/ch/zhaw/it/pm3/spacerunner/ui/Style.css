@@ -10,7 +10,7 @@
 }
 
 Label, Button {
-    -fx-font-family: 'metallord';
+    -fx-font-family: 'Bauhaus 93';
 }
 
 .darkbg .title {
@@ -38,6 +38,7 @@ Button:hover Label {
     -fx-cursor: hand;
 }
 
+
 /* Menu.fxml */
 .darkbg .menu Label.title {
     -fx-font-size: 60 !important;
@@ -46,6 +47,19 @@ Button:hover Label {
 .icon-start-game{
     -fx-font-family: 'video games';
 }
+
+Button.help {
+    -fx-background-color: transparent;
+    -fx-effect: none;
+    -fx-pref-height: 40;
+    -fx-pref-width: 40;
+    -fx-font-size: 40;
+}
+
+Button.help:hover {
+    -fx-text-fill: red !important;
+}
+
 
 /* Settings.fxml */
 .settings Label {

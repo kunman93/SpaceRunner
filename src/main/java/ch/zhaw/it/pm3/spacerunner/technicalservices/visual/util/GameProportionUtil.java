@@ -1,5 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
+/**
+ *
+ * */
 public class GameProportionUtil {
 
     private final double proportionGame = 8.5; // todo
@@ -13,6 +16,12 @@ public class GameProportionUtil {
         return GAME_PROPORTION_UTIL;
     }
 
+    /**
+     * Calculates heights (game and infoBar) for GameViewPort
+     * @param width             width of primaryStage (view port)
+     * @param height            width of primaryStage (view port)
+     * @return double           fontsize
+     * */
     public GameViewPort calcProportions(double width, double height) {
         double proportionY = proportionGame + proportionGameBar;
         double proportionX = 16;
@@ -29,19 +38,27 @@ public class GameProportionUtil {
         return new GameViewPort(width, gameHeight, infoBarHeight);
     }
 
-    public double getTextWidth(int value, double height, double percentage) { //todo count digits
-        int responsiveMinNumber = 1_000_000;
-        if (value / responsiveMinNumber > 0) {
-            return getFontSize(height, percentage) * 7;
-        }
-        return getFontSize(height, percentage) * 5;
+    /**
+     * Calculates the text width proportional to the font size. Factor 5 is capable to display MAX_INTEGER.
+     * @param containerHeight   height of container where font is displayed
+     * @param percentage        font padding to container in percentage (only heights)
+     * @return double           width that can display all integer values
+     * */
+    public double getTextWidth(double containerHeight, double percentage) {
+        return getFontSize(containerHeight, percentage) * 5;
     }
 
-    public double getFontSize(double height, double percentage) {
-        return height * (1 - 2 * percentage);
+    /**
+     * Calculates the font size proportional to the parent container (subtracts the vertical paddings from the container).
+     * @param containerHeight   height of container where font is displayed
+     * @param percentage        font padding to container in percentage (only heights)
+     * @return double           fontsize
+     * */
+    public double getFontSize(double containerHeight, double percentage) {
+        return containerHeight * (1 - 2 * percentage);
     }
 
-    private double calcInfoBarHeight(double height, double proportionY) {
-        return height * (proportionGameBar / proportionY);
+    private double calcInfoBarHeight(double viewPortHeight, double proportionY) {
+        return viewPortHeight * (proportionGameBar / proportionY);
     }
 }

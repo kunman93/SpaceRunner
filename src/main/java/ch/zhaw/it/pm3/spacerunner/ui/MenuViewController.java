@@ -1,14 +1,14 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
+
+/**
+ * Visual entry point of program. Loads new FXML files on button-clicks.
+ *
+ * @author freymar1
+ * */
 public class MenuViewController extends ViewController {
-
-    @FXML
-    public Button settingsButton;
-    @FXML
-    public Button startGameButton;
 
     @FXML
     public void showGame() {
@@ -25,9 +25,6 @@ public class MenuViewController extends ViewController {
         getMain().setFXMLView(FXMLFile.SETTINGS);
     }
 
-    // todo remove from super
-    @Override
-    public void initialize() {
-
-    }
+    @FXML
+    public void showHelp() { getMain().setFXMLView(FXMLFile.HELP); }
 }

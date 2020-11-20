@@ -31,7 +31,6 @@ public class SettingsViewController extends ViewController {
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
-    @Override
     public void initialize() {
         playerProfile = persistenceUtil.loadProfile();
         playerName.setText(playerProfile.getPlayerName());
