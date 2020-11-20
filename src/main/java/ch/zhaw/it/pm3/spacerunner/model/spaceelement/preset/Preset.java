@@ -1,5 +1,6 @@
-package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
+package ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
