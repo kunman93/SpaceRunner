@@ -339,7 +339,7 @@ public class GameController {
 
     private void collisionWithCoin(Coin c){
         collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
-        score += 25;
+        score += 25 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
         elements.remove(c);
         new Thread(()->{
             try {
@@ -355,7 +355,7 @@ public class GameController {
         activatedPowerUpManager.addPowerUp(p);
         p.activatePowerUp();
         elements.remove(p);
-        score += 10;
+        score += 50;
     }
 
 

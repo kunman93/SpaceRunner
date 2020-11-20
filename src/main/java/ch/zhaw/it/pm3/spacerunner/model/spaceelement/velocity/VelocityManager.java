@@ -26,7 +26,7 @@ public class VelocityManager {
 
     public void setupGameElementVelocity(){
         velocityManager.setVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.UFO.getSpeed()));
+        velocityManager.setVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
         velocityManager.setVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
         velocityManager.setVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
         velocityManager.setVelocity(ShieldPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
