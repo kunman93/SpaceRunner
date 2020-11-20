@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -23,7 +24,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * class for each table row which contains various FXML elements
+ * Shop-view (shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
+ * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
  * */
 public class ShopContentCell extends ListCell<ShopContent> {
 
@@ -76,8 +78,8 @@ public class ShopContentCell extends ListCell<ShopContent> {
     }
 
     /**
-     * called automatic from ListView by clicking somewhere
-     * - changes button texts according to buying-state
+     * called automatically from ListView by clicking somewhere
+     * - changes buttons texts according to buying-state
      * */
     @Override
     public void updateItem(ShopContent content, boolean empty) {
@@ -203,6 +205,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
         ButtonType purchaseButtonType = new ButtonType("Purchase", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"",purchaseButtonType,cancelButtonType);
+        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm Purchase");
         alert.setHeaderText(null);
         alert.setContentText("Do you really want to buy " + content.getTitle() + "?");
@@ -237,6 +240,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
     private void showFailedToPurchaseContentAlertDialogue() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Purchase failed!");
         alert.setHeaderText(null);
         alert.setContentText("Not enough coins! You need at least " + persistenceUtil.getAmountOfCoinsNeededToBuyContent(content.getPrice()) + " more coins.");
@@ -248,8 +252,5 @@ public class ShopContentCell extends ListCell<ShopContent> {
 
         alert.showAndWait();
     }
-
-
-
 }
 
