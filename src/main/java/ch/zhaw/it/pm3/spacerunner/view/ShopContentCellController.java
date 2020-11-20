@@ -233,7 +233,6 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         shopContentCellControllerListeners.add(shopContentCellControllerListener);
     }
 
-    //TODO: We should remove the listener at some time
     public void removeListener(ShopContentCellControllerListener shopContentCellControllerListener) {
         shopContentCellControllerListeners.remove(shopContentCellControllerListener);
     }
