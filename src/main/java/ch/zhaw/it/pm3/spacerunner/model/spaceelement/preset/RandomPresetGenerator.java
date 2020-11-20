@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.model;
+package ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset;
 
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
@@ -9,12 +9,14 @@ import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  * In this class the different presets are created, which are can shown randomly in the game.
  */
-public class ElementPreset {
 
-    private Logger logger = Logger.getLogger(ElementPreset.class.getName());
+public class RandomPresetGenerator {
+
+    private Logger logger = Logger.getLogger(RandomPresetGenerator.class.getName());
 
     VisualManager visualManager = VisualManager.getManager();
 

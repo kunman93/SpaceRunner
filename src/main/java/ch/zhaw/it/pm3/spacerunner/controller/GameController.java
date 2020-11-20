@@ -1,8 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.model.ElementPreset;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset.RandomPresetGenerator;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset.Preset;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ActivatedPowerUpManager;
@@ -56,7 +57,7 @@ public class GameController {
 
     private Set<SpaceElement> elements = ConcurrentHashMap.newKeySet();
     private PlayerProfile playerProfile;
-    private ElementPreset elementPreset;
+    private RandomPresetGenerator elementPreset;
 
 
     private long lastUpdate = 0;
@@ -168,7 +169,7 @@ public class GameController {
 
         playerProfile = persistenceUtil.loadProfile();
 
-        elementPreset = new ElementPreset();
+        elementPreset = new RandomPresetGenerator();
 
         background = new SpaceWorld(new Point2D.Double(0, 0));
         spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));

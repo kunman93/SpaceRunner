@@ -121,6 +121,7 @@ Slider .axis .axis-minor-tick-mark {
 .shop .list-cell Label {
     -fx-font-size: 20;
     -fx-padding: 10 0 0 0;
+    -fx-font-family: "Bauhaus 93";
 }
 
 .shop .list-cell Button {
