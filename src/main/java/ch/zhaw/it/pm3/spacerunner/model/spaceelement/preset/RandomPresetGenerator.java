@@ -16,9 +16,8 @@ import java.util.logging.Logger;
 
 public class RandomPresetGenerator {
 
-    private Logger logger = Logger.getLogger(RandomPresetGenerator.class.getName());
-
-    VisualManager visualManager = VisualManager.getManager();
+    private final Logger logger = Logger.getLogger(RandomPresetGenerator.class.getName());
+    private final VisualManager visualManager = VisualManager.getManager();
 
     /**
      * Creates all cases of presets
