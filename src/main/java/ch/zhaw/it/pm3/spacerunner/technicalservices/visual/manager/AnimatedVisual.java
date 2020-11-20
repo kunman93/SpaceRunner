@@ -30,13 +30,13 @@ public class AnimatedVisual {
         this.visuals = visuals;
     }
 
-    public Visual getCurrentVisual(){
+    public Visual getCurrentVisual() {
         long currentTime = System.currentTimeMillis();
 
-        if(currentTime - animationTimeStamp > visualSVGAnimationFiles.getAnimationStepTime()){
-            if(animationPointer < visuals.length - 1){
+        if (currentTime - animationTimeStamp > visualSVGAnimationFiles.getAnimationStepTime()) {
+            if (animationPointer < visuals.length - 1) {
                 animationPointer++;
-            }else{
+            } else {
                 animationPointer = 0;
             }
             animationTimeStamp = System.currentTimeMillis();

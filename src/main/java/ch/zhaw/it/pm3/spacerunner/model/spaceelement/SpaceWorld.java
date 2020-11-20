@@ -9,8 +9,8 @@ import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SpaceWorld extends SpaceElement{
-  public SpaceWorld(Point2D.Double startPosition) {
+public class SpaceWorld extends SpaceElement {
+    public SpaceWorld(Point2D.Double startPosition) {
         super(startPosition);
     }
 
@@ -25,10 +25,10 @@ public class SpaceWorld extends SpaceElement{
         Point2D.Double position = getRelativePosition();
 
         try {
-            if(position.x + visualManager.getElementRelativeWidth(SpaceWorld.class) < 1){
+            if (position.x + visualManager.getElementRelativeWidth(SpaceWorld.class) < 1) {
                 position.x = 0;
-            }else{
-                position.x += (timeInMillis/1000.0 *velocityManager.getRelativeVelocity(this.getClass()).x);
+            } else {
+                position.x += (timeInMillis / 1000.0 * velocityManager.getRelativeVelocity(this.getClass()).x);
             }
         } catch (VisualNotSetException e) {
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", SpaceWorld.class);

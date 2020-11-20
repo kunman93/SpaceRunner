@@ -31,9 +31,10 @@ public class VisualUtil {
     /**
      * private constructor for the singleton-pattern
      */
-    private VisualUtil(){}
+    private VisualUtil() {
+    }
 
-    public static VisualUtil getUtil(){
+    public static VisualUtil getUtil() {
         return visualUtil;
     }
 
@@ -55,7 +56,7 @@ public class VisualUtil {
     }
 
 
-    public BufferedImage generateBackground(BufferedImage inputImage,  int scaledWidth, int scaledHeight){
+    public BufferedImage generateBackground(BufferedImage inputImage, int scaledWidth, int scaledHeight) {
         BufferedImage outputImage = new BufferedImage(scaledWidth * 3, scaledHeight, inputImage.getType());
 
         // creates output image
@@ -73,12 +74,13 @@ public class VisualUtil {
 
     /**
      * This will resize the inputImage and return the resized image
-     * @param inputImage image to resize
-     * @param scaledWidth width for resized image
+     *
+     * @param inputImage   image to resize
+     * @param scaledWidth  width for resized image
      * @param scaledHeight height for resized image
      * @return resized image
      */
-    public BufferedImage resizeImage(BufferedImage inputImage, int scaledWidth, int scaledHeight){
+    public BufferedImage resizeImage(BufferedImage inputImage, int scaledWidth, int scaledHeight) {
 
         // creates output image
         BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, inputImage.getType());
@@ -92,16 +94,15 @@ public class VisualUtil {
     }
 
     //TODO: Declare as copied from internet. (Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage)
+
     /**
      * Converts a given Image into a BufferedImage
      *
      * @param img The Image to be converted
      * @return The converted BufferedImage
      */
-    private BufferedImage toBufferedImage(Image img)
-    {
-        if (img instanceof BufferedImage)
-        {
+    private BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
             return (BufferedImage) img;
         }
 
@@ -184,27 +185,25 @@ public class VisualUtil {
             };
             t.setTranscodingHints(transcoderHints);
             t.transcode(input, null);
-        }
-        catch (TranscoderException ex) {
+        } catch (TranscoderException ex) {
             logger.log(Level.SEVERE, "Couldn't convert {0}", svgFile);
             // Requires Java 6
             ex.printStackTrace();
             throw new IOException("Couldn't convert " + svgFile);
-        }
-        finally {
+        } finally {
             cssFile.delete();
         }
 
         return imagePointer[0];
     }
 
-    public BufferedImage flipImage(BufferedImage image, boolean horizontal){
+    public BufferedImage flipImage(BufferedImage image, boolean horizontal) {
         // Flip the image horizontally
         AffineTransform tx;
-        if(horizontal){
+        if (horizontal) {
             tx = AffineTransform.getScaleInstance(-1, 1);
             tx.translate(-image.getWidth(null), 0);
-        }else{
+        } else {
             tx = AffineTransform.getScaleInstance(1, -1);
             tx.translate(0, -image.getHeight(null));
 

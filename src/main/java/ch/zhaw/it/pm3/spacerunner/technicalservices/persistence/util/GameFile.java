@@ -6,7 +6,8 @@ public enum GameFile {
 
 
     private String fileName;
-    private GameFile(String fileName){
+
+    private GameFile(String fileName) {
         this.fileName = fileName;
     }
 

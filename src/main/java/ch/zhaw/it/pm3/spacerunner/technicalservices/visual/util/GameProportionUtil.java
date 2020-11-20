@@ -6,7 +6,8 @@ public class GameProportionUtil {
     private final double proportionGameBar = 0.5;
     private final static GameProportionUtil GAME_PROPORTION_UTIL = new GameProportionUtil();
 
-    private GameProportionUtil() {}
+    private GameProportionUtil() {
+    }
 
     public static GameProportionUtil getUtil() {
         return GAME_PROPORTION_UTIL;

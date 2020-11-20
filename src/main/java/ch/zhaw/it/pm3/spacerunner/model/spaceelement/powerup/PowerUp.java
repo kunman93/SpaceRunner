@@ -3,7 +3,10 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.SpaceElement;
 
 import java.awt.geom.Point2D;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class PowerUp extends SpaceElement {
     private Set<PowerUpListener> powerUpListeners = new HashSet<>();
@@ -23,7 +26,7 @@ public abstract class PowerUp extends SpaceElement {
         powerUpListeners.remove(powerUpManagerListener);
     }
 
-    public void incrementPowerUpMultiplier(){
+    public void incrementPowerUpMultiplier() {
         multiplier++;
         resetPowerUpTimer();
     }
@@ -32,20 +35,20 @@ public abstract class PowerUp extends SpaceElement {
         return multiplier;
     }
 
-    public void createPowerUpTimer(){
+    public void createPowerUpTimer() {
         currentPowerUpTimerTask = createPowerUpTimerTask();
         powerUpTimer.schedule(currentPowerUpTimerTask, getActiveTime());
     }
 
-    private void resetPowerUpTimer(){
-        if (currentPowerUpTimerTask != null){
+    private void resetPowerUpTimer() {
+        if (currentPowerUpTimerTask != null) {
             currentPowerUpTimerTask.cancel();
             currentPowerUpTimerTask = createPowerUpTimerTask();
             powerUpTimer.schedule(currentPowerUpTimerTask, getActiveTime());
         }
     }
 
-    private TimerTask createPowerUpTimerTask(){
+    private TimerTask createPowerUpTimerTask() {
         PowerUp powerUp = this;
         return new TimerTask() {
             @Override

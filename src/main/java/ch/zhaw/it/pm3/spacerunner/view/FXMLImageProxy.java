@@ -17,11 +17,11 @@ public class FXMLImageProxy implements VisualManagerListener {
     private VisualManager visualManager = VisualManager.getManager();
     private Map<BufferedImage, Image> fxmlImageClassMap = new HashMap<>();
 
-    private FXMLImageProxy(){
+    private FXMLImageProxy() {
         visualManager.addListener(this);
     }
 
-    public static FXMLImageProxy getProxy(){
+    public static FXMLImageProxy getProxy() {
         return proxyInstance;
     }
 
@@ -29,17 +29,17 @@ public class FXMLImageProxy implements VisualManagerListener {
         BufferedImage bufferedImage = visualManager.getImage(elementClass);
         Image image = fxmlImageClassMap.get(bufferedImage);
 
-        if(image != null){
+        if (image != null) {
             return image;
         } else {
-            Image fxmlImage =  SwingFXUtils.toFXImage(bufferedImage, null);
+            Image fxmlImage = SwingFXUtils.toFXImage(bufferedImage, null);
             fxmlImageClassMap.put(bufferedImage, fxmlImage);
             return fxmlImage;
         }
     }
 
     @Override
-    public void clear(){
+    public void clear() {
         fxmlImageClassMap = new HashMap<>();
     }
 

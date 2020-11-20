@@ -22,7 +22,7 @@ public class PlayerProfile {
     public static boolean TEST = false;
 
 
-    public PlayerProfile(){
+    public PlayerProfile() {
         audioEnabled = true;
         volume = 100;
         playerName = "Player1";
@@ -86,7 +86,7 @@ public class PlayerProfile {
         return purchasedContentIds;
     }
 
-    public void addContent(ContentId contentId){
+    public void addContent(ContentId contentId) {
         purchasedContentIds.add(contentId);
     }
 
@@ -124,8 +124,8 @@ public class PlayerProfile {
 
     @Override
     public boolean equals(Object o) {
-        if(TEST){
-            if(o instanceof PlayerProfile){
+        if (TEST) {
+            if (o instanceof PlayerProfile) {
                 PlayerProfile that = (PlayerProfile) o;
                 return audioEnabled == that.audioEnabled &&
                         volume == that.volume &&
@@ -134,10 +134,10 @@ public class PlayerProfile {
                         Objects.equals(playerName, that.playerName) &&
                         Objects.equals(purchasedContentIds, that.purchasedContentIds) &&
                         activeShopContent.size() == that.activeShopContent.size();
-            }else{
+            } else {
                 return super.equals(o);
             }
-        }else{
+        } else {
             return super.equals(o);
         }
     }

@@ -13,5 +13,7 @@ public enum ContentId {
         value = newValue;
     }
 
-    public int getValue() { return value; }
+    public int getValue() {
+        return value;
+    }
 }

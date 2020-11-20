@@ -17,7 +17,7 @@ public enum VisualScaling {
         this.scaling = scaling;
     }
 
-   public double getScaling() {
+    public double getScaling() {
         return scaling;
     }
 }

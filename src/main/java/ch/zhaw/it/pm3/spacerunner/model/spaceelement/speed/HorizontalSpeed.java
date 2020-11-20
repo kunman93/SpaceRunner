@@ -14,7 +14,7 @@ public enum HorizontalSpeed {
 
     private double speed;
 
-    HorizontalSpeed(double speed){
+    HorizontalSpeed(double speed) {
         this.speed = speed;
     }
 

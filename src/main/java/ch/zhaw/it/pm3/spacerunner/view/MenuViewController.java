@@ -21,7 +21,9 @@ public class MenuViewController extends ViewController {
     }
 
     @FXML
-    public void showSettings() { getMain().setFXMLView(FXMLFile.SETTINGS); }
+    public void showSettings() {
+        getMain().setFXMLView(FXMLFile.SETTINGS);
+    }
 
     // todo remove from super
     @Override

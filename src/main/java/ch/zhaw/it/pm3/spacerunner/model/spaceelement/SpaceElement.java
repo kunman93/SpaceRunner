@@ -34,8 +34,8 @@ public abstract class SpaceElement implements VisualElement {
             logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
         }
 
-        position.x += (timeInMillis/1000.0) * velocity.x;
-        position.y += (timeInMillis/1000.0) * velocity.y;
+        position.x += (timeInMillis / 1000.0) * velocity.x;
+        position.y += (timeInMillis / 1000.0) * velocity.y;
     }
 
 
@@ -50,7 +50,7 @@ public abstract class SpaceElement implements VisualElement {
     /**
      * @return Returns Point where the SpaceElement will be after one move()
      */
-    public Point2D.Double getNextPosition(){
+    public Point2D.Double getNextPosition() {
         Point2D.Double velocity = null;
         try {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
@@ -66,7 +66,7 @@ public abstract class SpaceElement implements VisualElement {
      * @param s other SpaceElement
      * @return Returns true if SpaceElements Overlapp
      */
-    public boolean doesCollide(SpaceElement s){
+    public boolean doesCollide(SpaceElement s) {
         try {
             return pointInObject(s.getRelativePosition().x, s.getRelativePosition().y, this)
                     || pointInObject(s.getRelativePosition().x, s.getRelativePosition().y + visualManager.getElementRelativeHeight(s.getClass()), this)
@@ -76,16 +76,16 @@ public abstract class SpaceElement implements VisualElement {
                     || pointInObject(position.x, position.y + visualManager.getElementRelativeHeight(this.getClass()), s)
                     || pointInObject(position.x + visualManager.getElementRelativeWidth(this.getClass()), position.y, s)
                     || pointInObject(position.x + visualManager.getElementRelativeWidth(this.getClass()), position.y + visualManager.getElementRelativeHeight(this.getClass()), s);
-        }catch(VisualNotSetException e){
+        } catch (VisualNotSetException e) {
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
             return true;
         }
     }
 
-    private boolean pointInObject(double x, double y, SpaceElement s){
+    private boolean pointInObject(double x, double y, SpaceElement s) {
         try {
             return x >= s.getRelativePosition().x && x <= s.getRelativePosition().x + visualManager.getElementRelativeWidth(s.getClass()) && y >= s.getRelativePosition().y && y <= s.getRelativePosition().y + visualManager.getElementRelativeHeight(s.getClass());
-        }catch(VisualNotSetException e){
+        } catch (VisualNotSetException e) {
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", this.getClass());
             return false;
         }

@@ -12,7 +12,7 @@ public abstract class ViewController {
     protected static String DEFAULT_FONT = "Bauhaus 93";
     private static GameDataCache gameDataCache = null;
 
-    public static void  setMain(SpaceRunnerApp main) {
+    public static void setMain(SpaceRunnerApp main) {
         ViewController.main = main;
     }
 

@@ -1,7 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
-
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
@@ -34,15 +32,16 @@ public class SoundClip {
 
     /**
      * Sets the volume of the SoundClip.
+     *
      * @param volume desired volume from 0 - 100
      */
-    public void setVolume(int volume){
-        if(volume < 0 || volume > 100){
+    public void setVolume(int volume) {
+        if (volume < 0 || volume > 100) {
             logger.log(Level.WARNING, "Invalid volume. Volume must me between 0 - 100");
             throw new IllegalArgumentException("Invalid volume. Volume must me between 0 - 100");
         }
 
-        float f_volume = volume/100f;
+        float f_volume = volume / 100f;
 
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float range = gainControl.getMaximum() - gainControl.getMinimum();

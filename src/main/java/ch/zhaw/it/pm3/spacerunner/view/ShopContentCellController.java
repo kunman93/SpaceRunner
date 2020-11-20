@@ -1,7 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.view;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ItemType;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
@@ -26,7 +29,7 @@ import java.util.stream.Collectors;
 /**
  * Shop-view (shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
  * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
- * */
+ */
 public class ShopContentCellController extends ListCell<ShopContent> {
 
     private Logger logger = Logger.getLogger(ShopContent.class.getName());
@@ -41,13 +44,20 @@ public class ShopContentCellController extends ListCell<ShopContent> {
 
     private final Set<ShopContentCellControllerListener> shopContentCellControllerListeners = new HashSet<>();
 
-    @FXML private GridPane cellContent;
-    @FXML private GridPane verticalSeparation;
-    @FXML private ImageView contentImageView = new ImageView();
-    @FXML private Label contentTitelLabel = new Label();
-    @FXML private Label contentPriceLabel = new Label();
-    @FXML private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
-    @FXML private Button activateButton = new Button(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
+    @FXML
+    private GridPane cellContent;
+    @FXML
+    private GridPane verticalSeparation;
+    @FXML
+    private ImageView contentImageView = new ImageView();
+    @FXML
+    private Label contentTitelLabel = new Label();
+    @FXML
+    private Label contentPriceLabel = new Label();
+    @FXML
+    private Button buyButton = new Button(BUY_TEXT_FOR_BUY_BUTTON);
+    @FXML
+    private Button activateButton = new Button(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
     private static boolean spaceShipModelIsAlreadySelected;
     private ShopContent content;
 
@@ -65,7 +75,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         setUpUI();
     }
 
-    private void setUpUI(){
+    private void setUpUI() {
         contentImageView = (ImageView) cellContent.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
         verticalSeparation = (GridPane) cellContent.getChildren().stream().filter((child) -> child.getId().equals("verticalSeparation")).collect(Collectors.toList()).get(0);
         contentTitelLabel = (Label) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
@@ -79,13 +89,13 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     /**
      * called automatically from ListView by clicking somewhere
      * - changes buttons texts according to buying-state
-     * */
+     */
     @Override
     public void updateItem(ShopContent content, boolean empty) {
-        super.updateItem(getItem(),empty);
+        super.updateItem(getItem(), empty);
         this.content = content;
         setText(null);
-        if(this.content != null) {
+        if (this.content != null) {
             setUpImageAndLabelsOfContent();
 
             setUpBuyButton();
@@ -106,45 +116,45 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     }
 
     private void setUpBuyButton() {
-        if(persistenceUtil.contentIsPurchased(content.getContentId())){
+        if (persistenceUtil.contentIsPurchased(content.getContentId())) {
             buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
             buyButton.setDisable(true);
-        }else{
+        } else {
             buyButton.setText(BUY_TEXT_FOR_BUY_BUTTON);
             buyButton.setDisable(false);
         }
     }
 
     private void setUpActivateButton() {
-        if(persistenceUtil.contentIsActive(content.getContentId())){
+        if (persistenceUtil.contentIsActive(content.getContentId())) {
             activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
-            if(contentIsAPlayerModel()) {
+            if (contentIsAPlayerModel()) {
                 spaceShipModelIsAlreadySelected = true;
             }
-        }else{
+        } else {
             activateButton.setText(ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
         }
 
-        if(spaceShipModelIsAlreadySelected) {
+        if (spaceShipModelIsAlreadySelected) {
             if (!persistenceUtil.contentIsActive(content.getContentId()) && contentIsAPlayerModel()) {
                 activateButton.setDisable(true);
-            } else if(contentIsAPlayerModel()){
+            } else if (contentIsAPlayerModel()) {
                 activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
                 activateButton.setDisable(false);
             }
-        }else if(contentIsAPlayerModel()){
+        } else if (contentIsAPlayerModel()) {
             activateButton.setDisable(false);
         }
     }
 
     private void processShopping() {
-        if(persistenceUtil.contentIsPurchased(content.getContentId())) {
+        if (persistenceUtil.contentIsPurchased(content.getContentId())) {
             if (persistenceUtil.contentIsActive(content.getContentId())) {
                 deactivatePurchasedContent();
             } else {
                 activatePurchasedContent();
             }
-        }else{
+        } else {
             buyContent();
         }
     }
@@ -153,15 +163,15 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         return content.getItemType() == ItemType.PLAYER_MODEL;
     }
 
-    private boolean contentIsAnUpgrade(){
+    private boolean contentIsAnUpgrade() {
         return content.getItemType() == ItemType.UPGRADE;
     }
 
     private void deactivatePurchasedContent() {
         activateButton.setOnAction(event -> {
-            if(contentIsAnUpgrade()) {
+            if (contentIsAnUpgrade()) {
                 deactivateContentInPlayerProfile();
-            }else if(contentIsAPlayerModel() && (spaceShipModelIsAlreadySelected)){
+            } else if (contentIsAPlayerModel() && (spaceShipModelIsAlreadySelected)) {
                 deactivateContentInPlayerProfile();
                 spaceShipModelIsAlreadySelected = false;
             }
@@ -175,9 +185,9 @@ public class ShopContentCellController extends ListCell<ShopContent> {
 
     private void activatePurchasedContent() {
         activateButton.setOnAction(event -> {
-            if(contentIsAnUpgrade()){
+            if (contentIsAnUpgrade()) {
                 activateContentInPlayerProfile();
-            }else if(contentIsAPlayerModel() && (!spaceShipModelIsAlreadySelected)){
+            } else if (contentIsAPlayerModel() && (!spaceShipModelIsAlreadySelected)) {
                 activateContentInPlayerProfile();
                 spaceShipModelIsAlreadySelected = true;
             }
@@ -192,18 +202,18 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     private void buyContent() {
         activateButton.setDisable(true);
         buyButton.setOnAction(event -> {
-            if(persistenceUtil.playerHasEnoughCoinsToBuy(content.getPrice())){
+            if (persistenceUtil.playerHasEnoughCoinsToBuy(content.getPrice())) {
                 showPurchaseContentConfirmationDialogue();
-            }else{
+            } else {
                 showFailedToPurchaseContentAlertDialogue();
             }
         });
     }
 
-    private void showPurchaseContentConfirmationDialogue(){
+    private void showPurchaseContentConfirmationDialogue() {
         ButtonType purchaseButtonType = new ButtonType("Purchase", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"",purchaseButtonType,cancelButtonType);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", purchaseButtonType, cancelButtonType);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm Purchase");
         alert.setHeaderText(null);
@@ -215,7 +225,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         dialogPane.getStyleClass().add("dialog");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == purchaseButtonType){
+        if (result.get() == purchaseButtonType) {
             buy();
         }
     }

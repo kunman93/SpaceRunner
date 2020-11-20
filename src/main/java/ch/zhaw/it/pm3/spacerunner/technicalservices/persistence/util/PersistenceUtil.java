@@ -1,6 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -32,15 +31,16 @@ public class PersistenceUtil implements Persistence {
     /**
      * private constructor for the singleton-pattern
      */
-    private PersistenceUtil(){}
+    private PersistenceUtil() {
+    }
 
-    public static PersistenceUtil getUtil(){
+    public static PersistenceUtil getUtil() {
         return persistenceUtil;
     }
 
     //TODO: JavaDOC and name
     @Override
-    public void deactivateContent(ContentId contentId){
+    public void deactivateContent(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         profile.deactivateContent(contentId);
         saveProfile(profile);
@@ -48,7 +48,7 @@ public class PersistenceUtil implements Persistence {
 
     //TODO: JavaDOC and name
     @Override
-    public void activateContent(ContentId contentId){
+    public void activateContent(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         profile.activateContent(contentId);
         saveProfile(profile);
@@ -56,9 +56,9 @@ public class PersistenceUtil implements Persistence {
 
     //TODO: JavaDOC and name
     @Override
-    public int getAmountOfCoinsNeededToBuyContent(int price){
+    public int getAmountOfCoinsNeededToBuyContent(int price) {
         PlayerProfile profile = loadProfile();
-        if(profile.getCoins() >= price){
+        if (profile.getCoins() >= price) {
             return 0;
         }
         return price - profile.getCoins();
@@ -73,9 +73,9 @@ public class PersistenceUtil implements Persistence {
 
     //TODO: JavaDOC and name
     @Override
-    public void buyContent(ContentId contentId, int price){
+    public void buyContent(ContentId contentId, int price) {
         PlayerProfile profile = loadProfile();
-        profile.setCoins(profile.getCoins() - price);
+        profile.subtractCoins(price);
         profile.addContent(contentId);
         saveProfile(profile);
     }
@@ -96,13 +96,13 @@ public class PersistenceUtil implements Persistence {
 
     //TODO: JavaDOC and name
     @Override
-    public int getSoundVolume(){
+    public int getSoundVolume() {
         return loadProfile().getVolume();
     }
 
     //TODO: JavaDOC and name
     @Override
-    public boolean isAudioEnabled(){
+    public boolean isAudioEnabled() {
         return loadProfile().isAudioEnabled();
     }
 
@@ -191,8 +191,8 @@ public class PersistenceUtil implements Persistence {
     //TODO: JavaDOC
     private Set<ShopContent> loadActiveContent(Set<ContentId> activeContentIds) {
         List<ShopContent> shopContentList = loadShopContent();
-        return shopContentList.stream().filter((shopContent)->{
-            return activeContentIds.stream().anyMatch((purchasedContentId) ->{
+        return shopContentList.stream().filter((shopContent) -> {
+            return activeContentIds.stream().anyMatch((purchasedContentId) -> {
                 return purchasedContentId == shopContent.getContentId();
             });
         }).collect(Collectors.toSet());
@@ -201,8 +201,8 @@ public class PersistenceUtil implements Persistence {
     //TODO: JavaDOC
     private Set<ShopContent> loadPurchasedContent(Set<ContentId> purchasedContentIds) {
         List<ShopContent> shopContentList = loadShopContent();
-        return shopContentList.stream().filter((shopContent)->{
-            return purchasedContentIds.stream().anyMatch((purchasedContentId) ->{
+        return shopContentList.stream().filter((shopContent) -> {
+            return purchasedContentIds.stream().anyMatch((purchasedContentId) -> {
                 return purchasedContentId == shopContent.getContentId();
             });
         }).collect(Collectors.toSet());
@@ -211,7 +211,8 @@ public class PersistenceUtil implements Persistence {
     //TODO: JavaDOC
     @Override
     public List<ShopContent> loadShopContent() {
-        Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {}.getType();
+        Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {
+        }.getType();
 
         List<ShopContent> shopContentList = null;
         try {

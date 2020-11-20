@@ -7,7 +7,6 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.ShopContent
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
@@ -23,14 +22,19 @@ import java.util.Set;
 public class ShopViewControllerController extends ViewController implements ShopContentCellControllerListener {
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
-    @FXML private TabPane tabPane;
-    @FXML private ListView<ShopContent> listViewForUpgrades;
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private ListView<ShopContent> listViewForUpgrades;
     private Set<ShopContentCellController> upgradeElements = new HashSet<>();
-    @FXML private ListView<ShopContent> listViewForSkins;
+    @FXML
+    private ListView<ShopContent> listViewForSkins;
     private Set<ShopContentCellController> skinElements = new HashSet<>();
-    @FXML private Label collectedCoinsLabel;
+    @FXML
+    private Label collectedCoinsLabel;
 
-    @FXML public void showMenu() {
+    @FXML
+    public void showMenu() {
         upgradeElements.forEach((shopContentCellController -> shopContentCellController.removeListener(this)));
         skinElements.forEach((shopContentCellController -> shopContentCellController.removeListener(this)));
         getMain().setFXMLView(FXMLFile.MENU);
@@ -45,10 +49,10 @@ public class ShopViewControllerController extends ViewController implements Shop
         List<ShopContent> upgrades = new ArrayList<>();
         List<ShopContent> skins = new ArrayList<>();
 
-        for(ShopContent content : shopContents){
-            if(content.getItemType() == ItemType.UPGRADE){
+        for (ShopContent content : shopContents) {
+            if (content.getItemType() == ItemType.UPGRADE) {
                 upgrades.add(content);
-            }else if(content.getItemType() == ItemType.PLAYER_MODEL){
+            } else if (content.getItemType() == ItemType.PLAYER_MODEL) {
                 skins.add(content);
             }
         }

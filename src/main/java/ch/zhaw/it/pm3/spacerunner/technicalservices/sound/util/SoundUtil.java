@@ -1,11 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.UFO;
-
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class SoundUtil {
     // Singleton pattern
@@ -14,9 +11,10 @@ public class SoundUtil {
     /**
      * private constructor for the singleton-pattern
      */
-    private SoundUtil(){}
+    private SoundUtil() {
+    }
 
-    public static SoundUtil getInstance(){
+    public static SoundUtil getInstance() {
         return instance;
     }
 

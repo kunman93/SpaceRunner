@@ -2,8 +2,6 @@ package ch.zhaw.it.pm3.spacerunner.view;
 
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.text.Text;
 
 public class HelpViewController extends ViewController {
 

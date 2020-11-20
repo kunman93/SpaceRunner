@@ -2,7 +2,6 @@ package ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity;
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.DoubleCoinsPowerUp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ShieldPowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.HorizontalSpeed;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.speed.VerticalSpeed;
@@ -16,15 +15,15 @@ public class VelocityManager {
     private Map<Class<? extends SpaceElement>, Point2D.Double> velocityMap = new HashMap<>();
     private static VelocityManager velocityManager = new VelocityManager();
 
-    public static VelocityManager getManager(){
+    public static VelocityManager getManager() {
         return velocityManager;
     }
 
-    private VelocityManager(){
+    private VelocityManager() {
 
     }
 
-    public void setupGameElementVelocity(){
+    public void setupGameElementVelocity() {
         velocityManager.setVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
         velocityManager.setVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
         velocityManager.setVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
@@ -36,43 +35,43 @@ public class VelocityManager {
 
     }
 
-    public synchronized void setVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity){
+    public synchronized void setVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity) {
         velocityMap.put(elementClass, velocity);
     }
 
-    public synchronized void accelerateAll(Point2D.Double acceleration){
-        for(Map.Entry<Class<? extends SpaceElement>, Point2D.Double> currentVelocity : velocityMap.entrySet()){
+    public synchronized void accelerateAll(Point2D.Double acceleration) {
+        for (Map.Entry<Class<? extends SpaceElement>, Point2D.Double> currentVelocity : velocityMap.entrySet()) {
             Point2D.Double velocity = currentVelocity.getValue();
-            if(velocity.x != 0){
+            if (velocity.x != 0) {
                 velocity.x = velocity.x + acceleration.x;
             }
-            if(velocity.y != 0){
+            if (velocity.y != 0) {
                 velocity.y = velocity.y + acceleration.y;
             }
             velocityMap.put(currentVelocity.getKey(), velocity);
         }
     }
 
-    public synchronized void accelerateX(Class<? extends SpaceElement> elementClass, double xAcceleration){
+    public synchronized void accelerateX(Class<? extends SpaceElement> elementClass, double xAcceleration) {
         Point2D.Double velocity = velocityMap.get(elementClass);
 
-        if(velocity != null){
+        if (velocity != null) {
             velocityMap.put(elementClass, new Point2D.Double(velocity.x + xAcceleration, velocity.y));
         }
     }
 
-    public synchronized void accelerateY(Class<? extends SpaceElement> elementClass, double yAcceleration){
+    public synchronized void accelerateY(Class<? extends SpaceElement> elementClass, double yAcceleration) {
         Point2D.Double velocity = velocityMap.get(elementClass);
 
-        if(velocity != null){
+        if (velocity != null) {
             velocityMap.put(elementClass, new Point2D.Double(velocity.x, velocity.y + yAcceleration));
         }
     }
 
-    public synchronized void accelerate(Class<? extends SpaceElement> elementClass, Point2D.Double acceleration){
+    public synchronized void accelerate(Class<? extends SpaceElement> elementClass, Point2D.Double acceleration) {
         Point2D.Double velocity = velocityMap.get(elementClass);
 
-        if(velocity != null){
+        if (velocity != null) {
             velocityMap.put(elementClass, new Point2D.Double(velocity.x + acceleration.x, velocity.y + acceleration.y));
         }
     }
@@ -80,7 +79,7 @@ public class VelocityManager {
 
     public synchronized Point2D.Double getRelativeVelocity(Class<? extends SpaceElement> elementClass) throws VelocityNotSetException {
         Point2D.Double velocity = velocityMap.get(elementClass);
-        if(velocity == null){
+        if (velocity == null) {
             throw new VelocityNotSetException("Velocity for " + elementClass.getSimpleName() + " was not set!");
         }
 

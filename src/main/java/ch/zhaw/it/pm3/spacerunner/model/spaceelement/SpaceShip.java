@@ -1,7 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.model.spaceelement;
 
 
-
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
@@ -21,7 +20,7 @@ public class SpaceShip extends SpaceElement {
     private final VisualManager visualManager = VisualManager.getManager();
 
 
-    public SpaceShip(Point2D.Double startPosition){
+    public SpaceShip(Point2D.Double startPosition) {
         super(startPosition);
     }
 
@@ -33,7 +32,7 @@ public class SpaceShip extends SpaceElement {
         hasCrashed = true;
     }
 
-    private void directMove(SpaceShipDirection direction, Point2D.Double position, long timeInMillis){
+    private void directMove(SpaceShipDirection direction, Point2D.Double position, long timeInMillis) {
         Point2D.Double velocity = null;
         try {
             velocity = velocityManager.getRelativeVelocity(this.getClass());
@@ -41,12 +40,12 @@ public class SpaceShip extends SpaceElement {
             logger.log(Level.SEVERE, "Velocity for {0} wasn't set", this.getClass());
         }
 
-        if(direction == SpaceShipDirection.UP){
-            position.x -= timeInMillis/1000.0 * velocity.x;
-            position.y -= timeInMillis/1000.0 * velocity.y;
-        }else if(direction == SpaceShipDirection.DOWN){
-            position.x += timeInMillis/1000.0 * velocity.x;
-            position.y += timeInMillis/1000.0 * velocity.y;
+        if (direction == SpaceShipDirection.UP) {
+            position.x -= timeInMillis / 1000.0 * velocity.x;
+            position.y -= timeInMillis / 1000.0 * velocity.y;
+        } else if (direction == SpaceShipDirection.DOWN) {
+            position.x += timeInMillis / 1000.0 * velocity.x;
+            position.y += timeInMillis / 1000.0 * velocity.y;
         }
 
         setRelativePosition(position);
@@ -67,7 +66,7 @@ public class SpaceShip extends SpaceElement {
         Point2D.Double position = getRelativePosition();
         switch (direction) {
             case UP:
-                if (position.y <= 0.0){
+                if (position.y <= 0.0) {
                     setRelativePosition(new Point2D.Double(position.x, 0.0));
                     return;
                 }

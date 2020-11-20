@@ -9,11 +9,16 @@ import javafx.scene.control.Label;
 
 public class GameEndedViewController extends ViewController {
 
-    @FXML public Button showMenuButton;
-    @FXML public Button playAgainButton;
-    @FXML public Label score;
-    @FXML public Label name;
-    @FXML public Label collectedCoins;
+    @FXML
+    public Button showMenuButton;
+    @FXML
+    public Button playAgainButton;
+    @FXML
+    public Label score;
+    @FXML
+    public Label name;
+    @FXML
+    public Label collectedCoins;
 
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 

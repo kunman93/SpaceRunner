@@ -1,19 +1,17 @@
 package ch.zhaw.it.pm3.spacerunner.controller;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset.RandomPresetGenerator;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
-
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset.Preset;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ActivatedPowerUpManager;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.PowerUp;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset.Preset;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset.RandomPresetGenerator;
+import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
-
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 
@@ -65,7 +63,6 @@ public class GameController {
     //TODO: proxy pattern mit manager
 
 
-
     public void saveGame() {
         updatePlayerProfile();
         persistenceUtil.saveProfile(playerProfile);
@@ -86,10 +83,10 @@ public class GameController {
     }
 
 
-    private long millisSinceLastProcessing(){
-        if(lastUpdate == 0){
+    private long millisSinceLastProcessing() {
+        if (lastUpdate == 0) {
             return 0;
-        }else{
+        } else {
             return System.currentTimeMillis() - lastUpdate;
         }
     }
@@ -111,14 +108,12 @@ public class GameController {
     }
 
 
-
-
     /**
      * Updates the playerProfile with collected coins and new highscore
      */
     private void updatePlayerProfile() {
         playerProfile.addCoins(collectedCoins);
-        if(score > playerProfile.getHighScore()) {
+        if (score > playerProfile.getHighScore()) {
             playerProfile.setHighScore(score);
         }
     }
@@ -142,7 +137,9 @@ public class GameController {
         return fps;
     }
 
-    public boolean isPaused() {return isPaused;}
+    public boolean isPaused() {
+        return isPaused;
+    }
 
     /**
      * Continues or stops game logic according to clicking pause/resume button
@@ -176,13 +173,13 @@ public class GameController {
         fps = playerProfile.getFps();
     }
 
-    private TimerTask getPowerUpGeneratorTask(){
+    private TimerTask getPowerUpGeneratorTask() {
         return new TimerTask() {
             @Override
             public void run() {
-                if (!isPaused){
+                if (!isPaused) {
                     PowerUp powerUp = activatedPowerUpManager.generatePowerUps();
-                    if(powerUp != null){
+                    if (powerUp != null) {
                         elements.add(powerUp);
                     }
                 }
@@ -193,7 +190,7 @@ public class GameController {
     private TimerTask getGameBackgroundTask() {
         return new TimerTask() {
             public void run() {
-                if(!isPaused){
+                if (!isPaused) {
                     updateElementsSpeed();
                 }
 
@@ -207,7 +204,7 @@ public class GameController {
         this.visualManager.setViewport(width, height);
     }
 
-      /**
+    /**
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
@@ -227,7 +224,7 @@ public class GameController {
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
     private void generateObstacles() {
-        if(remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
+        if (remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
             generatePreset(elementPreset.getRandomPreset());
         }
     }
@@ -245,7 +242,7 @@ public class GameController {
             element.move(timeSinceLastUpdate);
         }
         background.move(timeSinceLastUpdate);
-        remainingDistanceUntilNextPreset -= timeSinceLastUpdate/1000.0;
+        remainingDistanceUntilNextPreset -= timeSinceLastUpdate / 1000.0;
     }
 
     /**
@@ -260,35 +257,35 @@ public class GameController {
         return null;
     }
 
-    private void endRun(){
+    private void endRun() {
         spaceShip.crash();
         gameTimer.cancel();
         gameOver = true;
-        if(playerProfile.isAudioEnabled()){
-            new Thread(()->{
+        if (playerProfile.isAudioEnabled()) {
+            new Thread(() -> {
                 try {
                     SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
                     explosion.addListener(() -> {
                         try {
                             SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
-                            gameOverVoice.addListener(()->{
+                            gameOverVoice.addListener(() -> {
                                 try {
                                     gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
-                                }  catch (Exception e){
+                                } catch (Exception e) {
                                     //IGNORE ON PURPOSE
                                     logger.log(Level.WARNING, "Sound GAME_OVER_2 couldn't be loaded");
                                 }
                             });
                             gameOverVoice.play();
                             gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             //IGNORE ON PURPOSE
                             logger.log(Level.WARNING, "Sound GAME_OVER_1 couldn't be loaded");
                         }
                     });
                     explosion.play();
 
-                } catch (Exception e){
+                } catch (Exception e) {
                     //IGNORE ON PURPOSE
                     logger.log(Level.WARNING, "Sound EXPLOSION couldn't be loaded");
                 }
@@ -296,7 +293,7 @@ public class GameController {
         }
         try {
             Thread.sleep(500);
-        } catch (Exception e){
+        } catch (Exception e) {
             //IGNORE ON PURPOSE
             logger.log(Level.WARNING, "Thread wasn't able to sleep");
         }
@@ -322,8 +319,8 @@ public class GameController {
         }
     }
 
-    private void collisionWithObstacle(Obstacle o){
-        if (activatedPowerUpManager.hasShield()){
+    private void collisionWithObstacle(Obstacle o) {
+        if (activatedPowerUpManager.hasShield()) {
             elements.remove(o);
             activatedPowerUpManager.removeShield();
         } else {
@@ -331,21 +328,21 @@ public class GameController {
         }
     }
 
-    private void collisionWithCoin(Coin c){
+    private void collisionWithCoin(Coin c) {
         collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
         score += 25 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
         elements.remove(c);
-        new Thread(()->{
+        new Thread(() -> {
             try {
                 gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
-            } catch (Exception e){
+            } catch (Exception e) {
                 //IGNORE ON PURPOSE
                 logger.log(Level.WARNING, "Sound COIN_PICKUP couldn't be loaded");
             }
         }).start();
     }
 
-    private void collisionWithPowerUp(PowerUp p){
+    private void collisionWithPowerUp(PowerUp p) {
         activatedPowerUpManager.addPowerUp(p);
         p.activatePowerUp();
         elements.remove(p);
@@ -353,7 +350,7 @@ public class GameController {
     }
 
 
-    public Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps(){
+    public Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps() {
         return Collections.unmodifiableMap(activatedPowerUpManager.getActivePowerUps());
     }
 
@@ -362,6 +359,6 @@ public class GameController {
     }
 
     private void updateHighScore(long timeSinceLastUpdate) {
-        score = score + (int)(timeSinceLastUpdate/10);
+        score = score + (int) (timeSinceLastUpdate / 10);
     }
 }

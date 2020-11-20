@@ -43,7 +43,8 @@ public class GameViewController extends ViewController {
     private final Logger logger = Logger.getLogger(GameViewController.class.getName());
     private final VisualUtil visualUtil = VisualUtil.getUtil();
 
-    @FXML private Canvas gameCanvas;
+    @FXML
+    private Canvas gameCanvas;
     private GraphicsContext graphicsContext;
     private GameViewPort gameViewPort = null;
     private GameProportionUtil gameProportionUtil = GameProportionUtil.getUtil();
@@ -54,21 +55,21 @@ public class GameViewController extends ViewController {
     private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
-    private EventHandler<KeyEvent> startGameKeyHandler = new EventHandler<KeyEvent>(){
+    private EventHandler<KeyEvent> startGameKeyHandler = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            if(event.getCode() == KeyCode.SPACE){
+            if (event.getCode() == KeyCode.SPACE) {
                 gameController.togglePause();
-                if(primaryStage != null){
+                if (primaryStage != null) {
                     primaryStage.removeEventHandler(KeyEvent.KEY_RELEASED, this);
                 }
             }
         }
     };
-    private EventHandler<KeyEvent> pauseGameKeyHandler = new EventHandler<KeyEvent>(){
+    private EventHandler<KeyEvent> pauseGameKeyHandler = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            if(event.getCode() == KeyCode.P){
+            if (event.getCode() == KeyCode.P) {
                 gameController.togglePause();
             }
         }
@@ -123,7 +124,7 @@ public class GameViewController extends ViewController {
 
         showLoadingScreen();
 
-        new Thread(()->{
+        new Thread(() -> {
             gameController.initialize();
 
             int fps_config = gameController.getFps();
@@ -137,12 +138,10 @@ public class GameViewController extends ViewController {
             primaryStage.addEventHandler(KeyEvent.KEY_RELEASED, startGameKeyHandler);
 
             lastUpdate = System.nanoTime();
-            gameLoop = new AnimationTimer()
-            {
+            gameLoop = new AnimationTimer() {
                 private FPSTracker fpsTracker = new FPSTracker();
 
-                public void handle(long currentNanoTime)
-                {
+                public void handle(long currentNanoTime) {
                     if (currentNanoTime - lastUpdate >= timeForFrameNano) {
                         updateGameFrame();
 
@@ -165,7 +164,7 @@ public class GameViewController extends ViewController {
     }
 
 
-    private void updateGameFrame(){
+    private void updateGameFrame() {
         gameController.processFrame(upPressed, downPressed);
         clearCanvas();
         displayUpdatedSpaceElements(gameController.getGameElements());
@@ -174,10 +173,10 @@ public class GameViewController extends ViewController {
 
         boolean gameOver = gameController.isGameOver();
 
-        if(gameOver){
+        if (gameOver) {
             removeKeyHandlers();
             removeWindowSizeListeners();
-            if(gameLoop != null){
+            if (gameLoop != null) {
                 gameLoop.stop();
                 setGameDataCache(new GameDataCache(gameController.getCollectedCoins(), gameController.getScore()));
                 getMain().setFXMLView(FXMLFile.GAME_ENDED);
@@ -206,15 +205,15 @@ public class GameViewController extends ViewController {
 
     private void resize() {
 
-        if(!wasPausedBeforeResize && !isResizing){
+        if (!wasPausedBeforeResize && !isResizing) {
             isResizing = true;
             wasPausedBeforeResize = gameController.isPaused();
-            if(!wasPausedBeforeResize){
+            if (!wasPausedBeforeResize) {
                 gameController.togglePause();
             }
         }
 
-        if(resizeTask != null){
+        if (resizeTask != null) {
             resizeTask.cancel();
         }
 
@@ -229,11 +228,11 @@ public class GameViewController extends ViewController {
         resizeTask = new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater(()->{
+                Platform.runLater(() -> {
                     gameCanvas.setWidth(finalWidth);
                     gameCanvas.setHeight(finalHeight + gameViewPort.getInfoBarHeight());
                     gameController.setViewport((int) finalWidth, (int) finalHeight);
-                    if(!wasPausedBeforeResize){
+                    if (!wasPausedBeforeResize) {
                         gameController.togglePause();
                     }
                     isResizing = false;
@@ -258,7 +257,7 @@ public class GameViewController extends ViewController {
         };
     }
 
-    private EventHandler<WindowEvent> handleCloseWindowEvent(){
+    private EventHandler<WindowEvent> handleCloseWindowEvent() {
         return event -> {
             Platform.exit();
             System.exit(0);
@@ -267,11 +266,11 @@ public class GameViewController extends ViewController {
 
 
     /*
-    * https://stackoverflow.com/questions/45326525/how-to-show-a-loading-animation-in-javafx-application
-    */
+     * https://stackoverflow.com/questions/45326525/how-to-show-a-loading-animation-in-javafx-application
+     */
     private void showLoadingScreen() {
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(), infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
 
         loadingAnimation = new AnimationTimer() {
@@ -297,7 +296,7 @@ public class GameViewController extends ViewController {
         loadingAnimation.start();
     }
 
-    private void clearCanvas(){
+    private void clearCanvas() {
         graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
     }
 
@@ -314,7 +313,6 @@ public class GameViewController extends ViewController {
             graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
         }
     }
-
 
 
     private void displayCoinsAndScore(int coins, int score) { //todo aufteilen
@@ -338,11 +336,11 @@ public class GameViewController extends ViewController {
             e.printStackTrace();
         }
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(), infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
         xPositionReference -= infoBarTextMargin;
-        double textWidth = gameProportionUtil.getTextWidth(coins,gameViewPort.getInfoBarHeight(),infoBarPaddingPercent);
+        double textWidth = gameProportionUtil.getTextWidth(coins, gameViewPort.getInfoBarHeight(), infoBarPaddingPercent);
         graphicsContext.fillText(String.valueOf(coins), xPositionReference, infoBarYPosition, textWidth);
         xPositionReference -= (infoBarTextMargin + textWidth);
         graphicsContext.fillText(String.valueOf(score), xPositionReference, infoBarYPosition, textWidth);
@@ -380,7 +378,7 @@ public class GameViewController extends ViewController {
 
     private void displayInformation(String info) {
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent)));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(), infoBarPaddingPercent)));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
         graphicsContext.fillText(info, gameViewPort.getGameWidth() / 2, gameViewPort.getGameHeight());
     }
@@ -392,7 +390,7 @@ public class GameViewController extends ViewController {
     }
 
     //todo problem with enum class
-    private void initializeUiElements(){
+    private void initializeUiElements() {
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
         visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
         visualManager.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
