@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class FXMLImageProxy implements VisualManagerListener {
 
-    private static FXMLImageProxy proxyInstance = new FXMLImageProxy();
-    private VisualManager visualManager = VisualManager.getManager();
+    private static final FXMLImageProxy proxyInstance = new FXMLImageProxy();
+    private final VisualManager visualManager = VisualManager.getManager();
     private Map<BufferedImage, Image> fxmlImageClassMap = new HashMap<>();
 
     private FXMLImageProxy() {
