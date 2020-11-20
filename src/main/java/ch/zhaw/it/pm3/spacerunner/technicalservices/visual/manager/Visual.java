@@ -4,7 +4,8 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 
 import java.awt.image.BufferedImage;
-public class Visual{
+
+public class Visual {
     private BufferedImage bufferedImage;
     private VisualSVGFile visualSVGFile;
     private VisualFile visualFile;
@@ -39,13 +40,13 @@ public class Visual{
         this.visualScaling = visualScaling;
     }
 
-    public void setResize(int resizeHeight, int resizeWidth){
+    public void setResize(int resizeHeight, int resizeWidth) {
         this.resize = true;
         this.resizeHeight = resizeHeight;
         this.resizeWidth = resizeWidth;
     }
 
-    public void setIsBackground(boolean isBackground){
+    public void setIsBackground(boolean isBackground) {
         this.resize = isBackground;
         this.isBackground = isBackground;
     }

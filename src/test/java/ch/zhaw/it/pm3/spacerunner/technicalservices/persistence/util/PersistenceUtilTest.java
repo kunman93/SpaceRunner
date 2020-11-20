@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

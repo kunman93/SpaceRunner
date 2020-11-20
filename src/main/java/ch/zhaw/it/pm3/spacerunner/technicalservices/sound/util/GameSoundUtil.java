@@ -8,13 +8,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class GameSoundUtil{
+public class GameSoundUtil {
 
-    private SoundUtil soundUtil = SoundUtil.getInstance();
+    private SoundUtil soundUtil = SoundUtil.getUtil();
     private static GameSoundUtil gameSoundUtil = new GameSoundUtil();
 
-    private GameSoundUtil(){
-
+    private GameSoundUtil() {
     }
 
     public static GameSoundUtil getUtil() {
@@ -35,6 +34,4 @@ public class GameSoundUtil{
     public void setVolume(int volume) {
         soundUtil.setVolume(volume);
     }
-
-
 }

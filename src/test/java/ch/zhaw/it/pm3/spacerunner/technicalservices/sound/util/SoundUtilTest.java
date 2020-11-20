@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests The SoundUtil-Class.
  */
 class SoundUtilTest {
-    private SoundUtil soundUtil = SoundUtil.getInstance();
+    private SoundUtil soundUtil = SoundUtil.getUtil();
     private File file;
     private SoundClip soundClip;
 

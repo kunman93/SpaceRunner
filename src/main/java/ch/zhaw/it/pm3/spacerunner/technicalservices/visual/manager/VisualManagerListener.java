@@ -7,5 +7,6 @@ import java.awt.image.BufferedImage;
  */
 public interface VisualManagerListener {
     void clear();
+
     void bufferedImageChanged(BufferedImage bufferedImage);
 }

@@ -5,11 +5,15 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * SoundClip Object that offers methods related to handling playback.
  */
 public class SoundClip {
+
+    private Logger logger = Logger.getLogger(SoundClip.class.getName());
 
     private final Clip clip;
 
@@ -23,20 +27,21 @@ public class SoundClip {
 
     public SoundClip(Clip clip) {
         this.clip = clip;
-
         clip.addLineListener(this::clipLineListener);
     }
 
     /**
      * Sets the volume of the SoundClip.
+     *
      * @param volume desired volume from 0 - 100
      */
-    public void setVolume(int volume){
-        if(volume < 0 || volume > 100){
+    public void setVolume(int volume) {
+        if (volume < 0 || volume > 100) {
+            logger.log(Level.WARNING, "Invalid volume. Volume must me between 0 - 100");
             throw new IllegalArgumentException("Invalid volume. Volume must me between 0 - 100");
         }
 
-        float f_volume = volume/100f;
+        float f_volume = volume / 100f;
 
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         float range = gainControl.getMaximum() - gainControl.getMinimum();
@@ -76,7 +81,6 @@ public class SoundClip {
         }
 
         return false;
-
     }
 
     /**
@@ -90,7 +94,6 @@ public class SoundClip {
         }
 
         state = PlayStates.PLAYING;
-
     }
 
     private void playClipFromStart() {
@@ -113,10 +116,8 @@ public class SoundClip {
     private void playClip() {
         if (loopClip) {
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-
         } else {
             clip.start();
-
         }
     }
 

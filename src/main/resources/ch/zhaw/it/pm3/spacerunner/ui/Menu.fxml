@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.ui.MenuViewController"
+          stylesheets="@Style.css"
+          prefHeight="490" prefWidth="800"
+          xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"
+          styleClass="darkbg">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="10" />
+        <ColumnConstraints percentWidth="90" />
+        <ColumnConstraints percentWidth="10" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="5" />
+        <RowConstraints percentHeight="10" />
+        <RowConstraints percentHeight="50" />
+        <RowConstraints percentHeight="20" />
+        <RowConstraints percentHeight="20" />
+        <RowConstraints percentHeight="5" />
+    </rowConstraints>
+    <children>
+        <Button styleClass="help" text="?" alignment="TOP_RIGHT" GridPane.rowIndex="1" GridPane.columnIndex="1" onAction="#showHelp" GridPane.halignment="RIGHT" />
+        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label text="SPACE RUNNER" styleClass="title"/>
+        </HBox>
+        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="menu">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="30" />
+                <ColumnConstraints percentWidth="5" />
+                <ColumnConstraints percentWidth="30" />
+                <ColumnConstraints percentWidth="5" />
+                <ColumnConstraints percentWidth="30" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                    <HBox alignment="CENTER" GridPane.columnIndex="0">
+                        <children>
+                            <Button onAction="#showGame" text="START" >
+                                <graphic>
+                                    <HBox>
+                                        <children>
+                                            <Label styleClass="icon-start-game">B</Label>
+                                        </children>
+                                    </HBox>
+                                </graphic>
+                            </Button>
+                        </children>
+                    </HBox>
+                    <HBox alignment="CENTER" GridPane.columnIndex="2">
+                        <children>
+                            <Button onAction="#showShop" text="SHOP" />
+                        </children>
+                    </HBox>
+                    <HBox alignment="CENTER" GridPane.columnIndex="4">
+                        <children>
+                            <Button onAction="#showSettings" text="SETTINGS" />
+                        </children>
+                    </HBox>
+            </children>
+        </GridPane>
+    </children>
+</GridPane>

@@ -6,15 +6,16 @@ import java.io.IOException;
 
 public class SoundUtil {
     // Singleton pattern
-    private static final SoundUtil instance = new SoundUtil();
+    private static final SoundUtil soundUtil = new SoundUtil();
 
     /**
      * private constructor for the singleton-pattern
      */
-    private SoundUtil(){}
+    private SoundUtil() {
+    }
 
-    public static SoundUtil getInstance(){
-        return instance;
+    public static SoundUtil getUtil() {
+        return soundUtil;
     }
 
 

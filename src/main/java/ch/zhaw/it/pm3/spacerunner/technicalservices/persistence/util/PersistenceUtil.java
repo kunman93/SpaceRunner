@@ -1,5 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ContentId;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,12 +16,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
  * Utility tool to persist data (load / save)
  */
-public class PersistenceUtil {
+public class PersistenceUtil implements Persistence {
+
+    private Logger logger = Logger.getLogger(PersistenceUtil.class.getName());
+
     // Singleton pattern
     private static final PersistenceUtil persistenceUtil = new PersistenceUtil();
 
@@ -26,21 +35,78 @@ public class PersistenceUtil {
     /**
      * private constructor for the singleton-pattern
      */
-    private PersistenceUtil(){}
+    private PersistenceUtil() {
+    }
 
-    public static PersistenceUtil getUtil(){
+    public static PersistenceUtil getUtil() {
         return persistenceUtil;
     }
 
-
+    //TODO: JavaDOC and name
+    @Override
+    public void deactivateContent(ContentId contentId) {
+        PlayerProfile profile = loadProfile();
+        profile.deactivateContent(contentId);
+        saveProfile(profile);
+    }
 
     //TODO: JavaDOC and name
-    public int getSoundVolume(){
+    @Override
+    public void activateContent(ContentId contentId) {
+        PlayerProfile profile = loadProfile();
+        profile.activateContent(contentId);
+        saveProfile(profile);
+    }
+
+    //TODO: JavaDOC and name
+    @Override
+    public int getAmountOfCoinsNeededToBuyContent(int price) {
+        PlayerProfile profile = loadProfile();
+        if (profile.getCoins() >= price) {
+            return 0;
+        }
+        return price - profile.getCoins();
+    }
+
+    //TODO: JavaDOC and name
+    @Override
+    public boolean playerHasEnoughCoinsToBuy(int price) {
+        PlayerProfile profile = loadProfile();
+        return profile.getCoins() >= price;
+    }
+
+    //TODO: JavaDOC and name
+    @Override
+    public void buyContent(ContentId contentId, int price) {
+        PlayerProfile profile = loadProfile();
+        profile.subtractCoins(price);
+        profile.addContent(contentId);
+        saveProfile(profile);
+    }
+
+    //TODO: JavaDOC and name
+    @Override
+    public boolean contentIsActive(ContentId contentId) {
+        PlayerProfile profile = loadProfile();
+        return profile.getActiveContentIds().contains(contentId);
+    }
+
+    //TODO: JavaDOC and name
+    @Override
+    public boolean contentIsPurchased(ContentId contentId) {
+        PlayerProfile profile = loadProfile();
+        return profile.getPurchasedContentIds().contains(contentId);
+    }
+
+    //TODO: JavaDOC and name
+    @Override
+    public int getSoundVolume() {
         return loadProfile().getVolume();
     }
 
     //TODO: JavaDOC and name
-    public boolean isAudioEnabled(){
+    @Override
+    public boolean isAudioEnabled() {
         return loadProfile().isAudioEnabled();
     }
 
@@ -50,6 +116,7 @@ public class PersistenceUtil {
      *
      * @return the player's profile (or a default profile if it doesn't exist)
      */
+    @Override
     public PlayerProfile loadProfile() {
         Path path = Path.of(GameFile.PROFILE.getFileName());
         PlayerProfile playerProfile = null;
@@ -59,8 +126,7 @@ public class PersistenceUtil {
             try {
                 playerProfile = loadAndDeserializeData(GameFile.PROFILE.getFileName(), PlayerProfile.class);
             } catch (IOException e) {
-                // TODO handle
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Unable to Load and / or Deserialize Data");
                 playerProfile = new PlayerProfile();
             }
         } else {
@@ -96,6 +162,7 @@ public class PersistenceUtil {
      *
      * @param playerProfile player profile to save
      */
+    @Override
     public void saveProfile(PlayerProfile playerProfile) {
         if (playerProfile == null) {
             throw new IllegalArgumentException("null is not a legal argument for a player profile!");
@@ -104,8 +171,7 @@ public class PersistenceUtil {
         try {
             serializeAndSaveData(GameFile.PROFILE.getFileName(), playerProfile);
         } catch (IOException e) {
-            // TODO handle
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Unable to Serialize and / or load Data");
         }
     }
 
@@ -129,8 +195,8 @@ public class PersistenceUtil {
     //TODO: JavaDOC
     private Set<ShopContent> loadActiveContent(Set<ContentId> activeContentIds) {
         List<ShopContent> shopContentList = loadShopContent();
-        return shopContentList.stream().filter((shopContent)->{
-            return activeContentIds.stream().anyMatch((purchasedContentId) ->{
+        return shopContentList.stream().filter((shopContent) -> {
+            return activeContentIds.stream().anyMatch((purchasedContentId) -> {
                 return purchasedContentId == shopContent.getContentId();
             });
         }).collect(Collectors.toSet());
@@ -139,26 +205,25 @@ public class PersistenceUtil {
     //TODO: JavaDOC
     private Set<ShopContent> loadPurchasedContent(Set<ContentId> purchasedContentIds) {
         List<ShopContent> shopContentList = loadShopContent();
-        return shopContentList.stream().filter((shopContent)->{
-            return purchasedContentIds.stream().anyMatch((purchasedContentId) ->{
+        return shopContentList.stream().filter((shopContent) -> {
+            return purchasedContentIds.stream().anyMatch((purchasedContentId) -> {
                 return purchasedContentId == shopContent.getContentId();
             });
         }).collect(Collectors.toSet());
     }
 
     //TODO: JavaDOC
+    @Override
     public List<ShopContent> loadShopContent() {
-        Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {}.getType();
+        Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {
+        }.getType();
 
         List<ShopContent> shopContentList = null;
         try {
             shopContentList = loadAndDeserializeData(GameFile.SHOP_CONTENT.getFileName(), listOfShopContentType);
         } catch (IOException e) {
-            // TODO handle
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error with Loading and / or Deserializing Data");
         }
         return shopContentList;
     }
-
-
 }

@@ -11,15 +11,13 @@ public enum VisualScaling {
     ROCKET(0.1);
 
 
-
-
     private double scaling;
 
     VisualScaling(double scaling) {
         this.scaling = scaling;
     }
 
-   public double getScaling() {
+    public double getScaling() {
         return scaling;
     }
 }

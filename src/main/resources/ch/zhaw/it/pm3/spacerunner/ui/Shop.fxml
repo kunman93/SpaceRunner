@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.ui.ShopViewControllerController"
+          stylesheets="@Style.css"
+          prefHeight="490" prefWidth="800"
+          xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"
+          styleClass="darkbg">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="10" />
+        <ColumnConstraints percentWidth="90" />
+        <ColumnConstraints percentWidth="10" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="5" />
+        <RowConstraints percentHeight="10" />
+        <RowConstraints percentHeight="65" />
+        <RowConstraints percentHeight="5" />
+        <RowConstraints percentHeight="15" />
+        <RowConstraints percentHeight="5" />
+    </rowConstraints>
+    <children>
+        <Label fx:id="collectedCoinsLabel" GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="playerMoney"/>
+        <TabPane fx:id="tabPane" styleClass="shop" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <tabs>
+                <Tab text="UPGRADES">
+                    <content>
+                        <Button onAction="#updateList" text="* update List" />
+                        <ListView fx:id="listViewForUpgrades" />
+                    </content>
+                </Tab>
+                <Tab text="PLAYER MODEL">
+                    <content>
+                        <ListView fx:id="listViewForSkins" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+    <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <Button fx:id="homeButton" onAction="#showMenu" text="&lt; BACK"/>
+    </HBox>
+</GridPane>
