@@ -10,13 +10,12 @@ import org.junit.jupiter.api.*;
 
 import java.awt.geom.Point2D;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SpaceShipTest {
     private SpaceShip spaceShip;
-    private VelocityManager velocityManager = VelocityManager.getManager();
-    private VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
+    private final VisualManager visualManager = VisualManager.getManager();
 
     /**
      * Sets Up the velocity and visual of SpaceShip.
