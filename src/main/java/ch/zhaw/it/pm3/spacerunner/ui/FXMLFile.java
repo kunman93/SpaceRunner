@@ -3,18 +3,18 @@ package ch.zhaw.it.pm3.spacerunner.ui;
 import ch.zhaw.it.pm3.spacerunner.FileResource;
 
 public enum FXMLFile implements FileResource {
-    MENU("menu.fxml"),
-    GAME("game.fxml"),
-    GAME_ENDED("gameEnded.fxml"),
-    HELP("help.fxml"),
-    SHOP("shop.fxml"),
+    MENU("Menu.fxml"),
+    GAME("Game.fxml"),
+    GAME_ENDED("GameEnded.fxml"),
+    HELP("Help.fxml"),
+    SHOP("Shop.fxml"),
     SHOP_CONTENT_CELL("ShopContentCell.fxml"),
-    SETTINGS("settings.fxml");
+    SETTINGS("Settings.fxml");
 
     private String filename;
 
     FXMLFile(String filename) {
-        this.filename = "view/" + filename;
+        this.filename = "ui/" + filename;
     }
 
     @Override

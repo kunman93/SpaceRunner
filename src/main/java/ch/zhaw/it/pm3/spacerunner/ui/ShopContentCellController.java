@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Shop-view (shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
+ * Shop-view (Shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
  * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
  */
 public class ShopContentCellController extends ListCell<ShopContent> {
@@ -221,7 +221,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                getClass().getResource("style.css").toExternalForm());
+                getClass().getResource("Style.css").toExternalForm());
         dialogPane.getStyleClass().add("dialog");
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -255,7 +255,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
 
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
-                getClass().getResource("style.css").toExternalForm());
+                getClass().getResource("Style.css").toExternalForm());
         dialogPane.getStyleClass().add("dialog");
 
         alert.showAndWait();

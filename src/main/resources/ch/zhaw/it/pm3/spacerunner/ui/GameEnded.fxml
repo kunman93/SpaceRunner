@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.ui.GameEndedViewController"
-          stylesheets="@style.css"
+          stylesheets="@Style.css"
           prefHeight="490" prefWidth="800"
           xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"
           styleClass="darkbg">

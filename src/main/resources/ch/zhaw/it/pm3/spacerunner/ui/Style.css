@@ -38,7 +38,7 @@ Button:hover Label {
     -fx-cursor: hand;
 }
 
-/* menu.fxml */
+/* Menu.fxml */
 .darkbg .menu Label.title {
     -fx-font-size: 60 !important;
 }
@@ -47,7 +47,7 @@ Button:hover Label {
     -fx-font-family: 'video games';
 }
 
-/* settings.fxml */
+/* Settings.fxml */
 .settings Label {
     -fx-font-size: 20;
 }
@@ -71,12 +71,12 @@ Slider .axis .axis-minor-tick-mark {
     -fx-font-size: 18;
 }
 
-/* game.fxml */
+/* Game.fxml */
 .gameBG {
     -fx-background-color: black;
 }
 
-/* shop.fxml
+/* Shop.fxml
  -> https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#tabpane
 */
 
