@@ -21,14 +21,14 @@ public class Preset implements Cloneable {
 
     public Preset(SpaceElement[] elements) {
         elementsInPreset = elements;
-        timeUntilEntirePresetOnScreen = calculateSize();
+        timeUntilEntirePresetOnScreen = calculatePresetTimeUntilOnScreen();
     }
 
-    private double calculateSize() {
+    private double calculatePresetTimeUntilOnScreen() {
         try {
             double maxTime = 0;
             for (SpaceElement e : elementsInPreset) {
-                maxTime = Math.max(maxTime, (1 - (e.getRelativePosition().x + visualManager.getElementRelativeWidth(e.getClass()))) / velocityManager.getRelativeVelocity(e.getClass()).x);
+                maxTime = Math.max(maxTime, (1.0 - (e.getRelativePosition().x + visualManager.getElementRelativeWidth(e.getClass()))) / velocityManager.getRelativeVelocity(e.getClass()).x);
             }
             return maxTime;
         } catch (VisualNotSetException e) {
