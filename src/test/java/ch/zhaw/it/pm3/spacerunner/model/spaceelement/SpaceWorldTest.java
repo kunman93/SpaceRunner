@@ -4,6 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,7 +62,11 @@ public class SpaceWorldTest {
      */
     @Test
     void moveLoopSpaceWorldImage() {
-        spaceWorld = new SpaceWorld(new Point2D.Double(-3,0));
+        try {
+            spaceWorld = new SpaceWorld(new Point2D.Double(-visualManager.getElementRelativeWidth(SpaceWorld.class),0));
+        } catch (VisualNotSetException e) {
+            fail("VisualNotSetException thrown");
+        }
         spaceWorld.move(1000);
         assertEquals(spaceWorld.getRelativePosition(), new Point2D.Double(0,0));
     }
