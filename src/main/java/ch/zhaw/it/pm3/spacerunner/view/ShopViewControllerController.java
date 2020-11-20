@@ -12,14 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 
-import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The ShopViewController is a controller-class, which is responsible for the shop-view (shop.fxml).
  **/
-public class ShopViewController extends ViewController implements ShopContentCellListener {
+public class ShopViewControllerController extends ViewController implements ShopContentCellControllerListener {
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
     @FXML private TabPane tabPane;
@@ -54,17 +53,17 @@ public class ShopViewController extends ViewController implements ShopContentCel
         observableListOfUpgrades.setAll(upgrades);
         listViewForUpgrades.setItems(observableListOfUpgrades);
         listViewForUpgrades.setCellFactory(shopContentListView -> {
-            ShopContentCell shopContentCell = new ShopContentCell();
-            shopContentCell.addListener(this);
-            return shopContentCell;
+            ShopContentCellController shopContentCellController = new ShopContentCellController();
+            shopContentCellController.addListener(this);
+            return shopContentCellController;
         });
 
         observableListOfSkins.setAll(skins);
         listViewForSkins.setItems(observableListOfSkins);
         listViewForSkins.setCellFactory(shopContentListView -> {
-            ShopContentCell shopContentCell = new ShopContentCell();
-            shopContentCell.addListener(this);
-            return shopContentCell;
+            ShopContentCellController shopContentCellController = new ShopContentCellController();
+            shopContentCellController.addListener(this);
+            return shopContentCellController;
         });
     }
 

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * Shop-view (shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
  * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
  * */
-public class ShopContentCell extends ListCell<ShopContent> {
+public class ShopContentCellController extends ListCell<ShopContent> {
 
     private Logger logger = Logger.getLogger(ShopContent.class.getName());
 
@@ -39,7 +39,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private static final String ACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "activate";
     private static final String DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON = "deactivate";
 
-    private final Set<ShopContentCellListener> shopContentCellListeners = new HashSet<>();
+    private final Set<ShopContentCellControllerListener> shopContentCellControllerListeners = new HashSet<>();
 
     @FXML private GridPane cellContent;
     @FXML private GridPane verticalSeparation;
@@ -51,7 +51,7 @@ public class ShopContentCell extends ListCell<ShopContent> {
     private static boolean spaceShipModelIsAlreadySelected;
     private ShopContent content;
 
-    public ShopContentCell() {
+    public ShopContentCellController() {
         FXMLLoader fxmlLoader = new FXMLLoader(SpaceRunnerApp.class.getResource(FXMLFile.SHOP_CONTENT_CELL.getFileName()));
         fxmlLoader.setController(this);
         try {
@@ -226,16 +226,16 @@ public class ShopContentCell extends ListCell<ShopContent> {
         buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
         buyButton.setDisable(true);
         activateButton.setDisable(false);
-        shopContentCellListeners.forEach(ShopContentCellListener::purchasedItem);
+        shopContentCellControllerListeners.forEach(ShopContentCellControllerListener::purchasedItem);
     }
 
-    public void addListener(ShopContentCellListener shopContentCellListener) {
-        shopContentCellListeners.add(shopContentCellListener);
+    public void addListener(ShopContentCellControllerListener shopContentCellControllerListener) {
+        shopContentCellControllerListeners.add(shopContentCellControllerListener);
     }
 
     //TODO: We should remove the listener at some time
-    public void removeListener(ShopContentCellListener shopContentCellListener) {
-        shopContentCellListeners.remove(shopContentCellListener);
+    public void removeListener(ShopContentCellControllerListener shopContentCellControllerListener) {
+        shopContentCellControllerListeners.remove(shopContentCellControllerListener);
     }
 
     private void showFailedToPurchaseContentAlertDialogue() {

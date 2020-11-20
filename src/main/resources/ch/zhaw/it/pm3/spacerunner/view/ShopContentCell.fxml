@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<GridPane fx:id="cellContent" GridPane.vgrow="ALWAYS" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" styleClass="shopContentCell">
+<GridPane fx:id="cellContent" GridPane.vgrow="ALWAYS" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" styleClass="shopContentCellController">
     <columnConstraints>
         <ColumnConstraints percentWidth="10" />
         <ColumnConstraints percentWidth="90" />
