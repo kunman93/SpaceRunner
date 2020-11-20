@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.model;
+package ch.zhaw.it.pm3.spacerunner.model.spaceelement.preset;
 
 
 import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
@@ -9,9 +9,9 @@ import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ElementPreset {
+public class RandomPresetGenerator {
 
-    private Logger logger = Logger.getLogger(ElementPreset.class.getName());
+    private Logger logger = Logger.getLogger(RandomPresetGenerator.class.getName());
 
     VisualManager visualManager = VisualManager.getManager();
 
