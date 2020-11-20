@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.view.GameEndedViewController"
+<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.ui.GameEndedViewController"
           stylesheets="@style.css"
           prefHeight="490" prefWidth="800"
           xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"

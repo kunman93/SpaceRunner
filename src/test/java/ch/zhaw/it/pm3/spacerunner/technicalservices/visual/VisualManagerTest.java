@@ -1,6 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual;
 
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.Coin;
+import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.Coin;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;

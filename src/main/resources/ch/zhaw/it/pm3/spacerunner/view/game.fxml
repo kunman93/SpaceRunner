@@ -3,7 +3,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.view.GameViewController"
+<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.ui.GameViewController"
           stylesheets="@style.css"
           prefHeight="490" prefWidth="800"
           xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"

@@ -1,9 +1,13 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.*;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.DoubleCoinsPowerUp;
-import ch.zhaw.it.pm3.spacerunner.model.spaceelement.powerup.ShieldPowerUp;
+import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
+import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.DoubleCoinsPowerUp;
+import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.ShieldPowerUp;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;

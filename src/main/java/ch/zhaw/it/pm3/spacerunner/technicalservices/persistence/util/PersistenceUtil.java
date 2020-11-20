@@ -1,5 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ContentId;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
