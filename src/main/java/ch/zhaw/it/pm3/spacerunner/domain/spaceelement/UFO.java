@@ -30,15 +30,10 @@ public class UFO extends Obstacle {
     public void move(long timeInMillis) {
         double currentXPos = getRelativePosition().x;
         Point2D.Double currentPos = new Point2D.Double(currentXPos, sinWave(currentXPos));
-        setRelativePosition(currentPos);
         double nextXPos = getNextPosition().x;
-        Point2D.Double nextPos = new Point2D.Double(nextXPos, sinWave(nextXPos));
-        Point2D.Double velocity = new Point2D.Double(nextPos.x - currentPos.x, nextPos.y - currentPos.y);
-
-        //TODO: Velocity should be considered inside here and not updated
-        velocityManager.setVelocity(UFO.class, velocity);
-
-        super.move(timeInMillis);
+        Point2D.Double velocity = new Point2D.Double(nextXPos - currentXPos, sinWave(currentXPos) - sinWave(nextXPos));
+        Point2D.Double nextPos = new Point2D.Double(currentPos.x + (timeInMillis/1000.0)*velocity.x, currentPos.y + (timeInMillis/1000.0)*velocity.y);
+        setRelativePosition(nextPos);
     }
 
     private double sinWave(double currentXPos) {
