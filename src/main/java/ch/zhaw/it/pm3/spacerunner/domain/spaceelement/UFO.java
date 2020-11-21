@@ -14,7 +14,6 @@ public class UFO extends Obstacle {
     private final Logger logger = Logger.getLogger(UFO.class.getName());
 
     private final VisualManager visualManager = VisualManager.getManager();
-    private final VelocityManager velocityManager = VelocityManager.getManager();
     private double waveOffset = 0;
 
     public UFO(Point2D.Double startPosition) {
