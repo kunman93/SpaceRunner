@@ -10,8 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * In this class preset, SpaceElements can be saved.
+ * In preset several SpaceElements can be stored.
  * The class calculates the relative width of this sequence of SpaceElements.
+ * @author hirsceva
  */
 public class Preset implements Cloneable {
 
@@ -24,8 +25,7 @@ public class Preset implements Cloneable {
     private VelocityManager velocityManager = VelocityManager.getManager();
 
     /**
-     * Constructor for the class preset
-     *
+     * Constructor for the class preset.
      * @param elements array with SpaceElements
      */
     public Preset(SpaceElement[] elements) {
@@ -42,18 +42,24 @@ public class Preset implements Cloneable {
             return maxTime;
         } catch (VisualNotSetException e) {
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", e.getClass());
-            e.printStackTrace();
         } catch (VelocityNotSetException e) {
             logger.log(Level.SEVERE, "Velocity for {0} wasn't set", e.getClass());
-            e.printStackTrace();
         }
         return 0;
     }
 
+    /**
+     * Return all stored SpaceElements from the preset
+     * @return array of SpaceElements
+     */
     public SpaceElement[] getElementsInPreset() {
         return elementsInPreset;
     }
 
+    /**
+     * Return the time of the sequence of all SpaceElements from the preset.
+     * @return time on the screen
+     */
     public double getPresetTimeUntilOnScreen() {
         return timeUntilEntirePresetOnScreen;
     }
