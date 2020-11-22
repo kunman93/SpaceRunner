@@ -52,7 +52,7 @@ Button.help {
     -fx-background-color: transparent;
     -fx-effect: none;
     -fx-pref-height: 40;
-    -fx-pref-width: 40;
+    -fx-max-width: 40;
     -fx-font-size: 40;
 }
 
@@ -90,10 +90,7 @@ Slider .axis .axis-minor-tick-mark {
     -fx-background-color: black;
 }
 
-/* Shop.fxml
- -> https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#tabpane
-*/
-
+/* Shop.fxml */
 
 .tab-label {
     -fx-text-fill: white;

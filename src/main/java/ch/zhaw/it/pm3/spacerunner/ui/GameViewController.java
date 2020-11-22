@@ -3,6 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.ui;
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.application.GameController;
 import ch.zhaw.it.pm3.spacerunner.domain.GameDataCache;
+import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.Coin;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.DoubleCoinsPowerUp;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.PowerUp;
@@ -47,7 +48,7 @@ public class GameViewController extends ViewController {
     private Canvas gameCanvas;
     private GraphicsContext graphicsContext;
     private GameViewPort gameViewPort = null;
-    private GameProportionUtil gameProportionUtil = GameProportionUtil.getUtil();
+    private GameRatioUtil gameRatioUtil = GameRatioUtil.getUtil();
 
     private GameController gameController = new GameController();
     private boolean downPressed;
@@ -89,10 +90,10 @@ public class GameViewController extends ViewController {
 
     private boolean isLoaded = false;
 
-    private final double infoBarPaddingPercent = 0.1; // todo capital
-    private final double infoBarImageMargin = 10;
-    private final double infoBarTextMargin = 30;
-    private final VisualManager visualManager = VisualManager.getManager();
+    private final double FONT_SIZE_IN_PERCENT_OF_INFO_BAR = 0.8;
+    private final double INFO_BAR_IMAGE_MARGIN = 10;
+    private final double INFO_BAR_TEXT_MARGIN = 30;
+    private final VisualManager VISUAL_MANAGER = VisualManager.getManager();
 
     private long lastUpdate = 0;
     //Used to overperform a little bit. if we dont have this we dont reach the required fps (has to do with some internal AnimationTimer stuff)
@@ -104,7 +105,7 @@ public class GameViewController extends ViewController {
 
         SpaceRunnerApp main = getMain();
         primaryStage = main.getPrimaryStage();
-        gameViewPort = gameProportionUtil.calcProportions(primaryStage.getWidth(), primaryStage.getHeight());
+        gameViewPort = gameRatioUtil.calcRatio(primaryStage.getWidth(), primaryStage.getHeight());
 
 
         resize();
@@ -218,7 +219,7 @@ public class GameViewController extends ViewController {
 
         double appBarHeight = 40;
 
-        gameViewPort = gameProportionUtil.calcProportions(primaryStage.getWidth(), primaryStage.getHeight() - appBarHeight);
+        gameViewPort = gameRatioUtil.calcRatio(primaryStage.getWidth(), primaryStage.getHeight() - appBarHeight);
 
         //needed for scheduler
         double finalWidth = gameViewPort.getGameWidth();
@@ -269,7 +270,7 @@ public class GameViewController extends ViewController {
      */
     private void showLoadingScreen() {
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(), infoBarPaddingPercent)));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameRatioUtil.getFontSize(gameViewPort.getInfoBarHeight(), FONT_SIZE_IN_PERCENT_OF_INFO_BAR)));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
 
         loadingAnimation = new AnimationTimer() {
@@ -309,7 +310,7 @@ public class GameViewController extends ViewController {
             } catch (VisualNotSetException e) {
                 logger.log(Level.SEVERE, "Visual for {0} wasn't set", spaceElement.getClass());
             }
-            graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
+            graphicsContext.drawImage(image, position.x * VISUAL_MANAGER.getWidth(), position.y * VISUAL_MANAGER.getHeight());
         }
     }
 
@@ -327,27 +328,27 @@ public class GameViewController extends ViewController {
         try {
             image = fxmlImageProxy.getFXMLImage(UIVisualElement.COIN_COUNT);
             xPositionReference -= image.getWidth();
-            graphicsContext.drawImage(image, (gameViewPort.getGameWidth() - image.getWidth() - infoBarImageMargin),
-                    infoBarYPosition, image.getWidth(), image.getHeight());
+            graphicsContext.drawImage(image, (gameViewPort.getGameWidth() - image.getWidth() - INFO_BAR_IMAGE_MARGIN),
+                    infoBarYPosition + (gameViewPort.getInfoBarHeight() - image.getHeight()) / 2, image.getWidth(), image.getHeight());
         } catch (VisualNotSetException e) {
             logger.log(Level.SEVERE, "Visual for {0} wasn't set", UIVisualElement.COIN_COUNT.getClass());
         }
 
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(), infoBarPaddingPercent)));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameRatioUtil.getFontSize(gameViewPort.getInfoBarHeight(), FONT_SIZE_IN_PERCENT_OF_INFO_BAR)));
         graphicsContext.setTextAlign(TextAlignment.RIGHT);
         graphicsContext.setTextBaseline(VPos.TOP);
-        xPositionReference -= infoBarTextMargin;
+        xPositionReference -= INFO_BAR_TEXT_MARGIN;
 
 
-        double textWidth = gameProportionUtil.getTextWidth(gameViewPort.getInfoBarHeight(),infoBarPaddingPercent);
+        double textWidth = gameRatioUtil.getTextWidth(gameViewPort.getInfoBarHeight(), FONT_SIZE_IN_PERCENT_OF_INFO_BAR);
         graphicsContext.fillText(String.valueOf(coins), xPositionReference, infoBarYPosition, textWidth);
-        xPositionReference -= (infoBarTextMargin + textWidth);
+        xPositionReference -= (INFO_BAR_TEXT_MARGIN + textWidth);
         graphicsContext.fillText(String.valueOf(score), xPositionReference, infoBarYPosition, textWidth);
     }
 
     private void displayActivatedPowerUps(Map<Class<? extends PowerUp>, PowerUp> activePowerUps) {
-        double xPositionReference = 0;
+        double xPositionReference = INFO_BAR_IMAGE_MARGIN;
         double infoBarYPosition = gameViewPort.getGameHeight();
 
         Image image = null;
@@ -364,9 +365,9 @@ public class GameViewController extends ViewController {
             }
             try {
                 image = fxmlImageProxy.getFXMLImage(uiVisualElementClass);
-                xPositionReference += image.getWidth();
-                graphicsContext.drawImage(image, infoBarImageMargin + xPositionReference,
-                        infoBarYPosition, image.getWidth(), image.getHeight());
+                graphicsContext.drawImage(image, xPositionReference,
+                        infoBarYPosition + (gameViewPort.getInfoBarHeight() - image.getHeight()) / 2, image.getWidth(), image.getHeight());
+                xPositionReference += image.getWidth() + INFO_BAR_IMAGE_MARGIN;
             } catch (VisualNotSetException e) {
                 logger.log(Level.SEVERE, "Visual for {0} wasn't set", uiVisualElementClass.getSimpleName());
             }
@@ -375,7 +376,7 @@ public class GameViewController extends ViewController {
 
     private void displayInformation(String info) {
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.setFont(new Font(DEFAULT_FONT, gameProportionUtil.getFontSize(gameViewPort.getInfoBarHeight(), infoBarPaddingPercent)));
+        graphicsContext.setFont(new Font(DEFAULT_FONT, gameRatioUtil.getFontSize(gameViewPort.getInfoBarHeight(), FONT_SIZE_IN_PERCENT_OF_INFO_BAR)));
         graphicsContext.setTextAlign(TextAlignment.CENTER);
         graphicsContext.fillText(info, gameViewPort.getGameWidth() / 2, gameViewPort.getGameHeight());
     }
@@ -388,8 +389,8 @@ public class GameViewController extends ViewController {
 
     private void initializeUiElements() {
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
-        visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
-        visualManager.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
-        visualManager.loadAndSetVisual(UIVisualElement.SHIELD_POWER_UP, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP_UI));
+        VISUAL_MANAGER.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
+        VISUAL_MANAGER.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
+        VISUAL_MANAGER.loadAndSetVisual(UIVisualElement.SHIELD_POWER_UP, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP_UI));
     }
 }

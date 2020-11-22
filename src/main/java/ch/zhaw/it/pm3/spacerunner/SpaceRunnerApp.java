@@ -66,7 +66,6 @@ public class SpaceRunnerApp extends Application {
             primaryStage.setScene(scene);
 
             if(primaryStage.getIcons().size() == 0) { // used to maintain same height and avoid redundant operations
-
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
                 primaryStage.setHeight(height);
