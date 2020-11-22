@@ -2,6 +2,10 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
 import ch.zhaw.it.pm3.spacerunner.FileResource;
 
+/**
+ * Path variables of all image files which are not SCG files.
+ * @author blattpet
+ */
 public enum VisualFile implements FileResource {
 
     BACKGROUND_STARS("background.jpg"),
