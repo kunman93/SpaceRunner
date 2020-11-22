@@ -3,7 +3,8 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 import ch.zhaw.it.pm3.spacerunner.FileResource;
 
 /**
- * Enum only for SVG files
+ * Path variables of all images which are SVG files.
+ * @author blattpet
  */
 public enum VisualSVGFile implements FileResource {
     SHINEY_COIN_1("coin/shiny-coin1.svg"),
