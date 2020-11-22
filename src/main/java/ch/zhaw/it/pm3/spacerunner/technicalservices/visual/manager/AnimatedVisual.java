@@ -2,18 +2,18 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class AnimatedVisual {
     private long animationTimeStamp = 0;
-    private int animationPointer = 0;
+    private AtomicInteger animationPointer = new AtomicInteger(0);
     private VisualSVGAnimationFiles visualSVGAnimationFiles;
     private Visual[] visuals;
     private VisualScaling visualScaling;
 
 
-    //TODO: ThreadSafe animationPointer etc!!!
-
     public AnimatedVisual(VisualSVGAnimationFiles visualSVGAnimationFiles, VisualScaling visualScaling) {
-        this.animationPointer = 0;
+        this.animationPointer.set(0);
         this.visualSVGAnimationFiles = visualSVGAnimationFiles;
         this.visualScaling = visualScaling;
     }
@@ -34,14 +34,14 @@ public class AnimatedVisual {
         long currentTime = System.currentTimeMillis();
 
         if (currentTime - animationTimeStamp > visualSVGAnimationFiles.getAnimationStepTime()) {
-            if (animationPointer < visuals.length - 1) {
-                animationPointer++;
+            if (animationPointer.get() < visuals.length - 1) {
+                animationPointer.incrementAndGet();
             } else {
-                animationPointer = 0;
+                animationPointer.set(0);
             }
             animationTimeStamp = System.currentTimeMillis();
         }
-        return this.visuals[animationPointer];
+        return this.visuals[animationPointer.get()];
     }
 
     public VisualScaling getVisualScaling() {
