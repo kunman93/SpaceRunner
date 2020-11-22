@@ -1,5 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
+/**
+ * Holds the calculated sizes, according to ratio (from GameRatioUtil.java), for the game.
+ *
+ * @author freymar1
+ * */
 public class GameViewPort {
     private double gameWidth;
     private double gameHeight;
