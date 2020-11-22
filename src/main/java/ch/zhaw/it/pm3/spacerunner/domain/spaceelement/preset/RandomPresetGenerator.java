@@ -1,6 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset;
 
-
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
@@ -9,18 +8,19 @@ import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  * In this class the different presets are created, which are can shown randomly in the game.
+ * @author blattpet
  */
-
 public class RandomPresetGenerator {
 
     private final Logger logger = Logger.getLogger(RandomPresetGenerator.class.getName());
     private final VisualManager visualManager = VisualManager.getManager();
 
     /**
-     * Creates all cases of presets
+     * Creates all cases of presets.
+     * @param p PresetType
+     * @return A preset when the case exists
      */
     private Preset generatePreset(PresetType p) throws VisualNotSetException {
         double y;
@@ -58,7 +58,6 @@ public class RandomPresetGenerator {
             return generatePreset(PresetType.values()[index]);
         } catch (VisualNotSetException e) {
             logger.log(Level.SEVERE, "Error with Preset generation");
-            e.printStackTrace();
         }
 
         return null;
