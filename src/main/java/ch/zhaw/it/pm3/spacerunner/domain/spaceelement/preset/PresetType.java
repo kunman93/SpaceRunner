@@ -1,7 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset;
 
 /**
- * Different types of presets
+ * Different types of presets.
+ * @author blattpet
  */
 public enum PresetType {
     ASTEROID,
