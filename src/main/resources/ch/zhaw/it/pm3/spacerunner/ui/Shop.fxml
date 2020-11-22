@@ -28,7 +28,6 @@
             <tabs>
                 <Tab text="UPGRADES">
                     <content>
-                        <Button onAction="#updateList" text="* update List" />
                         <ListView fx:id="listViewForUpgrades" />
                     </content>
                 </Tab>

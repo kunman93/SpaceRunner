@@ -34,6 +34,9 @@ public class ShopViewControllerController extends ViewController implements Shop
     @FXML
     private Label collectedCoinsLabel;
 
+    /**
+     * Shows the menu if the BACK-Button was pressed.
+     */
     @FXML
     public void showMenu() {
         upgradeElements.forEach((shopContentCellController -> shopContentCellController.removeListener(this)));
@@ -79,9 +82,6 @@ public class ShopViewControllerController extends ViewController implements Shop
         });
     }
 
-    public void updateList() {
-        initialize();
-    }
 
     /**
      * Depicts the updated coin value after the Buy-Button was pressed.
