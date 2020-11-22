@@ -87,6 +87,7 @@ Pull requests are merged and discussed together on a voice chat (e.g. Discord). 
 TODO!
 
 ## Meetings
+The following meetings and iteration sections show the progress of the project. 
 
 [Meeting 2.10.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/2)
 
