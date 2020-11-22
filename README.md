@@ -18,7 +18,7 @@ First you need to start the programm. Then you are greeted by the Main Screen wh
 #### Start
 After pressing Start you need to Press **SPACE** to start the Run. 
 
-![start game](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/start_game.gif)
+![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif)
 
 #### Shop
 Here you can buy and Manage Upgrades or Playermodels
