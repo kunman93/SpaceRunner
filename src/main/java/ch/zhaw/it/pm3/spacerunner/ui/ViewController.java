@@ -4,8 +4,9 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.domain.GameDataCache;
 
 /**
- * contains game instance
+ * ViewController contains game instance
  * used for methods which are similar in each Controller (e.g. responsive calculations)
+ * @author freymar1
  */
 public abstract class ViewController {
     private static SpaceRunnerApp main;

@@ -29,10 +29,11 @@ import java.util.stream.Collectors;
 /**
  * Shop-view (Shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
  * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
+ * @author kunnuman
  */
 public class ShopContentCellController extends ListCell<ShopContent> {
 
-    private Logger logger = Logger.getLogger(ShopContent.class.getName());
+    private final Logger logger = Logger.getLogger(ShopContent.class.getName());
 
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
     private final VisualUtil visualUtil = VisualUtil.getUtil();
@@ -61,6 +62,9 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     private static boolean spaceShipModelIsAlreadySelected;
     private ShopContent content;
 
+    /**
+     * Sets up the UI of the shop content cell.
+     */
     public ShopContentCellController() {
         FXMLLoader fxmlLoader = new FXMLLoader(SpaceRunnerApp.class.getResource(FXMLFile.SHOP_CONTENT_CELL.getFileName()));
         fxmlLoader.setController(this);
@@ -87,8 +91,10 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     }
 
     /**
-     * called automatically from ListView by clicking somewhere
-     * - changes buttons texts according to buying-state
+     * This method is called automatically from listViewForUpgrades or listViewForSkins by clicking somewhere.
+     * It changes buttons texts according to buying-stat and processes the shopping.
+     * @param content The shop content that is available for the player to buy or activate.
+     * @param empty true if empty, else false
      */
     @Override
     public void updateItem(ShopContent content, boolean empty) {

@@ -26,6 +26,10 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * SpaceRunnerApp is the class where the application starts.
+ * @author freymar1
+ */
 public class SpaceRunnerApp extends Application {
 
     private Logger logger = Logger.getLogger(SpaceRunnerApp.class.getName());

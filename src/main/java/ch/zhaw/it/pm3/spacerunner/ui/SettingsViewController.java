@@ -10,6 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
+/**
+ * SettingsViewController is a controller class responsible for the Settings-View (Settings.fxml).
+ * @author freymar1
+ */
 public class SettingsViewController extends ViewController {
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
@@ -19,6 +23,9 @@ public class SettingsViewController extends ViewController {
     public Slider framerate;
     private PlayerProfile playerProfile;
 
+    /**
+     * Updates the setting of the player profile and changes the view to Menu.fxml when the Menu-Button is pressed.
+     */
     @FXML
     public void showMenu() {
         playerProfile.setPlayerName(playerName.getText());

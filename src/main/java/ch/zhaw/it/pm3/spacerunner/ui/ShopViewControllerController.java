@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * The ShopViewController is a controller-class, which is responsible for the shop-view (Shop.fxml).
+ * @author kunnuman
  **/
 public class ShopViewControllerController extends ViewController implements ShopContentCellControllerListener {
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
@@ -33,6 +34,9 @@ public class ShopViewControllerController extends ViewController implements Shop
     @FXML
     private Label collectedCoinsLabel;
 
+    /**
+     * Shows the menu if the BACK-Button was pressed.
+     */
     @FXML
     public void showMenu() {
         upgradeElements.forEach((shopContentCellController -> shopContentCellController.removeListener(this)));
@@ -78,10 +82,10 @@ public class ShopViewControllerController extends ViewController implements Shop
         });
     }
 
-    public void updateList() {
-        initialize();
-    }
 
+    /**
+     * Depicts the updated coin value after the Buy-Button was pressed.
+     */
     @Override
     public void purchasedItem() {
         collectedCoinsLabel.setText("Coins: " + persistenceUtil.loadProfile().getCoins());
