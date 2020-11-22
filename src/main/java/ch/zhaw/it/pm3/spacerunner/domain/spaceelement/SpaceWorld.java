@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 /**
  * The background of the game.
+ * @author islermic
  */
 public class SpaceWorld extends SpaceElement {
 
