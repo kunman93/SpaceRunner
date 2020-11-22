@@ -3,6 +3,11 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.performance;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class will track the Frames per Second. Call the track method every time you process a frame.
+ *
+ * @author islermic
+ */
 public class FPSTracker {
 
     private Logger logger = Logger.getLogger(FPSTracker.class.getName());
@@ -12,6 +17,10 @@ public class FPSTracker {
     private boolean arrayFilled = false;
     private long lastTimeFPSLogged = System.currentTimeMillis();
 
+    /**
+     * Tracks the process of a frame. Once the internal buffer (100) is filled, it will start to log the current FPS once per second.
+     * @param currentNanoTime timestamp in nanoseconds, when this function has been called.
+     */
     public void track(long currentNanoTime) {
         long oldFrameTime = frameTimes[frameTimeIndex];
         frameTimes[frameTimeIndex] = currentNanoTime;

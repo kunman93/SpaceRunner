@@ -15,6 +15,8 @@ import java.util.Map;
  * It is implemented with the singleton-pattern.
  * The Manager was implemented because for example all Asteroids share the same velocity. -> So it would make no sense to have the velocity in every element itself.
  * The Velocity is set per Class of SpaceElement (? extends SpaceElement)
+ *
+ * @author islermic
  */
 public class VelocityManager {
 
