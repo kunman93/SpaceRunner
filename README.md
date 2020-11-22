@@ -11,7 +11,9 @@ Welcome to our project: Space-Runner. We are 6 engineering Students at the ZHAW.
 You can run this project in an IDE (gradle preinstalled) and start by entering "gradle run" in the terminal. Or just run the .jar File.
 
 ### How To Play
-First you need to start the programm. Then you are greeted by the Main Screen where you can choose between Start, Shop and Settings.
+First you need to start the programm. Then you are greeted by the Main Screen where you can choose between Start, Shop and Settings. You can also find help by clicking on the Help button.
+
+![help screen](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/help_screen.gif)
 
 #### Start
 After pressing Start you need to Press **SPACE** to start the Run. 
