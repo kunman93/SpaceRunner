@@ -42,6 +42,18 @@ public class PersistenceUtil implements Persistence {
         return persistenceUtil;
     }
 
+    @Override
+    public boolean hasDoubleDurationForCoinPowerUp() {
+        PlayerProfile profile = loadProfile();
+        return profile.getActiveContentIds().stream().anyMatch((activeContent) -> activeContent.equals(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
+    }
+
+    @Override
+    public boolean hasPowerUpChanceMultiplierUpgrade() {
+        PlayerProfile profile = loadProfile();
+        return profile.getActiveContentIds().stream().anyMatch((activeContent) -> activeContent.equals(ContentId.POWER_UP_CHANCE_MULTIPLIER));
+    }
+
     //TODO: JavaDOC and name
     @Override
     public void deactivateContent(ContentId contentId) {

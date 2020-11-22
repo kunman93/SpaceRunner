@@ -18,6 +18,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetE
 import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -208,16 +209,22 @@ public class GameController {
      * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
      */
     private void removePastDrawables() {
-        logger.log(Level.INFO, "Removing past drawables");
+        AtomicInteger count = new AtomicInteger();
         elements.removeIf((SpaceElement element) ->
         {
             try {
-                return element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()) < 0;
+                boolean outOfScreen = element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()) < 0;
+                if(outOfScreen){
+                    count.getAndIncrement();
+                }
+                return outOfScreen;
             } catch (VisualNotSetException e) {
                 logger.log(Level.SEVERE, "Visual of {0} wasn't set", element.getClass());
                 return true;
             }
         });
+        logger.log(Level.INFO, "removed " + count + " past drawables");
+
     }
 
     /**
@@ -344,7 +351,6 @@ public class GameController {
 
     private void collisionWithPowerUp(PowerUp p) {
         activatedPowerUpManager.addPowerUp(p);
-        p.activatePowerUp();
         elements.remove(p);
         score += 50;
     }

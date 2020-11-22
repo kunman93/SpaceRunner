@@ -26,7 +26,7 @@ public abstract class PowerUp extends SpaceElement {
         powerUpListeners.remove(powerUpManagerListener);
     }
 
-    public void incrementPowerUpMultiplier() {
+    public synchronized void incrementPowerUpMultiplier() {
         multiplier++;
         resetPowerUpTimer();
     }
@@ -35,12 +35,12 @@ public abstract class PowerUp extends SpaceElement {
         return multiplier;
     }
 
-    public void createPowerUpTimer() {
+    public synchronized void createPowerUpTimer() {
         currentPowerUpTimerTask = createPowerUpTimerTask();
         powerUpTimer.schedule(currentPowerUpTimerTask, getActiveTime());
     }
 
-    private void resetPowerUpTimer() {
+    private synchronized void resetPowerUpTimer() {
         if (currentPowerUpTimerTask != null) {
             currentPowerUpTimerTask.cancel();
             currentPowerUpTimerTask = createPowerUpTimerTask();

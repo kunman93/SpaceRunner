@@ -1,24 +1,37 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup;
 
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+
 import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ActivatedPowerUpManager implements PowerUpListener {
 
     private final Logger logger = Logger.getLogger(ActivatedPowerUpManager.class.getName());
+    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
-    private final int GENERAL_POWER_UP_PROBABILITY = 33;
+    private Random randomGen = new Random();
+    private int GENERAL_POWER_UP_PROBABILITY = 33;
     private final Map<Class<? extends PowerUp>, PowerUp> activePowerUps = new HashMap<>();
     private final Map<Class<? extends PowerUp>, Integer> probabilities = new HashMap<>() {{
         put(DoubleCoinsPowerUp.class, 10);
         put(ShieldPowerUp.class, 15);
     }};
 
+    public ActivatedPowerUpManager(){
+        if(persistenceUtil.hasPowerUpChanceMultiplierUpgrade()){
+            GENERAL_POWER_UP_PROBABILITY = GENERAL_POWER_UP_PROBABILITY * 2;
+        }
+    }
+
     public PowerUp generatePowerUps() {
-        int x = (int) Math.floor(Math.random() * 100);
+
+        int x = randomGen.nextInt(101);
         if (x < GENERAL_POWER_UP_PROBABILITY) {
             int sum = 0;
 
@@ -27,7 +40,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
             }
 
 
-            x = (int) Math.floor(Math.random() * sum);
+            x = randomGen.nextInt(sum);
             int secondSum = 0;
 
             for (Map.Entry<Class<? extends PowerUp>, Integer> probability : probabilities.entrySet()) {
@@ -42,6 +55,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
                     }
 
                 }
+                secondSum += probability.getValue();
             }
         }
         return null;
