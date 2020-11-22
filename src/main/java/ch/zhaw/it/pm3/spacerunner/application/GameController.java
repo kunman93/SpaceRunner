@@ -21,6 +21,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The GameController is responsible for the game logic of the Space-Runner application.
+ * @author islermic, hirsceva, blattpet, nachbric, freymar1, kunnuman
+ */
 public class GameController {
 
     private Logger logger = Logger.getLogger(GameController.class.getName());
@@ -59,101 +63,12 @@ public class GameController {
 
     private long lastUpdate = 0;
 
+
     //TODO: information expert verletzung bei laden der bilder im voraus (wegen laggs).
+
     //TODO: proxy pattern mit manager
-
-
-    public void saveGame() {
-        updatePlayerProfile();
-        persistenceUtil.saveProfile(playerProfile);
-    }
-
-    public void processFrame(boolean upPressed, boolean downPressed) {
-        long timeSinceLastUpdate = millisSinceLastProcessing();
-
-        if (!isPaused) {
-            moveSpaceShip(upPressed, downPressed, timeSinceLastUpdate);
-            updateHighScore(timeSinceLastUpdate);
-            processCollision(detectCollision());
-            generateObstacles();
-            moveElements(timeSinceLastUpdate);
-        }
-
-        lastUpdate = System.currentTimeMillis();
-    }
-
-
-    private long millisSinceLastProcessing() {
-        if (lastUpdate == 0) {
-            return 0;
-        } else {
-            return System.currentTimeMillis() - lastUpdate;
-        }
-    }
-
-
-    private void updateElementsSpeed() {
-        velocityManager.accelerateAll(new Point2D.Double(-RELATIVE_GAME_SPEED_INCREASE_PER_SECOND, RELATIVE_GAME_SPEED_INCREASE_PER_SECOND));
-    }
-
     /**
-     * Checks if movement keys are pressed & moves the spaceship accordingly
-     */
-    public void moveSpaceShip(boolean upPressed, boolean downPressed, long timeInMillis) {
-        if (upPressed && !downPressed) {
-            spaceShip.moveSpaceShip(SpaceShipDirection.UP, timeInMillis);
-        } else if (downPressed && !upPressed) {
-            spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, timeInMillis);
-        }
-    }
-
-
-    /**
-     * Updates the playerProfile with collected coins and new highscore
-     */
-    private void updatePlayerProfile() {
-        playerProfile.addCoins(collectedCoins);
-        if (score > playerProfile.getHighScore()) {
-            playerProfile.setHighScore(score);
-        }
-    }
-
-    public ArrayList<SpaceElement> getGameElements() {
-        ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
-        dataToDisplay.add(0, background);
-        dataToDisplay.add(spaceShip);
-        return dataToDisplay;
-    }
-
-    public int getCollectedCoins() {
-        return collectedCoins;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getFps() {
-        return fps;
-    }
-
-    public boolean isPaused() {
-        return isPaused;
-    }
-
-    /**
-     * Continues or stops game logic according to clicking pause/resume button
-     */
-    public void togglePause() {
-        isPaused = !isPaused;
-    }
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    /**
-     * Initializes the class variables
+     * Initializes the class variables.
      */
     public void initialize() {
         velocityManager.setupGameElementVelocity();
@@ -173,6 +88,18 @@ public class GameController {
         fps = playerProfile.getFps();
     }
 
+    private TimerTask getGameBackgroundTask() {
+        return new TimerTask() {
+            public void run() {
+                if (!isPaused) {
+                    updateElementsSpeed();
+                }
+
+                removePastDrawables();
+            }
+        };
+    }
+
     private TimerTask getPowerUpGeneratorTask() {
         return new TimerTask() {
             @Override
@@ -187,25 +114,12 @@ public class GameController {
         };
     }
 
-    private TimerTask getGameBackgroundTask() {
-        return new TimerTask() {
-            public void run() {
-                if (!isPaused) {
-                    updateElementsSpeed();
-                }
-
-                removePastDrawables();
-            }
-        };
-    }
-
-
-    public void setViewport(int width, int height) {
-        this.visualManager.setViewport(width, height);
+    private void updateElementsSpeed() {
+        velocityManager.accelerateAll(new Point2D.Double(-RELATIVE_GAME_SPEED_INCREASE_PER_SECOND, RELATIVE_GAME_SPEED_INCREASE_PER_SECOND));
     }
 
     /**
-     * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI
+     * Removes drawable SpaceElements that have moved past the left side of the screen, so that their no longer visible on the UI.
      */
     private void removePastDrawables() {
         logger.log(Level.INFO, "Removing past drawables");
@@ -221,32 +135,50 @@ public class GameController {
     }
 
     /**
-     * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
+     * Process each frame.
+     * @param upPressed Is true when the Up-Key was pressed, else false.
+     * @param downPressed Is true when the Down-Key was pressed, else false.
      */
-    private void generateObstacles() {
-        if (remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
-            generatePreset(elementPreset.getRandomPreset());
+    public void processFrame(boolean upPressed, boolean downPressed) {
+        long timeSinceLastUpdate = millisSinceLastProcessing();
+
+        if (!isPaused) {
+            moveSpaceShip(upPressed, downPressed, timeSinceLastUpdate);
+            updateHighScore(timeSinceLastUpdate);
+            processCollision(detectCollision());
+            generateObstacles();
+            moveElements(timeSinceLastUpdate);
         }
+
+        lastUpdate = System.currentTimeMillis();
     }
 
-    private void generatePreset(Preset preset) {
-        Collections.addAll(elements, preset.getElementsInPreset());
-        remainingDistanceUntilNextPreset = preset.getPresetTimeUntilOnScreen();
+    private long millisSinceLastProcessing() {
+        if (lastUpdate == 0) {
+            return 0;
+        } else {
+            return System.currentTimeMillis() - lastUpdate;
+        }
     }
 
     /**
-     * Moves all SpaceElements
+     * Checks if movement keys are pressed & moves the spaceship accordingly.
      */
-    public void moveElements(long timeSinceLastUpdate) {
-        for (SpaceElement element : elements) {
-            element.move(timeSinceLastUpdate);
+    private void moveSpaceShip(boolean upPressed, boolean downPressed, long timeInMillis) {
+        if (upPressed && !downPressed) {
+            spaceShip.moveSpaceShip(SpaceShipDirection.UP, timeInMillis);
+        } else if (downPressed && !upPressed) {
+            spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, timeInMillis);
         }
-        background.move(timeSinceLastUpdate);
-        remainingDistanceUntilNextPreset -= timeSinceLastUpdate / 1000.0;
+    }
+
+    private void updateHighScore(long timeSinceLastUpdate) {
+        score = score + (int) (timeSinceLastUpdate / 10);
     }
 
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
+     * @return Returns the SpaceElement-Object with which the Spaceship collided.
      */
     private SpaceElement detectCollision() {
         for (SpaceElement spaceElement : elements) {
@@ -257,6 +189,40 @@ public class GameController {
         return null;
     }
 
+    /**
+     * executes effects depending on type of spaceElement
+     * @param spaceElement The SpaceElements for example UFO, Asteroid, COIN, etc.
+     */
+    private void processCollision(SpaceElement spaceElement) {
+        if (spaceElement == null) return;
+
+        if (spaceElement instanceof Obstacle) {
+            collisionWithObstacle((Obstacle) spaceElement);
+        } else if (spaceElement instanceof Coin) {
+            collisionWithCoin((Coin) spaceElement);
+        } else if (spaceElement instanceof PowerUp) {
+            collisionWithPowerUp((PowerUp) spaceElement);
+        } else {
+            logger.log(Level.INFO, "Collision with unknown spaceElement");
+        }
+    }
+
+    /**
+     * Executes the logic when the spaceship collided with an obstacle.
+     * @param o Obstacle with which the spaceship collided.
+     */
+    private void collisionWithObstacle(Obstacle o) {
+        if (activatedPowerUpManager.hasShield()) {
+            elements.remove(o);
+            activatedPowerUpManager.removeShield();
+        } else {
+            endRun();
+        }
+    }
+
+    /**
+     * Ends the game if the spaceship collided with any obstacle and saves the game.
+     */
     private void endRun() {
         spaceShip.crash();
         gameTimer.cancel();
@@ -300,34 +266,25 @@ public class GameController {
         saveGame();
     }
 
+    private void saveGame() {
+        updatePlayerProfile();
+        persistenceUtil.saveProfile(playerProfile);
+    }
+
     /**
-     * executes effects depending on type of spaceElement
-     *
-     * @param spaceElement
+     * Updates the playerProfile with collected coins and the new high score.
      */
-    private void processCollision(SpaceElement spaceElement) {
-        if (spaceElement == null) return;
-
-        if (spaceElement instanceof Obstacle) {
-            collisionWithObstacle((Obstacle) spaceElement);
-        } else if (spaceElement instanceof Coin) {
-            collisionWithCoin((Coin) spaceElement);
-        } else if (spaceElement instanceof PowerUp) {
-            collisionWithPowerUp((PowerUp) spaceElement);
-        } else {
-            logger.log(Level.INFO, "Collision with unknown spaceElement");
+    private void updatePlayerProfile() {
+        playerProfile.addCoins(collectedCoins);
+        if (score > playerProfile.getHighScore()) {
+            playerProfile.setHighScore(score);
         }
     }
 
-    private void collisionWithObstacle(Obstacle o) {
-        if (activatedPowerUpManager.hasShield()) {
-            elements.remove(o);
-            activatedPowerUpManager.removeShield();
-        } else {
-            endRun();
-        }
-    }
-
+    /**
+     * Executes the logic when the spaceship collides with Coin-Object.
+     * @param c  A Coin-Object which the spaceship collects.
+     */
     private void collisionWithCoin(Coin c) {
         collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
         score += 25 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
@@ -349,6 +306,74 @@ public class GameController {
         score += 50;
     }
 
+    /**
+     * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
+     */
+    private void generateObstacles() {
+        if (remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
+            generatePreset(elementPreset.getRandomPreset());
+        }
+    }
+
+    private void generatePreset(Preset preset) {
+        Collections.addAll(elements, preset.getElementsInPreset());
+        remainingDistanceUntilNextPreset = preset.getPresetTimeUntilOnScreen();
+    }
+
+    /**
+     * Moves all SpaceElements
+     */
+    private void moveElements(long timeSinceLastUpdate) {
+        for (SpaceElement element : elements) {
+            element.move(timeSinceLastUpdate);
+        }
+        background.move(timeSinceLastUpdate);
+        remainingDistanceUntilNextPreset -= timeSinceLastUpdate / 1000.0;
+    }
+
+    public ArrayList<SpaceElement> getGameElements() {
+        ArrayList<SpaceElement> dataToDisplay = new ArrayList<SpaceElement>(elements);
+        dataToDisplay.add(0, background);
+        dataToDisplay.add(spaceShip);
+        return dataToDisplay;
+    }
+
+    public int getCollectedCoins() {
+        return collectedCoins;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getFps() {
+        return fps;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    /**
+     * Continues or stops game logic according to clicking pause/resume button
+     */
+    public void togglePause() {
+        isPaused = !isPaused;
+    }
+
+    /**
+     * Checks if the game is over.
+     * @return true if the game is over, else false.
+     */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+
+    public void setViewport(int width, int height) {
+        this.visualManager.setViewport(width, height);
+    }
+
 
     public Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps() {
         return Collections.unmodifiableMap(activatedPowerUpManager.getActivePowerUps());
@@ -356,9 +381,5 @@ public class GameController {
 
     protected SpaceShip getSpaceShip() {
         return spaceShip;
-    }
-
-    private void updateHighScore(long timeSinceLastUpdate) {
-        score = score + (int) (timeSinceLastUpdate / 10);
     }
 }
