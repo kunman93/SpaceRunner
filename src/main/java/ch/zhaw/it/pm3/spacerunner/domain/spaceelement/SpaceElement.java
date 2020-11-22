@@ -103,7 +103,7 @@ public abstract class SpaceElement implements VisualElement {
      * @param x The X value of the point
      * @param y The Y value of the point
      * @param s The SpaceElement
-     * @return
+     * @return True if the points is within the SpaceElement.
      */
     private boolean pointInObject(double x, double y, SpaceElement s) {
         try {
