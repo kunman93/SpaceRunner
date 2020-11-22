@@ -7,6 +7,11 @@ import java.awt.geom.Point2D;
  * @author hirsceva
  */
 public class Rocket extends Obstacle {
+
+    /**
+     * Initializes the variable position.
+     * @param startPosition The starting position of the Rocket
+     */
     public Rocket(Point2D.Double startPosition) {
         super(startPosition);
     }

@@ -7,6 +7,11 @@ import java.awt.geom.Point2D;
  * @author nachbric
  */
 public abstract class Obstacle extends SpaceElement {
+
+    /**
+     * Initializes the variable position.
+     * @param startPosition The starting position of the Obstacle
+     */
     public Obstacle(Point2D.Double startPosition) {
         super(startPosition);
     }

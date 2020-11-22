@@ -10,6 +10,10 @@ import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * SpaceShip is the SpaceElement that the player controls. It moves vertically in a straight line and cannot leave the visible game-screen.
+ * @author nachbric
+ */
 public class SpaceShip extends SpaceElement {
 
     private final Logger logger = Logger.getLogger(SpaceShip.class.getName());
@@ -19,15 +23,24 @@ public class SpaceShip extends SpaceElement {
     private final VelocityManager velocityManager = VelocityManager.getManager();
     private final VisualManager visualManager = VisualManager.getManager();
 
-
+    /**
+     * Initializes the variable position.
+     * @param startPosition The starting position of the SpaceShip
+     */
     public SpaceShip(Point2D.Double startPosition) {
         super(startPosition);
     }
 
+    /**
+     * @return True if the SpaceShip has crashed.
+     */
     public boolean hasCrashed() {
         return hasCrashed;
     }
 
+    /**
+     * Crashes the SpaceShip
+     */
     public void crash() {
         hasCrashed = true;
     }
@@ -53,8 +66,7 @@ public class SpaceShip extends SpaceElement {
 
     /**
      * Moves the spaceship
-     *
-     * @param direction The direction of movement (UP,DOWN or NONE)
+     * @param direction The direction of movement (UP or DOWN)
      */
     public void moveSpaceShip(SpaceShipDirection direction, long timeInMillis) {
         double relativeHeight = 0;

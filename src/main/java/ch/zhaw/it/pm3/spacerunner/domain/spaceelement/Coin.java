@@ -9,6 +9,10 @@ import java.awt.geom.Point2D;
  */
 public class Coin extends SpaceElement {
 
+    /**
+     * Initializes the variable position.
+     * @param startPosition The starting position of the Coin
+     */
     public Coin(Point2D.Double startPosition) {
         super(startPosition);
     }
