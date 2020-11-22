@@ -20,6 +20,8 @@ After pressing Start you need to Press **SPACE** to start the Run.
 
 ![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif)
 
+![game restart](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_restart.gif)
+
 #### Shop
 Here you can buy and Manage Upgrades or Playermodels
 * Upgrades
@@ -28,6 +30,20 @@ Here you can buy and Manage Upgrades or Playermodels
 * Playermodel
   * Ship Skin 1
   * Ship Skin 2
+
+![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_1.gif)
+
+![buy upgrad](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_2_upgarde_buy.gif)
+
+![activate upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_3_upgrade_activate.gif)
+
+![not enough coins for upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_4_upgrade_not_enough_coins.gif)
+
+![buy player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_5_player_model_buy.gif)
+
+![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_6_player_model_activate.gif)
+
+![not enough coins for player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_7_player_model_not_enoght_coins.gif)
 
 #### Settings
 Here you can set the Playername, the Sound Volume and the Framerate 
