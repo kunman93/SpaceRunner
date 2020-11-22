@@ -23,23 +23,37 @@ public class VelocityManager {
 
     }
 
+    public void clear(){
+        velocityMap = new HashMap<>();
+    }
+
     public void setupGameElementVelocity() {
-        velocityManager.setVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
-        velocityManager.setVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
-        velocityManager.setVelocity(ShieldPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setVelocity(DoubleCoinsPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setVelocity(Rocket.class, new Point2D.Double(-HorizontalSpeed.ROCKET.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setRelativeVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setRelativeVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setRelativeVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
+        velocityManager.setRelativeVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
+        velocityManager.setRelativeVelocity(ShieldPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setRelativeVelocity(DoubleCoinsPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWERUP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setRelativeVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        velocityManager.setRelativeVelocity(Rocket.class, new Point2D.Double(-HorizontalSpeed.ROCKET.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
 
     }
 
-    public synchronized void setVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity) {
+    public synchronized void setRelativeVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity) {
+        if(elementClass == null){
+            throw new IllegalArgumentException("Element class can not be null");
+        }else if(velocity == null){
+            throw new IllegalArgumentException("velocity can not be null");
+        }
+
         velocityMap.put(elementClass, velocity);
     }
 
     public synchronized void accelerateAll(Point2D.Double acceleration) {
+        if(acceleration == null){
+            throw new IllegalArgumentException("acceleration can not be null");
+        }
+
         for (Map.Entry<Class<? extends SpaceElement>, Point2D.Double> currentVelocity : velocityMap.entrySet()) {
             Point2D.Double velocity = currentVelocity.getValue();
             if (velocity.x != 0) {
@@ -69,6 +83,10 @@ public class VelocityManager {
     }
 
     public synchronized void accelerate(Class<? extends SpaceElement> elementClass, Point2D.Double acceleration) {
+        if(acceleration == null){
+            throw new IllegalArgumentException("acceleration can not be null");
+        }
+
         Point2D.Double velocity = velocityMap.get(elementClass);
 
         if (velocity != null) {
@@ -78,6 +96,10 @@ public class VelocityManager {
 
 
     public synchronized Point2D.Double getRelativeVelocity(Class<? extends SpaceElement> elementClass) throws VelocityNotSetException {
+        if(elementClass == null){
+            throw new IllegalArgumentException("Element class can not be null");
+        }
+
         Point2D.Double velocity = velocityMap.get(elementClass);
         if (velocity == null) {
             throw new VelocityNotSetException("Velocity for " + elementClass.getSimpleName() + " was not set!");
