@@ -24,7 +24,7 @@ public class SettingsViewController extends ViewController {
     private PlayerProfile playerProfile;
 
     /**
-     * Changes the view to Menu.fxml when the Menu-Button is pressed and updates the setting of the player profile.
+     * Updates the setting of the player profile and changes the view to Menu.fxml when the Menu-Button is pressed.
      */
     @FXML
     public void showMenu() {
