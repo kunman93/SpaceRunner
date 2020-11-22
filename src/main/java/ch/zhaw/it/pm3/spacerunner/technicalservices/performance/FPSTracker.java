@@ -10,6 +10,7 @@ public class FPSTracker {
     private final long[] frameTimes = new long[100];
     private int frameTimeIndex = 0;
     private boolean arrayFilled = false;
+    private long lastTimeFPSLogged = System.currentTimeMillis();
 
     public void track(long currentNanoTime) {
         long oldFrameTime = frameTimes[frameTimeIndex];
@@ -18,11 +19,12 @@ public class FPSTracker {
         if (frameTimeIndex == 0) {
             arrayFilled = true;
         }
-        if (arrayFilled) {
+        if (arrayFilled && (System.currentTimeMillis() - lastTimeFPSLogged > 1000)) {
             long elapsedNanos = currentNanoTime - oldFrameTime;
             long elapsedNanosPerFrame = elapsedNanos / frameTimes.length;
             double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame;
             logger.log(Level.INFO, String.format("Current frame rate: %.3f", frameRate));
+            lastTimeFPSLogged = System.currentTimeMillis();
         }
     }
 }
