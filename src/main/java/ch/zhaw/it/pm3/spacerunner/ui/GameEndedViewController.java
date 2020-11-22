@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+/**
+ * GameEndedViewController is responsible for the GameOver-Window (GameEnded.fxml).
+ * @author freymar1
+ */
 public class GameEndedViewController extends ViewController {
 
     @FXML
@@ -33,11 +37,17 @@ public class GameEndedViewController extends ViewController {
         collectedCoins.setText("Collected Coins: " + getGameDataCache().getCoins());
     }
 
+    /**
+     * Changes the view to Game.fxml when the RESTART-Button is pressed.
+     */
     @FXML
     public void playAgain() {
         getMain().setFXMLView(FXMLFile.GAME);
     }
 
+    /**
+     * Changes the view to Menu.fxml when the Menu-Button is pressed.
+     */
     @FXML
     public void showMenu() {
         getMain().setFXMLView(FXMLFile.MENU);
