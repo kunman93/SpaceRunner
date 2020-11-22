@@ -1,7 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.speed;
 
 /**
- * Horizontal speed of elements per second relative to the view
+ * Horizontal speed of elements per second relative to the view.
+ * @author blattpet
  */
 public enum HorizontalSpeed {
     ZERO(0),
