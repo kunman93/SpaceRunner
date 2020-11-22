@@ -6,7 +6,7 @@ package ch.zhaw.it.pm3.spacerunner.ui;
  * @author kunnuman
  */
 public interface ShopContentCellControllerListener {
-    
+
     /**
      * Performs the action when a shop content was purchased.
      */

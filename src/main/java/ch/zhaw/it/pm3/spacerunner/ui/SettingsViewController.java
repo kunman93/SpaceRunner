@@ -11,7 +11,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 /**
- * SettingsViewController is responsible for the Settings-View (Settings.fxml).
+ * SettingsViewController is a controller class responsible for the Settings-View (Settings.fxml).
  * @author freymar1
  */
 public class SettingsViewController extends ViewController {

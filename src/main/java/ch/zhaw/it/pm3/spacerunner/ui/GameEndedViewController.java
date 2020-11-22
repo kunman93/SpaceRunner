@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
- * GameEndedViewController is responsible for the GameOver-Window (GameEnded.fxml).
+ * GameEndedViewController is a controller class responsible for the GameOver-Window (GameEnded.fxml).
  * @author freymar1
  */
 public class GameEndedViewController extends ViewController {
