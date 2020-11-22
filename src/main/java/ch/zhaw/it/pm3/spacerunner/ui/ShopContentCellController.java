@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 /**
  * Shop-view (Shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
  * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
+ * @author kunnuman
  */
 public class ShopContentCellController extends ListCell<ShopContent> {
 
