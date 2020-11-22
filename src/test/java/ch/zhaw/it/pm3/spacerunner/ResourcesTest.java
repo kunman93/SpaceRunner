@@ -67,7 +67,7 @@ public class ResourcesTest {
 
     @Test
     void testIfFXMLResourceFilesHaveAnEnumEntry() {
-        checkIfPathFilesWithExtensionExistInEnum(FXMLFile.class, new String[]{"fxml"}, "view", "FXML");
+        checkIfPathFilesWithExtensionExistInEnum(FXMLFile.class, new String[]{"fxml"}, "ui", "FXML");
     }
 
     private <T extends Enum & FileResource> void checkIfPathFilesWithExtensionExistInEnum(Class<T> enumToCheck, String[] extensions, String subfolder, String typeForError) {

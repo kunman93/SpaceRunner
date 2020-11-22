@@ -42,6 +42,7 @@ public class PowerUpTest {
      */
     @Test
     void getActiveTimeTest() {
+        //TODO: removed makes no sense... would only make sense to test if doubled with upgrade
         assertEquals(10000, d.getActiveTime());
         assertEquals(0, s.getActiveTime());
     }
