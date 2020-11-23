@@ -18,8 +18,13 @@ After pressing Start you need to Press **SPACE** to start the Run.
 
 When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
 
-![game restart](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_restart.gif)
+![powerup pick up](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup-pick-up.gif)
 
+![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup-shield.gif)
+
+![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game-pause.gif)
+
+![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG)
 
 #### Shop
 
@@ -31,7 +36,8 @@ Here you can buy and Manage Upgrades or Playermodels
   * Double duration of Coin PowerUp
 
 ![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_2_upgarde_buy.gif)
-![not enough coins for upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_4_upgrade_not_enough_coins.gif)
+
+![not enough coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_not_enough_coins.PNG)
 
 * Playermodel
   * Ship Skin 1

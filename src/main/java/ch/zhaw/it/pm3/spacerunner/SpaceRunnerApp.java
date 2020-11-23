@@ -27,7 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * SpaceRunnerApp is the class where the application starts.
+ * Responsible to start application, display of user-interfaces and to initialize background sound.
  * @author freymar1
  */
 public class SpaceRunnerApp extends Application {
@@ -43,6 +43,10 @@ public class SpaceRunnerApp extends Application {
         launch(args);
     }
 
+    /**
+     * Initializes primaryStage's UI and music.
+     * @param   primaryStage which will be assigned to the ui
+     * */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -54,28 +58,31 @@ public class SpaceRunnerApp extends Application {
         setupBackgroundMusic();
     }
 
-
+    /**
+     * Loads the new view to the primaryStage. Sizes, app-icon and font are set/loaded only once to avoid redundant
+     * operations and to maintain same sizes.
+     * @param   source of FXMLFile which should be loaded
+     * */
     public void setFXMLView(FXMLFile source){
         double height = 490;
         double width = 800;
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(source.getFileName()));
-
-            URL a = getClass().getResource("font/video_games.ttf");
-            Font.loadFont(a.toString().replace("%20", " "), 10);
-
             Pane rootPane = loader.load();
             Scene scene = new Scene(rootPane);
             primaryStage.setScene(scene);
 
-            if(primaryStage.getIcons().size() == 0) { // used to maintain same height and avoid redundant operations
+            if(primaryStage.getIcons().size() == 0) {
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
                 primaryStage.setHeight(height);
                 primaryStage.setWidth(width);
                 primaryStage.setMinHeight(height);
                 primaryStage.setMinWidth(width);
+
+                URL a = getClass().getResource("font/video_games.ttf");
+                Font.loadFont(a.toString().replace("%20", " "), 10);
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "File not Found");
@@ -91,6 +98,7 @@ public class SpaceRunnerApp extends Application {
         return primaryStage;
     }
 
+    //todo javadoc
     public void setupBackgroundMusic() {
         if (backgroundMusic != null) {
             backgroundMusic.stop();
