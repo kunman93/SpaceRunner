@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset;
+package ch.zhaw.it.pm3.spacerunner.domain.preset;
 
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;

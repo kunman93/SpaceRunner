@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
@@ -36,7 +36,7 @@ public class SpaceRunnerApp extends Application {
 
     private Stage primaryStage;
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private SoundClip backgroundMusic;
 
     public static void main(String[] args) {

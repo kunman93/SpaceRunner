@@ -1,7 +1,5 @@
-package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset;
+package ch.zhaw.it.pm3.spacerunner.domain.preset;
 
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset.Preset;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset.RandomPresetGenerator;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import org.junit.jupiter.api.BeforeEach;

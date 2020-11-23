@@ -1,5 +1,6 @@
-package ch.zhaw.it.pm3.spacerunner.application;
+package ch.zhaw.it.pm3.spacerunner.domain;
 
+import ch.zhaw.it.pm3.spacerunner.domain.GameController;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;

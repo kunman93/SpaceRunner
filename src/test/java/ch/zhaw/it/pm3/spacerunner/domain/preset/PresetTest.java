@@ -1,8 +1,7 @@
-package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset;
+package ch.zhaw.it.pm3.spacerunner.domain.preset;
 
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.Coin;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceElement;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset.Preset;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;

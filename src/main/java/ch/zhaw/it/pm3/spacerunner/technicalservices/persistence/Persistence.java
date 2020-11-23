@@ -1,5 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
+import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
+
 import java.util.List;
 
 /**
@@ -32,7 +36,7 @@ public interface Persistence {
     void activateContent(ContentId contentId);
 
     /**
-     * returns the amount of coins needed to buy the content with the given price. If the player has enough coins => 0 is returned
+     * returns the amount of coins needed to buy the content with the given price. If the player has enough coins {@literal =>} 0 is returned
      * @param price price of the content
      * @return coins needed to be able to buy the content
      */
@@ -46,7 +50,7 @@ public interface Persistence {
     boolean playerHasEnoughCoinsToBuy(int price);
 
     /**
-     * Buys the content with the specified content if. => Subtracts coins from profile and adds the content to the profile.
+     * Buys the content with the specified content if. {@literal =>} Subtracts coins from profile and adds the content to the profile.
      * @param contentId content to add to profile
      * @param price price of content
      */
@@ -57,14 +61,14 @@ public interface Persistence {
      * @param contentId content to check for
      * @return is active
      */
-    boolean contentIsActive(ContentId contentId);
+    boolean isContentActive(ContentId contentId);
 
     /**
      * Checks if the specified content is already purchased.
      * @param contentId content to check
      * @return is purchased
      */
-    boolean contentIsPurchased(ContentId contentId);
+    boolean isContentPurchased(ContentId contentId);
 
     /**
      * Set the specified sound volume in the profile.

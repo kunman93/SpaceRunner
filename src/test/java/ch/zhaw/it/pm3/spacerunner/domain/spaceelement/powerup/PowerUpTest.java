@@ -37,13 +37,4 @@ public class PowerUpTest {
         assertEquals(2, s.getMultiplier());
     }
 
-    /**
-     * Tests if the PowerUps return the correct time that they are active (10000 for Double Coins and 0 for Shield).
-     */
-    @Test
-    void getActiveTimeTest() {
-        //TODO: removed makes no sense... would only make sense to test if doubled with upgrade
-        assertEquals(10000, d.getActiveTime());
-        assertEquals(0, s.getActiveTime());
-    }
 }

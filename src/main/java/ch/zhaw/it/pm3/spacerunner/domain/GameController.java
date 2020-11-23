@@ -1,14 +1,13 @@
-package ch.zhaw.it.pm3.spacerunner.application;
+package ch.zhaw.it.pm3.spacerunner.domain;
 
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.ActivatedPowerUpManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.PowerUp;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset.Preset;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset.RandomPresetGenerator;
+import ch.zhaw.it.pm3.spacerunner.domain.preset.Preset;
+import ch.zhaw.it.pm3.spacerunner.domain.preset.RandomPresetGenerator;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
@@ -30,7 +29,7 @@ public class GameController {
 
     private Logger logger = Logger.getLogger(GameController.class.getName());
 
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
     private final VisualManager visualManager = VisualManager.getManager();
     private final VelocityManager velocityManager = VelocityManager.getManager();

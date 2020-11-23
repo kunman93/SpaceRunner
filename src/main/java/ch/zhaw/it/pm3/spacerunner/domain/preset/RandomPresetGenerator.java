@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.preset;
+package ch.zhaw.it.pm3.spacerunner.domain.preset;
 
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;

@@ -1,10 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
+import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
@@ -35,7 +35,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
 
     private final Logger logger = Logger.getLogger(ShopContent.class.getName());
 
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private final VisualUtil visualUtil = VisualUtil.getUtil();
 
     private static final String BUY_TEXT_FOR_BUY_BUTTON = "buy";
@@ -122,7 +122,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     }
 
     private void setUpBuyButton() {
-        if (persistenceUtil.contentIsPurchased(content.getContentId())) {
+        if (persistenceUtil.isContentPurchased(content.getContentId())) {
             buyButton.setText(BOUGHT_TEXT_FOR_BUY_BUTTON);
             buyButton.setDisable(true);
         } else {
@@ -132,7 +132,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     }
 
     private void setUpActivateButton() {
-        if (persistenceUtil.contentIsActive(content.getContentId())) {
+        if (persistenceUtil.isContentActive(content.getContentId())) {
             activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
             if (contentIsAPlayerModel()) {
                 spaceShipModelIsAlreadySelected = true;
@@ -142,7 +142,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         }
 
         if (spaceShipModelIsAlreadySelected) {
-            if (!persistenceUtil.contentIsActive(content.getContentId()) && contentIsAPlayerModel()) {
+            if (!persistenceUtil.isContentActive(content.getContentId()) && contentIsAPlayerModel()) {
                 activateButton.setDisable(true);
             } else if (contentIsAPlayerModel()) {
                 activateButton.setText(DEACTIVATE_TEXT_FOR_ACTIVATE_BUTTON);
@@ -154,8 +154,8 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     }
 
     private void processShopping() {
-        if (persistenceUtil.contentIsPurchased(content.getContentId())) {
-            if (persistenceUtil.contentIsActive(content.getContentId())) {
+        if (persistenceUtil.isContentPurchased(content.getContentId())) {
+            if (persistenceUtil.isContentActive(content.getContentId())) {
                 deactivatePurchasedContent();
             } else {
                 activatePurchasedContent();

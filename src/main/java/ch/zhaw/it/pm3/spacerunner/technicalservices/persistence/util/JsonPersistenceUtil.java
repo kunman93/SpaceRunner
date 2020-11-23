@@ -1,9 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ContentId;
+import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -25,22 +25,22 @@ import java.util.stream.Collectors;
  * Implemented with the singleton-pattern
  * @author islermic, kunnuman
  */
-public class PersistenceUtil implements Persistence {
+public class JsonPersistenceUtil implements Persistence {
 
-    private final Logger logger = Logger.getLogger(PersistenceUtil.class.getName());
+    private final Logger logger = Logger.getLogger(JsonPersistenceUtil.class.getName());
 
-    private static final PersistenceUtil persistenceUtil = new PersistenceUtil();
+    private static final JsonPersistenceUtil JSON_PERSISTENCE_UTIL = new JsonPersistenceUtil();
 
     private static final Gson gson = new Gson();
 
     /**
      * private constructor for the singleton-pattern
      */
-    private PersistenceUtil() {
+    private JsonPersistenceUtil() {
     }
 
-    public static PersistenceUtil getUtil() {
-        return persistenceUtil;
+    public static JsonPersistenceUtil getUtil() {
+        return JSON_PERSISTENCE_UTIL;
     }
 
     /**
@@ -81,17 +81,28 @@ public class PersistenceUtil implements Persistence {
     @Override
     public void activateContent(ContentId contentId) {
         PlayerProfile profile = loadProfile();
+
+        boolean ownsContent = profile.getPurchasedContentIds().contains(contentId);
+
+        if(!ownsContent){
+            throw new IllegalArgumentException("The player does not own the content that should be activated");
+        }
+
         profile.activateContent(contentId);
         saveProfile(profile);
     }
 
     /**
-     * returns the amount of coins needed to buy the content with the given price. If the player has enough coins => 0 is returned
-     * @param price price of the content
+     * returns the amount of coins needed to buy the content with the given price. If the player has enough coins  {@literal =>} 0 is returned
+     * @param price price of the content. Has to be higher or equal zero
      * @return coins needed to be able to buy the content
      */
     @Override
     public int getAmountOfCoinsNeededToBuyContent(int price) {
+        if(price < 0){
+            throw new IllegalArgumentException("price to get amount of coins needed to buy has to be 0 or greater");
+        }
+
         PlayerProfile profile = loadProfile();
         if (profile.getCoins() >= price) {
             return 0;
@@ -101,22 +112,34 @@ public class PersistenceUtil implements Persistence {
 
     /**
      * Checks if the player has enough coins to buy the content with the given price.
-     * @param price price of the content
+     * @param price price of the content. Has to be higher or equal zero
      * @return user has enough coins
      */
     @Override
     public boolean playerHasEnoughCoinsToBuy(int price) {
+        if(price < 0){
+            throw new IllegalArgumentException("price has to be 0 or greater");
+        }
+
         PlayerProfile profile = loadProfile();
         return profile.getCoins() >= price;
     }
 
     /**
-     * Buys the content with the specified content if. => Subtracts coins from profile and adds the content to the profile.
-     * @param contentId content to add to profile
-     * @param price price of content
+     * Buys the content with the specified content if. {@literal =>} Subtracts coins from profile and adds the content to the profile.
+     * @param contentId content to add to profile. Not Null
+     * @param price price of content. Has to be higher or equal zero
      */
     @Override
     public void buyContent(ContentId contentId, int price) {
+        if(contentId == null){
+            throw new IllegalArgumentException("ContentId can not be null");
+        }else if(price < 0){
+            throw new IllegalArgumentException("price has to be 0 or greater");
+        }else if(!playerHasEnoughCoinsToBuy(price)){
+            throw new IllegalArgumentException("player does not have enough coins to buy the content: " + contentId.name());
+        }
+
         PlayerProfile profile = loadProfile();
         profile.subtractCoins(price);
         profile.addContent(contentId);
@@ -129,7 +152,7 @@ public class PersistenceUtil implements Persistence {
      * @return is active
      */
     @Override
-    public boolean contentIsActive(ContentId contentId) {
+    public boolean isContentActive(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         return profile.getActiveContentIds().contains(contentId);
     }
@@ -140,7 +163,7 @@ public class PersistenceUtil implements Persistence {
      * @return is purchased
      */
     @Override
-    public boolean contentIsPurchased(ContentId contentId) {
+    public boolean isContentPurchased(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         return profile.getPurchasedContentIds().contains(contentId);
     }

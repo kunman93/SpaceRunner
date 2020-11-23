@@ -43,9 +43,14 @@ public class SoundClip {
 
         float f_volume = volume / 100f;
 
+
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        float range = gainControl.getMaximum() - gainControl.getMinimum();
-        float gain = (range * f_volume) + gainControl.getMinimum();
+
+        //Minimum is -80 decibel. to have a realistic scaling + 50 is needed. ELSE: below volume 50 you wouldnt here a sound...
+        float minimum = gainControl.getMinimum() + 50;
+
+        float range = gainControl.getMaximum() - minimum;
+        float gain = (range * f_volume) + minimum;
 
         gainControl.setValue(gain);
     }

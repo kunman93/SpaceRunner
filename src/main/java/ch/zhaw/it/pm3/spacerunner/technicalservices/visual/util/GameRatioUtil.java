@@ -11,6 +11,7 @@ public class GameRatioUtil {
     private final double Y_RATIO_GAME = 8.5;
     private final double Y_RATIO_GAME_BAR = 0.5;
     private final double X_RATIO = 16;
+
     private final static GameRatioUtil GAME_PROPORTION_UTIL = new GameRatioUtil();
 
     private GameRatioUtil() { }

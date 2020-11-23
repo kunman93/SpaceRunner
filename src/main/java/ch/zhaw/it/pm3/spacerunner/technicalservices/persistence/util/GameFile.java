@@ -8,6 +8,7 @@ public enum GameFile {
     SHOP_CONTENT("shop_content.json");
 
 
+    public static boolean TEST = false;
     private String fileName;
 
     private GameFile(String fileName) {
@@ -15,6 +16,9 @@ public enum GameFile {
     }
 
     public String getFileName() {
+        if(TEST){
+            return "src/test/resources/ch/zhaw/it/pm3/spacerunner/persistence/" + fileName;
+        }
         return fileName;
     }
 }

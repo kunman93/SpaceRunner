@@ -1,4 +1,4 @@
-package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
+package ch.zhaw.it.pm3.spacerunner.domain;
 
 /**
  * Different types of items listed in the shop.
