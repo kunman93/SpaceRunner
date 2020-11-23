@@ -59,8 +59,8 @@ public class SpaceRunnerApp extends Application {
     }
 
     /**
-     * Loads the new view to the primaryStage. Sizes, app-icon and font are set/loaded only once to avoid redundant
-     * operations and to maintain same sizes.
+     * Loads the new view to the primaryStage. Sizes and app-icon are set/loaded only once to avoid redundant
+     * operations and to maintain same sizes while loading another view.
      * @param   source of FXMLFile which should be loaded
      * */
     public void setFXMLView(FXMLFile source){
@@ -73,6 +73,9 @@ public class SpaceRunnerApp extends Application {
             Scene scene = new Scene(rootPane);
             primaryStage.setScene(scene);
 
+            URL a = getClass().getResource("font/video_games.ttf");
+            Font.loadFont(a.toString().replace("%20", " "), 10);
+
             if(primaryStage.getIcons().size() == 0) {
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
@@ -80,9 +83,6 @@ public class SpaceRunnerApp extends Application {
                 primaryStage.setWidth(width);
                 primaryStage.setMinHeight(height);
                 primaryStage.setMinWidth(width);
-
-                URL a = getClass().getResource("font/video_games.ttf");
-                Font.loadFont(a.toString().replace("%20", " "), 10);
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "File not Found");
@@ -98,7 +98,9 @@ public class SpaceRunnerApp extends Application {
         return primaryStage;
     }
 
-    //todo javadoc
+    /**
+     * Initializes background music and sets it to an endless loop.
+     * */
     public void setupBackgroundMusic() {
         if (backgroundMusic != null) {
             backgroundMusic.stop();

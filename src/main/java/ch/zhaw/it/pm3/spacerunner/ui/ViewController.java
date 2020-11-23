@@ -4,8 +4,8 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.domain.GameDataCache;
 
 /**
- * ViewController contains game instance
- * used for methods which are similar in each Controller (e.g. responsive calculations)
+ * Defines required methods of a ViewController and stores the achievements of the last played game.
+ *
  * @author freymar1
  */
 public abstract class ViewController {
@@ -13,9 +13,7 @@ public abstract class ViewController {
     protected static String DEFAULT_FONT = "Bauhaus 93";
     private static GameDataCache gameDataCache = null;
 
-    public static void setMain(SpaceRunnerApp main) {
-        ViewController.main = main;
-    }
+    public static void setMain(SpaceRunnerApp main) { ViewController.main = main; }
 
     public static SpaceRunnerApp getMain() {
         return main;

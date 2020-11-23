@@ -8,7 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
- * GameEndedViewController is a controller class responsible for the GameOver-Window (GameEnded.fxml).
+ * Displays achievements of a game and redirects the user to his/her next desired view.
+ *
+ * ViewController of GameEnded.fxml
+ *
  * @author freymar1
  */
 public class GameEndedViewController extends ViewController {
@@ -26,6 +29,9 @@ public class GameEndedViewController extends ViewController {
 
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
+    /**
+     * Displays a congratulation to the user, his achieved score and the collected coins.
+     * */
     public void initialize() {
         PlayerProfile player = persistenceUtil.loadProfile();
         name.setText("Congratulation " + player.getPlayerName());
@@ -46,7 +52,7 @@ public class GameEndedViewController extends ViewController {
     }
 
     /**
-     * Changes the view to Menu.fxml when the Menu-Button is pressed.
+     * Changes the view to Menu.fxml when the MENU-Button is pressed.
      */
     @FXML
     public void showMenu() {

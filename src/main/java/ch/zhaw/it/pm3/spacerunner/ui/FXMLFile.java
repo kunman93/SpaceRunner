@@ -3,7 +3,9 @@ package ch.zhaw.it.pm3.spacerunner.ui;
 import ch.zhaw.it.pm3.spacerunner.FileResource;
 
 /**
- * Enumeration of the FXML-files that are being used.
+ * Enumeration of the FXML-files that are being used, containing the file path to the FXML.
+ *
+ * @author freymar1
  */
 public enum FXMLFile implements FileResource {
     MENU("Menu.fxml"),

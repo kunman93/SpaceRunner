@@ -1,5 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.domain;
 
+/**
+ * Stores the achievements of a game to be used in different views (e.g. for game-ended-view).
+ *
+ * @author freymar1
+ * */
 public class GameDataCache {
     private int coins;
     private int score;

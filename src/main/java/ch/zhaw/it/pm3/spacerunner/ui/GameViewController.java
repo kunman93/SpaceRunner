@@ -3,7 +3,6 @@ package ch.zhaw.it.pm3.spacerunner.ui;
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.application.GameController;
 import ch.zhaw.it.pm3.spacerunner.domain.GameDataCache;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.Coin;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.DoubleCoinsPowerUp;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.PowerUp;
@@ -39,6 +38,14 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Visual appearance of the game. Receives I/O inputs, hands them over to GameController which performs logic actions
+ * and display the result on a canvas.
+ *
+ * ViewController of Game.fxml
+ *
+ * @author islermic, freymar1
+ * */
 public class GameViewController extends ViewController {
 
     private final Logger logger = Logger.getLogger(GameViewController.class.getName());
@@ -99,6 +106,10 @@ public class GameViewController extends ViewController {
     //Used to overperform a little bit. if we dont have this we dont reach the required fps (has to do with some internal AnimationTimer stuff)
     private final long FRAME_TIME_DELTA = 2_000_000;
 
+    /**
+     * Initialisation of the UI related component such as scaling of displayed contents and initialisation of I/O related
+     * handlers. Contains ApplicationTimer, which is the game loop, who updates the appearance according to an input.
+     * */
     public void initialize() {
         initializeUiElements();
 
@@ -164,6 +175,10 @@ public class GameViewController extends ViewController {
     }
 
 
+    /**
+     * Updates game view by processing input, updating displayed space elements and game info bar and is responsible
+     * to close the game (loop, handlers and persistence) properly.
+     * */
     private void updateGameFrame() {
         gameController.processFrame(upPressed, downPressed);
         clearCanvas();
@@ -203,6 +218,10 @@ public class GameViewController extends ViewController {
         };
     }
 
+    /**
+     * Ensures correct ratio of games and delays the resize of displayed content. Loading the adapted svg-files for
+     * every single width during resizing is expensive.
+     * */
     private void resize() {
 
         if (!wasPausedBeforeResize && !isResizing) {
@@ -246,6 +265,11 @@ public class GameViewController extends ViewController {
         resizeTimer.schedule(resizeTask, 300);
     }
 
+    /**
+     * Assigns true to the boolean values of the arrow-keys up and down (upPressed, downPressed), if there is a
+     * corresponding event.
+     * @param isPressedHandler      value assigned for the specific EventHandler
+     * */
     private EventHandler<KeyEvent> createPressReleaseKeyHandler(boolean isPressedHandler) {
         return event -> {
             if (event.getCode() == KeyCode.UP) {
@@ -264,10 +288,9 @@ public class GameViewController extends ViewController {
         };
     }
 
-
-    /*
-     * https://stackoverflow.com/questions/45326525/how-to-show-a-loading-animation-in-javafx-application
-     */
+    /**
+     * While the game is loading this method will display a loading animation by rotating it continuously.
+     * */
     private void showLoadingScreen() {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, gameRatioUtil.getFontSize(gameViewPort.getInfoBarHeight(), FONT_SIZE_IN_PERCENT_OF_INFO_BAR)));
@@ -296,11 +319,17 @@ public class GameViewController extends ViewController {
         loadingAnimation.start();
     }
 
+    /**
+     * Clears canvas of game.
+     * */
     private void clearCanvas() {
         graphicsContext.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
     }
 
-
+    /**
+     * Displays the space elements according to their new position, relative to the scene (responsive design).
+     * @param spaceElements     all SpaceElements which are displayed on the screen
+     * */
     private void displayUpdatedSpaceElements(List<SpaceElement> spaceElements) {
         for (SpaceElement spaceElement : spaceElements) {
             Point2D.Double position = spaceElement.getRelativePosition();
@@ -314,7 +343,11 @@ public class GameViewController extends ViewController {
         }
     }
 
-
+    /**
+     * Display coins, coin animation and score to the info bar.
+     * @param coins         collected coins in game
+     * @param score         achieved score in game
+     */
     private void displayCoinsAndScore(int coins, int score) {
         double xPositionReference = gameViewPort.getGameWidth();
         double infoBarYPosition = gameViewPort.getGameHeight();
@@ -347,6 +380,10 @@ public class GameViewController extends ViewController {
         graphicsContext.fillText(String.valueOf(score), xPositionReference, infoBarYPosition, textWidth);
     }
 
+    /**
+     * Display icons of collected power ups on the info bar.
+     * @param activePowerUps    Map of activated power ups
+     * */
     private void displayActivatedPowerUps(Map<Class<? extends PowerUp>, PowerUp> activePowerUps) {
         double xPositionReference = INFO_BAR_IMAGE_MARGIN;
         double infoBarYPosition = gameViewPort.getGameHeight();
@@ -374,6 +411,10 @@ public class GameViewController extends ViewController {
         }
     }
 
+    /**
+     * Displays a text centered on the info bar.
+     * @param info      text to display
+     * */
     private void displayInformation(String info) {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(new Font(DEFAULT_FONT, gameRatioUtil.getFontSize(gameViewPort.getInfoBarHeight(), FONT_SIZE_IN_PERCENT_OF_INFO_BAR)));
@@ -387,6 +428,10 @@ public class GameViewController extends ViewController {
         primaryStage.removeEventHandler(KeyEvent.KEY_PRESSED, pauseGameKeyHandler);
     }
 
+    /**
+     * Initializes SVG images / animations which are not drawn on the gameCanvas (only SpaceElements with a position are
+     * drawn on the gameCanvas), but are required for the info bar.
+     * */
     private void initializeUiElements() {
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
         VISUAL_MANAGER.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
