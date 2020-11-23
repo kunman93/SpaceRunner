@@ -1,5 +1,11 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
 
+/**
+ * Used to define Animations.
+ * Contains an array of VisualSVGFile for an animation.
+ *
+ * @author islermic
+ */
 public enum VisualSVGAnimationFiles {
 
     COIN_ANIMATION(new VisualSVGFile[]{

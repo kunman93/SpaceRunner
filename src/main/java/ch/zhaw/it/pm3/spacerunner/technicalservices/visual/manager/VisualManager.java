@@ -18,6 +18,14 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * This is a Manager for the Visuals of the different VisualElement's.
+ * It is implemented with the singleton-pattern.
+ * The Manager was implemented because for example all Asteroids share the same image. -> So it would make no sense to have the image in every element itself.
+ * The image is set per Class of VisualElement (? extends VisualElement)
+ *
+ * @author islermic
+ */
 public class VisualManager {
 
     private final VisualUtil visualUtil = VisualUtil.getUtil();
@@ -40,6 +48,19 @@ public class VisualManager {
     private VisualManager() {
     }
 
+
+    /**
+     * Clears the data of the manager. (reset)
+     */
+    public synchronized void clear() {
+        visualList = new HashMap<>();
+        animatedVisualList = new HashMap<>();
+    }
+
+    /**
+     * Setup visuals for the game.
+     * If a new element is implemented, add code for the element in this function so it has an image at the start.
+     */
     public void loadGameElementVisuals() {
         visualManagerListeners.forEach(VisualManagerListener::clear);
 
@@ -70,14 +91,31 @@ public class VisualManager {
         visualManager.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
     }
 
+    /**
+     * Returns the relative height of the specified class
+     * @param elementClass class to get height
+     * @return relative height
+     * @throws VisualNotSetException if no visual set
+     */
     public double getElementRelativeHeight(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getVisual(elementClass).getVisualScaling().getScaling();
     }
 
+    /**
+     * Returns the relative width of the specified class
+     * @param elementClass class to get width
+     * @return relative width
+     * @throws VisualNotSetException if no visual set
+     */
     public double getElementRelativeWidth(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getImage(elementClass).getWidth() / ((double) width);
     }
 
+    /**
+     * Loads the specified visual for the class.
+     * @param elementClass class to add visual
+     * @param visual visual to load and set
+     */
     public void loadAndSetVisual(Class<? extends VisualElement> elementClass, Visual visual) {
         BufferedImage image;
         if (visual.getVisualFile() == null) {
@@ -130,6 +168,11 @@ public class VisualManager {
         return visualUtil.loadImage(imageURL);
     }
 
+    /**
+     * Loads the specified animated visual for the class.
+     * @param elementClass class to add visual animation
+     * @param animatedVisual animation to load and set
+     */
     public void loadAndSetAnimatedVisual(Class<? extends VisualElement> elementClass, AnimatedVisual animatedVisual) {
         VisualSVGFile[] svgFiles = animatedVisual.getVisualSVGFiles().getAnimationVisuals();
 
@@ -149,10 +192,24 @@ public class VisualManager {
         }
     }
 
+    /**
+     * Gets the image of the class.
+     * @param elementClass class to get image for
+     * @return image for class
+     * @throws VisualNotSetException if no visual set
+     */
     public BufferedImage getImage(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         return getVisual(elementClass).getBufferedImage();
     }
 
+    /**
+     * Gets the visual of the class.
+     * If there is an animation set, the animated visual is preferred. Else the visual is returned.
+     *
+     * @param elementClass class to get visual for
+     * @return visual for class
+     * @throws VisualNotSetException if no visual set
+     */
     private Visual getVisual(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         Visual animatedVisual = getAnimatedVisual(elementClass);
         if (animatedVisual != null) {
@@ -179,12 +236,6 @@ public class VisualManager {
         }
     }
 
-    public synchronized void clear() {
-        visualList = new HashMap<>();
-        animatedVisualList = new HashMap<>();
-    }
-
-    ;
 
     public int getHeight() {
         return height;
@@ -194,6 +245,12 @@ public class VisualManager {
         return width;
     }
 
+    /**
+     * Sets the height and with managed by the manager.
+     * All visuals will be reloaded with the new sizes.
+     * @param width width in px
+     * @param height height in px
+     */
     public synchronized void setViewport(int width, int height) {
         this.width = width;
         this.height = height;
@@ -206,10 +263,18 @@ public class VisualManager {
         }
     }
 
+    /**
+     * Add Listener
+     * @param visualManagerListener listener to add
+     */
     public void addListener(VisualManagerListener visualManagerListener) {
         visualManagerListeners.add(visualManagerListener);
     }
 
+    /**
+     * Remove Listener
+     * @param visualManagerListener listener to remove
+     */
     public void removeListener(VisualManagerListener visualManagerListener) {
         visualManagerListeners.remove(visualManagerListener);
     }

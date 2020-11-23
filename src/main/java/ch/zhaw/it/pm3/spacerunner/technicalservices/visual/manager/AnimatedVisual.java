@@ -4,6 +4,11 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimati
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Container for multiple visuals which represent an animated visual.
+ *
+ * @author islermic
+ */
 public class AnimatedVisual {
     private long animationTimeStamp = 0;
     private AtomicInteger animationPointer = new AtomicInteger(0);
@@ -30,6 +35,10 @@ public class AnimatedVisual {
         this.visuals = visuals;
     }
 
+    /**
+     * Gets the current visual depending on the animation pointer.
+     * @return the current visual which represents this animation
+     */
     public Visual getCurrentVisual() {
         long currentTime = System.currentTimeMillis();
 

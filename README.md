@@ -1,9 +1,5 @@
 # Space-Runner
-TODO!
-
 ## Instructions
-TODO!
-
 ### Welcome
 Welcome to our project: Space-Runner. We are 6 engineering Students at the ZHAW. First you will get an instruction on how to set-up the project, How to Play, testing and the project outlines and how far we've progressed.
 
@@ -20,75 +16,59 @@ After pressing Start you need to Press **SPACE** to start the Run.
 
 ![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif)
 
+When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
+
 ![game restart](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_restart.gif)
 
+
 #### Shop
+
+![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_1.gif)
+
 Here you can buy and Manage Upgrades or Playermodels
 * Upgrades
   * 1.5x PowerUp Chance
   * Double duration of Coin PowerUp
+
+![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_2_upgarde_buy.gif)
+![not enough coins for upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_4_upgrade_not_enough_coins.gif)
+
 * Playermodel
   * Ship Skin 1
   * Ship Skin 2
 
-![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_1.gif)
-
-![buy upgrad](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_2_upgarde_buy.gif)
-
-![activate upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_3_upgrade_activate.gif)
-
-![not enough coins for upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_4_upgrade_not_enough_coins.gif)
-
-![buy player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_5_player_model_buy.gif)
-
 ![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_6_player_model_activate.gif)
 
-![not enough coins for player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_7_player_model_not_enoght_coins.gif)
-
 #### Settings
-Here you can set the Playername, the Sound Volume and the Framerate 
-* Player Name
-* Sound Volume (in %)
-* Framerate (in FPS)
 
 ![go to settings](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_1.gif)
 
+Here you can set the Playername, the Sound Volume and the Framerate 
+* Player Name
+
 ![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_2_change_name.gif)
+
+* Sound Volume (in %)
+* Framerate (in FPS)
 
 ![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_3.gif)
 
-
-
-#### Game
-When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
-
-## Class Diagram
-TODO!
-
 ## Project Outlines
-TODO!
-
 ### Brief Summary
-TODO!
+The goal of the Project is to create a Endless Sidescroller similar to Jetpack Joyride or Templerun. 
 
 ### Functional Principle
 TODO!
 
-### Features
-TODO!
-
-#### Nice-To-Have
-TODO!
-
 ## Pull Request
-Pull requests are merged and discussed together on a voice chat (e.g. Discord). Feedback is directly provided per voice.
+Pull requests are merged and discussed together on a voice chat (e.g. Discord/Teams). Feedback is directly provided per voice.
 
 ## Testing
-TODO!
+We tested what we could but since it's a Game most of the testing couldn't be done with JUnit.
 
-## External Rsources
+## External Ressources
 Link to Wiki
-[External Rsources](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/wiki/External-ressources)
+[External Resources](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/wiki/External-ressources)
 
 ## Meetings
 The following meetings and iteration sections show the progress of the project. 

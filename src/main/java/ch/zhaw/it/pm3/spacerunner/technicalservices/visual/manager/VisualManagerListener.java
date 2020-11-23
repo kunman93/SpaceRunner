@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * Implemented this interface to register to Events from VisualManager.
+ * @author islermic
  */
 public interface VisualManagerListener {
     void clear();

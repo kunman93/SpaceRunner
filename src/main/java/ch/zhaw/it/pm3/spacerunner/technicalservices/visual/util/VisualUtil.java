@@ -21,11 +21,19 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * Util to load visuals
+ * Implemented with the singleton-pattern.
+ *
+ * Uses the org.apache.batik libraries for svg processing.
+ *
+ * @author islermic
+ */
 public class VisualUtil {
 
     private final Logger logger = Logger.getLogger(VisualUtil.class.getName());
 
-    // Singleton pattern
     private static final VisualUtil visualUtil = new VisualUtil();
 
     /**
@@ -44,18 +52,18 @@ public class VisualUtil {
      * @param imageURL URL of the image to load
      * @return loaded image
      */
-    /**
-     * Loads the image from the URL provided
-     *
-     * @param imageURL URL of the image to load
-     * @return loaded image
-     */
     public BufferedImage loadImage(URL imageURL) {
         Image image = new ImageIcon(imageURL).getImage();
         return toBufferedImage(image);
     }
 
-
+    /**
+     * Generates the "infinite" background ("normal image" + "mirror image" + "normal image").
+     * @param inputImage image for background
+     * @param scaledWidth width used for the background (will be tripled in the output image)
+     * @param scaledHeight height used for background
+     * @return background image with size (3*scaledWidth, scaledHeight) contains ("normal image" + "mirror image" + "normal image").
+     */
     public BufferedImage generateBackground(BufferedImage inputImage, int scaledWidth, int scaledHeight) {
         BufferedImage outputImage = new BufferedImage(scaledWidth * 3, scaledHeight, inputImage.getType());
 
@@ -93,13 +101,14 @@ public class VisualUtil {
         return outputImage;
     }
 
-    //TODO: Declare as copied from internet. (Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage)
-
     /**
      * Converts a given Image into a BufferedImage
      *
      * @param img The Image to be converted
      * @return The converted BufferedImage
+     *
+     *
+     * @author Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
      */
     private BufferedImage toBufferedImage(Image img) {
         if (img instanceof BufferedImage) {
@@ -137,7 +146,9 @@ public class VisualUtil {
     }
 
 
-    //TODO: https://stackoverflow.com/questions/11435671/how-to-get-a-bufferedimage-from-a-svg
+    /**
+     * @author Code is from stackoverflow https://stackoverflow.com/questions/11435671/how-to-get-a-bufferedimage-from-a-svg and optimized by islermic
+     */
     private BufferedImage rasterize(File svgFile, float height) throws IOException {
 
         final BufferedImage[] imagePointer = new BufferedImage[1];
@@ -197,6 +208,12 @@ public class VisualUtil {
         return imagePointer[0];
     }
 
+    /**
+     * Flips the image.
+     * @param image image to flip
+     * @param horizontal should flip horizontal? if false it is flipped vertically
+     * @return image flipped in the correct direction
+     */
     public BufferedImage flipImage(BufferedImage image, boolean horizontal) {
         // Flip the image horizontally
         AffineTransform tx;
@@ -213,6 +230,12 @@ public class VisualUtil {
         return image;
     }
 
+    /**
+     * Rotate an image by the specified degree.
+     * @param bufferedImage image to rotate
+     * @param deg degrees for rotation
+     * @return rotated image
+     */
     public BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
         BufferedImage image = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
         AffineTransform trans = AffineTransform.getRotateInstance(deg, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);

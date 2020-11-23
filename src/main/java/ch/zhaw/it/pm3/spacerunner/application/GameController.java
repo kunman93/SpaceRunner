@@ -310,6 +310,14 @@ public class GameController {
         activatedPowerUpManager.addPowerUp(p);
         elements.remove(p);
         score += 50;
+        new Thread(() -> {
+            try {
+                gameSoundUtil.loadClip(GameSound.POWER_UP_PICKUP).play();
+            } catch (Exception e) {
+                //IGNORE ON PURPOSE
+                logger.log(Level.WARNING, "Sound POWER_UP_PICKUP couldn't be loaded");
+            }
+        }).start();
     }
 
     /**
