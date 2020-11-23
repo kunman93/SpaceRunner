@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
 
     private final Logger logger = Logger.getLogger(ActivatedPowerUpManager.class.getName());
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final VisualManager visualManager = VisualManager.getManager();
 
     private Random randomGen = new Random();
     private int GENERAL_POWER_UP_PROBABILITY = 33;
@@ -58,7 +60,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
                 if (x < probability.getValue() + secondSum) {
                     PowerUp powerUp;
                     try {
-                        powerUp = probability.getKey().getConstructor(Point2D.Double.class).newInstance(new Point2D.Double(1, Math.random() * 0.8 + 0.1));
+                        powerUp = probability.getKey().getConstructor(Point2D.Double.class).newInstance(new Point2D.Double(1, Math.random() * (1.0 - visualManager.getElementRelativeHeight(probability.getKey()))));
                         return powerUp;
                     } catch (Exception e) {
                         logger.log(Level.SEVERE, "Error in PowerUp generation");

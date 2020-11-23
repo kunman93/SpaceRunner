@@ -230,7 +230,7 @@ public class PersistenceUtil implements Persistence {
         if (playerProfile == null) {
             throw new IllegalArgumentException("null is not a legal argument for a player profile!");
         }
-        //gson.toJson(playerProfile, new FileWriter(GameFile.PROFILE.getFileName()));
+
         try {
             serializeAndSaveData(GameFile.PROFILE.getFileName(), playerProfile);
         } catch (IOException e) {
