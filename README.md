@@ -57,9 +57,6 @@ Here you can set the Playername, the Sound Volume and the Framerate
 ### Brief Summary
 The goal of the Project is to create a Endless Sidescroller similar to Jetpack Joyride or Templerun. 
 
-### Functional Principle
-TODO!
-
 ## Pull Request
 Pull requests are merged and discussed together on a voice chat (e.g. Discord/Teams). Feedback is directly provided per voice.
 
