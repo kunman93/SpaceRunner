@@ -21,13 +21,13 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Utility tool to persist data (load / save)
+ * Utility tool to persist data (load / save) with Gson-library
+ * Implemented with the singleton-pattern
  */
 public class PersistenceUtil implements Persistence {
 
-    private Logger logger = Logger.getLogger(PersistenceUtil.class.getName());
+    private final Logger logger = Logger.getLogger(PersistenceUtil.class.getName());
 
-    // Singleton pattern
     private static final PersistenceUtil persistenceUtil = new PersistenceUtil();
 
     private static final Gson gson = new Gson();
@@ -42,19 +42,30 @@ public class PersistenceUtil implements Persistence {
         return persistenceUtil;
     }
 
+    /**
+     * Checks if the user has activated the double duration upgrade for the coin power up.
+     * @return if it is activated
+     */
     @Override
     public boolean hasDoubleDurationForCoinPowerUp() {
         PlayerProfile profile = loadProfile();
         return profile.getActiveContentIds().stream().anyMatch((activeContent) -> activeContent.equals(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
     }
 
+    /**
+     * Checks if the user has activated the power up chance multiplier upgrade.
+     * @return if it is activated
+     */
     @Override
     public boolean hasPowerUpChanceMultiplierUpgrade() {
         PlayerProfile profile = loadProfile();
         return profile.getActiveContentIds().stream().anyMatch((activeContent) -> activeContent.equals(ContentId.POWER_UP_CHANCE_MULTIPLIER));
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Deactivated the content with the specified contentId in the profile of the user.
+     * @param contentId id to be deactivated
+     */
     @Override
     public void deactivateContent(ContentId contentId) {
         PlayerProfile profile = loadProfile();
@@ -62,7 +73,10 @@ public class PersistenceUtil implements Persistence {
         saveProfile(profile);
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Activated the content with the specified contentId in the profile of the user.
+     * @param contentId id to be activated
+     */
     @Override
     public void activateContent(ContentId contentId) {
         PlayerProfile profile = loadProfile();
@@ -70,7 +84,11 @@ public class PersistenceUtil implements Persistence {
         saveProfile(profile);
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * returns the amount of coins needed to buy the content with the given price. If the player has enough coins => 0 is returned
+     * @param price price of the content
+     * @return coins needed to be able to buy the content
+     */
     @Override
     public int getAmountOfCoinsNeededToBuyContent(int price) {
         PlayerProfile profile = loadProfile();
@@ -80,14 +98,22 @@ public class PersistenceUtil implements Persistence {
         return price - profile.getCoins();
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Checks if the player has enough coins to buy the content with the given price.
+     * @param price price of the content
+     * @return user has enough coins
+     */
     @Override
     public boolean playerHasEnoughCoinsToBuy(int price) {
         PlayerProfile profile = loadProfile();
         return profile.getCoins() >= price;
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Buys the content with the specified content if. => Subtracts coins from profile and adds the content to the profile.
+     * @param contentId content to add to profile
+     * @param price price of content
+     */
     @Override
     public void buyContent(ContentId contentId, int price) {
         PlayerProfile profile = loadProfile();
@@ -96,27 +122,41 @@ public class PersistenceUtil implements Persistence {
         saveProfile(profile);
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Checks if the specified content is active.
+     * @param contentId content to check for
+     * @return is active
+     */
     @Override
     public boolean contentIsActive(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         return profile.getActiveContentIds().contains(contentId);
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Checks if the specified content is already purchased.
+     * @param contentId content to check
+     * @return is purchased
+     */
     @Override
     public boolean contentIsPurchased(ContentId contentId) {
         PlayerProfile profile = loadProfile();
         return profile.getPurchasedContentIds().contains(contentId);
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Get the specified sound volume from the profile.
+     * @return sound volume
+     */
     @Override
     public int getSoundVolume() {
         return loadProfile().getVolume();
     }
 
-    //TODO: JavaDOC and name
+    /**
+     * Returns if the audio is enabled.
+     * @return is audio enabled
+     */
     @Override
     public boolean isAudioEnabled() {
         return loadProfile().isAudioEnabled();
@@ -204,7 +244,6 @@ public class PersistenceUtil implements Persistence {
         }
     }
 
-    //TODO: JavaDOC
     private Set<ShopContent> loadActiveContent(Set<ContentId> activeContentIds) {
         List<ShopContent> shopContentList = loadShopContent();
         return shopContentList.stream().filter((shopContent) -> {
@@ -214,7 +253,6 @@ public class PersistenceUtil implements Persistence {
         }).collect(Collectors.toSet());
     }
 
-    //TODO: JavaDOC
     private Set<ShopContent> loadPurchasedContent(Set<ContentId> purchasedContentIds) {
         List<ShopContent> shopContentList = loadShopContent();
         return shopContentList.stream().filter((shopContent) -> {
@@ -224,7 +262,10 @@ public class PersistenceUtil implements Persistence {
         }).collect(Collectors.toSet());
     }
 
-    //TODO: JavaDOC
+    /**
+     * Loads the shop content list.
+     * @return shop content list
+     */
     @Override
     public List<ShopContent> loadShopContent() {
         Type listOfShopContentType = new TypeToken<ArrayList<ShopContent>>() {

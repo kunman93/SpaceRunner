@@ -8,10 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+//TODO: JavaDOC and name
 public class GameSoundUtil {
 
-    private SoundUtil soundUtil = SoundUtil.getUtil();
-    private static GameSoundUtil gameSoundUtil = new GameSoundUtil();
+    private final SoundUtil soundUtil = SoundUtil.getUtil();
+    private final static GameSoundUtil gameSoundUtil = new GameSoundUtil();
 
     private GameSoundUtil() {
     }
