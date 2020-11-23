@@ -86,7 +86,7 @@ public class JsonPersistenceUtil implements Persistence {
     }
 
     /**
-     * returns the amount of coins needed to buy the content with the given price. If the player has enough coins => 0 is returned
+     * returns the amount of coins needed to buy the content with the given price. If the player has enough coins  {@literal =>} 0 is returned
      * @param price price of the content
      * @return coins needed to be able to buy the content
      */
@@ -111,7 +111,7 @@ public class JsonPersistenceUtil implements Persistence {
     }
 
     /**
-     * Buys the content with the specified content if. => Subtracts coins from profile and adds the content to the profile.
+     * Buys the content with the specified content if. {@literal =>} Subtracts coins from profile and adds the content to the profile.
      * @param contentId content to add to profile
      * @param price price of content
      */

@@ -131,6 +131,7 @@ public class VisualUtil {
      * Loads the SVG image from the URL provided
      *
      * @param imageURL URL of the image to load
+     * @param height height for the image in px
      * @return loaded image
      */
     public BufferedImage loadSVGImage(URL imageURL, float height) {

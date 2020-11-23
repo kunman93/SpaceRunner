@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * This is a Manager for the Velocity of the different SpaceElements.
  * It is implemented with the singleton-pattern.
- * The Manager was implemented because for example all Asteroids share the same velocity. -> So it would make no sense to have the velocity in every element itself.
+ * The Manager was implemented because for example all Asteroids share the same velocity. {@literal =>} So it would make no sense to have the velocity in every element itself.
  * The Velocity is set per Class of SpaceElement (? extends SpaceElement)
  *
  * @author islermic
@@ -55,8 +55,8 @@ public class VelocityManager {
     }
 
     /**
-     * Set the velocity for a Class<? extends SpaceElement>. The velocity is given as a point. x is the x velocity and y is the y velocity.
-     * @param elementClass Class<? extends SpaceElement> to set the velocity
+     * Set the velocity for a Class &lt;? extends SpaceElement&gt;. The velocity is given as a point. x is the x velocity and y is the y velocity.
+     * @param elementClass Class &lt;? extends SpaceElement&gt; to set the velocity
      * @param velocity Point2D.Double velocity to be set
      */
     public synchronized void setRelativeVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity) {
@@ -92,7 +92,7 @@ public class VelocityManager {
 
     /**
      * Accelerates the x velocity of a specific class. If the class is not currently managed, nothing happens.
-     * @param elementClass Class<? extends SpaceElement> to accelerate
+     * @param elementClass Class &lt;? extends SpaceElement&gt; to accelerate
      * @param xAcceleration acceleration for x-velocity
      */
     public synchronized void accelerateX(Class<? extends SpaceElement> elementClass, double xAcceleration) {
@@ -105,7 +105,7 @@ public class VelocityManager {
 
     /**
      * Accelerates the y velocity of a specific class. If the class is not currently managed, nothing happens.
-     * @param elementClass Class<? extends SpaceElement> to accelerate
+     * @param elementClass Class &lt;? extends SpaceElement&gt; to accelerate
      * @param yAcceleration acceleration for y-velocity
      */
     public synchronized void accelerateY(Class<? extends SpaceElement> elementClass, double yAcceleration) {
@@ -118,7 +118,7 @@ public class VelocityManager {
 
     /**
      * Accelerates velocity of a specific class.
-     * @param elementClass Class<? extends SpaceElement> to accelerate
+     * @param elementClass Class &lt;? extends SpaceElement&gt; to accelerate
      * @param acceleration Point2D.Double acceleration. Accelerate x-velocity with acceleration.x and y-velocity with acceleration.y
      */
     public synchronized void accelerate(Class<? extends SpaceElement> elementClass, Point2D.Double acceleration) {
@@ -136,7 +136,7 @@ public class VelocityManager {
 
     /**
      * Get the velocity of a specific class.
-     * @param elementClass Class<? extends SpaceElement> to get the velocity of
+     * @param elementClass Class &lt;? extends SpaceElement&gt; to get the velocity of
      * @return velocity of the class
      * @throws VelocityNotSetException if the velocity was not set
      */

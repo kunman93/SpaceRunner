@@ -21,7 +21,7 @@ import java.util.*;
 /**
  * This is a Manager for the Visuals of the different VisualElement's.
  * It is implemented with the singleton-pattern.
- * The Manager was implemented because for example all Asteroids share the same image. -> So it would make no sense to have the image in every element itself.
+ * The Manager was implemented because for example all Asteroids share the same image. {@literal =>} So it would make no sense to have the image in every element itself.
  * The image is set per Class of VisualElement (? extends VisualElement)
  *
  * @author islermic
