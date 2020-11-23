@@ -1,5 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
+import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
 import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +17,15 @@ public class JsonPersistenceUtilTest {
 
     @BeforeEach
     void setUp() throws IOException {
+        GameFile.TEST = true;
         PlayerProfile.TEST = true;
 
-        Path testJSON = Path.of("profile.json");
+        Path testJSON = Path.of(GameFile.PROFILE.getFileName());
         if(Files.exists(testJSON)){
             Files.delete(testJSON);
         }
     }
+
 
     /**
      *  test save profile
@@ -114,6 +117,208 @@ public class JsonPersistenceUtilTest {
 
 
 
+    @Test
+    void isContentPurchasedTest(){
+        assertFalse(jsonPersistenceUtil.isContentPurchased(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
+        assertFalse(jsonPersistenceUtil.isContentPurchased(ContentId.POWER_UP_CHANCE_MULTIPLIER));
 
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+        assertTrue(jsonPersistenceUtil.isContentPurchased(ContentId.POWER_UP_CHANCE_MULTIPLIER));
+    }
+
+    @Test
+    void isContentActiveTest(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertFalse(jsonPersistenceUtil.isContentActive(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
+        assertFalse(jsonPersistenceUtil.isContentActive(ContentId.POWER_UP_CHANCE_MULTIPLIER));
+
+        jsonPersistenceUtil.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        assertTrue(jsonPersistenceUtil.isContentActive(ContentId.POWER_UP_CHANCE_MULTIPLIER));
+    }
+
+    @Test
+    void buyContentTestWithoutEnoughCoins(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.setCoins(3000);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.buyContent(ContentId.DOUBLE_DURATION_COIN_UPGRADE, 4000);
+        });
+        playerProfile = jsonPersistenceUtil.loadProfile();
+        assertEquals(3000, playerProfile.getCoins());
+        assertFalse(playerProfile.getPurchasedContentIds().contains(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
+    }
+
+    @Test
+    void buyContentTestWithNullAsContent(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.setCoins(3000);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.buyContent(null, 12);
+        });
+        playerProfile = jsonPersistenceUtil.loadProfile();
+        assertEquals(3000, playerProfile.getCoins());
+    }
+
+    @Test
+    void buyContentTestWithNegativePrice(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.setCoins(3000);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.buyContent(ContentId.DOUBLE_DURATION_COIN_UPGRADE, -1);
+        });
+        playerProfile = jsonPersistenceUtil.loadProfile();
+        assertEquals(3000, playerProfile.getCoins());
+        assertFalse(playerProfile.getPurchasedContentIds().contains(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
+    }
+
+    @Test
+    void buyContentTest(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.setCoins(3000);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        jsonPersistenceUtil.buyContent(ContentId.DOUBLE_DURATION_COIN_UPGRADE, 1000);
+
+        playerProfile = jsonPersistenceUtil.loadProfile();
+        assertEquals(2000, playerProfile.getCoins());
+        assertTrue(playerProfile.getPurchasedContentIds().contains(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
+    }
+
+    @Test
+    void playerHasEnoughCoinsToBuyTestTestWithNegativePrice(){
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.playerHasEnoughCoinsToBuy(-1);
+        });
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.playerHasEnoughCoinsToBuy(Integer.MIN_VALUE);
+        });
+    }
+
+    @Test
+    void playerHasEnoughCoinsToBuyTest(){
+        assertFalse(jsonPersistenceUtil.playerHasEnoughCoinsToBuy(1000));
+
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.setCoins(3000);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertTrue(jsonPersistenceUtil.playerHasEnoughCoinsToBuy(1000));
+    }
+
+    @Test
+    void getAmountOfCoinsNeededToBuyContentTest(){
+        assertEquals(1000, jsonPersistenceUtil.getAmountOfCoinsNeededToBuyContent(1000));
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.setCoins(3000);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+        assertEquals(0, jsonPersistenceUtil.getAmountOfCoinsNeededToBuyContent(1000));
+
+    }
+
+
+    @Test
+    void getAmountOfCoinsNeededToBuyContentTestWithNegativePrice(){
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.getAmountOfCoinsNeededToBuyContent(-1);
+        });
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.getAmountOfCoinsNeededToBuyContent(Integer.MIN_VALUE);
+        });
+    }
+
+    @Test
+    void activateContentWhenNotPurchased(){
+        assertThrows(IllegalArgumentException.class, () ->{
+            jsonPersistenceUtil.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        });
+    }
+
+    @Test
+    void activateContentAlreadyActive(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        jsonPersistenceUtil.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        jsonPersistenceUtil.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+
+        assertTrue(jsonPersistenceUtil.hasPowerUpChanceMultiplierUpgrade());
+    }
+
+    @Test
+    void activateContent(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        jsonPersistenceUtil.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        assertTrue(jsonPersistenceUtil.hasPowerUpChanceMultiplierUpgrade());
+    }
+
+    @Test
+    void deactivateContentTestWhenNotActive(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        jsonPersistenceUtil.deactivateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        assertFalse(jsonPersistenceUtil.hasPowerUpChanceMultiplierUpgrade());
+
+    }
+
+    @Test
+    void deactivateContentTest(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertFalse(jsonPersistenceUtil.hasPowerUpChanceMultiplierUpgrade());
+
+        playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        playerProfile.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        jsonPersistenceUtil.deactivateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+
+        assertFalse(jsonPersistenceUtil.hasPowerUpChanceMultiplierUpgrade());
+
+    }
+
+    @Test
+    void hasPowerUpChanceMultiplierUpgradeTest(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertFalse(jsonPersistenceUtil.hasPowerUpChanceMultiplierUpgrade());
+
+        playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        playerProfile.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertTrue(jsonPersistenceUtil.hasPowerUpChanceMultiplierUpgrade());
+    }
+
+    @Test
+    void hasDoubleDurationForCoinPowerUpTest(){
+        PlayerProfile playerProfile = new PlayerProfile();
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertFalse(jsonPersistenceUtil.hasDoubleDurationForCoinPowerUp());
+
+        playerProfile.addContent(ContentId.DOUBLE_DURATION_COIN_UPGRADE);
+        playerProfile.activateContent(ContentId.DOUBLE_DURATION_COIN_UPGRADE);
+        jsonPersistenceUtil.saveProfile(playerProfile);
+
+        assertTrue(jsonPersistenceUtil.hasDoubleDurationForCoinPowerUp());
+    }
 
 }

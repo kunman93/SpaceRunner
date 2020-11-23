@@ -61,14 +61,14 @@ public interface Persistence {
      * @param contentId content to check for
      * @return is active
      */
-    boolean contentIsActive(ContentId contentId);
+    boolean isContentActive(ContentId contentId);
 
     /**
      * Checks if the specified content is already purchased.
      * @param contentId content to check
      * @return is purchased
      */
-    boolean contentIsPurchased(ContentId contentId);
+    boolean isContentPurchased(ContentId contentId);
 
     /**
      * Set the specified sound volume in the profile.
