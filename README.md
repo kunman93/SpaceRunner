@@ -16,6 +16,10 @@ After pressing Start you need to Press **SPACE** to start the Run.
 
 ![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif)
 
+When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
+
+![game restart](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_restart.gif)
+
 
 #### Shop
 
@@ -51,11 +55,6 @@ Here you can set the Playername, the Sound Volume and the Framerate
 * Framerate (in FPS)
 
 ![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_3.gif)
-
-#### Game
-When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
-
-![game restart](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_restart.gif)
 
 ## Project Outlines
 ### Brief Summary
