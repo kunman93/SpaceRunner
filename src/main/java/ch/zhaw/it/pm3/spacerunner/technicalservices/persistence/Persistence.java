@@ -67,12 +67,6 @@ public interface Persistence {
     boolean contentIsPurchased(ContentId contentId);
 
     /**
-     * Set the specified sound volume in the profile.
-     * @param soundVolume volume to set
-     */
-    void setSoundVolume(int soundVolume);
-
-    /**
      * Get the specified sound volume from the profile.
      * @return sound volume
      */
