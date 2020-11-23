@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 /**
  * This class is used to specify a visual and load it with the visual manager.
  * A Visual which contains the image file, scaling and properties like resize, isBackground... etc.
+ *
+ * @author islermic
  */
 public class Visual {
     private BufferedImage bufferedImage;

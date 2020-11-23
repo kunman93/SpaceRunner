@@ -1,5 +1,14 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager;
 
+/**
+ * Scaling for visual elements.
+ *
+ * For example:
+ * A scaling of 0.1 means 10% of the height is used for the visual height.
+ * A scaling of 0.3 means 30% of the height is used for the visual height.
+ *
+ * @author islermic
+ */
 public enum VisualScaling {
     SPACE_SHIP(0.1),
     COIN(0.1),

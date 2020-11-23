@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Container for multiple visuals which represent an animated visual.
+ *
+ * @author islermic
  */
 public class AnimatedVisual {
     private long animationTimeStamp = 0;

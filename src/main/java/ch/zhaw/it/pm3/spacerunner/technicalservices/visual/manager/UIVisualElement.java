@@ -3,6 +3,8 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager;
 /**
  * Self made enum with classes.
  * Used to set visuals for ui elements (controls/icons... etc.) with the visual manager
+ *
+ * @author islermic
  */
 public class UIVisualElement {
     public final static Class<? extends VisualElement> COIN_COUNT = CoinCount.class;
