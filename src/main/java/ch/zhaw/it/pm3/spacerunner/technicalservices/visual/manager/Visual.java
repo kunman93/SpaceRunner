@@ -5,6 +5,10 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * This class is used to specify a visual and load it with the visual manager.
+ * A Visual which contains the image file, scaling and properties like resize, isBackground... etc.
+ */
 public class Visual {
     private BufferedImage bufferedImage;
     private VisualSVGFile visualSVGFile;
