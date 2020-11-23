@@ -5,6 +5,8 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundUtil;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -31,8 +33,8 @@ public class SettingsViewController extends ViewController {
         playerProfile.setPlayerName(playerName.getText());
         playerProfile.setVolume((int) soundVolume.getValue());
         playerProfile.setFps((int) framerate.getValue());
+        playerProfile.setVolume((int) soundVolume.getValue());
         persistenceUtil.saveProfile(playerProfile);
-        gameSoundUtil.setVolume(playerProfile.getVolume());
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
@@ -52,7 +54,8 @@ public class SettingsViewController extends ViewController {
             }
         });
 
-        soundVolume.valueProperty().addListener((obs, oldVal, newVal) ->{
+        soundVolume.valueProperty().addListener((observable, oldValue, newValue) -> {
+            gameSoundUtil.setVolume(newValue.intValue());
             getMain().setupBackgroundMusic();
         });
     }
