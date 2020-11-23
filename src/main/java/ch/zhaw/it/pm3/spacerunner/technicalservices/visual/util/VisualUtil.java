@@ -49,22 +49,32 @@ public class VisualUtil {
     /**
      * Loads the image from the URL provided
      *
-     * @param imageURL URL of the image to load
+     * @param imageURL URL of the image to load. not null
      * @return loaded image
      */
     public BufferedImage loadImage(URL imageURL) {
+        if(imageURL == null){
+            throw new IllegalArgumentException("imageURL can not be null");
+        }
+
         Image image = new ImageIcon(imageURL).getImage();
         return toBufferedImage(image);
     }
 
     /**
      * Generates the "infinite" background ("normal image" + "mirror image" + "normal image").
-     * @param inputImage image for background
-     * @param scaledWidth width used for the background (will be tripled in the output image)
-     * @param scaledHeight height used for background
+     * @param inputImage image for background. not null
+     * @param scaledWidth width used for the background (will be tripled in the output image). has to be higher than 0 (positive)
+     * @param scaledHeight height used for background. has to be higher than 0 (positive)
      * @return background image with size (3*scaledWidth, scaledHeight) contains ("normal image" + "mirror image" + "normal image").
      */
     public BufferedImage generateBackground(BufferedImage inputImage, int scaledWidth, int scaledHeight) {
+        if(inputImage == null){
+            throw new IllegalArgumentException("inputImage can not be null");
+        }else if(scaledWidth <= 0 || scaledHeight <= 0){
+            throw new IllegalArgumentException("scaledWidth and scaledHeight have to be higher than 0");
+        }
+
         BufferedImage outputImage = new BufferedImage(scaledWidth * 3, scaledHeight, inputImage.getType());
 
         // creates output image
@@ -83,12 +93,17 @@ public class VisualUtil {
     /**
      * This will resize the inputImage and return the resized image
      *
-     * @param inputImage   image to resize
-     * @param scaledWidth  width for resized image
-     * @param scaledHeight height for resized image
+     * @param inputImage   image to resize. not null
+     * @param scaledWidth  width for resized image. has to be higher than 0 (positive)
+     * @param scaledHeight height for resized image. has to be higher than 0 (positive)
      * @return resized image
      */
     public BufferedImage resizeImage(BufferedImage inputImage, int scaledWidth, int scaledHeight) {
+        if(inputImage == null){
+            throw new IllegalArgumentException("inputImage can not be null");
+        }else if(scaledWidth <= 0 || scaledHeight <= 0){
+            throw new IllegalArgumentException("scaledWidth and scaledHeight have to be higher than 0");
+        }
 
         // creates output image
         BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, inputImage.getType());
@@ -104,23 +119,27 @@ public class VisualUtil {
     /**
      * Converts a given Image into a BufferedImage
      *
-     * @param img The Image to be converted
+     * @param inputImage The Image to be converted. not null
      * @return The converted BufferedImage
      *
      *
      * @author Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
      */
-    private BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
+    private BufferedImage toBufferedImage(Image inputImage) {
+        if(inputImage == null){
+            throw new IllegalArgumentException("inputImage can not be null");
+        }
+
+        if (inputImage instanceof BufferedImage) {
+            return (BufferedImage) inputImage;
         }
 
         // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bimage = new BufferedImage(inputImage.getWidth(null), inputImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
         // Draw the image on to the buffered image
         Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
+        bGr.drawImage(inputImage, 0, 0, null);
         bGr.dispose();
 
         // Return the buffered image
@@ -130,11 +149,17 @@ public class VisualUtil {
     /**
      * Loads the SVG image from the URL provided
      *
-     * @param imageURL URL of the image to load
-     * @param height height for the image in px
+     * @param imageURL URL of the image to load. not null
+     * @param height height for the image in px. higher than 0 (positive)
      * @return loaded image
      */
     public BufferedImage loadSVGImage(URL imageURL, float height) {
+        if(imageURL == null){
+            throw new IllegalArgumentException("imageURL can not be null");
+        }else if(height <= 0){
+            throw new IllegalArgumentException("height has to be higher than 0");
+        }
+
         BufferedImage loadedImage = null;
         try {
             loadedImage = rasterize(new File(imageURL.getFile().replace("%20", " ")), height);
@@ -211,11 +236,15 @@ public class VisualUtil {
 
     /**
      * Flips the image.
-     * @param image image to flip
+     * @param image image to flip. not null
      * @param horizontal should flip horizontal? if false it is flipped vertically
      * @return image flipped in the correct direction
      */
     public BufferedImage flipImage(BufferedImage image, boolean horizontal) {
+        if(image == null){
+            throw new IllegalArgumentException("image can not be null");
+        }
+
         // Flip the image horizontally
         AffineTransform tx;
         if (horizontal) {
@@ -238,6 +267,10 @@ public class VisualUtil {
      * @return rotated image
      */
     public BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
+        if(bufferedImage == null){
+            throw new IllegalArgumentException("bufferedImage can not be null");
+        }
+
         BufferedImage image = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
         AffineTransform trans = AffineTransform.getRotateInstance(deg, bufferedImage.getWidth() / 2, bufferedImage.getHeight() / 2);
         AffineTransformOp op = new AffineTransformOp(trans, AffineTransformOp.TYPE_BILINEAR);
