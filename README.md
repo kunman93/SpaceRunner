@@ -1,9 +1,5 @@
 # Space-Runner
-TODO!
-
 ## Instructions
-TODO!
-
 ### Welcome
 Welcome to our project: Space-Runner. We are 6 engineering Students at the ZHAW. First you will get an instruction on how to set-up the project, How to Play, testing and the project outlines and how far we've progressed.
 
@@ -75,9 +71,9 @@ TODO!
 Pull requests are merged and discussed together on a voice chat (e.g. Discord/Teams). Feedback is directly provided per voice.
 
 ## Testing
-TODO!
+We tested what we could but since it's a Game most of the testing couldn't be done with JUnit.
 
-## External Rsources
+## External Ressources
 Link to Wiki
 [External Resources](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/wiki/External-ressources)
 
