@@ -2,6 +2,9 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util;
 
 import ch.zhaw.it.pm3.spacerunner.FileResource;
 
+/**
+ * Sound files used by the space-runner game
+ */
 public enum GameSound implements FileResource {
     BACKGROUND("background.wav"),
     EXPLOSION("explosion.wav"),
