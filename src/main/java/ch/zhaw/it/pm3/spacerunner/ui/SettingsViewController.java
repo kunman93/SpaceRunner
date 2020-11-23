@@ -33,7 +33,6 @@ public class SettingsViewController extends ViewController {
         playerProfile.setFps((int) framerate.getValue());
         persistenceUtil.saveProfile(playerProfile);
         gameSoundUtil.setVolume(playerProfile.getVolume());
-        getMain().setupBackgroundMusic();
         getMain().setFXMLView(FXMLFile.MENU);
     }
 
@@ -51,6 +50,10 @@ public class SettingsViewController extends ViewController {
                 playerName.setStyle("-fx-border-color: white");
                 homeButton.setDisable(false);
             }
+        });
+
+        soundVolume.valueProperty().addListener((obs, oldVal, newVal) ->{
+            getMain().setupBackgroundMusic();
         });
     }
 }
