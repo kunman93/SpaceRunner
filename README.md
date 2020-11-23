@@ -96,6 +96,8 @@ The following meetings and iteration sections show the progress of the project.
 
 [Meeting 13.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/109)
 
+[Meeting 16.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/130)
+
 [Meeting 21.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/121)
 
 <br/>
