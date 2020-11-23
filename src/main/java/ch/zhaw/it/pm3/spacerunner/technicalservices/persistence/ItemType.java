@@ -1,5 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
+/**
+ * Different types of items listed in the shop.
+ */
 public enum ItemType {
     UPGRADE(0),
     PLAYER_MODEL(1);

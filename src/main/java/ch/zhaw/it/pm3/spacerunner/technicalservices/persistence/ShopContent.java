@@ -2,12 +2,11 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 
+/**
+ * Data model for the content in the shop
+ */
 public class ShopContent {
 
-    //1.5 x Powerup Chance
-    //Doppelte Coin Powerup hält 15 anstatt 10 sekunden
-
-    //Content der im shop zum Kaufen erhältlich ist
     private ContentId contentId;
 
     private String title;

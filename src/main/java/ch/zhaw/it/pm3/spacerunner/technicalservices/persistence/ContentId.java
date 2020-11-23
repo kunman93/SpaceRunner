@@ -1,5 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
+/**
+ * Content ids for content available in the shop.
+ */
 public enum ContentId {
     POWER_UP_CHANCE_MULTIPLIER(0),
     DOUBLE_DURATION_COIN_UPGRADE(1),
