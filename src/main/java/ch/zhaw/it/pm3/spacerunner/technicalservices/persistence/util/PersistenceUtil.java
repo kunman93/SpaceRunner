@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Utility tool to persist data (load / save) with Gson-library
  * Implemented with the singleton-pattern
+ * @author islermic, kunnuman
  */
 public class PersistenceUtil implements Persistence {
 

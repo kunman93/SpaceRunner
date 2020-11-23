@@ -4,6 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 
 /**
  * Data model for the content in the shop
+ * @author islermic
  */
 public class ShopContent {
 
