@@ -8,10 +8,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+
+/**
+ * Project specific wrapper for the SoundUtil
+ * @author islermic
+ */
 public class GameSoundUtil {
 
-    private SoundUtil soundUtil = SoundUtil.getUtil();
-    private static GameSoundUtil gameSoundUtil = new GameSoundUtil();
+    private final SoundUtil soundUtil = SoundUtil.getUtil();
+    private final static GameSoundUtil gameSoundUtil = new GameSoundUtil();
 
     private GameSoundUtil() {
     }
@@ -20,6 +25,15 @@ public class GameSoundUtil {
         return gameSoundUtil;
     }
 
+    /**
+     * Loads a SoundClip from the specified enum value
+     *
+     * @param soundFile Sound to load
+     * @return SoundClip that was loaded
+     * @throws IOException
+     * @throws UnsupportedAudioFileException
+     * @throws LineUnavailableException
+     */
     public SoundClip loadClip(GameSound soundFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         URL backgroundMusicURL = SpaceRunnerApp.class.getResource(soundFile.getFileName());
         File audioFile = new File(backgroundMusicURL.getPath().replace("%20", " "));

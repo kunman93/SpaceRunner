@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Data model for the personal profile of the player
+ * @author islermic
+ */
 public class PlayerProfile {
 
     private boolean audioEnabled;

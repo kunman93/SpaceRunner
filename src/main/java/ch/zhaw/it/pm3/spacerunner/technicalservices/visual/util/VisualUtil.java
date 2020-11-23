@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 public class VisualUtil {
 
-    private Logger logger = Logger.getLogger(VisualUtil.class.getName());
+    private final Logger logger = Logger.getLogger(VisualUtil.class.getName());
 
     // Singleton pattern
     private static final VisualUtil visualUtil = new VisualUtil();

@@ -86,6 +86,10 @@ Pull requests are merged and discussed together on a voice chat (e.g. Discord). 
 ## Testing
 TODO!
 
+## External Rsources
+Link to Wiki
+[External Rsources](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/wiki/External-ressources)
+
 ## Meetings
 The following meetings and iteration sections show the progress of the project. 
 
