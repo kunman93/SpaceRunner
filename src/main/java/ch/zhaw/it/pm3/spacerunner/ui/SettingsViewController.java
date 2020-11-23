@@ -1,12 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundUtil;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -17,7 +14,7 @@ import javafx.scene.control.TextField;
  * @author freymar1
  */
 public class SettingsViewController extends ViewController {
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
     public Button homeButton;
     public TextField playerName;

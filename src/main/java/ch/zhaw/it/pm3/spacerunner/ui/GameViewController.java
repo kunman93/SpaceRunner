@@ -1,9 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.application.GameController;
+import ch.zhaw.it.pm3.spacerunner.domain.GameController;
 import ch.zhaw.it.pm3.spacerunner.domain.GameDataCache;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.Coin;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceElement;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.DoubleCoinsPowerUp;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.PowerUp;

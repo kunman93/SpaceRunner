@@ -1,9 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
+import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,8 +20,8 @@ import java.util.Set;
  * The ShopViewController is a controller-class, which is responsible for the shop-view (Shop.fxml).
  * @author kunnuman
  **/
-public class ShopViewControllerController extends ViewController implements ShopContentCellControllerListener {
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+public class ShopViewController extends ViewController implements ShopContentCellControllerListener {
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
 
     @FXML
     private TabPane tabPane;

@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class FXMLImageProxy implements VisualManagerListener {
 
-    private static final FXMLImageProxy proxyInstance = new FXMLImageProxy();
+    private static final FXMLImageProxy FXML_IMAGE_PROXY = new FXMLImageProxy();
     private final VisualManager visualManager = VisualManager.getManager();
     private Map<BufferedImage, Image> fxmlImageClassMap = new HashMap<>();
 
@@ -29,7 +29,7 @@ public class FXMLImageProxy implements VisualManagerListener {
     }
 
     public static FXMLImageProxy getProxy() {
-        return proxyInstance;
+        return FXML_IMAGE_PROXY;
     }
 
     /**

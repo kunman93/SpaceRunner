@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
 
 import java.awt.geom.Point2D;
 
@@ -10,7 +10,7 @@ import java.awt.geom.Point2D;
  * @author nachbric
  */
 public class DoubleCoinsPowerUp extends PowerUp {
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
 
     private int TIME_ACTIVE = 10000;
 

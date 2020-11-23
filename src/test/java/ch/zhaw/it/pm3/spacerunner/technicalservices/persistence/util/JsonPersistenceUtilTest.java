@@ -1,6 +1,6 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,9 +10,9 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PersistenceUtilTest {
+public class JsonPersistenceUtilTest {
 
-    private PersistenceUtil persistenceUtil = PersistenceUtil.getUtil();
+    private JsonPersistenceUtil jsonPersistenceUtil = JsonPersistenceUtil.getUtil();
 
     @BeforeEach
     void setUp() throws IOException {
@@ -35,7 +35,7 @@ public class PersistenceUtilTest {
         playerProfile.setFps(35);
         playerProfile.setVolume(55);
 
-        persistenceUtil.saveProfile(playerProfile);
+        jsonPersistenceUtil.saveProfile(playerProfile);
         Path path = Path.of(GameFile.PROFILE.getFileName());
         assertTrue(Files.exists(path));
 
@@ -46,7 +46,7 @@ public class PersistenceUtilTest {
      */
     @Test
     void testSaveProfileWithNull(){
-        assertThrows(IllegalArgumentException.class, () -> persistenceUtil.saveProfile(null));
+        assertThrows(IllegalArgumentException.class, () -> jsonPersistenceUtil.saveProfile(null));
         Path path = Path.of(GameFile.PROFILE.getFileName());
         assertFalse(Files.exists(path));
     }
@@ -62,8 +62,8 @@ public class PersistenceUtilTest {
         playerProfile.setFps(65);
         playerProfile.setVolume(45);
 
-        persistenceUtil.saveProfile(playerProfile);
-        PlayerProfile playerProfileLoaded = persistenceUtil.loadProfile();
+        jsonPersistenceUtil.saveProfile(playerProfile);
+        PlayerProfile playerProfileLoaded = jsonPersistenceUtil.loadProfile();
 
         assertEquals(playerProfile, playerProfileLoaded);
     }
@@ -76,7 +76,7 @@ public class PersistenceUtilTest {
     void testLoadProfileWithoutExistingProfile(){
         PlayerProfile playerProfile = new PlayerProfile(); //Creating default profile!
 
-        PlayerProfile playerProfileLoaded = persistenceUtil.loadProfile();
+        PlayerProfile playerProfileLoaded = jsonPersistenceUtil.loadProfile();
 
         assertEquals(playerProfile, playerProfileLoaded);
     }
@@ -88,10 +88,10 @@ public class PersistenceUtilTest {
     void testSaveDataAndLoadIntoClassWithMoreFields() throws IOException {
         Path path = Path.of("testModel.json");
         TestDataModel testDataModel = new TestDataModel(13);
-        persistenceUtil.serializeAndSaveData(path.toString(), testDataModel);
+        jsonPersistenceUtil.serializeAndSaveData(path.toString(), testDataModel);
 
         assertTrue(Files.exists(path));
-        TestDataModelExtended testDataModelExtended = persistenceUtil.loadAndDeserializeData(path.toString(), TestDataModelExtended.class);
+        TestDataModelExtended testDataModelExtended = jsonPersistenceUtil.loadAndDeserializeData(path.toString(), TestDataModelExtended.class);
         assertEquals(testDataModel.getTestNumber(), testDataModelExtended.getTestNumber());
         Files.delete(path);
     }
@@ -103,10 +103,10 @@ public class PersistenceUtilTest {
     void testSaveDataAndLoadIntoClassWithLessFields() throws IOException {
         Path path = Path.of("testModel.json");
         TestDataModelExtended testDataModelExtended = new TestDataModelExtended(13, "Test", 55);
-        persistenceUtil.serializeAndSaveData(path.toString(), testDataModelExtended);
+        jsonPersistenceUtil.serializeAndSaveData(path.toString(), testDataModelExtended);
 
         assertTrue(Files.exists(path));
-        TestDataModel testDataModel = persistenceUtil.loadAndDeserializeData(path.toString(), TestDataModel.class);
+        TestDataModel testDataModel = jsonPersistenceUtil.loadAndDeserializeData(path.toString(), TestDataModel.class);
         assertEquals(testDataModelExtended.getTestNumber(), testDataModel.getTestNumber());
         Files.delete(path);
     }

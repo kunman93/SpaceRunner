@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup;
 
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
 import java.awt.geom.Point2D;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class ActivatedPowerUpManager implements PowerUpListener {
 
     private final Logger logger = Logger.getLogger(ActivatedPowerUpManager.class.getName());
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private final VisualManager visualManager = VisualManager.getManager();
 
     private Random randomGen = new Random();

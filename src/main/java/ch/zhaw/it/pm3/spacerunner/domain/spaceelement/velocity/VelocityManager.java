@@ -21,10 +21,10 @@ import java.util.Map;
 public class VelocityManager {
 
     private Map<Class<? extends SpaceElement>, Point2D.Double> velocityMap = new HashMap<>();
-    private final static VelocityManager velocityManager = new VelocityManager();
+    private final static VelocityManager VELOCITY_MANAGER = new VelocityManager();
 
     public static VelocityManager getManager() {
-        return velocityManager;
+        return VELOCITY_MANAGER;
     }
 
     private VelocityManager() {
@@ -43,14 +43,14 @@ public class VelocityManager {
      * If a new element is implemented, add code for the element in this function so it has a velocity at the start.
      */
     public void setupGameElementVelocity() {
-        velocityManager.setRelativeVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setRelativeVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setRelativeVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
-        velocityManager.setRelativeVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
-        velocityManager.setRelativeVelocity(ShieldPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWER_UP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setRelativeVelocity(DoubleCoinsPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWER_UP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setRelativeVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
-        velocityManager.setRelativeVelocity(Rocket.class, new Point2D.Double(-HorizontalSpeed.ROCKET.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(Coin.class, new Point2D.Double(-HorizontalSpeed.COIN.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(UFO.class, new Point2D.Double(-HorizontalSpeed.UFO.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(SpaceShip.class, new Point2D.Double(HorizontalSpeed.ZERO.getSpeed(), VerticalSpeed.SPACE_SHIP.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(Asteroid.class, new Point2D.Double(-HorizontalSpeed.ASTEROID.getSpeed(), VerticalSpeed.ASTEROID.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(ShieldPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWER_UP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(DoubleCoinsPowerUp.class, new Point2D.Double(-HorizontalSpeed.POWER_UP.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(SpaceWorld.class, new Point2D.Double(-HorizontalSpeed.BACKGROUND.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
+        VELOCITY_MANAGER.setRelativeVelocity(Rocket.class, new Point2D.Double(-HorizontalSpeed.ROCKET.getSpeed(), VerticalSpeed.ZERO.getSpeed()));
 
     }
 

@@ -4,10 +4,10 @@ import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.DoubleCoinsPowerUp;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.ShieldPowerUp;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
+import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
@@ -29,9 +29,9 @@ import java.util.*;
 public class VisualManager {
 
     private final VisualUtil visualUtil = VisualUtil.getUtil();
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
 
-    private final static VisualManager visualManager = new VisualManager();
+    private final static VisualManager VISUAL_MANAGER = new VisualManager();
 
     private int height = 500;
     private int width = 500;
@@ -41,7 +41,7 @@ public class VisualManager {
     private final Set<VisualManagerListener> visualManagerListeners = new HashSet<>();
 
     public static VisualManager getManager() {
-        return visualManager;
+        return VISUAL_MANAGER;
     }
 
 
@@ -68,27 +68,27 @@ public class VisualManager {
         PlayerProfile playerProfile = persistenceUtil.loadProfile();
         Set<ShopContent> activeShopContents = playerProfile.getActiveShopContent();
 
-        visualManager.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
+        VISUAL_MANAGER.loadAndSetVisual(SpaceShip.class, new Visual(VisualSVGFile.SPACE_SHIP_1, VisualScaling.SPACE_SHIP, true, false));
 
         for (ShopContent activeShopContent : activeShopContents) {
             if (activeShopContent.getItemType() == ItemType.PLAYER_MODEL) {
-                visualManager.loadAndSetVisual(SpaceShip.class, new Visual(activeShopContent.getImageId(), VisualScaling.SPACE_SHIP, false, false));
+                VISUAL_MANAGER.loadAndSetVisual(SpaceShip.class, new Visual(activeShopContent.getImageId(), VisualScaling.SPACE_SHIP, false, false));
             }
         }
 
-        visualManager.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
-        visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
-        visualManager.loadAndSetVisual(DoubleCoinsPowerUp.class, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP));
-        visualManager.loadAndSetVisual(ShieldPowerUp.class, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP));
-        visualManager.loadAndSetVisual(Rocket.class, new Visual(VisualSVGFile.ROCKET_1, VisualScaling.ROCKET));
+        VISUAL_MANAGER.loadAndSetVisual(UFO.class, new Visual(VisualSVGFile.UFO_1, VisualScaling.UFO));
+        VISUAL_MANAGER.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
+        VISUAL_MANAGER.loadAndSetVisual(DoubleCoinsPowerUp.class, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP));
+        VISUAL_MANAGER.loadAndSetVisual(ShieldPowerUp.class, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP));
+        VISUAL_MANAGER.loadAndSetVisual(Rocket.class, new Visual(VisualSVGFile.ROCKET_1, VisualScaling.ROCKET));
 
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);
         background.setIsBackground(true);
-        visualManager.loadAndSetVisual(SpaceWorld.class, background);
-        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
+        VISUAL_MANAGER.loadAndSetVisual(SpaceWorld.class, background);
+        VISUAL_MANAGER.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
-        visualManager.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
+        VISUAL_MANAGER.loadAndSetAnimatedVisual(Coin.class, coinAnimation);
     }
 
     /**

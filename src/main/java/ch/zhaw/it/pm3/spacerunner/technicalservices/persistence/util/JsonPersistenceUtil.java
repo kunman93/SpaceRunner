@@ -1,9 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ContentId;
+import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -25,22 +25,22 @@ import java.util.stream.Collectors;
  * Implemented with the singleton-pattern
  * @author islermic, kunnuman
  */
-public class PersistenceUtil implements Persistence {
+public class JsonPersistenceUtil implements Persistence {
 
-    private final Logger logger = Logger.getLogger(PersistenceUtil.class.getName());
+    private final Logger logger = Logger.getLogger(JsonPersistenceUtil.class.getName());
 
-    private static final PersistenceUtil persistenceUtil = new PersistenceUtil();
+    private static final JsonPersistenceUtil JSON_PERSISTENCE_UTIL = new JsonPersistenceUtil();
 
     private static final Gson gson = new Gson();
 
     /**
      * private constructor for the singleton-pattern
      */
-    private PersistenceUtil() {
+    private JsonPersistenceUtil() {
     }
 
-    public static PersistenceUtil getUtil() {
-        return persistenceUtil;
+    public static JsonPersistenceUtil getUtil() {
+        return JSON_PERSISTENCE_UTIL;
     }
 
     /**

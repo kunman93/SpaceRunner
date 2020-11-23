@@ -34,7 +34,7 @@ public class VisualUtil {
 
     private final Logger logger = Logger.getLogger(VisualUtil.class.getName());
 
-    private static final VisualUtil visualUtil = new VisualUtil();
+    private static final VisualUtil VISUAL_UTIL = new VisualUtil();
 
     /**
      * private constructor for the singleton-pattern
@@ -43,7 +43,7 @@ public class VisualUtil {
     }
 
     public static VisualUtil getUtil() {
-        return visualUtil;
+        return VISUAL_UTIL;
     }
 
     /**

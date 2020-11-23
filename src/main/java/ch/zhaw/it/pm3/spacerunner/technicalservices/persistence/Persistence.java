@@ -1,5 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence;
 
+import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
+
 import java.util.List;
 
 /**

@@ -1,10 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ItemType;
+import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.PersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
@@ -35,7 +35,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
 
     private final Logger logger = Logger.getLogger(ShopContent.class.getName());
 
-    private final Persistence persistenceUtil = PersistenceUtil.getUtil();
+    private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private final VisualUtil visualUtil = VisualUtil.getUtil();
 
     private static final String BUY_TEXT_FOR_BUY_BUTTON = "buy";

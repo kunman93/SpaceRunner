@@ -16,13 +16,13 @@ import java.net.URL;
 public class GameSoundUtil {
 
     private final SoundUtil soundUtil = SoundUtil.getUtil();
-    private final static GameSoundUtil gameSoundUtil = new GameSoundUtil();
+    private final static GameSoundUtil GAME_SOUND_UTIL = new GameSoundUtil();
 
     private GameSoundUtil() {
     }
 
     public static GameSoundUtil getUtil() {
-        return gameSoundUtil;
+        return GAME_SOUND_UTIL;
     }
 
     /**
