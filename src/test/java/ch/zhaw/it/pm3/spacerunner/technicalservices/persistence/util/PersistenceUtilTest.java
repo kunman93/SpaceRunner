@@ -31,7 +31,6 @@ public class PersistenceUtilTest {
     void testSaveProfile(){
 
         PlayerProfile playerProfile = new PlayerProfile();
-        playerProfile.setAudioEnabled(false);
         playerProfile.setCoins(20000);
         playerProfile.setFps(35);
         playerProfile.setVolume(55);
@@ -59,7 +58,6 @@ public class PersistenceUtilTest {
     void testLoadProfile(){
 
         PlayerProfile playerProfile = new PlayerProfile();
-        playerProfile.setAudioEnabled(false);
         playerProfile.setCoins(20060);
         playerProfile.setFps(65);
         playerProfile.setVolume(45);
