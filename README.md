@@ -59,10 +59,8 @@ Here you can set the Playername, the Sound Volume and the Framerate
 When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
 
 ## Project Outlines
-TODO!
-
 ### Brief Summary
-TODO!
+The goal of the Project is to create a Endless Sidescroller similar to Jetpack Joyride or Templerun. 
 
 ### Functional Principle
 TODO!
