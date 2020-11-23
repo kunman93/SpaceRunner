@@ -5,11 +5,19 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.Persistence
 
 import java.awt.geom.Point2D;
 
+/**
+ * DoubleCoinsPowerUp is a power-up which doubles the coin value for a certain time when collected.
+ * @author nachbric
+ */
 public class DoubleCoinsPowerUp extends PowerUp {
     private final Persistence persistenceUtil = PersistenceUtil.getUtil();
 
     private int TIME_ACTIVE = 10000;
 
+    /**
+     * Sets up the startPosition and doubles the duration of this power-ups if the upgrade was selected in the shop.
+     * @param startPosition The startPosition where the double coins power-up should appear.
+     */
     public DoubleCoinsPowerUp(Point2D.Double startPosition) {
         super(startPosition);
 
