@@ -56,6 +56,7 @@ public class SettingsViewController extends ViewController {
 
         soundVolume.valueProperty().addListener((observable, oldValue, newValue) -> {
             gameSoundUtil.setVolume(newValue.intValue());
+            persistenceUtil.setSoundVolume(newValue.intValue());
             getMain().setupBackgroundMusic();
         });
     }
