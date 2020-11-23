@@ -8,10 +8,11 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-//TODO: Copied from old project...
 
 /**
  * Tests The SoundUtil-Class.
+ *
+ * @author islermic (copied from old project and extended)
  */
 class SoundUtilTest {
     private SoundUtil soundUtil = SoundUtil.getUtil();

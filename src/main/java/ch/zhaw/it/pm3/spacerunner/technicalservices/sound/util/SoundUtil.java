@@ -4,6 +4,10 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * SoundUtil to load sound / set volume
+ * @author islermic (copied from old project and extended)
+ */
 public class SoundUtil {
     // Singleton pattern
     private static final SoundUtil SOUND_UTIL = new SoundUtil();
@@ -28,8 +32,6 @@ public class SoundUtil {
     public void setVolume(int volume) {
         this.volume = volume;
     }
-
-    //TODO: Copied from old project...
 
     /**
      * Loads a SoundClip from a File
