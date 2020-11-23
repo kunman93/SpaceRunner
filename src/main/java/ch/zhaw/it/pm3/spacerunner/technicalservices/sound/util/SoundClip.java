@@ -43,9 +43,11 @@ public class SoundClip {
 
         float f_volume = volume / 100f;
 
+
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        float range = gainControl.getMaximum() - gainControl.getMinimum();
-        float gain = (range * f_volume) + gainControl.getMinimum();
+        float minimum = gainControl.getMinimum() + 50;
+        float range = gainControl.getMaximum() - minimum;
+        float gain = (range * f_volume) + minimum;
 
         gainControl.setValue(gain);
     }
