@@ -11,6 +11,7 @@ public enum GameSound implements FileResource {
     GAME_OVER_VOICE("game-over-1.wav"),
     GAME_OVER_1("game-over-2.wav"),
     GAME_OVER_2("game-over-3.wav"),
+    POWER_UP_PICKUP("powerup-pickup.wav"),
     COIN_PICKUP("coin-pickup.wav");
 
 
