@@ -42,16 +42,13 @@ public class PlayerProfile {
         return audioEnabled;
     }
 
-    public void setAudioEnabled(boolean audioEnabled) {
-        this.audioEnabled = audioEnabled;
-    }
-
     public int getVolume() {
         return volume;
     }
 
     public void setVolume(int volume) {
         this.volume = volume;
+        audioEnabled = volume > 0;
     }
 
     public String getPlayerName() {

@@ -30,7 +30,6 @@ public class SettingsViewController extends ViewController {
     public void showMenu() {
         playerProfile.setPlayerName(playerName.getText());
         playerProfile.setVolume((int) soundVolume.getValue());
-        playerProfile.setAudioEnabled(soundVolume.getValue() > 0);
         playerProfile.setFps((int) framerate.getValue());
         persistenceUtil.saveProfile(playerProfile);
         gameSoundUtil.setVolume(playerProfile.getVolume());

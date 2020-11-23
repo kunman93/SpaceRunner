@@ -146,6 +146,16 @@ public class PersistenceUtil implements Persistence {
     }
 
     /**
+     * Set the specified sound volume in the profile.
+     */
+    @Override
+    public void setSoundVolume(int soundVolume){
+        PlayerProfile profile = loadProfile();
+        profile.setVolume(soundVolume);
+        saveProfile(profile);
+    };
+
+    /**
      * Get the specified sound volume from the profile.
      * @return sound volume
      */
