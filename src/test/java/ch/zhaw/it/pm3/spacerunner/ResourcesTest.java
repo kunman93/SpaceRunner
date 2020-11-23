@@ -14,6 +14,11 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+/**
+ * These tests will find unused resources and FileResource enum entries which don't have an existing file in the resources!
+ *
+ * It's purpose is to clean up resources and enums!
+ */
 public class ResourcesTest {
     private final String ResourcePath = "src/main/resources/ch/zhaw/it/pm3/spacerunner/";
 
