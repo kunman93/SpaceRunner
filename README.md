@@ -36,7 +36,8 @@ Here you can buy and Manage Upgrades or Playermodels
   * Double duration of Coin PowerUp
 
 ![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_2_upgarde_buy.gif)
-![not enough coins for upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_4_upgrade_not_enough_coins.gif)
+
+![not enough coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_not_enough_coins.PNG)
 
 * Playermodel
   * Ship Skin 1
