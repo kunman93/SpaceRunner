@@ -8,24 +8,43 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * PowerUp is a space element that gives the spaceship a special ability when it's collected during a game.
+ * @author nachbric
+ */
 public abstract class PowerUp extends SpaceElement {
     private Set<PowerUpListener> powerUpListeners = new HashSet<>();
     private static Timer powerUpTimer = new Timer("PowerUp Timer");
     private TimerTask currentPowerUpTimerTask;
     private int multiplier = 1;
 
+    /**
+     * Sets up the startPosition where a PowerUp should appear in the game.
+     * @param startPosition The startPosition where the power-up should appear.
+     */
     public PowerUp(Point2D.Double startPosition) {
         super(startPosition);
     }
 
+    /**
+     * Adds a powerUpManagerListener to powerUpListeners which is set of PowerUpListeners.
+     * @param powerUpManagerListener Is a reference to ActivatedPowerUpManger which implements a PowerUpListener.
+     */
     public void addListener(PowerUpListener powerUpManagerListener) {
         powerUpListeners.add(powerUpManagerListener);
     }
 
+    /**
+     * Removes a powerUpManagerListener from the set of PowerUpListeners.
+     * @param powerUpManagerListener Is a reference to ActivatedPowerUpManger which implements a PowerUpListener.
+     */
     public void removeListener(PowerUpListener powerUpManagerListener) {
         powerUpListeners.remove(powerUpManagerListener);
     }
 
+    /**
+     * Increment power-up multiplier and resets power-up timer.
+     */
     public synchronized void incrementPowerUpMultiplier() {
         multiplier++;
         resetPowerUpTimer();
@@ -35,6 +54,9 @@ public abstract class PowerUp extends SpaceElement {
         return multiplier;
     }
 
+    /**
+     * Creates a power-up timer.
+     */
     public synchronized void createPowerUpTimer() {
         currentPowerUpTimerTask = createPowerUpTimerTask();
         powerUpTimer.schedule(currentPowerUpTimerTask, getActiveTime());
@@ -60,7 +82,14 @@ public abstract class PowerUp extends SpaceElement {
         };
     }
 
+    /**
+     * Is an abstract-method which is implemented by the sub-classes to get the power-active-time.
+     * @return Returns the time how long a power-up should be active.
+     */
     public abstract int getActiveTime();
 
+    /**
+     * Is an abstract-method which is implemented by the sub-classes to activate a power up.
+     */
     public abstract void activatePowerUp();
 }
