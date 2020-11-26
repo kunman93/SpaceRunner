@@ -57,7 +57,7 @@ public abstract class PowerUp extends SpaceElement {
     /**
      * Creates a power-up timer.
      */
-    public synchronized void createPowerUpTimer() {
+    protected synchronized void createPowerUpTimer() {
         currentPowerUpTimerTask = createPowerUpTimerTask();
         powerUpTimer.schedule(currentPowerUpTimerTask, getActiveTime());
     }
