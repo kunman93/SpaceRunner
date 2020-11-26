@@ -5,6 +5,7 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersist
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 
 import java.awt.geom.Point2D;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -83,7 +84,6 @@ public class ActivatedPowerUpManager implements PowerUpListener {
             activePowerUps.get(powerUp.getClass()).incrementPowerUpMultiplier();
         } else {
             activePowerUps.put(powerUp.getClass(), powerUp);
-            //TODO: is a listener necessary?
             powerUp.addListener(this);
             powerUp.activatePowerUp();
         }
@@ -105,7 +105,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
     }
 
     public synchronized Map<Class<? extends PowerUp>, PowerUp> getActivePowerUps() {
-        return activePowerUps;
+        return Collections.unmodifiableMap(activePowerUps);
     }
 
     public synchronized int getCoinMultiplicator() {
