@@ -16,7 +16,7 @@ public enum FXMLFile implements FileResource {
     SHOP_CONTENT_CELL("ShopContentCell.fxml"),
     SETTINGS("Settings.fxml");
 
-    private String filename;
+    private final String filename;
 
     FXMLFile(String filename) {
         this.filename = "ui/" + filename;

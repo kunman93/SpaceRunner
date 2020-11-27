@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  */
 public class SpaceRunnerApp extends Application {
 
-    private Logger logger = Logger.getLogger(SpaceRunnerApp.class.getName());
+    private final Logger logger = Logger.getLogger(SpaceRunnerApp.class.getName());
 
     private Stage primaryStage;
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();

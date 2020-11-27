@@ -9,7 +9,7 @@ public enum GameFile {
 
 
     public static boolean TEST = false;
-    private String fileName;
+    private final String fileName;
 
     private GameFile(String fileName) {
         this.fileName = fileName;

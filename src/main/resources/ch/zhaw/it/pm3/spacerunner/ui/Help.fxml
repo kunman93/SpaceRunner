@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<GridPane fx:controller="ch.zhaw.it.pm3.spacerunner.ui.HelpViewController"
-          stylesheets="@Style.css"
 
-          prefHeight="490" prefWidth="800"
-          xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx"
-          styleClass="darkbg">
+<GridPane prefHeight="490" prefWidth="800" styleClass="darkbg" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.it.pm3.spacerunner.ui.HelpViewController">
     <columnConstraints>
         <ColumnConstraints percentWidth="10" />
         <ColumnConstraints percentWidth="80" />
@@ -23,29 +18,37 @@
         <RowConstraints percentHeight="5" />
     </rowConstraints>
     <children>
-        <Label GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="title" text="HELP" />
+        <Label styleClass="title" text="How to play?" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <GridPane styleClass="help" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <columnConstraints>
-                <ColumnConstraints percentWidth="30" />
-                <ColumnConstraints percentWidth="70" />
+                <ColumnConstraints percentWidth="100" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints percentHeight="40" />
                 <RowConstraints percentHeight="10" />
                 <RowConstraints percentHeight="10" />
                 <RowConstraints percentHeight="10" />
-                <RowConstraints percentHeight="10" />
+                <RowConstraints percentHeight="30" />
                 <RowConstraints percentHeight="10" />
                 <RowConstraints percentHeight="10" />
             </rowConstraints>
             <children>
-                <Label GridPane.rowIndex="0" text="p"/>
-                <Label GridPane.rowIndex="0" GridPane.columnIndex="1" text="pause"/>
-
+                <Label styleClass="subtitle" text="Start " GridPane.rowIndex="0" />
+                <Label text="After pressing Start you need to Press 'SPACE' to start the Run. " GridPane.rowIndex="1" />
+                <Label styleClass="subtitle" text="Game play " GridPane.rowIndex="2" />
+                <Label text="When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the ⬆ or ⬇ Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game. " GridPane.rowIndex="3" />
+                <Label styleClass="subtitle" text="Pause Game " GridPane.rowIndex="4" />
+                <Label text="Press 'P'-Key to pause the game and a second time to continue playing. " GridPane.rowIndex="5" />
              </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
          </GridPane>
         <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
-            <Button onAction="#showMenu" text="&lt; BACK"/>
+            <Button onAction="#showMenu" text="&lt; BACK" />
         </HBox>
     </children>
 </GridPane>

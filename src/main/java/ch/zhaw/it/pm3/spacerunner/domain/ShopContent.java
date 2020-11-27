@@ -18,7 +18,6 @@ public class ShopContent {
     private VisualSVGFile imageId;
     private ItemType itemType;
     private transient boolean purchased;
-    private transient boolean equipped;
 
     public ShopContent(ContentId contentId, String title, String description, int price, VisualSVGFile imageId, ItemType itemType) {
         this.contentId = contentId;
@@ -33,18 +32,9 @@ public class ShopContent {
         purchased = true;
     }
 
-    public void equipContent(boolean equipped) {
-        this.equipped = equipped;
-    }
-
     public boolean isPurchased() {
         return purchased;
     }
-
-    public boolean isEquipped() {
-        return equipped;
-    }
-
 
     public ContentId getContentId() {
         return contentId;

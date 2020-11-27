@@ -27,7 +27,7 @@ public class PresetTest {
     @BeforeEach
     void setUp() {
         velocityManager.setupGameElementVelocity();
-        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
+        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINY_COIN_1, VisualScaling.COIN));
     }
 
     /**

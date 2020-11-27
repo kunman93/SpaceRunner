@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class GameController {
 
-    private Logger logger = Logger.getLogger(GameController.class.getName());
+    private final Logger logger = Logger.getLogger(GameController.class.getName());
 
     private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private final GameSoundUtil gameSoundUtil = GameSoundUtil.getUtil();
@@ -36,14 +36,14 @@ public class GameController {
     private final ActivatedPowerUpManager activatedPowerUpManager = new ActivatedPowerUpManager();
 
 
-    private final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
-    private final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.005;
+    private static final long GAME_SPEED_INCREASE_PERIOD_TIME = 1000L;
+    private static final double RELATIVE_GAME_SPEED_INCREASE_PER_SECOND = 0.005;
 
 
     private double remainingDistanceUntilNextPreset = 0.1;
-    private final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.45;
+    private static final double BUFFER_DISTANCE_BETWEEN_PRESETS = 0.45;
 
-    private final int GENERAL_POWER_UP_COOLDOWN = 5000;
+    private static final int GENERAL_POWER_UP_COOLDOWN = 5000;
 
 
     private boolean isPaused = false;
@@ -59,7 +59,7 @@ public class GameController {
     private SpaceWorld background = null;
     private SpaceShip spaceShip;
 
-    private Set<SpaceElement> elements = ConcurrentHashMap.newKeySet();
+    private final Set<SpaceElement> elements = ConcurrentHashMap.newKeySet();
     private PlayerProfile playerProfile;
     private RandomPresetGenerator elementPreset;
 
@@ -251,7 +251,6 @@ public class GameController {
      * Ends the game if the spaceship collided with any obstacle and saves the game.
      */
     private void endRun() {
-        spaceShip.crash();
         gameTimer.cancel();
         gameOver = true;
         if (playerProfile.isAudioEnabled()) {

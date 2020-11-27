@@ -6,6 +6,11 @@ package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup;
  * @author nachbric
  */
 public interface PowerUpListener {
+
+    /**
+     * Perform the action when a power-up timer changed.
+     * @param timeLeft The time left until the power-up finishes.
+     */
     void powerUpTimerChanged(double timeLeft);
 
     /**

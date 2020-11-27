@@ -6,9 +6,9 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
  * @author freymar1
  * */
 public class GameViewPort {
-    private double gameWidth;
-    private double gameHeight;
-    private double infoBarHeight;
+    private final double gameWidth;
+    private final double gameHeight;
+    private final double infoBarHeight;
 
     public GameViewPort(double gameWidth, double gameHeight, double infoBarHeight) {
         this.gameWidth = gameWidth;

@@ -60,6 +60,20 @@ Button.help:hover {
     -fx-text-fill: red !important;
 }
 
+/* Help.fxml */
+.help Label {
+    -fx-wrap-text: true;
+    -fx-font-size: 15;
+    -fx-row-valignment: top;
+    -fx-text-overrun: ellipsis;
+}
+
+.help Label.subtitle {
+    -fx-position-shape: bottom;
+    -fx-font-size: 20;
+    -fx-row-valignment: bottom;
+}
+
 
 /* Settings.fxml */
 .settings Label {

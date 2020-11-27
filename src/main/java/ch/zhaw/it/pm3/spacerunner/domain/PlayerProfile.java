@@ -18,7 +18,7 @@ public class PlayerProfile {
     //gekaufte shop inhalte
     private Set<ContentId> purchasedContentIds;
     //aktivierte shop inhalte
-    private Set<ContentId> activeContentIds;
+    private final Set<ContentId> activeContentIds;
     private int fps;
 
     private transient Set<ShopContent> activeShopContent;

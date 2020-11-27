@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  */
 public class FPSTracker {
 
-    private Logger logger = Logger.getLogger(FPSTracker.class.getName());
+    private final Logger logger = Logger.getLogger(FPSTracker.class.getName());
 
     private final long[] frameTimes = new long[100];
     private int frameTimeIndex = 0;

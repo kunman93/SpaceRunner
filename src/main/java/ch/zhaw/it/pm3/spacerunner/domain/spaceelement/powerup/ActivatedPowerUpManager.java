@@ -22,8 +22,8 @@ public class ActivatedPowerUpManager implements PowerUpListener {
     private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
     private final VisualManager visualManager = VisualManager.getManager();
 
-    private Random randomGen = new Random();
-    private int GENERAL_POWER_UP_PROBABILITY = 33;
+    private final Random randomGen = new Random();
+    private static int GENERAL_POWER_UP_PROBABILITY = 33;
     private final Map<Class<? extends PowerUp>, PowerUp> activePowerUps = new HashMap<>();
     private final Map<Class<? extends PowerUp>, Integer> probabilities = new HashMap<>() {{
         put(DoubleCoinsPowerUp.class, 10);
@@ -116,7 +116,10 @@ public class ActivatedPowerUpManager implements PowerUpListener {
         }
     }
 
-   //TODO: ask Team
+    /**
+     * Currently empty body. This method can be used in future.
+     * @param timeLeft The time left until the power-up finishes.
+     */
     @Override
     public void powerUpTimerChanged(double timeLeft) {
         //Ignored

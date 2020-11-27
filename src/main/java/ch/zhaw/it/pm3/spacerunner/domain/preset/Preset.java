@@ -16,13 +16,13 @@ import java.util.logging.Logger;
  */
 public class Preset implements Cloneable {
 
-    private Logger logger = Logger.getLogger(Preset.class.getName());
+    private final Logger logger = Logger.getLogger(Preset.class.getName());
 
-    private SpaceElement[] elementsInPreset;
-    private double timeUntilEntirePresetOnScreen;
+    private final SpaceElement[] elementsInPreset;
+    private final double timeUntilEntirePresetOnScreen;
 
-    private VisualManager visualManager = VisualManager.getManager();
-    private VelocityManager velocityManager = VelocityManager.getManager();
+    private final VisualManager visualManager = VisualManager.getManager();
+    private final VelocityManager velocityManager = VelocityManager.getManager();
 
     /**
      * Constructor for the class preset.
