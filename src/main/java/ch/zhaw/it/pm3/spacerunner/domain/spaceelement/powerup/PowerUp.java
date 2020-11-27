@@ -13,8 +13,8 @@ import java.util.TimerTask;
  * @author nachbric
  */
 public abstract class PowerUp extends SpaceElement {
-    private Set<PowerUpListener> powerUpListeners = new HashSet<>();
-    private static Timer powerUpTimer = new Timer("PowerUp Timer");
+    private final Set<PowerUpListener> powerUpListeners = new HashSet<>();
+    private static final Timer powerUpTimer = new Timer("PowerUp Timer");
     private TimerTask currentPowerUpTimerTask;
     private int multiplier = 1;
 

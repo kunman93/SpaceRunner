@@ -1,5 +1,4 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
@@ -24,7 +23,7 @@ public class SpaceElementTest {
     @BeforeEach
     void setUp() {
         velocityManager.setupGameElementVelocity();
-        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
+        visualManager.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINY_COIN_1, VisualScaling.COIN));
         visualManager.loadAndSetVisual(Asteroid.class, new Visual(VisualSVGFile.ASTEROID, VisualScaling.ASTEROID));
     }
 

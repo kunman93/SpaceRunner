@@ -11,7 +11,7 @@ public enum VisualFile implements FileResource {
     BACKGROUND_STARS("background.jpg"),
     ROCKET_ICON("icon.png");
 
-    private String fileName;
+    private final String fileName;
 
     VisualFile(String fileName) {
         this.fileName = "images/" + fileName;

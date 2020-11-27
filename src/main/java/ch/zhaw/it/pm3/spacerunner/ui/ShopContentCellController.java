@@ -52,7 +52,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     @FXML
     private ImageView contentImageView = new ImageView();
     @FXML
-    private Label contentTitelLabel = new Label();
+    private Label contentTitleLabel = new Label();
     @FXML
     private Label contentPriceLabel = new Label();
     @FXML
@@ -82,7 +82,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     private void setUpUI() {
         contentImageView = (ImageView) cellContent.getChildren().stream().filter((child) -> child.getId().equals("contentImageView")).collect(Collectors.toList()).get(0);
         verticalSeparation = (GridPane) cellContent.getChildren().stream().filter((child) -> child.getId().equals("verticalSeparation")).collect(Collectors.toList()).get(0);
-        contentTitelLabel = (Label) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
+        contentTitleLabel = (Label) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("contentTitelLabel")).collect(Collectors.toList()).get(0);
         contentPriceLabel = (Label) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("contentPriceLabel")).collect(Collectors.toList()).get(0);
         buyButton = (Button) verticalSeparation.getChildren().stream().filter((child) -> child.getId().equals("buyButton")).collect(Collectors.toList()).get(0);
         GridPane.setFillWidth(buyButton, true);
@@ -117,7 +117,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
         contentImageView.setImage(imageOfContent);
         contentImageView.setEffect(new DropShadow(20, Color.RED));
-        contentTitelLabel.setText(this.content.getTitle());
+        contentTitleLabel.setText(this.content.getTitle());
         contentPriceLabel.setText("Price: " + this.content.getPrice());
     }
 

@@ -18,8 +18,6 @@ public class SpaceShip extends SpaceElement {
 
     private final Logger logger = Logger.getLogger(SpaceShip.class.getName());
 
-    private boolean hasCrashed;
-
     private final VelocityManager velocityManager = VelocityManager.getManager();
     private final VisualManager visualManager = VisualManager.getManager();
 
@@ -29,20 +27,6 @@ public class SpaceShip extends SpaceElement {
      */
     public SpaceShip(Point2D.Double startPosition) {
         super(startPosition);
-    }
-
-    /**
-     * @return True if the SpaceShip has crashed.
-     */
-    public boolean hasCrashed() {
-        return hasCrashed;
-    }
-
-    /**
-     * Crashes the SpaceShip
-     */
-    public void crash() {
-        hasCrashed = true;
     }
 
     private void directMove(SpaceShipDirection direction, Point2D.Double position, long timeInMillis) {

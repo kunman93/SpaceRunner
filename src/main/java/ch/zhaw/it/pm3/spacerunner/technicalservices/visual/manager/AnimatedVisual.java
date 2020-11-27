@@ -11,8 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AnimatedVisual {
     private long animationTimeStamp = 0;
-    private AtomicInteger animationPointer = new AtomicInteger(0);
-    private VisualSVGAnimationFiles visualSVGAnimationFiles;
+    private final AtomicInteger animationPointer = new AtomicInteger(0);
+    private final VisualSVGAnimationFiles visualSVGAnimationFiles;
     private Visual[] visuals;
     private VisualScaling visualScaling;
 

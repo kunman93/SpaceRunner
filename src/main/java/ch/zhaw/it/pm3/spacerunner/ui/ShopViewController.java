@@ -27,10 +27,10 @@ public class ShopViewController extends ViewController implements ShopContentCel
     private TabPane tabPane;
     @FXML
     private ListView<ShopContent> listViewForUpgrades;
-    private Set<ShopContentCellController> upgradeElements = new HashSet<>();
+    private final Set<ShopContentCellController> upgradeElements = new HashSet<>();
     @FXML
     private ListView<ShopContent> listViewForSkins;
-    private Set<ShopContentCellController> skinElements = new HashSet<>();
+    private final Set<ShopContentCellController> skinElements = new HashSet<>();
     @FXML
     private Label collectedCoinsLabel;
 

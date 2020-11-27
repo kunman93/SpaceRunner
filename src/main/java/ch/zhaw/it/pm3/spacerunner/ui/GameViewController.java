@@ -55,15 +55,15 @@ public class GameViewController extends ViewController {
     private Canvas gameCanvas;
     private GraphicsContext graphicsContext;
     private GameViewPort gameViewPort = null;
-    private GameRatioUtil gameRatioUtil = GameRatioUtil.getUtil();
+    private final GameRatioUtil gameRatioUtil = GameRatioUtil.getUtil();
 
-    private GameController gameController = new GameController();
+    private final GameController gameController = new GameController();
     private boolean downPressed;
     private boolean upPressed;
     private Stage primaryStage;
     private EventHandler<KeyEvent> pressedHandler;
     private EventHandler<KeyEvent> releasedHandler;
-    private EventHandler<KeyEvent> startGameKeyHandler = new EventHandler<KeyEvent>() {
+    private final EventHandler<KeyEvent> startGameKeyHandler = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if (event.getCode() == KeyCode.SPACE) {
@@ -74,7 +74,7 @@ public class GameViewController extends ViewController {
             }
         }
     };
-    private EventHandler<KeyEvent> pauseGameKeyHandler = new EventHandler<KeyEvent>() {
+    private final EventHandler<KeyEvent> pauseGameKeyHandler = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
             if (event.getCode() == KeyCode.P) {
@@ -86,25 +86,25 @@ public class GameViewController extends ViewController {
     private boolean wasPausedBeforeResize = false;
     private boolean isResizing = false;
 
-    private FXMLImageProxy fxmlImageProxy = FXMLImageProxy.getProxy();
+    private final FXMLImageProxy fxmlImageProxy = FXMLImageProxy.getProxy();
 
     private AnimationTimer gameLoop;
     private AnimationTimer loadingAnimation;
 
-    private Timer resizeTimer = new Timer("ResizeTimer");
+    private final Timer resizeTimer = new Timer("ResizeTimer");
     private TimerTask resizeTask = null;
 
 
     private boolean isLoaded = false;
 
-    private final double FONT_SIZE_IN_PERCENT_OF_INFO_BAR = 0.8;
-    private final double INFO_BAR_IMAGE_MARGIN = 10;
-    private final double INFO_BAR_TEXT_MARGIN = 30;
-    private final VisualManager VISUAL_MANAGER = VisualManager.getManager();
+    private static final double FONT_SIZE_IN_PERCENT_OF_INFO_BAR = 0.8;
+    private static final double INFO_BAR_IMAGE_MARGIN = 10;
+    private static final double INFO_BAR_TEXT_MARGIN = 30;
+    private final VisualManager visualManager = VisualManager.getManager();
 
     private long lastUpdate = 0;
     //Used to overperform a little bit. if we dont have this we dont reach the required fps (has to do with some internal AnimationTimer stuff)
-    private final long FRAME_TIME_DELTA = 2_000_000;
+    private static final long FRAME_TIME_DELTA = 2_000_000;
 
     /**
      * Initialisation of the UI related component such as scaling of displayed contents and initialisation of I/O related
@@ -340,7 +340,7 @@ public class GameViewController extends ViewController {
             } catch (VisualNotSetException e) {
                 logger.log(Level.SEVERE, "Visual for {0} wasn't set", spaceElement.getClass());
             }
-            graphicsContext.drawImage(image, position.x * VISUAL_MANAGER.getWidth(), position.y * VISUAL_MANAGER.getHeight());
+            graphicsContext.drawImage(image, position.x * visualManager.getWidth(), position.y * visualManager.getHeight());
         }
     }
 
@@ -435,8 +435,8 @@ public class GameViewController extends ViewController {
      * */
     private void initializeUiElements() {
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN_COUNT);
-        VISUAL_MANAGER.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
-        VISUAL_MANAGER.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
-        VISUAL_MANAGER.loadAndSetVisual(UIVisualElement.SHIELD_POWER_UP, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP_UI));
+        visualManager.loadAndSetAnimatedVisual(UIVisualElement.COIN_COUNT, coinAnimation);
+        visualManager.loadAndSetVisual(UIVisualElement.DOUBLE_COIN_POWER_UP, new Visual(VisualSVGFile.DOUBLE_COIN_POWER_UP, VisualScaling.POWER_UP_UI));
+        visualManager.loadAndSetVisual(UIVisualElement.SHIELD_POWER_UP, new Visual(VisualSVGFile.SHIELD_POWER_UP, VisualScaling.POWER_UP_UI));
     }
 }

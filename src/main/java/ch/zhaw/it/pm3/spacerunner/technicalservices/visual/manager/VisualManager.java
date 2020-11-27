@@ -85,7 +85,7 @@ public class VisualManager {
         Visual background = new Visual(VisualFile.BACKGROUND_STARS);
         background.setIsBackground(true);
         VISUAL_MANAGER.loadAndSetVisual(SpaceWorld.class, background);
-        VISUAL_MANAGER.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINEY_COIN_1, VisualScaling.COIN));
+        VISUAL_MANAGER.loadAndSetVisual(Coin.class, new Visual(VisualSVGFile.SHINY_COIN_1, VisualScaling.COIN));
 
         AnimatedVisual coinAnimation = new AnimatedVisual(VisualSVGAnimationFiles.COIN_ANIMATION, VisualScaling.COIN);
         VISUAL_MANAGER.loadAndSetAnimatedVisual(Coin.class, coinAnimation);

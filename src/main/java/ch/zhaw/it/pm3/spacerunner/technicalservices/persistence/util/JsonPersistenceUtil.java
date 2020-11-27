@@ -31,7 +31,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     private static final JsonPersistenceUtil JSON_PERSISTENCE_UTIL = new JsonPersistenceUtil();
 
-    private static final Gson gson = new Gson();
+    private static final Gson GSON = new Gson();
 
     /**
      * private constructor for the singleton-pattern
@@ -236,7 +236,7 @@ public class JsonPersistenceUtil implements Persistence {
     public <T> T loadAndDeserializeData(String path, Type dataClass) throws IOException {
         T data = null;
         try (FileReader reader = new FileReader(path)) {
-            data = gson.fromJson(reader, dataClass);
+            data = GSON.fromJson(reader, dataClass);
         } catch (IOException e) {
             throw e;
         }
@@ -272,7 +272,7 @@ public class JsonPersistenceUtil implements Persistence {
      */
     public <T> void serializeAndSaveData(String path, T data) throws IOException {
         try (FileWriter writer = new FileWriter(path)) {
-            gson.toJson(data, writer);
+            GSON.toJson(data, writer);
         } catch (IOException e) {
             throw e;
         }

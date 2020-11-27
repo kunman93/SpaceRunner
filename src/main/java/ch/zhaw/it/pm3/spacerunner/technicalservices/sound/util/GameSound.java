@@ -15,7 +15,7 @@ public enum GameSound implements FileResource {
     COIN_PICKUP("coin-pickup.wav");
 
 
-    private String fileName;
+    private final String fileName;
 
     GameSound(String fileName) {
         this.fileName = "sound/" + fileName;

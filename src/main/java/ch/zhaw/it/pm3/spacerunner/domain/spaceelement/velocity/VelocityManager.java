@@ -21,7 +21,7 @@ import java.util.Map;
 public class VelocityManager {
 
     private Map<Class<? extends SpaceElement>, Point2D.Double> velocityMap = new HashMap<>();
-    private final static VelocityManager VELOCITY_MANAGER = new VelocityManager();
+    private static final VelocityManager VELOCITY_MANAGER = new VelocityManager();
 
     public static VelocityManager getManager() {
         return VELOCITY_MANAGER;

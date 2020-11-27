@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class SoundClip {
 
-    private Logger logger = Logger.getLogger(SoundClip.class.getName());
+    private final Logger logger = Logger.getLogger(SoundClip.class.getName());
 
     private final Clip clip;
 

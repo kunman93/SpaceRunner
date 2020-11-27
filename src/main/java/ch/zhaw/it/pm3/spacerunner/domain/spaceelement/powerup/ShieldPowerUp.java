@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
  * @author nachbric
  */
 public class ShieldPowerUp extends PowerUp {
-    private final int TIME_ACTIVE = 0;
+    private static final int TIME_ACTIVE = 0;
 
     /**
      * Sets up the startPosition where ShieldPowerUp should appear in the game

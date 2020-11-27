@@ -20,7 +20,7 @@ public enum VisualScaling {
     ROCKET(0.1);
 
 
-    private double scaling;
+    private final double scaling;
 
     VisualScaling(double scaling) {
         this.scaling = scaling;
