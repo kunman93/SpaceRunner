@@ -23,7 +23,7 @@
             <RowConstraints percentHeight="50" />
         </rowConstraints>
         <Label fx:id="contentTitelLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Label fx:id="contentPriceLabel" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="priceLabel"/>
+        <Label fx:id="contentPriceLabel" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <Button fx:id="buyButton" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.valignment="CENTER"/>
         <Button fx:id="activateButton" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
     </GridPane>
