@@ -1,7 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.speed;
 
 /**
- * Horizontal speed of elements per second relative to the view. (Towards the player -> left direction)
+ * Horizontal speed of elements per second relative to the view. (Towards the player {@literal =>} left direction)
  * @author blattpet
  */
 public enum HorizontalSpeed {
