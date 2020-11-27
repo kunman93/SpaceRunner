@@ -116,7 +116,10 @@ public class ActivatedPowerUpManager implements PowerUpListener {
         }
     }
 
-   //TODO: ask Team
+    /**
+     * Currently empty body. This method can be used in future.
+     * @param timeLeft The time left until the power-up finishes.
+     */
     @Override
     public void powerUpTimerChanged(double timeLeft) {
         //Ignored
