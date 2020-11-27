@@ -7,7 +7,14 @@ import java.awt.image.BufferedImage;
  * @author islermic
  */
 public interface VisualManagerListener {
+    /**
+     * Notifies when the VisualManager clears its data
+     */
     void clear();
 
+    /**
+     * Notifies if an image in the visual manager has changed
+     * @param bufferedImage
+     */
     void bufferedImageChanged(BufferedImage bufferedImage);
 }
