@@ -71,7 +71,7 @@ We tested what we could but since it's a Game most of the testing couldn't be do
 
 ## External Ressources
 Link to Wiki
-[External Resources](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/wiki/External-ressources)
+[External Resources](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/wiki/External-Resources)
 
 ## Meetings
 The following meetings and iteration sections show the progress of the project. 
