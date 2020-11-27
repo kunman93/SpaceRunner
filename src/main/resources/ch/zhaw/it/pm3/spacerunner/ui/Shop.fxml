@@ -40,6 +40,6 @@
         </TabPane>
     </children>
     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
-        <Button fx:id="homeButton" onAction="#showMenu" text="&lt; BACK"/>
+        <Button onAction="#showMenu" text="&lt; BACK"/>
     </HBox>
 </GridPane>
