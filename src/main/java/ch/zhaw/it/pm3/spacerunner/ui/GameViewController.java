@@ -194,6 +194,7 @@ public class GameViewController extends ViewController {
             if (gameLoop != null) {
                 gameLoop.stop();
                 setGameDataCache(new GameDataCache(gameController.getCollectedCoins(), gameController.getScore()));
+                gameController.terminate();
                 getMain().setFXMLView(FXMLFile.GAME_ENDED);
             }
         }

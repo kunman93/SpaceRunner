@@ -3,7 +3,6 @@ package ch.zhaw.it.pm3.spacerunner.domain;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 import org.junit.jupiter.api.*;
 
 import java.awt.geom.Point2D;
@@ -66,6 +65,8 @@ public class GameControllerTest {
             assertEquals(roundedOldPositionYPlusVelocity, roundedCurrentPositionY);
         }
 
+        controller.terminate();
+
 
     }
 
@@ -77,5 +78,28 @@ public class GameControllerTest {
         return controller.getGameElements().stream().filter((spaceElement) ->{
                     return  !(spaceElement instanceof SpaceShip) && !(spaceElement instanceof SpaceWorld) && !(spaceElement instanceof UFO);
                 }).findFirst();
+    }
+
+    @Test
+    void processFrameWhenInitialized(){
+        controller.initialize();
+        controller.terminate();
+    }
+
+    @Test
+    void processFrameWhenNotInitialized(){
+        assertThrows(IllegalStateException.class, ()->{
+            controller.processFrame(false, false);
+        });
+    }
+
+    @Test
+    void processFrameWhenTerminated(){
+        controller.initialize();
+        controller.terminate();
+
+        assertThrows(IllegalStateException.class, ()->{
+            controller.processFrame(false, false);
+        });
     }
 }

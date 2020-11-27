@@ -52,6 +52,9 @@ public class GameController {
     private int fps = 60;
     private boolean gameOver = false;
 
+    private boolean isInitialized = false;
+    private boolean isTerminated = false;
+
     private Timer gameTimer;
     private SpaceWorld background = null;
     private SpaceShip spaceShip;
@@ -86,6 +89,16 @@ public class GameController {
         spaceShip = new SpaceShip(new Point2D.Double(.05, 0.45));
 
         fps = playerProfile.getFps();
+
+        isTerminated = false;
+        isInitialized = true;
+    }
+
+    public void terminate(){
+        if(gameTimer != null){
+            gameTimer.cancel();
+        }
+        isTerminated = true;
     }
 
     private TimerTask getGameBackgroundTask() {
@@ -142,10 +155,18 @@ public class GameController {
 
     /**
      * Process each frame.
+     * IMPORTANT: Initialize has to be called before processing frames!
+     * IMPORTANT: If the game is terminated, initialize has to be called again to process frames or it will not process any more frames.
      * @param upPressed Is true when the Up-Key was pressed, else false.
      * @param downPressed Is true when the Down-Key was pressed, else false.
      */
     public void processFrame(boolean upPressed, boolean downPressed) {
+        if(isTerminated){
+            throw new IllegalStateException("The game was already terminated when process frame was called! Initialize it again for re-use!");
+        }else if(!isInitialized){
+            throw new IllegalStateException("The game is not initialized! Method initialized has to be called before processing frames!");
+        }
+
         long timeSinceLastUpdate = millisSinceLastProcessing();
 
         if (!isPaused) {

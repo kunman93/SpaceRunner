@@ -60,6 +60,9 @@ class ActivatedPowerUpManagerTest {
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
         activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+
+        //TODO: TEST if the timer is refreshed/works should be in powerupTest cause they are implemented in the powerup :o
+
         assertEquals(1, activePowerUps.size());
         assertEquals(2, activatedPowerUpManager.getCoinMultiplicator());
 
