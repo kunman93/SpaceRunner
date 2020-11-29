@@ -312,8 +312,8 @@ public class GameController {
      * @param c  A Coin-Object which the spaceship collects.
      */
     private void collisionWithCoin(Coin c) {
-        collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
-        score += 25 * Math.pow(2, activatedPowerUpManager.getCoinMultiplicator());
+        collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplier());
+        score += 25 * Math.pow(2, activatedPowerUpManager.getCoinMultiplier());
         elements.remove(c);
         new Thread(() -> {
             try {

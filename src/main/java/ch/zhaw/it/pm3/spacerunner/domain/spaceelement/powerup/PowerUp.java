@@ -3,10 +3,7 @@ package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceElement;
 
 import java.awt.geom.Point2D;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * PowerUp is a space element that gives the spaceship a special ability when it's collected during a game.
@@ -92,4 +89,8 @@ public abstract class PowerUp extends SpaceElement {
      * Is an abstract-method which is implemented by the sub-classes to activate a power up.
      */
     public abstract void activatePowerUp();
+
+    Set<PowerUpListener> getPowerUpListeners(){
+        return Collections.unmodifiableSet(powerUpListeners);
+    }
 }

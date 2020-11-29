@@ -108,7 +108,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
         return Collections.unmodifiableMap(activePowerUps);
     }
 
-    public synchronized int getCoinMultiplicator() {
+    public synchronized int getCoinMultiplier() {
         if (activePowerUps.containsKey(DoubleCoinsPowerUp.class)) {
             return activePowerUps.get(DoubleCoinsPowerUp.class).getMultiplier();
         } else {
