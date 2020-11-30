@@ -72,7 +72,7 @@ public class VisualManager {
 
         for (ShopContent activeShopContent : activeShopContents) {
             if (activeShopContent.getItemType() == ItemType.PLAYER_MODEL) {
-                VISUAL_MANAGER.loadAndSetVisual(SpaceShip.class, new Visual(activeShopContent.getImageId(), VisualScaling.SPACE_SHIP, false, false));
+                VISUAL_MANAGER.loadAndSetVisual(SpaceShip.class, new Visual(activeShopContent.getImageId(), VisualScaling.SPACE_SHIP, true, false));
             }
         }
 
