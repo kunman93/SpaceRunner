@@ -173,7 +173,7 @@ public class GameController {
             moveSpaceShip(upPressed, downPressed, timeSinceLastUpdate);
             updateHighScore(timeSinceLastUpdate);
             processCollision(detectCollision());
-            generateObstacles();
+            generatePreset();
             moveElements(timeSinceLastUpdate);
         }
 
@@ -342,15 +342,13 @@ public class GameController {
     /**
      * Generates SpaceElements offscreen, which are meant to move left towards the spaceship
      */
-    private void generateObstacles() {
+    private void generatePreset() {
         if (remainingDistanceUntilNextPreset < -BUFFER_DISTANCE_BETWEEN_PRESETS) {
-            generatePreset(elementPreset.getRandomPreset());
-        }
-    }
+            Preset generatedPreset = elementPreset.getRandomPreset();
+            Collections.addAll(elements, generatedPreset.getElementsInPreset());
 
-    private void generatePreset(Preset preset) {
-        Collections.addAll(elements, preset.getElementsInPreset());
-        remainingDistanceUntilNextPreset = preset.getPresetTimeUntilOnScreen();
+            remainingDistanceUntilNextPreset = generatedPreset.getPresetTimeUntilOnScreen();
+        }
     }
 
     /**
