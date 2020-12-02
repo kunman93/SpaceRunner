@@ -45,6 +45,9 @@ public class ShopViewController extends ViewController implements ShopContentCel
     }
 
     // https://stackoverflow.com/questions/19588029/customize-listview-in-javafx-with-fxml
+    /**
+     * Displays, after loading the FXML-file, sets up the shop content cell.
+     * */
     public void initialize() {
         collectedCoinsLabel.setText("Coins: " + persistenceUtil.loadProfile().getCoins());
         List<ShopContent> shopContents = persistenceUtil.loadShopContent();
