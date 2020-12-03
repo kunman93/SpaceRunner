@@ -33,7 +33,7 @@ class ActivatedPowerUpManagerTest {
     void addPowerUpAddingOneDoubleCoinsPowerUpTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(1, activePowerUps.size());
     }
 
@@ -44,8 +44,8 @@ class ActivatedPowerUpManagerTest {
     void addPowerUpAddingTwoDoubleCoinsPowerUpTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(1, activePowerUps.size());
     }
 
@@ -56,9 +56,9 @@ class ActivatedPowerUpManagerTest {
     void addPowerUpAddingThreeDoubleCoinsPowerUpTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(1, activePowerUps.size());
     }
 
@@ -69,7 +69,7 @@ class ActivatedPowerUpManagerTest {
     void addPowerUpAddingOneShieldPowerUpTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(1, activePowerUps.size());
         assertTrue(activatedPowerUpManager.hasShield());
     }
@@ -81,8 +81,8 @@ class ActivatedPowerUpManagerTest {
     void addPowerUpAddingTwoShieldPowerUpTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(1, activePowerUps.size());
         assertTrue(activatedPowerUpManager.hasShield());
     }
@@ -94,8 +94,8 @@ class ActivatedPowerUpManagerTest {
     void addPowerUpAddingOneDoubleCoinsPowerUpAndOneShieldPowerUpTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(2, activePowerUps.size());
         assertTrue(activatedPowerUpManager.hasShield());
     }
@@ -105,7 +105,7 @@ class ActivatedPowerUpManagerTest {
      */
     @Test
     void removeShieldWhenOneShieldPowerUpWasCollectedTest(){
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertTrue(activatedPowerUpManager.hasShield());
         activatedPowerUpManager.removeShield();
         assertFalse(activatedPowerUpManager.hasShield());
@@ -116,8 +116,8 @@ class ActivatedPowerUpManagerTest {
      */
     @Test
     void removeShieldWhenTwoShieldPowerUpsWereCollectedTest(){
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertTrue(activatedPowerUpManager.hasShield());
         activatedPowerUpManager.removeShield();
         assertFalse(activatedPowerUpManager.hasShield());
@@ -136,11 +136,11 @@ class ActivatedPowerUpManagerTest {
      */
     @Test
     void getCoinMultiplierWhenDoubleCoinsPowerUpsWereCollectedTest(){
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(1, activatedPowerUpManager.getCoinMultiplier());
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(2, activatedPowerUpManager.getCoinMultiplier());
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(3, activatedPowerUpManager.getCoinMultiplier());
     }
 
@@ -149,11 +149,11 @@ class ActivatedPowerUpManagerTest {
      */
     @Test
     void getCoinMultiplierWhenShieldPowerUpsWereCollectedTest(){
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(0, activatedPowerUpManager.getCoinMultiplier());
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(0, activatedPowerUpManager.getCoinMultiplier());
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(0, activatedPowerUpManager.getCoinMultiplier());
     }
 
@@ -177,7 +177,7 @@ class ActivatedPowerUpManagerTest {
     void powerUpFinishedWhenDoubleCoinsPowerUpIsActiveTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(doubleCoinsPowerUp);
+        activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(1, activePowerUps.size());
         activatedPowerUpManager.powerUpFinished(doubleCoinsPowerUp);
         assertTrue(activePowerUps.isEmpty());
@@ -190,7 +190,7 @@ class ActivatedPowerUpManagerTest {
     void powerUpFinishedWhenShieldPowerUpIsActiveTest(){
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
-        activatedPowerUpManager.addPowerUp(shieldPowerUp);
+        activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(1, activePowerUps.size());
         activatedPowerUpManager.powerUpFinished(shieldPowerUp);
         assertTrue(activePowerUps.isEmpty());
