@@ -35,7 +35,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
      */
     public ActivatedPowerUpManager(){
         if(persistenceUtil.hasPowerUpChanceMultiplierUpgrade()){
-            GENERAL_POWER_UP_PROBABILITY = GENERAL_POWER_UP_PROBABILITY * 2;
+            GENERAL_POWER_UP_PROBABILITY = (int)(GENERAL_POWER_UP_PROBABILITY * 1.5);
         }
     }
 
