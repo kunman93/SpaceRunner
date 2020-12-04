@@ -254,9 +254,13 @@ public class GameController {
             new Thread(() -> {
                 try {
                     SoundClip explosion = gameSoundUtil.loadClip(GameSound.EXPLOSION);
+
+                    //Play next sound after this one has stopped playing!
                     explosion.addListener(() -> {
                         try {
                             SoundClip gameOverVoice = gameSoundUtil.loadClip(GameSound.GAME_OVER_VOICE);
+
+                            //Play next sound after this one has stopped playing!
                             gameOverVoice.addListener(() -> {
                                 try {
                                     gameSoundUtil.loadClip(GameSound.GAME_OVER_2).play();
@@ -265,6 +269,7 @@ public class GameController {
                                     logger.log(Level.WARNING, "Sound GAME_OVER_2 couldn't be loaded");
                                 }
                             });
+
                             gameOverVoice.play();
                             gameSoundUtil.loadClip(GameSound.GAME_OVER_1).play();
                         } catch (Exception e) {
