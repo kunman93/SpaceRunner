@@ -104,7 +104,15 @@ The following meetings and iteration sections show the progress of the project.
 
 [Meeting 16.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/130)
 
-[Meeting 21.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/121)
+[Meeting 20.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/121)
+
+[Meeting 23.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/131)
+
+[Meeting 27.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/132)
+
+[Meeting 30.11.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/135)
+
+[Meeting 04.12.2020](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/136)
 
 <br/>
 
@@ -115,8 +123,6 @@ The following meetings and iteration sections show the progress of the project.
 [Iterations-Review 4](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/97)
 
 [Iterations-Review 5](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/issues/127)
-
-
 
 
 
