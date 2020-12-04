@@ -18,24 +18,24 @@ After pressing Start you need to Press **SPACE** to start the Run.
 
 When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
 
-![powerup pick up](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup-pick-up.gif)
+![powerup pick up](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_pick_up.gif)
 
-![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup-shield.gif)
+![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_shield.gif)
 
-![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game-pause.gif)
+![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_pause.gif)
 
 ![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG)
 
 #### Shop
 
-![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_1.gif)
+![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop.gif)
 
 Here you can buy and Manage Upgrades or Playermodels
 * Upgrades
   * 1.5x PowerUp Chance
   * Double duration of Coin PowerUp
 
-![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_2_upgarde_buy.gif)
+![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_upgarde_buy.gif)
 
 ![not enough coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_not_enough_coins.PNG)
 
@@ -43,21 +43,21 @@ Here you can buy and Manage Upgrades or Playermodels
   * Ship Skin 1
   * Ship Skin 2
 
-![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_6_player_model_activate.gif)
+![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif)
 
 #### Settings
 
-![go to settings](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_1.gif)
+![go to settings](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings.gif)
 
 Here you can set the Playername, the Sound Volume and the Framerate 
 * Player Name
 
-![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_2_change_name.gif)
+![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_change_name.gif)
 
 * Sound Volume (in %)
 * Framerate (in FPS)
 
-![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_3.gif)
+![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_chnage_volume_and_fps.gif)
 
 ## Project Outlines
 ### Brief Summary
