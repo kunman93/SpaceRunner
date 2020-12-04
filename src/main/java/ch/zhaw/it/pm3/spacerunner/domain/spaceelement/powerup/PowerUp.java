@@ -80,6 +80,12 @@ public abstract class PowerUp extends SpaceElement {
     }
 
     /**
+     * Is an abstract-method which is implemented by the sub-classes to set the power-active-time.
+     * @param activeTime active time to be set.
+     */
+    protected abstract void setActiveTime(int activeTime);
+
+    /**
      * Is an abstract-method which is implemented by the sub-classes to get the power-active-time.
      * @return Returns the time how long a power-up should be active.
      */

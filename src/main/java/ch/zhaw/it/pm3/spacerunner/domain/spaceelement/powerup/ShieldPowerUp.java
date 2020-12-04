@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
  * @author nachbric
  */
 public class ShieldPowerUp extends PowerUp {
-    private static final int TIME_ACTIVE = 0;
+    private static final int timeActive = 0;
 
     /**
      * Sets up the startPosition where ShieldPowerUp should appear in the game
@@ -19,8 +19,13 @@ public class ShieldPowerUp extends PowerUp {
     }
 
     @Override
+    protected void setActiveTime(int activeTime) {
+        throw new IllegalArgumentException("Can't set the active time of a ShieldPowerUp!");
+    }
+
+    @Override
     public int getActiveTime() {
-        return TIME_ACTIVE;
+        return timeActive;
     }
 
     @Override

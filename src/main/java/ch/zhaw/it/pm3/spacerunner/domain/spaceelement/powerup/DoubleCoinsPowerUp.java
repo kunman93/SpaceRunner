@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
 public class DoubleCoinsPowerUp extends PowerUp {
     private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
 
-    private static int TIME_ACTIVE = 10000;
+    private static int timeActive = 10000;
 
     /**
      * Sets up the startPosition and doubles the duration of this power-ups if the upgrade was selected in the shop.
@@ -22,13 +22,18 @@ public class DoubleCoinsPowerUp extends PowerUp {
         super(startPosition);
 
         if(persistenceUtil.hasDoubleDurationForCoinPowerUp()){
-            TIME_ACTIVE = TIME_ACTIVE*2;
+            timeActive = timeActive *2;
         }
     }
 
     @Override
+    protected void setActiveTime(int activeTime) {
+        timeActive = activeTime;
+    }
+
+    @Override
     public int getActiveTime() {
-        return TIME_ACTIVE;
+        return timeActive;
     }
 
     @Override

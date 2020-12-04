@@ -23,6 +23,7 @@ public class PowerUpTest {
     @BeforeEach
     void setUp() {
         doubleCoinsPowerUp = new DoubleCoinsPowerUp(new Point2D.Double(1.0, 0.5));
+        doubleCoinsPowerUp.setActiveTime(3000);
         shieldPowerUp = new ShieldPowerUp(new Point2D.Double(1.0, 0.5));
         powerUpListener = new PowerUpListener() {
             @Override
@@ -81,25 +82,7 @@ public class PowerUpTest {
     }
 
     /**
-     * Tests if the powerUpTimer and the powerUpTimerTasks are created and executed properly.
-     */
-    @Test
-    void createPowerUpTimerTaskTest() {
-        Set<PowerUpListener> powerUpListeners = doubleCoinsPowerUp.getPowerUpListeners();
-        assertTrue(powerUpListeners.isEmpty());
-        doubleCoinsPowerUp.addListener(powerUpListener);
-        assertEquals(1,powerUpListeners.size());
-        doubleCoinsPowerUp.createPowerUpTimer();
-        try {
-            Thread.sleep(doubleCoinsPowerUp.getActiveTime() + 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(powerUpListeners.isEmpty());
-    }
-
-    /**
-     * Tests if the DoubleCoinPowerUp-activation works properly.
+     * Tests if the DoubleCoinPowerUp-activation works properly. (Tests if the powerUpTimer and the powerUpTimerTasks are created and executed properly.)
      */
     @Test
     void activateDoubleCoinPowerUpTest(){
