@@ -79,7 +79,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
      * Adds the powerUp to activePowerUps and activates it.
      * @param powerUp The power-up which should be activated.
      */
-    public synchronized void addPowerUp(PowerUp powerUp) {
+    public synchronized void activatePowerUp(PowerUp powerUp) {
         if (activePowerUps.containsKey(powerUp.getClass())) {
             activePowerUps.get(powerUp.getClass()).incrementPowerUpMultiplier();
         } else {

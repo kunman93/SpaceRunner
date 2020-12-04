@@ -326,7 +326,7 @@ public class GameController {
     }
 
     private void collisionWithPowerUp(PowerUp p) {
-        activatedPowerUpManager.addPowerUp(p);
+        activatedPowerUpManager.activatePowerUp(p);
         elements.remove(p);
         score += 50;
         new Thread(() -> {
