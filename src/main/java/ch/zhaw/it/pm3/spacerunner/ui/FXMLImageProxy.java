@@ -22,7 +22,7 @@ public class FXMLImageProxy implements VisualManagerListener {
 
     private static final FXMLImageProxy FXML_IMAGE_PROXY = new FXMLImageProxy();
     private final VisualManager visualManager = VisualManager.getManager();
-    private Map<BufferedImage, Image> fxmlImageClassMap = new HashMap<>();
+    private Map<BufferedImage, Image> fxmlImageCache = new HashMap<>();
 
     private FXMLImageProxy() {
         visualManager.addListener(this);
@@ -37,7 +37,7 @@ public class FXMLImageProxy implements VisualManagerListener {
      */
     @Override
     public void clear() {
-        fxmlImageClassMap = new HashMap<>();
+        fxmlImageCache = new HashMap<>();
     }
 
     /**
@@ -49,13 +49,13 @@ public class FXMLImageProxy implements VisualManagerListener {
      */
     public Image getFXMLImage(Class<? extends VisualElement> elementClass) throws VisualNotSetException {
         BufferedImage bufferedImage = visualManager.getImage(elementClass);
-        Image image = fxmlImageClassMap.get(bufferedImage);
+        Image image = fxmlImageCache.get(bufferedImage);
 
         if (image != null) {
             return image;
         } else {
             Image fxmlImage = SwingFXUtils.toFXImage(bufferedImage, null);
-            fxmlImageClassMap.put(bufferedImage, fxmlImage);
+            fxmlImageCache.put(bufferedImage, fxmlImage);
             return fxmlImage;
         }
     }
@@ -68,6 +68,6 @@ public class FXMLImageProxy implements VisualManagerListener {
     @Override
     public void bufferedImageChanged(BufferedImage bufferedImage) {
         Image fxmlImage = SwingFXUtils.toFXImage(bufferedImage, null);
-        fxmlImageClassMap.put(bufferedImage, fxmlImage);
+        fxmlImageCache.put(bufferedImage, fxmlImage);
     }
 }

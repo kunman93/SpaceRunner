@@ -77,7 +77,7 @@ public class GameController {
         velocityManager.setupGameElementVelocity();
         visualManager.loadGameElementVisuals();
 
-        gameTimer = new Timer("GameSpeedTimer");
+        gameTimer = new Timer("GameBackgroundTimer");
         gameTimer.scheduleAtFixedRate(getGameBackgroundTask(), 0, GAME_SPEED_INCREASE_PERIOD_TIME);
         gameTimer.schedule(getPowerUpGeneratorTask(), 0, GENERAL_POWER_UP_COOLDOWN);
 
