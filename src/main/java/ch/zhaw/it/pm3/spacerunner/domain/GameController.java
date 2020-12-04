@@ -67,9 +67,6 @@ public class GameController {
     private long lastUpdate = 0;
 
 
-    //TODO: information expert verletzung bei laden der bilder im voraus (wegen laggs).
-
-    //TODO: proxy pattern mit manager
     /**
      * Initializes the class variables.
      */
@@ -283,6 +280,7 @@ public class GameController {
                 }
             }).start();
         }
+
         try {
             Thread.sleep(500);
         } catch (Exception e) {
@@ -315,28 +313,32 @@ public class GameController {
         collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplier());
         score += 25 * Math.pow(2, activatedPowerUpManager.getCoinMultiplier());
         elements.remove(c);
-        new Thread(() -> {
-            try {
-                gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
-            } catch (Exception e) {
-                //IGNORE ON PURPOSE
-                logger.log(Level.WARNING, "Sound COIN_PICKUP couldn't be loaded");
-            }
-        }).start();
+        if (playerProfile.isAudioEnabled()) {
+                new Thread(() -> {
+                    try {
+                        gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
+                    } catch (Exception e) {
+                        //IGNORE ON PURPOSE
+                        logger.log(Level.WARNING, "Sound COIN_PICKUP couldn't be loaded");
+                    }
+                }).start();
+        }
     }
 
     private void collisionWithPowerUp(PowerUp p) {
         activatedPowerUpManager.activatePowerUp(p);
         elements.remove(p);
         score += 50;
-        new Thread(() -> {
-            try {
-                gameSoundUtil.loadClip(GameSound.POWER_UP_PICKUP).play();
-            } catch (Exception e) {
-                //IGNORE ON PURPOSE
-                logger.log(Level.WARNING, "Sound POWER_UP_PICKUP couldn't be loaded");
-            }
-        }).start();
+        if (playerProfile.isAudioEnabled()) {
+            new Thread(() -> {
+                try {
+                    gameSoundUtil.loadClip(GameSound.POWER_UP_PICKUP).play();
+                } catch (Exception e) {
+                    //IGNORE ON PURPOSE
+                    logger.log(Level.WARNING, "Sound POWER_UP_PICKUP couldn't be loaded");
+                }
+            }).start();
+        }
     }
 
     /**
