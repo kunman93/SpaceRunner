@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane prefHeight="490" prefWidth="800" styleClass="darkbg" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.it.pm3.spacerunner.ui.HelpViewController">
+<GridPane prefHeight="490" prefWidth="800" styleClass="blackbg" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.it.pm3.spacerunner.ui.HelpViewController">
     <columnConstraints>
         <ColumnConstraints percentWidth="10" />
         <ColumnConstraints percentWidth="80" />
