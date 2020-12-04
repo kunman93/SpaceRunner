@@ -1,6 +1,7 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
+import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
 import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
@@ -18,7 +19,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -114,7 +117,15 @@ public class ShopContentCellController extends ListCell<ShopContent> {
 
     private void setUpImageAndLabelsOfContent() {
         VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
-        Image imageOfContent = SwingFXUtils.toFXImage(visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f), null);
+
+        BufferedImage image = visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f);
+        if(this.content.getItemType() == ItemType.PLAYER_MODEL){
+            image = visualUtil.resizeImage(image, 60, 20);
+            image = visualUtil.flipImage(image, true);
+        }
+
+        Image imageOfContent = SwingFXUtils.toFXImage(image, null);
+
         contentImageView.setImage(imageOfContent);
         contentImageView.setEffect(new DropShadow(20, Color.RED));
         contentTitleLabel.setText(this.content.getTitle());

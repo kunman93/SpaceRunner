@@ -5,7 +5,12 @@
     -fx-background-size: 100% 100%;
 }
 
-.darkbg Label {
+
+.blackbg{
+    -fx-background-color: black;
+}
+
+.darkbg Label, .blackbg Label {
     -fx-text-fill: white;
 }
 
@@ -13,10 +18,11 @@ Label, Button {
     -fx-font-family: 'Bauhaus 93';
 }
 
-.darkbg .title {
+.darkbg .title, .blackbg .title {
     -fx-font-size: 40;
     -fx-alignment: center;
 }
+
 
 Button {
     -fx-pref-width: 250;
