@@ -52,6 +52,7 @@ Here you can buy and manage Upgrades or Playermodels
   * Ship Skin 2
 
 * If you have bought a skin, you can activate and deactivate it, so you can also switch between skins. For the upgrades the activation works exactly the same.
+
 ![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif)
 
 #### Settings
