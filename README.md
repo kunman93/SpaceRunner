@@ -4,6 +4,8 @@
 Welcome to our project: Space-Runner. We are 6 engineering Students at the ZHAW. First you will get an instruction on how to set-up the project, How to Play, testing and the project outlines and how far we've progressed.
 
 ### Set-Up
+Make sure Java 11 or higher is installed on your system.
+
 Clone the project to a local folder and opn it with an IDE (gradle preinstalled).
 Start it by entering "gradle run" in the terminal.
 
