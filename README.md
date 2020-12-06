@@ -38,7 +38,7 @@ When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with th
 
 ![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop.gif)
 
-Here you can buy and Manage Upgrades or Playermodels
+Here you can buy and manage Upgrades or Playermodels
 * Upgrades
   * 1.5x PowerUp Chance
   * Double duration of Coin PowerUp
@@ -54,16 +54,19 @@ Here you can buy and Manage Upgrades or Playermodels
 ![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif)
 
 #### Settings
-
+If you click on the "SETTINGS" button, you will land here. In the settings you can set the player name or change the sound and the framerate.
+<br/>
 ![go to settings](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings.gif)
+<br/>
+<br/>
 
-Here you can set the Playername, the Sound Volume and the Framerate 
-* Player Name
+* You can change the player name by overwriting it.
 
 ![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_change_name.gif)
+<br/>
+<br/>
 
-* Sound Volume (in %)
-* Framerate (in FPS)
+* You can adjust the sound and framerate by moving the button.
 
 ![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_chnage_volume_and_fps.gif)
 
@@ -78,7 +81,7 @@ Pull requests are merged and discussed together on a voice chat (e.g. Discord/Te
 We tested what we could but since it's a Game most of the testing couldn't be done with JUnit.
 
 ## External Ressources
-Link to Wiki
+Link to Wiki:
 [External Resources](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/wiki/External-Resources)
 
 ## Meetings
