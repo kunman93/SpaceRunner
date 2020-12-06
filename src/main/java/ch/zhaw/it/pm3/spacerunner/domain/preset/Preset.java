@@ -1,8 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.domain.preset;
 
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceElement;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
+import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 
@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 /**
  * In preset several SpaceElements can be stored.
  * The class calculates the relative width of this sequence of SpaceElements.
+ *
  * @author hirsceva
  */
 public class Preset implements Cloneable {
@@ -26,6 +27,7 @@ public class Preset implements Cloneable {
 
     /**
      * Constructor for the class preset.
+     *
      * @param elements array with SpaceElements
      */
     public Preset(SpaceElement[] elements) {
@@ -50,6 +52,7 @@ public class Preset implements Cloneable {
 
     /**
      * Return all stored SpaceElements from the preset
+     *
      * @return array of SpaceElements
      */
     public SpaceElement[] getElementsInPreset() {
@@ -58,6 +61,7 @@ public class Preset implements Cloneable {
 
     /**
      * Return the time of the sequence of all SpaceElements from the preset.
+     *
      * @return time on the screen
      */
     public double getPresetTimeUntilOnScreen() {

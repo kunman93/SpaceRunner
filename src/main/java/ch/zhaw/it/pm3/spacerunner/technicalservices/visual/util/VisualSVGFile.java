@@ -4,6 +4,7 @@ import ch.zhaw.it.pm3.spacerunner.FileResource;
 
 /**
  * Path variables of all images which are SVG files.
+ *
  * @author blattpet
  */
 public enum VisualSVGFile implements FileResource {

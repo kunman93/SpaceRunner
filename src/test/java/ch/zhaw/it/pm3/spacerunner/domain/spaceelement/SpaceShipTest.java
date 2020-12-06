@@ -1,6 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceShip;
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceShipDirection;
+
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
@@ -8,11 +7,13 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.awt.geom.Point2D;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class SpaceShipTest {
     private SpaceShip spaceShip;
@@ -33,7 +34,7 @@ public class SpaceShipTest {
      */
     @Test
     void directMoveUp1SecTest() {
-        spaceShip = new SpaceShip(new Point2D.Double(0,1));
+        spaceShip = new SpaceShip(new Point2D.Double(0, 1));
         spaceShip.moveSpaceShip(SpaceShipDirection.UP, 1000);
         try {
             assertEquals(spaceShip.getRelativePosition(), new Point2D.Double(0, 1 - velocityManager.getRelativeVelocity(SpaceShip.class).y));
@@ -47,10 +48,10 @@ public class SpaceShipTest {
      */
     @Test
     void directMoveUp1MillisTest() {
-        spaceShip = new SpaceShip(new Point2D.Double(0,1));
+        spaceShip = new SpaceShip(new Point2D.Double(0, 1));
         spaceShip.moveSpaceShip(SpaceShipDirection.UP, 1);
         try {
-            assertEquals(spaceShip.getRelativePosition(), new Point2D.Double(0, 1 - (1.0/1000.0)*velocityManager.getRelativeVelocity(SpaceShip.class).y));
+            assertEquals(spaceShip.getRelativePosition(), new Point2D.Double(0, 1 - (1.0 / 1000.0) * velocityManager.getRelativeVelocity(SpaceShip.class).y));
         } catch (VelocityNotSetException exception) {
             fail("VelocityNotSetException thrown");
         }
@@ -61,7 +62,7 @@ public class SpaceShipTest {
      */
     @Test
     void directMoveDown1SecTest() {
-        spaceShip = new SpaceShip(new Point2D.Double(0,0));
+        spaceShip = new SpaceShip(new Point2D.Double(0, 0));
         spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, 1000);
         try {
             assertEquals(spaceShip.getRelativePosition(), new Point2D.Double(0, 0 + velocityManager.getRelativeVelocity(SpaceShip.class).y));
@@ -75,10 +76,10 @@ public class SpaceShipTest {
      */
     @Test
     void directMoveDown1MillisTest() {
-        spaceShip = new SpaceShip(new Point2D.Double(0,0));
+        spaceShip = new SpaceShip(new Point2D.Double(0, 0));
         spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, 1);
         try {
-            assertEquals(spaceShip.getRelativePosition(), new Point2D.Double(0, 0 + (1.0/1000.0)*velocityManager.getRelativeVelocity(SpaceShip.class).y));
+            assertEquals(spaceShip.getRelativePosition(), new Point2D.Double(0, 0 + (1.0 / 1000.0) * velocityManager.getRelativeVelocity(SpaceShip.class).y));
         } catch (VelocityNotSetException exception) {
             fail("VelocityNotSetException thrown");
         }
@@ -89,7 +90,7 @@ public class SpaceShipTest {
      */
     @Test
     void directMoveDownPastScreenLimitTest() {
-        spaceShip = new SpaceShip(new Point2D.Double(0,0));
+        spaceShip = new SpaceShip(new Point2D.Double(0, 0));
         spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, 1000);
         spaceShip.moveSpaceShip(SpaceShipDirection.DOWN, 1000);
         try {
@@ -104,7 +105,7 @@ public class SpaceShipTest {
      */
     @Test
     void directMoveUpPastScreenLimitTest() {
-        spaceShip = new SpaceShip(new Point2D.Double(0,0.5));
+        spaceShip = new SpaceShip(new Point2D.Double(0, 0.5));
         spaceShip.moveSpaceShip(SpaceShipDirection.UP, 1000);
         spaceShip.moveSpaceShip(SpaceShipDirection.UP, 1000);
         assertEquals(spaceShip.getRelativePosition(), new Point2D.Double(0, 0));

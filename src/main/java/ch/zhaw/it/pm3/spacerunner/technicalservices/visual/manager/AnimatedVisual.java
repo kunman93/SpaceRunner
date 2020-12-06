@@ -37,6 +37,7 @@ public class AnimatedVisual {
 
     /**
      * Gets the current visual depending on the animation pointer.
+     *
      * @return the current visual which represents this animation
      */
     public Visual getCurrentVisual() {

@@ -11,12 +11,14 @@ import java.util.logging.Logger;
 
 /**
  * The background of the game.
+ *
  * @author islermic
  */
 public class SpaceWorld extends SpaceElement {
 
     /**
      * Initializes the variable position.
+     *
      * @param startPosition The starting position of the SpaceWorld
      */
     public SpaceWorld(Point2D.Double startPosition) {
@@ -28,7 +30,9 @@ public class SpaceWorld extends SpaceElement {
 
     /**
      * Moves the SpaceWorld to make it seem as if the background is looping.
-     * @param timeInMillis The time in milliseconds since the last time the SpaceWorld was moved. If timeInMillis is larger the SpaceWorld will be moved a larger distance to prevent element movement from changing at different framerates.
+     *
+     * @param timeInMillis The time in milliseconds since the last time the SpaceWorld was moved.
+     *                     If timeInMillis is larger the SpaceWorld will be moved a larger distance to prevent element movement from changing at different framerates.
      */
     @Override
     public void move(long timeInMillis) {

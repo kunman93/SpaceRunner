@@ -4,9 +4,11 @@ import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.Asteroid;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.Rocket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.geom.Point2D;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VelocityManagerTest {
 
@@ -19,25 +21,25 @@ public class VelocityManagerTest {
 
     @Test
     void getRelativeVelocityTestWithNull() {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             velocityManager.getRelativeVelocity(null);
         });
     }
 
     @Test
-    void getRelativeVelocityTestWhenNotSet(){
-        assertThrows(VelocityNotSetException.class, ()->{
+    void getRelativeVelocityTestWhenNotSet() {
+        assertThrows(VelocityNotSetException.class, () -> {
             velocityManager.getRelativeVelocity(Rocket.class);
         });
     }
 
     @Test
     void accelerateTest() throws VelocityNotSetException {
-        Point2D.Double rocketVelocity = new Point2D.Double(1.0,2.0);
+        Point2D.Double rocketVelocity = new Point2D.Double(1.0, 2.0);
 
         velocityManager.setRelativeVelocity(Rocket.class, rocketVelocity);
 
-        Point2D.Double acceleration = new Point2D.Double(0.5,-0.5);
+        Point2D.Double acceleration = new Point2D.Double(0.5, -0.5);
         velocityManager.accelerate(Rocket.class, acceleration);
 
         assertEquals(1.5, velocityManager.getRelativeVelocity(Rocket.class).x);
@@ -45,8 +47,8 @@ public class VelocityManagerTest {
     }
 
     @Test
-    void accelerateTestWithNull(){
-        assertThrows(IllegalArgumentException.class, ()->{
+    void accelerateTestWithNull() {
+        assertThrows(IllegalArgumentException.class, () -> {
             velocityManager.accelerate(Rocket.class, null);
         });
 
@@ -54,7 +56,7 @@ public class VelocityManagerTest {
 
     @Test
     void accelerateXTest() throws VelocityNotSetException {
-        Point2D.Double rocketVelocity = new Point2D.Double(1.0,2.0);
+        Point2D.Double rocketVelocity = new Point2D.Double(1.0, 2.0);
 
         velocityManager.setRelativeVelocity(Rocket.class, rocketVelocity);
 
@@ -65,7 +67,7 @@ public class VelocityManagerTest {
 
     @Test
     void accelerateYTest() throws VelocityNotSetException {
-        Point2D.Double rocketVelocity = new Point2D.Double(1.0,2.0);
+        Point2D.Double rocketVelocity = new Point2D.Double(1.0, 2.0);
 
         velocityManager.setRelativeVelocity(Rocket.class, rocketVelocity);
 
@@ -76,13 +78,13 @@ public class VelocityManagerTest {
 
     @Test
     void accelerateAllTest() throws VelocityNotSetException {
-        Point2D.Double rocketVelocity = new Point2D.Double(1.0,1.0);
-        Point2D.Double asteroidVelocity = new Point2D.Double(-1,10.0);
+        Point2D.Double rocketVelocity = new Point2D.Double(1.0, 1.0);
+        Point2D.Double asteroidVelocity = new Point2D.Double(-1, 10.0);
 
         velocityManager.setRelativeVelocity(Rocket.class, rocketVelocity);
         velocityManager.setRelativeVelocity(Asteroid.class, asteroidVelocity);
 
-        Point2D.Double acceleration = new Point2D.Double(0.5,-0.5);
+        Point2D.Double acceleration = new Point2D.Double(0.5, -0.5);
         velocityManager.accelerateAll(acceleration);
 
         assertEquals(1.5, velocityManager.getRelativeVelocity(Rocket.class).x);
@@ -93,29 +95,29 @@ public class VelocityManagerTest {
 
     @Test
     void accelerateAllTestWithNull() {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             velocityManager.accelerateAll(null);
         });
     }
 
     @Test
     void setRelativeVelocityTestWithClassNull() {
-        assertThrows(IllegalArgumentException.class, ()->{
-            Point2D.Double velocity = new Point2D.Double(1.0,1.0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            Point2D.Double velocity = new Point2D.Double(1.0, 1.0);
             velocityManager.setRelativeVelocity(null, velocity);
         });
     }
 
     @Test
     void setRelativeVelocityTestWithVelocityNull() {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             velocityManager.setRelativeVelocity(Rocket.class, null);
         });
     }
 
     @Test
     void setRelativeVelocityTest() throws VelocityNotSetException {
-        Point2D.Double velocity = new Point2D.Double(1.0,1.0);
+        Point2D.Double velocity = new Point2D.Double(1.0, 1.0);
 
         velocityManager.setRelativeVelocity(Rocket.class, velocity);
 

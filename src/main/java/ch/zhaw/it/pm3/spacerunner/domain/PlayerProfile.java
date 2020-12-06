@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * Data model for the personal profile of the player
+ *
  * @author islermic
  */
 public class PlayerProfile {
@@ -128,13 +129,13 @@ public class PlayerProfile {
         if (TEST) {
             if (o instanceof PlayerProfile) {
                 PlayerProfile that = (PlayerProfile) o;
-                return audioEnabled == that.audioEnabled &&
-                        volume == that.volume &&
-                        coins == that.coins &&
-                        fps == that.fps &&
-                        Objects.equals(playerName, that.playerName) &&
-                        Objects.equals(purchasedContentIds, that.purchasedContentIds) &&
-                        activeShopContent.size() == that.activeShopContent.size();
+                return audioEnabled == that.audioEnabled
+                        && volume == that.volume
+                        && coins == that.coins
+                        && fps == that.fps
+                        && Objects.equals(playerName, that.playerName)
+                        && Objects.equals(purchasedContentIds, that.purchasedContentIds)
+                        && activeShopContent.size() == that.activeShopContent.size();
             } else {
                 return super.equals(o);
             }

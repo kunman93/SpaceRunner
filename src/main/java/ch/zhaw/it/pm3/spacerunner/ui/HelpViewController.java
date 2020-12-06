@@ -5,11 +5,11 @@ import javafx.fxml.FXML;
 
 /**
  * Displays description of game functionality.
- *
+ * <p>
  * ViewController of Help.fxml
  *
  * @author freymar1
- * */
+ */
 public class HelpViewController extends ViewController {
 
     /**

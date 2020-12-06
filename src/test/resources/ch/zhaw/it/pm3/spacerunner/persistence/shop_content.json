@@ -1,19 +1,18 @@
-
 [
   {
     "contentId": "POWER_UP_CHANCE_MULTIPLIER",
     "title": "1.5x PowerUp Chance",
     "description": "The chance of spawning a PowerUp is multiplied by 1.5",
     "price": 1000,
-    "imageId":  "POWER_UP_SPAWN_RATE_UPGRADE",
-    "itemType":"UPGRADE"
+    "imageId": "POWER_UP_SPAWN_RATE_UPGRADE",
+    "itemType": "UPGRADE"
   },
   {
     "contentId": "DOUBLE_DURATION_COIN_UPGRADE",
     "title": "Double duration of coin power-up",
     "description": "Double duration of coin power-up",
     "price": 1000,
-    "imageId":  "DOUBLE_DURATION_COIN_UPGRADE",
+    "imageId": "DOUBLE_DURATION_COIN_UPGRADE",
     "itemType": "UPGRADE"
   },
   {
@@ -21,7 +20,7 @@
     "title": "Ship skin 1",
     "description": "Ship skin 1",
     "price": 1000,
-    "imageId":  "SPACE_SHIP_SKIN_1",
+    "imageId": "SPACE_SHIP_SKIN_1",
     "itemType": "PLAYER_MODEL"
   },
   {
@@ -29,7 +28,7 @@
     "title": "Ship skin 2",
     "description": "Ship skin 2",
     "price": 1000,
-    "imageId":  "SPACE_SHIP_SKIN_2",
+    "imageId": "SPACE_SHIP_SKIN_2",
     "itemType": "PLAYER_MODEL"
   }
 ]

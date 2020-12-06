@@ -21,7 +21,7 @@ public class VisualUtilTest {
 
     @Test
     void rotateImageTestWithNullAsImage() {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             visualUtil.rotateImage(null, 12);
         });
     }
@@ -35,7 +35,7 @@ public class VisualUtilTest {
 
     @Test
     void flipImageTestWithNullAsImage() {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             visualUtil.flipImage(null, true);
         });
     }
@@ -49,17 +49,17 @@ public class VisualUtilTest {
 
     @Test
     void loadSVGImageTestWithNegativeOrZeroHeight() {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             visualUtil.loadSVGImage(Paths.get("src/test/resources/ch/zhaw/it/pm3/spacerunner/image/rocket.svg").toUri().toURL(), -500);
         });
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             visualUtil.loadSVGImage(Paths.get("src/test/resources/ch/zhaw/it/pm3/spacerunner/image/rocket.svg").toUri().toURL(), 0);
         });
     }
 
     @Test
     void loadSVGImageTestWithNullAsURL() throws MalformedURLException {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             visualUtil.loadSVGImage(null, 500);
         });
     }
@@ -72,63 +72,63 @@ public class VisualUtilTest {
     @Test
     void resizeImageTestWithNegativeOrZeroScaledSizes() throws MalformedURLException {
         BufferedImage backgroundImage = visualUtil.loadImage(Paths.get("src/test/resources/ch/zhaw/it/pm3/spacerunner/image/background.jpg").toUri().toURL());
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.resizeImage(backgroundImage, -12,12);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.resizeImage(backgroundImage, -12, 12);
         });
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.resizeImage(backgroundImage, 0,12);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.resizeImage(backgroundImage, 0, 12);
         });
 
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.resizeImage(backgroundImage, 12,-12);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.resizeImage(backgroundImage, 12, -12);
         });
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.resizeImage(backgroundImage, 12,0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.resizeImage(backgroundImage, 12, 0);
         });
     }
 
     @Test
-    void resizeImageTestWithNullAsImage(){
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.resizeImage(null, 12,12);
+    void resizeImageTestWithNullAsImage() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.resizeImage(null, 12, 12);
         });
     }
 
     @Test
     void resizeImageTest() throws MalformedURLException {
         BufferedImage backgroundImage = visualUtil.loadImage(Paths.get("src/test/resources/ch/zhaw/it/pm3/spacerunner/image/background.jpg").toUri().toURL());
-        assertNotNull(visualUtil.resizeImage(backgroundImage, 12,12));
+        assertNotNull(visualUtil.resizeImage(backgroundImage, 12, 12));
     }
 
     @Test
     void generateBackgroundTestWithNegativeScaledSizes() throws MalformedURLException {
         BufferedImage backgroundImage = visualUtil.loadImage(Paths.get("src/test/resources/ch/zhaw/it/pm3/spacerunner/image/background.jpg").toUri().toURL());
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.generateBackground(backgroundImage, -12,12);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.generateBackground(backgroundImage, -12, 12);
         });
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.generateBackground(backgroundImage, 0,12);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.generateBackground(backgroundImage, 0, 12);
         });
 
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.generateBackground(backgroundImage, 12,-12);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.generateBackground(backgroundImage, 12, -12);
         });
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.generateBackground(backgroundImage, 12,0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.generateBackground(backgroundImage, 12, 0);
         });
     }
 
     @Test
-    void generateBackgroundTestWithNullAsImage(){
-        assertThrows(IllegalArgumentException.class, ()->{
-            visualUtil.generateBackground(null, 12,12);
+    void generateBackgroundTestWithNullAsImage() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            visualUtil.generateBackground(null, 12, 12);
         });
     }
 
     @Test
     void generateBackgroundTest() throws MalformedURLException {
         BufferedImage backgroundImage = visualUtil.loadImage(Paths.get("src/test/resources/ch/zhaw/it/pm3/spacerunner/image/background.jpg").toUri().toURL());
-        assertNotNull(visualUtil.generateBackground(backgroundImage, 12,12));
+        assertNotNull(visualUtil.generateBackground(backgroundImage, 12, 12));
     }
 
     @Test
@@ -138,7 +138,7 @@ public class VisualUtilTest {
 
     @Test
     void testLoadImageWithNull() {
-        assertThrows(IllegalArgumentException.class, ()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             visualUtil.loadImage(null);
         });
     }

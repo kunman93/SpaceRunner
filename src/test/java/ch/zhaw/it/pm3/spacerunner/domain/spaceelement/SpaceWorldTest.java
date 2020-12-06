@@ -1,6 +1,5 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement;
 
-import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.SpaceWorld;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
@@ -35,7 +34,7 @@ public class SpaceWorldTest {
      */
     @Test
     void move1SecTest() {
-        spaceWorld = new SpaceWorld(new Point2D.Double(0,0));
+        spaceWorld = new SpaceWorld(new Point2D.Double(0, 0));
         spaceWorld.move(1000);
         try {
             assertEquals(spaceWorld.getRelativePosition(), new Point2D.Double(0 + velocityManager.getRelativeVelocity(SpaceWorld.class).x, 0));
@@ -49,10 +48,10 @@ public class SpaceWorldTest {
      */
     @Test
     void move1MillisTest() {
-        spaceWorld = new SpaceWorld(new Point2D.Double(0,0));
+        spaceWorld = new SpaceWorld(new Point2D.Double(0, 0));
         spaceWorld.move(1);
         try {
-            assertEquals(spaceWorld.getRelativePosition(), new Point2D.Double(0 + (1.0/1000.0)*velocityManager.getRelativeVelocity(SpaceWorld.class).x, 0));
+            assertEquals(spaceWorld.getRelativePosition(), new Point2D.Double(0 + (1.0 / 1000.0) * velocityManager.getRelativeVelocity(SpaceWorld.class).x, 0));
         } catch (VelocityNotSetException exception) {
             fail("VelocityNotSetException thrown");
         }
@@ -64,11 +63,11 @@ public class SpaceWorldTest {
     @Test
     void moveLoopSpaceWorldImage() {
         try {
-            spaceWorld = new SpaceWorld(new Point2D.Double(-visualManager.getElementRelativeWidth(SpaceWorld.class),0));
+            spaceWorld = new SpaceWorld(new Point2D.Double(-visualManager.getElementRelativeWidth(SpaceWorld.class), 0));
         } catch (VisualNotSetException e) {
             fail("VisualNotSetException thrown");
         }
         spaceWorld.move(1000);
-        assertEquals(spaceWorld.getRelativePosition(), new Point2D.Double(0,0));
+        assertEquals(spaceWorld.getRelativePosition(), new Point2D.Double(0, 0));
     }
 }

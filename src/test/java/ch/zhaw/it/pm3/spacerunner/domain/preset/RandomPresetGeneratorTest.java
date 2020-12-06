@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class RandomPresetGeneratorTest {
     RandomPresetGenerator presetGenerator = new RandomPresetGenerator();
@@ -29,7 +30,7 @@ public class RandomPresetGeneratorTest {
      */
     @Test
     void getRandomPresetNotNull() {
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
             assertNotEquals(presetGenerator.getRandomPreset(), null);
             assertEquals(presetGenerator.getRandomPreset().getClass(), Preset.class);
         }
@@ -41,16 +42,16 @@ public class RandomPresetGeneratorTest {
     @Test
     void getRandomPresetNotEqual() {
         List<Preset> presetList = new ArrayList();
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
             Preset newPreset = presetGenerator.getRandomPreset();
             boolean isNotEqual = true;
-            for(Preset p : presetList) {
+            for (Preset p : presetList) {
                 if (p.equals(newPreset)) {
                     isNotEqual = false;
                     break;
                 }
             }
-            if(isNotEqual) {
+            if (isNotEqual) {
                 presetList.add(newPreset);
             }
         }

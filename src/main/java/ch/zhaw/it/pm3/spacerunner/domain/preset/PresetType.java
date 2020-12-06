@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.domain.preset;
 
 /**
  * Different types of presets.
+ *
  * @author blattpet
  */
 public enum PresetType {

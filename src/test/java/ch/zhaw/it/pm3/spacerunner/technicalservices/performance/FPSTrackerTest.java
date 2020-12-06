@@ -2,7 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.performance;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FPSTrackerTest {
 
@@ -11,7 +11,7 @@ class FPSTrackerTest {
         FPSTracker fpsTracker = new FPSTracker();
 
         long currentTimeFakeMs = 0;
-        for(int i = 0; i < 1000; i++){
+        for (int i = 0; i < 1000; i++) {
             currentTimeFakeMs += 10_000_000;
             fpsTracker.track(currentTimeFakeMs);
         }
@@ -22,7 +22,7 @@ class FPSTrackerTest {
 
 
         currentTimeFakeMs = 0;
-        for(int i = 0; i < 1000; i++){
+        for (int i = 0; i < 1000; i++) {
             currentTimeFakeMs += 1_000_000_000;
             fpsTracker.track(currentTimeFakeMs);
         }

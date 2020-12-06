@@ -1,8 +1,8 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 
 /**
  * Processes user input and persists the adjustments of the profile.
- *
+ * <p>
  * ViewController of Settings.fxml
  *
  * @author freymar1
@@ -29,7 +29,7 @@ public class SettingsViewController extends ViewController {
 
     /**
      * Displays, after loading the FXML-file, the stored values and adds listener to verify the input.
-     * */
+     */
     public void initialize() {
         playerProfile = persistenceUtil.loadProfile();
         playerName.setText(playerProfile.getPlayerName());

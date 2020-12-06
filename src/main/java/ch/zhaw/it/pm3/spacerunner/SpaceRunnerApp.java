@@ -5,12 +5,9 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersist
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSound;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.GameSoundUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util.SoundClip;
-
-
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.ui.FXMLFile;
 import ch.zhaw.it.pm3.spacerunner.ui.ViewController;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,6 +25,7 @@ import java.util.logging.Logger;
 
 /**
  * Responsible to start application, display of user-interfaces and to initialize background sound.
+ *
  * @author freymar1
  */
 public class SpaceRunnerApp extends Application {
@@ -45,8 +43,9 @@ public class SpaceRunnerApp extends Application {
 
     /**
      * Initializes primaryStage's UI and music.
-     * @param   primaryStage which will be assigned to the ui
-     * */
+     *
+     * @param primaryStage which will be assigned to the ui
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -61,9 +60,10 @@ public class SpaceRunnerApp extends Application {
     /**
      * Loads the new view to the primaryStage. Sizes and app-icon are set/loaded only once to avoid redundant
      * operations and to maintain same sizes while loading another view.
-     * @param   source of FXMLFile which should be loaded
-     * */
-    public void setFXMLView(FXMLFile source){
+     *
+     * @param source of FXMLFile which should be loaded
+     */
+    public void setFXMLView(FXMLFile source) {
         double height = 490;
         double width = 800;
 
@@ -76,7 +76,7 @@ public class SpaceRunnerApp extends Application {
             URL a = getClass().getResource("font/video_games.ttf");
             Font.loadFont(a.toString().replace("%20", " "), 10);
 
-            if(primaryStage.getIcons().size() == 0) {
+            if (primaryStage.getIcons().size() == 0) {
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(VisualFile.ROCKET_ICON.getFileName())));
                 primaryStage.show();
                 primaryStage.setHeight(height);
@@ -100,7 +100,7 @@ public class SpaceRunnerApp extends Application {
 
     /**
      * Initializes background music and sets it to an endless loop.
-     * */
+     */
     public void setupBackgroundMusic() {
         if (backgroundMusic != null) {
             backgroundMusic.stop();

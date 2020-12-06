@@ -1,14 +1,14 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
+import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.DoubleCoinsPowerUp;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.ShieldPowerUp;
-import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
-import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
-import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.*;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
@@ -31,7 +31,7 @@ public class VisualManager {
     private final VisualUtil visualUtil = VisualUtil.getUtil();
     private final Persistence persistenceUtil = JsonPersistenceUtil.getUtil();
 
-    private final static VisualManager VISUAL_MANAGER = new VisualManager();
+    private static final VisualManager VISUAL_MANAGER = new VisualManager();
 
     private int height = 500;
     private int width = 500;
@@ -93,6 +93,7 @@ public class VisualManager {
 
     /**
      * Returns the relative height of the specified class
+     *
      * @param elementClass class to get height
      * @return relative height
      * @throws VisualNotSetException if no visual set
@@ -103,6 +104,7 @@ public class VisualManager {
 
     /**
      * Returns the relative width of the specified class
+     *
      * @param elementClass class to get width
      * @return relative width
      * @throws VisualNotSetException if no visual set
@@ -113,8 +115,9 @@ public class VisualManager {
 
     /**
      * Loads the specified visual for the class.
+     *
      * @param elementClass class to add visual
-     * @param visual visual to load and set
+     * @param visual       visual to load and set
      */
     public void loadAndSetVisual(Class<? extends VisualElement> elementClass, Visual visual) {
         BufferedImage image;
@@ -170,7 +173,8 @@ public class VisualManager {
 
     /**
      * Loads the specified animated visual for the class.
-     * @param elementClass class to add visual animation
+     *
+     * @param elementClass   class to add visual animation
      * @param animatedVisual animation to load and set
      */
     public void loadAndSetAnimatedVisual(Class<? extends VisualElement> elementClass, AnimatedVisual animatedVisual) {
@@ -194,6 +198,7 @@ public class VisualManager {
 
     /**
      * Gets the image of the class.
+     *
      * @param elementClass class to get image for
      * @return image for class
      * @throws VisualNotSetException if no visual set
@@ -248,7 +253,8 @@ public class VisualManager {
     /**
      * Sets the height and with managed by the manager.
      * All visuals will be reloaded with the new sizes.
-     * @param width width in px
+     *
+     * @param width  width in px
      * @param height height in px
      */
     public synchronized void setViewport(int width, int height) {
@@ -265,6 +271,7 @@ public class VisualManager {
 
     /**
      * Add Listener
+     *
      * @param visualManagerListener listener to add
      */
     public void addListener(VisualManagerListener visualManagerListener) {
@@ -273,6 +280,7 @@ public class VisualManager {
 
     /**
      * Remove Listener
+     *
      * @param visualManagerListener listener to remove
      */
     public void removeListener(VisualManagerListener visualManagerListener) {

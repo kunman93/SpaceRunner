@@ -1,9 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * The ShopViewController is a controller-class, which is responsible for the shop-view (Shop.fxml).
+ *
  * @author kunnuman
  **/
 public class ShopViewController extends ViewController implements ShopContentCellControllerListener {
@@ -45,9 +46,10 @@ public class ShopViewController extends ViewController implements ShopContentCel
     }
 
     // https://stackoverflow.com/questions/19588029/customize-listview-in-javafx-with-fxml
+
     /**
      * Displays, after loading the FXML-file, sets up the shop content cell.
-     * */
+     */
     public void initialize() {
         collectedCoinsLabel.setText("Coins: " + persistenceUtil.loadProfile().getCoins());
         List<ShopContent> shopContents = persistenceUtil.loadShopContent();
@@ -63,17 +65,12 @@ public class ShopViewController extends ViewController implements ShopContentCel
             }
         }
 
-        ObservableList<ShopContent> observableListOfUpgrades = FXCollections.observableArrayList();
-        ObservableList<ShopContent> observableListOfSkins = FXCollections.observableArrayList();
+        setupListView(upgrades, listViewForUpgrades, upgradeElements);
+        setupListView(skins, listViewForSkins, skinElements);
+    }
 
-        observableListOfUpgrades.setAll(upgrades);
-        listViewForUpgrades.setItems(observableListOfUpgrades);
-        listViewForUpgrades.setCellFactory(shopContentListView -> {
-            ShopContentCellController shopContentCellController = new ShopContentCellController();
-            shopContentCellController.addListener(this);
-            upgradeElements.add(shopContentCellController);
-            return shopContentCellController;
-        });
+    private void setupListView(List<ShopContent> skins, ListView<ShopContent> listViewForSkins, Set<ShopContentCellController> skinElements) {
+        ObservableList<ShopContent> observableListOfSkins = FXCollections.observableArrayList();
 
         observableListOfSkins.setAll(skins);
         listViewForSkins.setItems(observableListOfSkins);

@@ -2,6 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.domain.spaceelement.speed;
 
 /**
  * Vertical speed of elements per second relative to the view.
+ *
  * @author blattpet
  */
 public enum VerticalSpeed {

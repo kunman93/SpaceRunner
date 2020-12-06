@@ -16,7 +16,7 @@ public enum GameFile {
     }
 
     public String getFileName() {
-        if(TEST){
+        if (TEST) {
             return "src/test/resources/ch/zhaw/it/pm3/spacerunner/persistence/" + fileName;
         }
         return fileName;

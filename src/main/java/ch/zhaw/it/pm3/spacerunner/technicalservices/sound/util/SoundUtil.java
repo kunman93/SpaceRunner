@@ -6,6 +6,7 @@ import java.io.IOException;
 
 /**
  * SoundUtil to load sound / set volume
+ *
  * @author islermic (copied from old project and extended)
  */
 public class SoundUtil {
@@ -38,9 +39,9 @@ public class SoundUtil {
      *
      * @param audioFile File to be loaded from
      * @return SoundClip that was loaded
-     * @throws IOException
-     * @throws UnsupportedAudioFileException
-     * @throws LineUnavailableException
+     * @throws IOException if there is an issue with loading the file
+     * @throws UnsupportedAudioFileException if the audio format of the file is not supported
+     * @throws LineUnavailableException if there is no audio line available
      */
     public SoundClip loadClip(File audioFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if (audioFile == null) {

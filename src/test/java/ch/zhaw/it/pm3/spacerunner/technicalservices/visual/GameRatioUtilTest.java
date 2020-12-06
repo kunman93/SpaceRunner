@@ -48,23 +48,23 @@ public class GameRatioUtilTest {
 
     @Test
     void testGetTextWidth() {
-        double textWidth = gameRatioUtil.getTextWidth(VALUE,1);
-        assertEquals(5* VALUE, textWidth);
+        double textWidth = gameRatioUtil.getTextWidth(VALUE, 1);
+        assertEquals(5 * VALUE, textWidth);
     }
 
     @Test
     void testGetFontSize() {
-        double fontSize = gameRatioUtil.getFontSize(VALUE,0);
+        double fontSize = gameRatioUtil.getFontSize(VALUE, 0);
         assertEquals(0, fontSize);
-        fontSize = gameRatioUtil.getFontSize(VALUE,1);
+        fontSize = gameRatioUtil.getFontSize(VALUE, 1);
         assertEquals(VALUE, fontSize);
-        fontSize = gameRatioUtil.getFontSize(VALUE,0.5);
+        fontSize = gameRatioUtil.getFontSize(VALUE, 0.5);
         assertEquals(0.5 * VALUE, fontSize);
     }
 
     @Test
     void testGetFontSizeNegativeNumbers() {
-        assertThrows(IllegalArgumentException.class, () -> assertEquals(VALUE, gameRatioUtil.getFontSize(VALUE,-1)));
+        assertThrows(IllegalArgumentException.class, () -> assertEquals(VALUE, gameRatioUtil.getFontSize(VALUE, -1)));
     }
 
 }

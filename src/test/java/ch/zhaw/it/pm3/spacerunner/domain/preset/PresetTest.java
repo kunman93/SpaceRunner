@@ -14,7 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.geom.Point2D;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class PresetTest {
     Preset preset;
@@ -35,7 +36,7 @@ public class PresetTest {
      */
     @Test
     void calculateTimeUntilOnScreenZeroTest() {
-        preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(0,0))});
+        preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(0, 0))});
         assertEquals(0, preset.getPresetTimeUntilOnScreen());
     }
 
@@ -44,7 +45,7 @@ public class PresetTest {
      */
     @Test
     void calculateTimeUntilOnScreenOneElementTest() {
-        preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1,0))});
+        preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1, 0))});
         try {
             assertEquals(preset.getPresetTimeUntilOnScreen(), (1.0 - (preset.getElementsInPreset()[0].getRelativePosition().x + visualManager.getElementRelativeWidth(preset.getElementsInPreset()[0].getClass()))) / velocityManager.getRelativeVelocity(preset.getElementsInPreset()[0].getClass()).x);
         } catch (VisualNotSetException | VelocityNotSetException e) {
@@ -57,7 +58,7 @@ public class PresetTest {
      */
     @Test
     void calculateTimeUntilOnScreenMultipleElementsTest() {
-        preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1,0)), new Coin(new Point2D.Double(2,0))});
+        preset = new Preset(new SpaceElement[]{new Coin(new Point2D.Double(1, 0)), new Coin(new Point2D.Double(2, 0))});
         try {
             assertEquals(preset.getPresetTimeUntilOnScreen(), (1.0 - (preset.getElementsInPreset()[1].getRelativePosition().x + visualManager.getElementRelativeWidth(preset.getElementsInPreset()[1].getClass()))) / velocityManager.getRelativeVelocity(preset.getElementsInPreset()[1].getClass()).x);
         } catch (VisualNotSetException | VelocityNotSetException e) {

@@ -5,11 +5,11 @@ import javafx.fxml.FXML;
 
 /**
  * Visual entry point of program. Loads new FXML files on button-clicks.
- *
+ * <p>
  * ViewController of Menu.fxml
  *
  * @author freymar1
- * */
+ */
 public class MenuViewController extends ViewController {
 
     /**
@@ -40,5 +40,7 @@ public class MenuViewController extends ViewController {
      * Changes the view to Help.fxml when the HELP-Button (?) is pressed.
      */
     @FXML
-    public void showHelp() { getMain().setFXMLView(FXMLFile.HELP); }
+    public void showHelp() {
+        getMain().setFXMLView(FXMLFile.HELP);
+    }
 }

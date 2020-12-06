@@ -41,7 +41,7 @@ public class SoundClip {
             throw new IllegalArgumentException("Invalid volume. Volume must me between 0 - 100");
         }
 
-        float f_volume = volume / 100f;
+        float volumeF = volume / 100f;
 
 
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -50,7 +50,7 @@ public class SoundClip {
         float minimum = gainControl.getMinimum() + 50;
 
         float range = gainControl.getMaximum() - minimum;
-        float gain = (range * f_volume) + minimum;
+        float gain = (range * volumeF) + minimum;
 
         gainControl.setValue(gain);
     }

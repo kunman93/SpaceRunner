@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -31,7 +30,7 @@ class SoundClipTest {
      * Tests if a clip which is not being played can be played successfully.
      */
     @Test
-    void playClipWhichIsNotBeingPlayedTest(){
+    void playClipWhichIsNotBeingPlayedTest() {
         soundClip.play();
         assertTrue(soundClip.isPlaying());
         assertNull(soundClip.getPausedFramePosition());
@@ -42,7 +41,7 @@ class SoundClipTest {
      * the soundClip.pause()-method should return true.
      */
     @Test
-    void pauseClipWhichIsBeingPlayedTest(){
+    void pauseClipWhichIsBeingPlayedTest() {
         soundClip.play();
         assertTrue(soundClip.pause());
         assertFalse(soundClip.isPlaying());
@@ -54,7 +53,7 @@ class SoundClipTest {
      * the soundClip.pause()-method should return false.
      */
     @Test
-    void pauseLoopClipWhichIsBeingPlayedTest(){
+    void pauseLoopClipWhichIsBeingPlayedTest() {
         soundClip.setLoop(true);
         soundClip.play();
         assertFalse(soundClip.pause());
@@ -67,7 +66,7 @@ class SoundClipTest {
      * the soundClip.pause() should return false, because the soundClip is not currently playing.
      */
     @Test
-    void pauseClipWhichIsNotBeingPlayedTest(){
+    void pauseClipWhichIsNotBeingPlayedTest() {
         assertFalse(soundClip.pause());
         assertFalse(soundClip.isPlaying());
         assertNull(soundClip.getPausedFramePosition());
@@ -78,7 +77,7 @@ class SoundClipTest {
      * the soundClip.stop() should return false.
      */
     @Test
-    void pauseClipWhichIsAlreadyPausedTest(){
+    void pauseClipWhichIsAlreadyPausedTest() {
         soundClip.play();
         soundClip.pause();
         assertFalse(soundClip.pause());
@@ -91,7 +90,7 @@ class SoundClipTest {
      * the soundClip.stop() should return true.
      */
     @Test
-    void stopClipWhichIsBeingPlayedTest(){
+    void stopClipWhichIsBeingPlayedTest() {
         soundClip.play();
         assertTrue(soundClip.stop());
         assertFalse(soundClip.isPlaying());
@@ -103,7 +102,7 @@ class SoundClipTest {
      * the soundClip.stop() should return true.
      */
     @Test
-    void stopLoopClipWhichIsBeingPlayedTest(){
+    void stopLoopClipWhichIsBeingPlayedTest() {
         soundClip.setLoop(true);
         soundClip.play();
         assertTrue(soundClip.stop());
@@ -115,7 +114,7 @@ class SoundClipTest {
      * Tests if a paused clip can be stopped successfully.
      */
     @Test
-    void stopAPausedClip(){
+    void stopAPausedClip() {
         soundClip.play();
         soundClip.pause();
         assertNotNull(soundClip.getPausedFramePosition());
@@ -129,7 +128,7 @@ class SoundClipTest {
      * the soundClip.stop() should return false.
      */
     @Test
-    void stopClipWhichIsAlreadyStopped(){
+    void stopClipWhichIsAlreadyStopped() {
         soundClip.play();
         soundClip.stop();
         assertFalse(soundClip.stop());

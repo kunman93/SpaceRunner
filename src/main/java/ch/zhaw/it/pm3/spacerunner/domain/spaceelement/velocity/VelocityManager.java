@@ -34,7 +34,7 @@ public class VelocityManager {
     /**
      * Clear the velocity map in the manager. (Reset)
      */
-    public void clear(){
+    public void clear() {
         velocityMap = new HashMap<>();
     }
 
@@ -56,13 +56,14 @@ public class VelocityManager {
 
     /**
      * Set the velocity for a Class &lt;? extends SpaceElement&gt;. The velocity is given as a point. x is the x velocity and y is the y velocity.
+     *
      * @param elementClass Class &lt;? extends SpaceElement&gt; to set the velocity
-     * @param velocity Point2D.Double velocity to be set
+     * @param velocity     Point2D.Double velocity to be set
      */
     public synchronized void setRelativeVelocity(Class<? extends SpaceElement> elementClass, Point2D.Double velocity) {
-        if(elementClass == null){
+        if (elementClass == null) {
             throw new IllegalArgumentException("Element class can not be null");
-        }else if(velocity == null){
+        } else if (velocity == null) {
             throw new IllegalArgumentException("velocity can not be null");
         }
 
@@ -71,10 +72,11 @@ public class VelocityManager {
 
     /**
      * Accelerates all the element classes which are currently managed.
+     *
      * @param acceleration Point2D.Double acceleration. Accelerate all x-velocities with acceleration.x and all y-velocities with acceleration.y
      */
     public synchronized void accelerateAll(Point2D.Double acceleration) {
-        if(acceleration == null){
+        if (acceleration == null) {
             throw new IllegalArgumentException("acceleration can not be null");
         }
 
@@ -92,37 +94,40 @@ public class VelocityManager {
 
     /**
      * Accelerates the x velocity of a specific class. If the class is not currently managed, nothing happens.
-     * @param elementClass Class &lt;? extends SpaceElement&gt; to accelerate
-     * @param xAcceleration acceleration for x-velocity
+     *
+     * @param elementClass  Class &lt;? extends SpaceElement&gt; to accelerate
+     * @param accelerationX acceleration for x-velocity
      */
-    public synchronized void accelerateX(Class<? extends SpaceElement> elementClass, double xAcceleration) {
+    public synchronized void accelerateX(Class<? extends SpaceElement> elementClass, double accelerationX) {
         Point2D.Double velocity = velocityMap.get(elementClass);
 
         if (velocity != null) {
-            velocityMap.put(elementClass, new Point2D.Double(velocity.x + xAcceleration, velocity.y));
+            velocityMap.put(elementClass, new Point2D.Double(velocity.x + accelerationX, velocity.y));
         }
     }
 
     /**
      * Accelerates the y velocity of a specific class. If the class is not currently managed, nothing happens.
-     * @param elementClass Class &lt;? extends SpaceElement&gt; to accelerate
-     * @param yAcceleration acceleration for y-velocity
+     *
+     * @param elementClass  Class &lt;? extends SpaceElement&gt; to accelerate
+     * @param accelerationY acceleration for y-velocity
      */
-    public synchronized void accelerateY(Class<? extends SpaceElement> elementClass, double yAcceleration) {
+    public synchronized void accelerateY(Class<? extends SpaceElement> elementClass, double accelerationY) {
         Point2D.Double velocity = velocityMap.get(elementClass);
 
         if (velocity != null) {
-            velocityMap.put(elementClass, new Point2D.Double(velocity.x, velocity.y + yAcceleration));
+            velocityMap.put(elementClass, new Point2D.Double(velocity.x, velocity.y + accelerationY));
         }
     }
 
     /**
      * Accelerates velocity of a specific class.
+     *
      * @param elementClass Class &lt;? extends SpaceElement&gt; to accelerate
      * @param acceleration Point2D.Double acceleration. Accelerate x-velocity with acceleration.x and y-velocity with acceleration.y
      */
     public synchronized void accelerate(Class<? extends SpaceElement> elementClass, Point2D.Double acceleration) {
-        if(acceleration == null){
+        if (acceleration == null) {
             throw new IllegalArgumentException("acceleration can not be null");
         }
 
@@ -136,12 +141,13 @@ public class VelocityManager {
 
     /**
      * Get the velocity of a specific class.
+     *
      * @param elementClass Class &lt;? extends SpaceElement&gt; to get the velocity of
      * @return velocity of the class
      * @throws VelocityNotSetException if the velocity was not set
      */
     public synchronized Point2D.Double getRelativeVelocity(Class<? extends SpaceElement> elementClass) throws VelocityNotSetException {
-        if(elementClass == null){
+        if (elementClass == null) {
             throw new IllegalArgumentException("Element class can not be null");
         }
 

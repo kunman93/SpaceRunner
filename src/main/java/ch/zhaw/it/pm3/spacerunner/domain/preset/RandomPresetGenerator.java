@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 /**
  * In this class the different presets are created, which are can shown randomly in the game.
+ *
  * @author blattpet
  */
 public class RandomPresetGenerator {
@@ -19,6 +20,7 @@ public class RandomPresetGenerator {
 
     /**
      * Creates all cases of presets.
+     *
      * @param p PresetType
      * @return A preset when the case exists
      */
@@ -43,13 +45,15 @@ public class RandomPresetGenerator {
                 return new Preset(randomCoinLine());
             case COINS_RANDOM_SQUARE:
                 return new Preset(randomCoinSquare());
+            default:
+                logger.log(Level.WARNING, "No Case for this Preset Type: {0}", p.name());
+                return null;
         }
-        logger.log(Level.WARNING, "No Case for this Preset Type: {0}", p.name());
-        return null;
     }
 
     /**
      * Returns one of the random preset
+     * @return a random preset
      */
     public synchronized Preset getRandomPreset() {
         int index = (int) Math.floor(Math.random() * (PresetType.values().length));

@@ -1,15 +1,15 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
+import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
  * Displays achievements of a game and redirects the user to his/her next desired view.
- *
+ * <p>
  * ViewController of GameEnded.fxml
  *
  * @author freymar1
@@ -31,7 +31,7 @@ public class GameEndedViewController extends ViewController {
 
     /**
      * Displays a congratulation to the user, his achieved score and the collected coins.
-     * */
+     */
     public void initialize() {
         PlayerProfile player = persistenceUtil.loadProfile();
         name.setText("Congratulation " + player.getPlayerName());

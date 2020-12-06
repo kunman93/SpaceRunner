@@ -1,11 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.ui;
 
 import ch.zhaw.it.pm3.spacerunner.SpaceRunnerApp;
-import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
 import ch.zhaw.it.pm3.spacerunner.domain.ItemType;
+import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
-import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualUtil;
 import javafx.embed.swing.SwingFXUtils;
@@ -21,7 +20,6 @@ import javafx.stage.StageStyle;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +30,7 @@ import java.util.stream.Collectors;
 /**
  * Shop-view (Shop.fxml) has multiple ShopContentCells. Each ShopContentCell contains various FXML elements.
  * This controller class is responsible for shop-content-cell-view (ShopContentCell.fxml).
+ *
  * @author kunnuman
  */
 public class ShopContentCellController extends ListCell<ShopContent> {
@@ -96,8 +95,9 @@ public class ShopContentCellController extends ListCell<ShopContent> {
     /**
      * This method is called automatically from listViewForUpgrades or listViewForSkins by clicking somewhere.
      * It changes buttons texts according to buying-stat and processes the shopping.
+     *
      * @param content The shop content that is available for the player to buy or activate.
-     * @param empty true if empty, else false
+     * @param empty   true if empty, else false
      */
     @Override
     public void updateItem(ShopContent content, boolean empty) {
@@ -119,7 +119,7 @@ public class ShopContentCellController extends ListCell<ShopContent> {
         VisualSVGFile visualSVGFileOfContent = this.content.getImageId();
 
         BufferedImage image = visualUtil.loadSVGImage(SpaceRunnerApp.class.getResource(visualSVGFileOfContent.getFileName()), 60f);
-        if(this.content.getItemType() == ItemType.PLAYER_MODEL){
+        if (this.content.getItemType() == ItemType.PLAYER_MODEL) {
             image = visualUtil.resizeImage(image, 60, 20);
             image = visualUtil.flipImage(image, true);
         }

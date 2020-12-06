@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 /**
  * SpaceShip is the SpaceElement that the player controls. It moves vertically in a straight line and cannot leave the visible game-screen.
+ *
  * @author nachbric
  */
 public class SpaceShip extends SpaceElement {
@@ -23,6 +24,7 @@ public class SpaceShip extends SpaceElement {
 
     /**
      * Initializes the variable position.
+     *
      * @param startPosition The starting position of the SpaceShip
      */
     public SpaceShip(Point2D.Double startPosition) {
@@ -50,7 +52,9 @@ public class SpaceShip extends SpaceElement {
 
     /**
      * Moves the spaceship
+     *
      * @param direction The direction of movement (UP or DOWN)
+     * @param timeInMillis time in milliseconds that the spaceship has to be moved for
      */
     public void moveSpaceShip(SpaceShipDirection direction, long timeInMillis) {
         double relativeHeight = 0;
@@ -74,6 +78,9 @@ public class SpaceShip extends SpaceElement {
                     return;
                 }
                 directMove(direction, position, timeInMillis);
+                break;
+            default:
+                //nothing to do
                 break;
         }
     }

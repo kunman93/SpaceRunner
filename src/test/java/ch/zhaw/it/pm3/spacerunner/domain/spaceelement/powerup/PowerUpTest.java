@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.awt.geom.Point2D;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests methods in PowerUp.
+ *
  * @author kunnuman
  */
 public class PowerUpTest {
@@ -27,7 +29,8 @@ public class PowerUpTest {
         shieldPowerUp = new ShieldPowerUp(new Point2D.Double(1.0, 0.5));
         powerUpListener = new PowerUpListener() {
             @Override
-            public void powerUpTimerChanged(double timeLeft) { }
+            public void powerUpTimerChanged(double timeLeft) {
+            }
 
             @Override
             public void powerUpFinished(PowerUp powerUp) {
@@ -48,15 +51,15 @@ public class PowerUpTest {
         Set<PowerUpListener> powerUpListeners = doubleCoinsPowerUp.getPowerUpListeners();
         assertTrue(powerUpListeners.isEmpty());
         doubleCoinsPowerUp.addListener(powerUpListener);
-        assertEquals(1,powerUpListeners.size());
+        assertEquals(1, powerUpListeners.size());
         doubleCoinsPowerUp.createPowerUpTimer();
 
         try {
-            Thread.sleep((long) (doubleCoinsPowerUp.getActiveTime() * (1.0/2.0)));
+            Thread.sleep((long) (doubleCoinsPowerUp.getActiveTime() * (1.0 / 2.0)));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(1,powerUpListeners.size());
+        assertEquals(1, powerUpListeners.size());
 
         doubleCoinsPowerUp.incrementPowerUpMultiplier();
         shieldPowerUp.incrementPowerUpMultiplier();
@@ -65,15 +68,15 @@ public class PowerUpTest {
         assertEquals(2, shieldPowerUp.getMultiplier());
 
         try {
-            Thread.sleep((long) (doubleCoinsPowerUp.getActiveTime() * (3.0/4.0)));
+            Thread.sleep((long) (doubleCoinsPowerUp.getActiveTime() * (3.0 / 4.0)));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        assertEquals(1,powerUpListeners.size());
+        assertEquals(1, powerUpListeners.size());
 
         try {
-            Thread.sleep((long) (doubleCoinsPowerUp.getActiveTime() * (1.0/4.0) + 1000));
+            Thread.sleep((long) (doubleCoinsPowerUp.getActiveTime() * (1.0 / 4.0) + 1000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -85,11 +88,11 @@ public class PowerUpTest {
      * Tests if the DoubleCoinPowerUp-activation works properly. (Tests if the powerUpTimer and the powerUpTimerTasks are created and executed properly.)
      */
     @Test
-    void activateDoubleCoinPowerUpTest(){
+    void activateDoubleCoinPowerUpTest() {
         Set<PowerUpListener> powerUpListeners = doubleCoinsPowerUp.getPowerUpListeners();
         assertTrue(powerUpListeners.isEmpty());
         doubleCoinsPowerUp.addListener(powerUpListener);
-        assertEquals(1,powerUpListeners.size());
+        assertEquals(1, powerUpListeners.size());
         doubleCoinsPowerUp.activatePowerUp();
         try {
             Thread.sleep(doubleCoinsPowerUp.getActiveTime() + 1000);

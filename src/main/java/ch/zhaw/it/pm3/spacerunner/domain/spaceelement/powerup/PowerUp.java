@@ -7,6 +7,7 @@ import java.util.*;
 
 /**
  * PowerUp is a space element that gives the spaceship a special ability when it's collected during a game.
+ *
  * @author nachbric
  */
 public abstract class PowerUp extends SpaceElement {
@@ -17,6 +18,7 @@ public abstract class PowerUp extends SpaceElement {
 
     /**
      * Sets up the startPosition where a PowerUp should appear in the game.
+     *
      * @param startPosition The startPosition where the power-up should appear.
      */
     public PowerUp(Point2D.Double startPosition) {
@@ -25,6 +27,7 @@ public abstract class PowerUp extends SpaceElement {
 
     /**
      * Adds a powerUpManagerListener to powerUpListeners which is set of PowerUpListeners.
+     *
      * @param powerUpManagerListener Is a reference to ActivatedPowerUpManger which implements a PowerUpListener.
      */
     public void addListener(PowerUpListener powerUpManagerListener) {
@@ -33,6 +36,7 @@ public abstract class PowerUp extends SpaceElement {
 
     /**
      * Removes a powerUpManagerListener from the set of PowerUpListeners.
+     *
      * @param powerUpManagerListener Is a reference to ActivatedPowerUpManger which implements a PowerUpListener.
      */
     public void removeListener(PowerUpListener powerUpManagerListener) {
@@ -81,12 +85,14 @@ public abstract class PowerUp extends SpaceElement {
 
     /**
      * Is an abstract-method which is implemented by the sub-classes to set the power-active-time.
+     *
      * @param activeTime active time to be set.
      */
     protected abstract void setActiveTime(int activeTime);
 
     /**
      * Is an abstract-method which is implemented by the sub-classes to get the power-active-time.
+     *
      * @return Returns the time how long a power-up should be active.
      */
     public abstract int getActiveTime();
@@ -96,7 +102,7 @@ public abstract class PowerUp extends SpaceElement {
      */
     public abstract void activatePowerUp();
 
-    Set<PowerUpListener> getPowerUpListeners(){
+    Set<PowerUpListener> getPowerUpListeners() {
         return Collections.unmodifiableSet(powerUpListeners);
     }
 }

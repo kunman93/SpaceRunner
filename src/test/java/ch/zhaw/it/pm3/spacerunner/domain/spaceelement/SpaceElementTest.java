@@ -1,11 +1,13 @@
 package ch.zhaw.it.pm3.spacerunner.domain.spaceelement;
+
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityNotSetException;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.Visual;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager.VisualScaling;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGFile;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.awt.geom.Point2D;
 
@@ -44,9 +46,9 @@ public class SpaceElementTest {
      * Tests if the SpaceElement.getPosition method returns the correct position.
      */
     @Test
-    void getPositionTest(){
+    void getPositionTest() {
         createElementsArray();
-        for(SpaceElement e : elements) {
+        for (SpaceElement e : elements) {
             assertEquals(e.getRelativePosition(), new Point2D.Double(1.0, 0.5));
         }
     }
@@ -55,9 +57,9 @@ public class SpaceElementTest {
      * Tests if the next position (after 1 sec of movement) is correctly returned.
      */
     @Test
-    void getNextPositionTest(){
+    void getNextPositionTest() {
         createElementsArray();
-        for(SpaceElement e : elements) {
+        for (SpaceElement e : elements) {
             try {
                 assertEquals(e.getNextPosition(), new Point2D.Double(1.0 + velocityManager.getRelativeVelocity(e.getClass()).x, 0.5 + velocityManager.getRelativeVelocity(e.getClass()).y));
             } catch (VelocityNotSetException exception) {
@@ -229,9 +231,9 @@ public class SpaceElementTest {
     @Test
     void move1SecTest() {
         createElementsArray();
-        for(SpaceElement e : elements) {
+        for (SpaceElement e : elements) {
             e.move(1000);
-            if(e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
+            if (e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
                 try {
                     assertEquals(e.getRelativePosition(), new Point2D.Double(1.0 + velocityManager.getRelativeVelocity(e.getClass()).x, 0.5 + velocityManager.getRelativeVelocity(e.getClass()).y));
                 } catch (VelocityNotSetException exception) {
@@ -248,11 +250,11 @@ public class SpaceElementTest {
     @Test
     void move1MillisTest() {
         createElementsArray();
-        for(SpaceElement e : elements) {
+        for (SpaceElement e : elements) {
             e.move(1);
-            if(e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
+            if (e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
                 try {
-                    assertEquals(e.getRelativePosition(), new Point2D.Double(1.0 + (1.0/1000.0)*velocityManager.getRelativeVelocity(e.getClass()).x, 0.5 + (1.0/1000.0)*velocityManager.getRelativeVelocity(e.getClass()).y));
+                    assertEquals(e.getRelativePosition(), new Point2D.Double(1.0 + (1.0 / 1000.0) * velocityManager.getRelativeVelocity(e.getClass()).x, 0.5 + (1.0 / 1000.0) * velocityManager.getRelativeVelocity(e.getClass()).y));
                 } catch (VelocityNotSetException exception) {
                     fail("VelocityNotSetException thrown");
                 }
@@ -267,11 +269,11 @@ public class SpaceElementTest {
     @Test
     void moveNegative1MillisTest() {
         createElementsArray();
-        for(SpaceElement e : elements) {
+        for (SpaceElement e : elements) {
             e.move(-1);
-            if(e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
+            if (e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
                 try {
-                    assertEquals(e.getRelativePosition(), new Point2D.Double(1.0 + (-1.0/1000.0)*velocityManager.getRelativeVelocity(e.getClass()).x, 0.5 + (-1.0/1000.0)*velocityManager.getRelativeVelocity(e.getClass()).y));
+                    assertEquals(e.getRelativePosition(), new Point2D.Double(1.0 + (-1.0 / 1000.0) * velocityManager.getRelativeVelocity(e.getClass()).x, 0.5 + (-1.0 / 1000.0) * velocityManager.getRelativeVelocity(e.getClass()).y));
                 } catch (VelocityNotSetException exception) {
                     fail("VelocityNotSetException thrown");
                 }
@@ -286,9 +288,9 @@ public class SpaceElementTest {
     @Test
     void move0MillisTest() {
         createElementsArray();
-        for(SpaceElement e : elements) {
+        for (SpaceElement e : elements) {
             e.move(0);
-            if(e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
+            if (e.getClass() != UFO.class && e.getClass() != SpaceWorld.class) {
                 assertEquals(e.getRelativePosition(), new Point2D.Double(1.0, 0.5));
             }
         }

@@ -2,12 +2,14 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests The SoundUtil-Class.
@@ -28,6 +30,7 @@ class SoundUtilTest {
 
     /**
      * Tests if a valid file can be loaded.
+     *
      * @throws UnsupportedAudioFileException
      * @throws IOException
      * @throws LineUnavailableException
@@ -44,16 +47,16 @@ class SoundUtilTest {
      */
     @Test
     void loadInvalidClipTest() {
-        file = new File ("src/test/resources/ch/zhaw/it/pm3/spacerunner/sound/unsupportedAudioFile.txt");
-        assertThrows(UnsupportedAudioFileException.class, () -> soundUtil.loadClip(file) );
+        file = new File("src/test/resources/ch/zhaw/it/pm3/spacerunner/sound/unsupportedAudioFile.txt");
+        assertThrows(UnsupportedAudioFileException.class, () -> soundUtil.loadClip(file));
     }
 
     /**
      * Tests if SoundUtil.loadClip can handle fictional paths.
      */
     @Test
-    void loadClipFromInvalidPathTest(){
-        assertThrows(IOException.class, () -> soundUtil.loadClip(new File("src/fictionalPath/fiction.wav")) );
+    void loadClipFromInvalidPathTest() {
+        assertThrows(IOException.class, () -> soundUtil.loadClip(new File("src/fictionalPath/fiction.wav")));
     }
 
 

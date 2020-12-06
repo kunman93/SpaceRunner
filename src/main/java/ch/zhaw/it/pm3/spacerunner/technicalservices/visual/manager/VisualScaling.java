@@ -2,7 +2,7 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager;
 
 /**
  * Scaling for visual elements.
- *
+ * <p>
  * For example:
  * A scaling of 0.1 means 10% of the height is used for the visual height.
  * A scaling of 0.3 means 30% of the height is used for the visual height.

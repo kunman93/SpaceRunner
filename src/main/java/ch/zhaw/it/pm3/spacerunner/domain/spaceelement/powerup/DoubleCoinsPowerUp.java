@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 
 /**
  * DoubleCoinsPowerUp is a power-up which doubles the coin value for a certain time when collected.
+ *
  * @author nachbric
  */
 public class DoubleCoinsPowerUp extends PowerUp {
@@ -16,13 +17,14 @@ public class DoubleCoinsPowerUp extends PowerUp {
 
     /**
      * Sets up the startPosition and doubles the duration of this power-ups if the upgrade was selected in the shop.
+     *
      * @param startPosition The startPosition where the double coins power-up should appear.
      */
     public DoubleCoinsPowerUp(Point2D.Double startPosition) {
         super(startPosition);
 
-        if(persistenceUtil.hasDoubleDurationForCoinPowerUp()){
-            timeActive = timeActive *2;
+        if (persistenceUtil.hasDoubleDurationForCoinPowerUp()) {
+            timeActive = timeActive * 2;
         }
     }
 

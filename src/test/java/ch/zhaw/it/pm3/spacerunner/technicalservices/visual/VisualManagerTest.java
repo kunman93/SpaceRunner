@@ -6,9 +6,10 @@ import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualFile;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util.VisualSVGAnimationFiles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.image.BufferedImage;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VisualManagerTest {
     private VisualManager visualManager = VisualManager.getManager();
@@ -57,8 +58,8 @@ public class VisualManagerTest {
     }
 
     @Test
-    void getVisualWhenNotSetTest(){
-        assertThrows(VisualNotSetException.class, () ->{
+    void getVisualWhenNotSetTest() {
+        assertThrows(VisualNotSetException.class, () -> {
             visualManager.getImage(Coin.class);
         });
     }

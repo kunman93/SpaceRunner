@@ -1,10 +1,10 @@
 package ch.zhaw.it.pm3.spacerunner.domain;
 
+import ch.zhaw.it.pm3.spacerunner.domain.preset.Preset;
+import ch.zhaw.it.pm3.spacerunner.domain.preset.RandomPresetGenerator;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.*;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.ActivatedPowerUpManager;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup.PowerUp;
-import ch.zhaw.it.pm3.spacerunner.domain.preset.Preset;
-import ch.zhaw.it.pm3.spacerunner.domain.preset.RandomPresetGenerator;
 import ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity.VelocityManager;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util.JsonPersistenceUtil;
@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 
 /**
  * The GameController is responsible for the game logic of the Space-Runner application.
+ *
  * @author islermic, hirsceva, blattpet, nachbric, freymar1, kunnuman
  */
 public class GameController {
@@ -91,8 +92,8 @@ public class GameController {
         isInitialized = true;
     }
 
-    public void terminate(){
-        if(gameTimer != null){
+    public void terminate() {
+        if (gameTimer != null) {
             gameTimer.cancel();
         }
         isTerminated = true;
@@ -133,11 +134,10 @@ public class GameController {
      */
     private void removePastDrawables() {
         AtomicInteger count = new AtomicInteger();
-        elements.removeIf((SpaceElement element) ->
-        {
+        elements.removeIf((SpaceElement element) -> {
             try {
                 boolean outOfScreen = element.getRelativePosition().x + visualManager.getElementRelativeWidth(element.getClass()) < 0;
-                if(outOfScreen){
+                if (outOfScreen) {
                     count.getAndIncrement();
                 }
                 return outOfScreen;
@@ -154,13 +154,14 @@ public class GameController {
      * Process each frame.
      * IMPORTANT: Initialize has to be called before processing frames!
      * IMPORTANT: If the game is terminated, initialize has to be called again to process frames or it will not process any more frames.
-     * @param upPressed Is true when the Up-Key was pressed, else false.
+     *
+     * @param upPressed   Is true when the Up-Key was pressed, else false.
      * @param downPressed Is true when the Down-Key was pressed, else false.
      */
     public void processFrame(boolean upPressed, boolean downPressed) {
-        if(isTerminated){
+        if (isTerminated) {
             throw new IllegalStateException("The game was already terminated when process frame was called! Initialize it again for re-use!");
-        }else if(!isInitialized){
+        } else if (!isInitialized) {
             throw new IllegalStateException("The game is not initialized! Method initialized has to be called before processing frames!");
         }
 
@@ -202,6 +203,7 @@ public class GameController {
 
     /**
      * Checks if Spaceship has collided with any other SpaceElement and performs the corresponding actions
+     *
      * @return Returns the SpaceElement-Object with which the Spaceship collided.
      */
     private SpaceElement detectCollision() {
@@ -215,10 +217,13 @@ public class GameController {
 
     /**
      * executes effects depending on type of spaceElement
+     *
      * @param spaceElement The SpaceElements for example UFO, Asteroid, COIN, etc.
      */
     private void processCollision(SpaceElement spaceElement) {
-        if (spaceElement == null) return;
+        if (spaceElement == null) {
+            return;
+        }
 
         if (spaceElement instanceof Obstacle) {
             collisionWithObstacle((Obstacle) spaceElement);
@@ -233,6 +238,7 @@ public class GameController {
 
     /**
      * Executes the logic when the spaceship collided with an obstacle.
+     *
      * @param o Obstacle with which the spaceship collided.
      */
     private void collisionWithObstacle(Obstacle o) {
@@ -312,21 +318,22 @@ public class GameController {
 
     /**
      * Executes the logic when the spaceship collides with Coin-Object.
-     * @param c  A Coin-Object which the spaceship collects.
+     *
+     * @param c A Coin-Object which the spaceship collects.
      */
     private void collisionWithCoin(Coin c) {
         collectedCoins += 1 * Math.pow(2, activatedPowerUpManager.getCoinMultiplier());
         score += 25 * Math.pow(2, activatedPowerUpManager.getCoinMultiplier());
         elements.remove(c);
         if (playerProfile.isAudioEnabled()) {
-                new Thread(() -> {
-                    try {
-                        gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
-                    } catch (Exception e) {
-                        //IGNORE ON PURPOSE
-                        logger.log(Level.WARNING, "Sound COIN_PICKUP couldn't be loaded");
-                    }
-                }).start();
+            new Thread(() -> {
+                try {
+                    gameSoundUtil.loadClip(GameSound.COIN_PICKUP).play();
+                } catch (Exception e) {
+                    //IGNORE ON PURPOSE
+                    logger.log(Level.WARNING, "Sound COIN_PICKUP couldn't be loaded");
+                }
+            }).start();
         }
     }
 
@@ -401,6 +408,7 @@ public class GameController {
 
     /**
      * Checks if the game is over.
+     *
      * @return true if the game is over, else false.
      */
     public boolean isGameOver() {

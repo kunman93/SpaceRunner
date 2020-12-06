@@ -1,9 +1,9 @@
 package ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util;
 
 import ch.zhaw.it.pm3.spacerunner.domain.ContentId;
-import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import ch.zhaw.it.pm3.spacerunner.domain.PlayerProfile;
 import ch.zhaw.it.pm3.spacerunner.domain.ShopContent;
+import ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.Persistence;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Utility tool to persist data (load / save) with Gson-library
  * Implemented with the singleton-pattern
+ *
  * @author islermic, kunnuman
  */
 public class JsonPersistenceUtil implements Persistence {
@@ -45,6 +46,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Checks if the user has activated the double duration upgrade for the coin power up.
+     *
      * @return if it is activated
      */
     @Override
@@ -55,6 +57,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Checks if the user has activated the power up chance multiplier upgrade.
+     *
      * @return if it is activated
      */
     @Override
@@ -65,6 +68,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Deactivated the content with the specified contentId in the profile of the user.
+     *
      * @param contentId id to be deactivated
      */
     @Override
@@ -76,6 +80,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Activated the content with the specified contentId in the profile of the user.
+     *
      * @param contentId id to be activated
      */
     @Override
@@ -84,7 +89,7 @@ public class JsonPersistenceUtil implements Persistence {
 
         boolean ownsContent = profile.getPurchasedContentIds().contains(contentId);
 
-        if(!ownsContent){
+        if (!ownsContent) {
             throw new IllegalArgumentException("The player does not own the content that should be activated");
         }
 
@@ -94,12 +99,13 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * returns the amount of coins needed to buy the content with the given price. If the player has enough coins  {@literal =>} 0 is returned
+     *
      * @param price price of the content. Has to be higher or equal zero
      * @return coins needed to be able to buy the content
      */
     @Override
     public int getAmountOfCoinsNeededToBuyContent(int price) {
-        if(price < 0){
+        if (price < 0) {
             throw new IllegalArgumentException("price to get amount of coins needed to buy has to be 0 or greater");
         }
 
@@ -112,12 +118,13 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Checks if the player has enough coins to buy the content with the given price.
+     *
      * @param price price of the content. Has to be higher or equal zero
      * @return user has enough coins
      */
     @Override
     public boolean playerHasEnoughCoinsToBuy(int price) {
-        if(price < 0){
+        if (price < 0) {
             throw new IllegalArgumentException("price has to be 0 or greater");
         }
 
@@ -127,16 +134,17 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Buys the content with the specified content if. {@literal =>} Subtracts coins from profile and adds the content to the profile.
+     *
      * @param contentId content to add to profile. Not Null
-     * @param price price of content. Has to be higher or equal zero
+     * @param price     price of content. Has to be higher or equal zero
      */
     @Override
     public void buyContent(ContentId contentId, int price) {
-        if(contentId == null){
+        if (contentId == null) {
             throw new IllegalArgumentException("ContentId can not be null");
-        }else if(price < 0){
+        } else if (price < 0) {
             throw new IllegalArgumentException("price has to be 0 or greater");
-        }else if(!playerHasEnoughCoinsToBuy(price)){
+        } else if (!playerHasEnoughCoinsToBuy(price)) {
             throw new IllegalArgumentException("player does not have enough coins to buy the content: " + contentId.name());
         }
 
@@ -148,6 +156,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Checks if the specified content is active.
+     *
      * @param contentId content to check for
      * @return is active
      */
@@ -159,6 +168,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Checks if the specified content is already purchased.
+     *
      * @param contentId content to check
      * @return is purchased
      */
@@ -172,14 +182,17 @@ public class JsonPersistenceUtil implements Persistence {
      * Set the specified sound volume in the profile.
      */
     @Override
-    public void setSoundVolume(int soundVolume){
+    public void setSoundVolume(int soundVolume) {
         PlayerProfile profile = loadProfile();
         profile.setVolume(soundVolume);
         saveProfile(profile);
-    };
+    }
+
+    ;
 
     /**
      * Get the specified sound volume from the profile.
+     *
      * @return sound volume
      */
     @Override
@@ -189,6 +202,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Returns if the audio is enabled.
+     *
      * @return is audio enabled
      */
     @Override
@@ -231,7 +245,7 @@ public class JsonPersistenceUtil implements Persistence {
      * @param dataClass Class of data object
      * @param <T>       Type of the data object
      * @return loaded data as object of class T
-     * @throws IOException
+     * @throws IOException if there is an error loading the file
      */
     public <T> T loadAndDeserializeData(String path, Type dataClass) throws IOException {
         T data = null;
@@ -268,7 +282,7 @@ public class JsonPersistenceUtil implements Persistence {
      * @param path path for the file
      * @param data data to serialize and save
      * @param <T>  type of the data to be saved
-     * @throws IOException
+     * @throws IOException if there is an error loading the file
      */
     public <T> void serializeAndSaveData(String path, T data) throws IOException {
         try (FileWriter writer = new FileWriter(path)) {
@@ -298,6 +312,7 @@ public class JsonPersistenceUtil implements Persistence {
 
     /**
      * Loads the shop content list.
+     *
      * @return shop content list
      */
     @Override

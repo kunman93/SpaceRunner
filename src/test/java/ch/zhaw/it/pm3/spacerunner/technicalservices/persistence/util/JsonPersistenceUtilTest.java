@@ -21,17 +21,17 @@ public class JsonPersistenceUtilTest {
         PlayerProfile.TEST = true;
 
         Path testJSON = Path.of(GameFile.PROFILE.getFileName());
-        if(Files.exists(testJSON)){
+        if (Files.exists(testJSON)) {
             Files.delete(testJSON);
         }
     }
 
 
     /**
-     *  test save profile
+     * test save profile
      */
     @Test
-    void testSaveProfile(){
+    void testSaveProfile() {
 
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.setCoins(20000);
@@ -45,20 +45,20 @@ public class JsonPersistenceUtilTest {
     }
 
     /**
-     *  test save profile with null -> IllegalArgumentException
+     * test save profile with null -> IllegalArgumentException
      */
     @Test
-    void testSaveProfileWithNull(){
+    void testSaveProfileWithNull() {
         assertThrows(IllegalArgumentException.class, () -> jsonPersistenceUtil.saveProfile(null));
         Path path = Path.of(GameFile.PROFILE.getFileName());
         assertFalse(Files.exists(path));
     }
 
     /**
-     *  test load profile
+     * test load profile
      */
     @Test
-    void testLoadProfile(){
+    void testLoadProfile() {
 
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.setCoins(20060);
@@ -72,11 +72,11 @@ public class JsonPersistenceUtilTest {
     }
 
     /**
-     *  test load profile without an existing json file
-     *  --> default profile should be loaded!
+     * test load profile without an existing json file
+     * --> default profile should be loaded!
      */
     @Test
-    void testLoadProfileWithoutExistingProfile(){
+    void testLoadProfileWithoutExistingProfile() {
         PlayerProfile playerProfile = new PlayerProfile(); //Creating default profile!
 
         PlayerProfile playerProfileLoaded = jsonPersistenceUtil.loadProfile();
@@ -115,10 +115,8 @@ public class JsonPersistenceUtilTest {
     }
 
 
-
-
     @Test
-    void isContentPurchasedTest(){
+    void isContentPurchasedTest() {
         assertFalse(jsonPersistenceUtil.isContentPurchased(ContentId.DOUBLE_DURATION_COIN_UPGRADE));
         assertFalse(jsonPersistenceUtil.isContentPurchased(ContentId.POWER_UP_CHANCE_MULTIPLIER));
 
@@ -129,7 +127,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void isContentActiveTest(){
+    void isContentActiveTest() {
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
         jsonPersistenceUtil.saveProfile(playerProfile);
@@ -142,12 +140,12 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void buyContentTestWithoutEnoughCoins(){
+    void buyContentTestWithoutEnoughCoins() {
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.setCoins(3000);
         jsonPersistenceUtil.saveProfile(playerProfile);
 
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.buyContent(ContentId.DOUBLE_DURATION_COIN_UPGRADE, 4000);
         });
         playerProfile = jsonPersistenceUtil.loadProfile();
@@ -156,12 +154,12 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void buyContentTestWithNullAsContent(){
+    void buyContentTestWithNullAsContent() {
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.setCoins(3000);
         jsonPersistenceUtil.saveProfile(playerProfile);
 
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.buyContent(null, 12);
         });
         playerProfile = jsonPersistenceUtil.loadProfile();
@@ -169,12 +167,12 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void buyContentTestWithNegativePrice(){
+    void buyContentTestWithNegativePrice() {
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.setCoins(3000);
         jsonPersistenceUtil.saveProfile(playerProfile);
 
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.buyContent(ContentId.DOUBLE_DURATION_COIN_UPGRADE, -1);
         });
         playerProfile = jsonPersistenceUtil.loadProfile();
@@ -183,7 +181,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void buyContentTest(){
+    void buyContentTest() {
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.setCoins(3000);
         jsonPersistenceUtil.saveProfile(playerProfile);
@@ -196,17 +194,17 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void playerHasEnoughCoinsToBuyTestTestWithNegativePrice(){
-        assertThrows(IllegalArgumentException.class, () ->{
+    void playerHasEnoughCoinsToBuyTestTestWithNegativePrice() {
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.playerHasEnoughCoinsToBuy(-1);
         });
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.playerHasEnoughCoinsToBuy(Integer.MIN_VALUE);
         });
     }
 
     @Test
-    void playerHasEnoughCoinsToBuyTest(){
+    void playerHasEnoughCoinsToBuyTest() {
         assertFalse(jsonPersistenceUtil.playerHasEnoughCoinsToBuy(1000));
 
         PlayerProfile playerProfile = new PlayerProfile();
@@ -217,7 +215,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void getAmountOfCoinsNeededToBuyContentTest(){
+    void getAmountOfCoinsNeededToBuyContentTest() {
         assertEquals(1000, jsonPersistenceUtil.getAmountOfCoinsNeededToBuyContent(1000));
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.setCoins(3000);
@@ -228,24 +226,24 @@ public class JsonPersistenceUtilTest {
 
 
     @Test
-    void getAmountOfCoinsNeededToBuyContentTestWithNegativePrice(){
-        assertThrows(IllegalArgumentException.class, () ->{
+    void getAmountOfCoinsNeededToBuyContentTestWithNegativePrice() {
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.getAmountOfCoinsNeededToBuyContent(-1);
         });
-        assertThrows(IllegalArgumentException.class, () ->{
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.getAmountOfCoinsNeededToBuyContent(Integer.MIN_VALUE);
         });
     }
 
     @Test
-    void activateContentWhenNotPurchased(){
-        assertThrows(IllegalArgumentException.class, () ->{
+    void activateContentWhenNotPurchased() {
+        assertThrows(IllegalArgumentException.class, () -> {
             jsonPersistenceUtil.activateContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
         });
     }
 
     @Test
-    void activateContentAlreadyActive(){
+    void activateContentAlreadyActive() {
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
         jsonPersistenceUtil.saveProfile(playerProfile);
@@ -257,7 +255,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void activateContent(){
+    void activateContent() {
         PlayerProfile playerProfile = new PlayerProfile();
         playerProfile.addContent(ContentId.POWER_UP_CHANCE_MULTIPLIER);
         jsonPersistenceUtil.saveProfile(playerProfile);
@@ -267,7 +265,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void deactivateContentTestWhenNotActive(){
+    void deactivateContentTestWhenNotActive() {
         PlayerProfile playerProfile = new PlayerProfile();
         jsonPersistenceUtil.saveProfile(playerProfile);
 
@@ -277,7 +275,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void deactivateContentTest(){
+    void deactivateContentTest() {
         PlayerProfile playerProfile = new PlayerProfile();
         jsonPersistenceUtil.saveProfile(playerProfile);
 
@@ -294,7 +292,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void hasPowerUpChanceMultiplierUpgradeTest(){
+    void hasPowerUpChanceMultiplierUpgradeTest() {
         PlayerProfile playerProfile = new PlayerProfile();
         jsonPersistenceUtil.saveProfile(playerProfile);
 
@@ -308,7 +306,7 @@ public class JsonPersistenceUtilTest {
     }
 
     @Test
-    void hasDoubleDurationForCoinPowerUpTest(){
+    void hasDoubleDurationForCoinPowerUpTest() {
         PlayerProfile playerProfile = new PlayerProfile();
         jsonPersistenceUtil.saveProfile(playerProfile);
 

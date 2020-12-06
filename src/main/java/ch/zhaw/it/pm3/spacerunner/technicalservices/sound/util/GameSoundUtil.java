@@ -11,12 +11,13 @@ import java.net.URL;
 
 /**
  * Project specific wrapper for the SoundUtil
+ *
  * @author islermic
  */
 public class GameSoundUtil {
 
     private final SoundUtil soundUtil = SoundUtil.getUtil();
-    private final static GameSoundUtil GAME_SOUND_UTIL = new GameSoundUtil();
+    private static final GameSoundUtil GAME_SOUND_UTIL = new GameSoundUtil();
 
     private GameSoundUtil() {
     }
@@ -30,9 +31,9 @@ public class GameSoundUtil {
      *
      * @param soundFile Sound to load
      * @return SoundClip that was loaded
-     * @throws IOException
-     * @throws UnsupportedAudioFileException
-     * @throws LineUnavailableException
+     * @throws IOException if there is an issue with loading the file
+     * @throws UnsupportedAudioFileException if the audio format of the file is not supported
+     * @throws LineUnavailableException if there is no audio line available
      */
     public SoundClip loadClip(GameSound soundFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         URL backgroundMusicURL = SpaceRunnerApp.class.getResource(soundFile.getFileName());

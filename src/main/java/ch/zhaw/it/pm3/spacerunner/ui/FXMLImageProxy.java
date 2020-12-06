@@ -43,6 +43,7 @@ public class FXMLImageProxy implements VisualManagerListener {
     /**
      * Gets the fxml image from the managers list.
      * If the image has not been loaded yet, it is loaded and added to the managed map. And returned afterwards.
+     *
      * @param elementClass class to load image
      * @return fxml image
      * @throws VisualNotSetException if no image set for this class
@@ -63,6 +64,7 @@ public class FXMLImageProxy implements VisualManagerListener {
     /**
      * Method implemented for VisualManagerListener.
      * Will be called when an image should be removed from cache and reloaded.
+     *
      * @param bufferedImage image that changed
      */
     @Override

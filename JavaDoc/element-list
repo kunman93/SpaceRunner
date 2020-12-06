@@ -1,0 +1,15 @@
+ch.zhaw.it.pm3.spacerunner
+ch.zhaw.it.pm3.spacerunner.domain
+ch.zhaw.it.pm3.spacerunner.domain.preset
+ch.zhaw.it.pm3.spacerunner.domain.spaceelement
+ch.zhaw.it.pm3.spacerunner.domain.spaceelement.powerup
+ch.zhaw.it.pm3.spacerunner.domain.spaceelement.speed
+ch.zhaw.it.pm3.spacerunner.domain.spaceelement.velocity
+ch.zhaw.it.pm3.spacerunner.technicalservices.performance
+ch.zhaw.it.pm3.spacerunner.technicalservices.persistence
+ch.zhaw.it.pm3.spacerunner.technicalservices.persistence.util
+ch.zhaw.it.pm3.spacerunner.technicalservices.sound.util
+ch.zhaw.it.pm3.spacerunner.technicalservices.visual
+ch.zhaw.it.pm3.spacerunner.technicalservices.visual.manager
+ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util
+ch.zhaw.it.pm3.spacerunner.ui

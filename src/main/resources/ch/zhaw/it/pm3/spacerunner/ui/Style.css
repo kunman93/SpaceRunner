@@ -6,7 +6,7 @@
 }
 
 
-.blackbg{
+.blackbg {
     -fx-background-color: black;
 }
 
@@ -34,7 +34,7 @@ Button {
     -fx-cursor: pointer;
     -fx-background-color: black;
     -fx-text-fill: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.8), 20, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.8), 20, 0, 0, 0);
 }
 
 Button:hover,
@@ -50,7 +50,7 @@ Button:hover Label {
     -fx-font-size: 60 !important;
 }
 
-.icon-start-game{
+.icon-start-game {
     -fx-font-family: 'video games';
 }
 
@@ -89,6 +89,7 @@ Button.help:hover {
 Slider .axis {
     -fx-tick-label-fill: white;
 }
+
 Slider .axis .axis-tick-mark,
 Slider .axis .axis-minor-tick-mark {
     -fx-fill: white;
@@ -118,10 +119,12 @@ Slider .axis .axis-minor-tick-mark {
     -fx-font-size: 20;
 
 }
+
 .tab,
 .shop .headers-region {
     -fx-pref-height: 50;
 }
+
 .tab,
 .shop .headers-region,
 .shop .tab-header-area,
@@ -167,12 +170,12 @@ Slider .axis .axis-minor-tick-mark {
     -fx-background-color: transparent;
 }
 
-.dialog > .label{
+.dialog > .label {
     -fx-font-size: 20;
     -fx-text-fill: WHITE;
 }
 
-.dialog .button{
+.dialog .button {
     -fx-font-size: 20;
     -fx-pref-width: 120;
     -fx-pref-height: 15;

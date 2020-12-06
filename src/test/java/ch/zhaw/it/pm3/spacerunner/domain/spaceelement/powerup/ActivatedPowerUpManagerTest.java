@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the ActivatedPowerUpManager which is responsible to generate, activate and deactivate power-ups.
+ *
  * @author kunnuman
  */
 class ActivatedPowerUpManagerTest {
@@ -30,7 +31,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if one DoubleCoinsPowerUp which was "collected" is added.
      */
     @Test
-    void addPowerUpAddingOneDoubleCoinsPowerUpTest(){
+    void addPowerUpAddingOneDoubleCoinsPowerUpTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
@@ -41,7 +42,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if the two DoubleCoinsPowerUps which were "collected" are added.
      */
     @Test
-    void addPowerUpAddingTwoDoubleCoinsPowerUpTest(){
+    void addPowerUpAddingTwoDoubleCoinsPowerUpTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
@@ -53,7 +54,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if the three DoubleCoinsPowerUps which were "collected" are added.
      */
     @Test
-    void addPowerUpAddingThreeDoubleCoinsPowerUpTest(){
+    void addPowerUpAddingThreeDoubleCoinsPowerUpTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
@@ -66,7 +67,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if one ShieldPowerUp which was "collected" is activated.
      */
     @Test
-    void addPowerUpAddingOneShieldPowerUpTest(){
+    void addPowerUpAddingOneShieldPowerUpTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);
@@ -78,7 +79,7 @@ class ActivatedPowerUpManagerTest {
      * This test simulates that a spaceship has only one shield active even if multiple ShieldPowerUps were collected.
      */
     @Test
-    void addPowerUpAddingTwoShieldPowerUpTest(){
+    void addPowerUpAddingTwoShieldPowerUpTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);
@@ -91,7 +92,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if the two power ups (DoubleCoinsPowerUp and ShieldPowerUp) which were "collected" are added.
      */
     @Test
-    void addPowerUpAddingOneDoubleCoinsPowerUpAndOneShieldPowerUpTest(){
+    void addPowerUpAddingOneDoubleCoinsPowerUpAndOneShieldPowerUpTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
@@ -104,7 +105,7 @@ class ActivatedPowerUpManagerTest {
      * This test simulates if the collected shield is removed properly after a collision occurred.
      */
     @Test
-    void removeShieldWhenOneShieldPowerUpWasCollectedTest(){
+    void removeShieldWhenOneShieldPowerUpWasCollectedTest() {
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertTrue(activatedPowerUpManager.hasShield());
         activatedPowerUpManager.removeShield();
@@ -115,7 +116,7 @@ class ActivatedPowerUpManagerTest {
      * This test simulates if the collected shield is removed properly after a collision occurred.
      */
     @Test
-    void removeShieldWhenTwoShieldPowerUpsWereCollectedTest(){
+    void removeShieldWhenTwoShieldPowerUpsWereCollectedTest() {
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertTrue(activatedPowerUpManager.hasShield());
@@ -127,7 +128,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if the coin multiplier is correct when no power-ups were collected.
      */
     @Test
-    void getCoinMultiplierWhenNoPowerUpsWereCollectedTest(){
+    void getCoinMultiplierWhenNoPowerUpsWereCollectedTest() {
         assertEquals(0, activatedPowerUpManager.getCoinMultiplier());
     }
 
@@ -135,7 +136,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if the coin multiplier is correct when DoubleCoinsPowerUp were collected.
      */
     @Test
-    void getCoinMultiplierWhenDoubleCoinsPowerUpsWereCollectedTest(){
+    void getCoinMultiplierWhenDoubleCoinsPowerUpsWereCollectedTest() {
         activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
         assertEquals(1, activatedPowerUpManager.getCoinMultiplier());
         activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
@@ -148,7 +149,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if the coin multiplier is correct when ShieldPowerUps were collected.
      */
     @Test
-    void getCoinMultiplierWhenShieldPowerUpsWereCollectedTest(){
+    void getCoinMultiplierWhenShieldPowerUpsWereCollectedTest() {
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);
         assertEquals(0, activatedPowerUpManager.getCoinMultiplier());
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);
@@ -161,7 +162,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if deactivating power-ups works properly when no power-ups are active.
      */
     @Test
-    void powerUpFinishedWhenNoPowerUpsAreActiveTest(){
+    void powerUpFinishedWhenNoPowerUpsAreActiveTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.powerUpFinished(doubleCoinsPowerUp);
@@ -174,7 +175,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if deactivating DoubleCoinsPowerUp works properly when one doubleCoinsPowerUp is active.
      */
     @Test
-    void powerUpFinishedWhenDoubleCoinsPowerUpIsActiveTest(){
+    void powerUpFinishedWhenDoubleCoinsPowerUpIsActiveTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(doubleCoinsPowerUp);
@@ -187,7 +188,7 @@ class ActivatedPowerUpManagerTest {
      * Tests if deactivating ShieldPowerUp works properly when one ShieldPowerUp is active.
      */
     @Test
-    void powerUpFinishedWhenShieldPowerUpIsActiveTest(){
+    void powerUpFinishedWhenShieldPowerUpIsActiveTest() {
         Map<Class<? extends PowerUp>, PowerUp> activePowerUps = activatedPowerUpManager.getActivePowerUps();
         assertTrue(activePowerUps.isEmpty());
         activatedPowerUpManager.activatePowerUp(shieldPowerUp);

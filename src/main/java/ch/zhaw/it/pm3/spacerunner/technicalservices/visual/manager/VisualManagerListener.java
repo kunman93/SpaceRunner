@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * Implemented this interface to register to Events from VisualManager.
+ *
  * @author islermic
  */
 public interface VisualManagerListener {
@@ -14,7 +15,8 @@ public interface VisualManagerListener {
 
     /**
      * Notifies if an image in the visual manager has changed
-     * @param bufferedImage
+     *
+     * @param bufferedImage image that changed
      */
     void bufferedImageChanged(BufferedImage bufferedImage);
 }

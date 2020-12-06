@@ -19,6 +19,7 @@ public class FPSTracker {
 
     /**
      * Tracks the process of a frame. Once the internal buffer (100) is filled, it will start to log the current FPS once per second.
+     *
      * @param currentNanoTime timestamp in nanoseconds, when this function has been called.
      * @return Current Frame rate if buffer is filled. Else returns 0 until buffer filled
      */
@@ -35,13 +36,13 @@ public class FPSTracker {
             long elapsedNanosPerFrame = elapsedNanos / frameTimes.length;
             double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame;
 
-            if((System.currentTimeMillis() - lastTimeFPSLogged > 1000)){
+            if ((System.currentTimeMillis() - lastTimeFPSLogged > 1000)) {
                 logger.log(Level.INFO, String.format("Current frame rate: %.3f", frameRate));
                 lastTimeFPSLogged = System.currentTimeMillis();
             }
 
             return frameRate;
-        }else{
+        } else {
             return 0;
         }
     }

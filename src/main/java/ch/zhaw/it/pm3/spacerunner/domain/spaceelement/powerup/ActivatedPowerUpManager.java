@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 /**
  * ActivatedPowerUpManager is responsible to generate, activate and deactivate power-ups.
+ *
  * @author islermic
  */
 public class ActivatedPowerUpManager implements PowerUpListener {
@@ -33,14 +34,15 @@ public class ActivatedPowerUpManager implements PowerUpListener {
     /**
      * Sets up the ActivatedPowerUpManager and increases the probability of power-ups if the upgrade was selected in the shop.
      */
-    public ActivatedPowerUpManager(){
-        if(persistenceUtil.hasPowerUpChanceMultiplierUpgrade()){
-            GENERAL_POWER_UP_PROBABILITY = (int)(GENERAL_POWER_UP_PROBABILITY * 1.5);
+    public ActivatedPowerUpManager() {
+        if (persistenceUtil.hasPowerUpChanceMultiplierUpgrade()) {
+            GENERAL_POWER_UP_PROBABILITY = (int) (GENERAL_POWER_UP_PROBABILITY * 1.5);
         }
     }
 
     /**
      * Generates a random power-up.
+     *
      * @return Returns the randomly generated PowerUp.
      */
     public PowerUp generatePowerUps() {
@@ -61,7 +63,9 @@ public class ActivatedPowerUpManager implements PowerUpListener {
                 if (x < probability.getValue() + secondSum) {
                     PowerUp powerUp;
                     try {
-                        powerUp = probability.getKey().getConstructor(Point2D.Double.class).newInstance(new Point2D.Double(1, Math.random() * (1.0 - visualManager.getElementRelativeHeight(probability.getKey()))));
+                        Double randomY = Math.random() * (1.0 - visualManager.getElementRelativeHeight(probability.getKey()));
+                        Point2D.Double generatedPosition = new Point2D.Double(1, randomY);
+                        powerUp = probability.getKey().getConstructor(Point2D.Double.class).newInstance(generatedPosition);
                         return powerUp;
                     } catch (Exception e) {
                         logger.log(Level.SEVERE, "Error in PowerUp generation");
@@ -77,6 +81,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
 
     /**
      * Adds the powerUp to activePowerUps and activates it.
+     *
      * @param powerUp The power-up which should be activated.
      */
     public synchronized void activatePowerUp(PowerUp powerUp) {
@@ -91,6 +96,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
 
     /**
      * Checks if activePowerUps has ShieldPowerUp.
+     *
      * @return Return true if activePowerUps has ShieldPowerUp, else false.
      */
     public synchronized boolean hasShield() {
@@ -118,6 +124,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
 
     /**
      * Currently empty body. This method can be used in future.
+     *
      * @param timeLeft The time left until the power-up finishes.
      */
     @Override
@@ -128,6 +135,7 @@ public class ActivatedPowerUpManager implements PowerUpListener {
 
     /**
      * Removes the powerUp if it's finished.
+     *
      * @param powerUp The powerUp which should be removed.
      */
     @Override

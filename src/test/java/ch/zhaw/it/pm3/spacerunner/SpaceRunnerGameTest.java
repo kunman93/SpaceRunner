@@ -3,10 +3,7 @@
  */
 package ch.zhaw.it.pm3.spacerunner;
 
-import org.junit.jupiter.api.Test;
-
 class SpaceRunnerGameTest {
-
 
 
 }

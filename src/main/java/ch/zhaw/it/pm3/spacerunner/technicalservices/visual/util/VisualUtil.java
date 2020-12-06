@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 /**
  * Util to load visuals
  * Implemented with the singleton-pattern.
- *
+ * <p>
  * Uses the org.apache.batik libraries for svg processing.
  *
  * @author islermic
@@ -53,7 +53,7 @@ public class VisualUtil {
      * @return loaded image
      */
     public BufferedImage loadImage(URL imageURL) {
-        if(imageURL == null){
+        if (imageURL == null) {
             throw new IllegalArgumentException("imageURL can not be null");
         }
 
@@ -63,15 +63,16 @@ public class VisualUtil {
 
     /**
      * Generates the "infinite" background ("normal image" + "mirror image" + "normal image").
-     * @param inputImage image for background. not null
-     * @param scaledWidth width used for the background (will be tripled in the output image). has to be higher than 0 (positive)
+     *
+     * @param inputImage   image for background. not null
+     * @param scaledWidth  width used for the background (will be tripled in the output image). has to be higher than 0 (positive)
      * @param scaledHeight height used for background. has to be higher than 0 (positive)
      * @return background image with size (3*scaledWidth, scaledHeight) contains ("normal image" + "mirror image" + "normal image").
      */
     public BufferedImage generateBackground(BufferedImage inputImage, int scaledWidth, int scaledHeight) {
-        if(inputImage == null){
+        if (inputImage == null) {
             throw new IllegalArgumentException("inputImage can not be null");
-        }else if(scaledWidth <= 0 || scaledHeight <= 0){
+        } else if (scaledWidth <= 0 || scaledHeight <= 0) {
             throw new IllegalArgumentException("scaledWidth and scaledHeight have to be higher than 0");
         }
 
@@ -99,9 +100,9 @@ public class VisualUtil {
      * @return resized image
      */
     public BufferedImage resizeImage(BufferedImage inputImage, int scaledWidth, int scaledHeight) {
-        if(inputImage == null){
+        if (inputImage == null) {
             throw new IllegalArgumentException("inputImage can not be null");
-        }else if(scaledWidth <= 0 || scaledHeight <= 0){
+        } else if (scaledWidth <= 0 || scaledHeight <= 0) {
             throw new IllegalArgumentException("scaledWidth and scaledHeight have to be higher than 0");
         }
 
@@ -121,12 +122,10 @@ public class VisualUtil {
      *
      * @param inputImage The Image to be converted. not null
      * @return The converted BufferedImage
-     *
-     *
      * @author Code is from stackoverflow https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
      */
     private BufferedImage toBufferedImage(Image inputImage) {
-        if(inputImage == null){
+        if (inputImage == null) {
             throw new IllegalArgumentException("inputImage can not be null");
         }
 
@@ -138,9 +137,9 @@ public class VisualUtil {
         BufferedImage bimage = new BufferedImage(inputImage.getWidth(null), inputImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
         // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(inputImage, 0, 0, null);
-        bGr.dispose();
+        Graphics2D graphic = bimage.createGraphics();
+        graphic.drawImage(inputImage, 0, 0, null);
+        graphic.dispose();
 
         // Return the buffered image
         return bimage;
@@ -150,13 +149,13 @@ public class VisualUtil {
      * Loads the SVG image from the URL provided
      *
      * @param imageURL URL of the image to load. not null
-     * @param height height for the image in px. higher than 0 (positive)
+     * @param height   height for the image in px. higher than 0 (positive)
      * @return loaded image
      */
     public BufferedImage loadSVGImage(URL imageURL, float height) {
-        if(imageURL == null){
+        if (imageURL == null) {
             throw new IllegalArgumentException("imageURL can not be null");
-        }else if(height <= 0){
+        } else if (height <= 0) {
             throw new IllegalArgumentException("height has to be higher than 0");
         }
 
@@ -184,12 +183,12 @@ public class VisualUtil {
         // These defaults emphasize quality and precision, and
         // are more similar to the defaults of other SVG viewers.
         // SVG documents can still override these defaults.
-        String css = "svg {" +
-                "shape-rendering: geometricPrecision;" +
-                "text-rendering:  geometricPrecision;" +
-                "color-rendering: optimizeQuality;" +
-                "image-rendering: optimizeQuality;" +
-                "}";
+        String css = "svg {"
+                + "shape-rendering: geometricPrecision;"
+                + "text-rendering:  geometricPrecision;"
+                + "color-rendering: optimizeQuality;"
+                + "image-rendering: optimizeQuality;"
+                + "}";
         File cssFile = File.createTempFile("batik-default-override-", ".css");
         FileUtils.writeStringToFile(cssFile, css);
 
@@ -236,12 +235,13 @@ public class VisualUtil {
 
     /**
      * Flips the image.
-     * @param image image to flip. not null
+     *
+     * @param image      image to flip. not null
      * @param horizontal should flip horizontal? if false it is flipped vertically
      * @return image flipped in the correct direction
      */
     public BufferedImage flipImage(BufferedImage image, boolean horizontal) {
-        if(image == null){
+        if (image == null) {
             throw new IllegalArgumentException("image can not be null");
         }
 
@@ -262,12 +262,13 @@ public class VisualUtil {
 
     /**
      * Rotate an image by the specified degree.
+     *
      * @param bufferedImage image to rotate
-     * @param deg degrees for rotation
+     * @param deg           degrees for rotation
      * @return rotated image
      */
     public BufferedImage rotateImage(BufferedImage bufferedImage, int deg) {
-        if(bufferedImage == null){
+        if (bufferedImage == null) {
             throw new IllegalArgumentException("bufferedImage can not be null");
         }
 

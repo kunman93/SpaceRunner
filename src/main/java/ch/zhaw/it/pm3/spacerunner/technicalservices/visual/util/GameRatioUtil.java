@@ -5,16 +5,17 @@ package ch.zhaw.it.pm3.spacerunner.technicalservices.visual.util;
  * instance exists).
  *
  * @author freymar1
- * */
+ */
 public class GameRatioUtil {
 
     private static final double Y_RATIO_GAME = 8.5;
     private static final double Y_RATIO_GAME_BAR = 0.5;
     private static final double X_RATIO = 16;
 
-    private final static GameRatioUtil GAME_PROPORTION_UTIL = new GameRatioUtil();
+    private static final GameRatioUtil GAME_PROPORTION_UTIL = new GameRatioUtil();
 
-    private GameRatioUtil() { }
+    private GameRatioUtil() {
+    }
 
     public static GameRatioUtil getUtil() {
         return GAME_PROPORTION_UTIL;
@@ -22,10 +23,11 @@ public class GameRatioUtil {
 
     /**
      * Calculates heights (game and infoBar) for GameViewPort.
-     * @param width             width of primaryStage (view port)
-     * @param height            height of primaryStage (view port)
+     *
+     * @param width  width of primaryStage (view port)
+     * @param height height of primaryStage (view port)
      * @return GameViewPort     object holding the viewports ratios
-     * */
+     */
     public GameViewPort calcRatio(double width, double height) {
         if (width < 0) {
             throw new IllegalArgumentException("Parameter 'width' requires a positive number.");
@@ -49,10 +51,11 @@ public class GameRatioUtil {
 
     /**
      * Calculates the text width proportional to the font size. Factor 5 is capable to display MAX_INTEGER.
-     * @param containerHeight   height of container where font is displayed
-     * @param percentage        font padding to container in percentage (only heights)
+     *
+     * @param containerHeight height of container where font is displayed
+     * @param percentage      font padding to container in percentage (only heights)
      * @return double           width that can display all integer values
-     * */
+     */
     public double getTextWidth(double containerHeight, double percentage) {
         return getFontSize(containerHeight, percentage) * 5;
     }
@@ -60,10 +63,11 @@ public class GameRatioUtil {
     /**
      * Calculates the font size proportional to the parent container (subtracts the vertical paddings from the container).
      * Negative numbers are ignored.
-     * @param containerHeight   height of container where font is displayed
-     * @param percentage        fontsize in percentage to container height
+     *
+     * @param containerHeight height of container where font is displayed
+     * @param percentage      fontsize in percentage to container height
      * @return double           fontsize
-     * */
+     */
     public double getFontSize(double containerHeight, double percentage) {
         if (containerHeight < 0) {
             throw new IllegalArgumentException("Parameter 'containerHeight' requires a positive number.");
