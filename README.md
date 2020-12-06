@@ -4,7 +4,10 @@
 Welcome to our project: Space-Runner. We are 6 engineering Students at the ZHAW. First you will get an instruction on how to set-up the project, How to Play, testing and the project outlines and how far we've progressed.
 
 ### Set-Up
-You can run this project in an IDE (gradle preinstalled) and start by entering "gradle run" in the terminal. Or just run the .jar File.
+You can run this project in an IDE (gradle preinstalled) and start by entering "gradle run" in the terminal. 
+
+If you want to test the beta of the game, get the ![version 1.0 beta release](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/releases).
+Extract the zip file and run the jar by double clicking or opening the command prompt and start it by using the command: "java -jar SpaceRunner.jar"
 
 ### How To Play
 First you need to start the programm. Then you are greeted by the Main Screen where you can choose between Start, Shop and Settings. You can also find help by clicking on the Help button.
