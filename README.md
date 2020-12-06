@@ -38,37 +38,33 @@ When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with th
 
 ![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop.gif)
 
-Here you can buy and manage Upgrades or Playermodels
+Here you can buy and manage Upgrades or Player models
 * Upgrades
-  * 1.5x PowerUp Chance
-  * Double duration of Coin PowerUp
+  * 1.5x PowerUp Chance (The chance that PowerUp will appear is increased)
+  * Double duration of Coin PowerUp (Increases the duration of Coin PowerUp from 10 to 20 seconds)
 
-![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_upgarde_buy.gif)
+* If you have enough coins to buy an item you can click on the "buy" button next to the item. Another small window will appear that ask you asking you if you really want to buy this item. So you can purchase  or cancel the item. It works the same for the upgrades and the playermodel. <br/>
+![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_upgarde_buy.gif) <br/>
 
-![not enough coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_not_enough_coins.PNG)
+* This warning is displayed if you do not have enough coins to buy something in the store. It also indicates how many coins you are missing to buy this item.<br/>
+![not enough coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_not_enough_coins.PNG) <br/>
 
-* Playermodel
+* Player model
   * Ship Skin 1
-  * Ship Skin 2
-
-* If you have bought a skin, you can activate and deactivate it, so you can also switch between skins. For the upgrades the activation works exactly the same.
-
-![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif)
+  * Ship Skin 2 
+  
+* If you have bought a skin, you can activate and deactivate it, so you can also switch between skins. For the upgrades the activation works exactly the same. <br/>
+![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif) <br/>
 
 #### Settings
-If you click on the "SETTINGS" button, you will land here. In the settings you can set the player name or change the sound and the framerate.
-<br/>
-![go to settings](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings.gif)
-<br/>
-<br/>
+If you click on the "SETTINGS" button, you will land here. In the settings you can set the player name or change the sound and the framerate. <br/>
+![go to settings](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings.gif) <br/>
 
-* You can change the player name by overwriting it.
-![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_change_name.gif)
-<br/>
-<br/>
+* You can change the player name by overwriting it. <br/>
+![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_change_name.gif) <br/>
 
-* You can adjust the sound and framerate by moving the button.
-![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_chnage_volume_and_fps.gif)
+* You can adjust the sound and framerate by moving the button. <br/>
+![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_chnage_volume_and_fps.gif) <br/>
 
 ## Project Outlines
 ### Brief Summary
