@@ -13,11 +13,11 @@ If you want to test the beta of the game, get the [version 1.0 beta release](htt
 Extract the zip file and run the jar by double clicking or opening the command prompt and start it by using the command: "java -jar SpaceRunner.jar"
 
 ### How To Play
-First you need to start the programm. Then you are greeted by the main screen where you can choose between **"START"**, **"SHOP"** and **"SETTINGS"**. You can also find help by clicking on the question mark button. <br/>
-![help screen](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/help_screen.gif) <br/>
+First you need to start the programm. Then you are greeted by the main screen where you can choose between **"START"**, **"SHOP"** and **"SETTINGS"**. In the next sections you will get more information about these three actions. You can also find help in the game by clicking on the question mark button. <br/>
+![help screen](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/help_screen.gif) <br/> <br/>
 
 #### Start
-After pressing the **"START"** button you will came to the game view  with the space ship. Then you need to Press **SPACE** to start the Run. <br/>
+After pressing the **"START"** button you will came to the game view  with the space ship. Then you need to Press **SPACE** to start the run. <br/>
 ![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif) <br/>
 
 When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons.
@@ -33,7 +33,7 @@ When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with th
 * After you collide with an obstacle you see the game over screen, with you score or your new highscore if you have overbeet it in this run. Then you can decide between the next two options:
   * **"MENU"**: You go back to the main screen
   * **"RESTART"**: You will start a new run <br/>
-![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG) <br/>
+![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG) <br/> <br/>
 
 #### Shop
 If you click on the **"SHOP"** button, you will land here. In the Shop you can buy and manage upgrades or player models.
@@ -52,7 +52,7 @@ If you click on the **"SHOP"** button, you will land here. In the Shop you can b
 ![not enough coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_not_enough_coins.PNG) <br/>
   
 * If you have bought a skin, you can activate and deactivate it, so you can also switch between skins. For the upgrades the activation works exactly the same. <br/>
-![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif) <br/>
+![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif) <br/> <br/>
 
 #### Settings
 If you click on the **"SETTINGS"** button, you will land here. In the settings you can set the player name or change the sound and the framerate. <br/>
@@ -62,7 +62,7 @@ If you click on the **"SETTINGS"** button, you will land here. In the settings y
 ![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_change_name.gif) <br/>
 
 * You can adjust the sound and framerate by moving the button. <br/>
-![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_chnage_volume_and_fps.gif) <br/>
+![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_chnage_volume_and_fps.gif) <br/> <br/>
 
 ## Project Outlines
 ### Brief Summary
