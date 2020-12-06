@@ -18,27 +18,26 @@ First you need to start the programm. Then you are greeted by the main screen wh
 
 #### Start
 After pressing the **"START"** button you will came to the game view  with the space ship. Then you need to Press **SPACE** to start the run. <br/>
-![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif) <br/>
+![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif) <br/> <br/>
 
-When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons.
-
-![powerup pick up](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_pick_up.gif) <br/>
-
-![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_shield.gif) <br/>
-
-![powerup_double_coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_double_coins.gif) <br/>
-
-![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_pause.gif) <br/>
-
-* After you collide with an obstacle you see the game over screen, with you score or your new highscore if you have overbeet it in this run. Then you can decide between the next two options:
-  * **"MENU"**: You go back to the main screen
+When in game you can use the :arrow_up: key an the :arrow_down: key for moving the space ship verticaly.
+* If you grab a shield PowerUp, it will remain active until you collide with an obstacle, you can't stack shield PowerUps. <br/>
+![powerup pick up](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_pick_up.gif) <br/> <br/>
+* You collide with an obstacle and have an active Shield PowerUp, you will lose your Shield PowerUp at this point, but the run is not terminated. <br/>
+![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_shield.gif) <br/> <br/>
+* When the Coin PowerUp is active, the coins that are collected are duplicated. In this example, eight coins are visually collected and counted 16. <br/>
+![powerup_double_coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_double_coins.gif) <br/> <br/>
+* With the **"P"** key you can pause and resume the game at any time. <br/>
+![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_pause.gif) <br/> <br/>
+* After you collide with an obstacle and you don't have a Shield PowerUp, you end the run. You see the game over screen, with your score or your new highscore if you have overbeet it in this run. Then you can decide between the next two options: <br/>
+  * **"MENU"**: You go back to the main screen <br/>
   * **"RESTART"**: You will start a new run <br/>
 ![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG) <br/> <br/>
 
 #### Shop
 If you click on the **"SHOP"** button, you will land here. In the Shop you can buy and manage upgrades or player models.
 * Upgrades
-  * 1.5x PowerUp Chance (The chance that PowerUp will appear is increased)
+  * 1.5x PowerUp chance (The chance that PowerUp will appear is increased)
   * Double duration of Coin PowerUp (Increases the duration of Coin PowerUp from 10 to 20 seconds)
 * Player model
   * Ship Skin 1 (red space ship)
