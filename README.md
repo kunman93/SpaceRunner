@@ -35,23 +35,21 @@ When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with th
 ![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG)
 
 #### Shop
+If you click on the "SHOP" button, you will land here. In the Shop you can buy and manage upgrades or player models. <br/>
+![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop.gif) <br/>
 
-![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop.gif)
-
-Here you can buy and manage Upgrades or Player models
 * Upgrades
   * 1.5x PowerUp Chance (The chance that PowerUp will appear is increased)
   * Double duration of Coin PowerUp (Increases the duration of Coin PowerUp from 10 to 20 seconds)
-
+* Player model
+  * Ship Skin 1 (red Space Ship)
+  * Ship Skin 2 (green Space Ship)
+  
 * If you have enough coins to buy an item you can click on the "buy" button next to the item. Another small window will appear that ask you asking you if you really want to buy this item. So you can purchase  or cancel the item. It works the same for the upgrades and the playermodel. <br/>
 ![buy upgrade](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_upgarde_buy.gif) <br/>
 
 * This warning is displayed if you do not have enough coins to buy something in the store. It also indicates how many coins you are missing to buy this item.<br/>
 ![not enough coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_not_enough_coins.PNG) <br/>
-
-* Player model
-  * Ship Skin 1
-  * Ship Skin 2 
   
 * If you have bought a skin, you can activate and deactivate it, so you can also switch between skins. For the upgrades the activation works exactly the same. <br/>
 ![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif) <br/>
