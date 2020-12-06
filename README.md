@@ -51,6 +51,8 @@ Here you can buy and manage Upgrades or Playermodels
   * Ship Skin 1
   * Ship Skin 2
 
+If you have bought a skin, you can activate and deactivate it, so you can also switch between skins. For the upgrades the activation works exactly the same. 
+<br/>
 ![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif)
 
 #### Settings
@@ -61,13 +63,11 @@ If you click on the "SETTINGS" button, you will land here. In the settings you c
 <br/>
 
 * You can change the player name by overwriting it.
-
 ![settings change name](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_change_name.gif)
 <br/>
 <br/>
 
 * You can adjust the sound and framerate by moving the button.
-
 ![settings change volume and fps](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings_chnage_volume_and_fps.gif)
 
 ## Project Outlines
