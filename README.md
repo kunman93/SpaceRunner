@@ -13,35 +13,36 @@ If you want to test the beta of the game, get the [version 1.0 beta release](htt
 Extract the zip file and run the jar by double clicking or opening the command prompt and start it by using the command: "java -jar SpaceRunner.jar"
 
 ### How To Play
-First you need to start the programm. Then you are greeted by the Main Screen where you can choose between Start, Shop and Settings. You can also find help by clicking on the Help button.
-
-![help screen](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/help_screen.gif)
+First you need to start the programm. Then you are greeted by the main screen where you can choose between **"START"**, **"SHOP"** and **"SETTINGS"**. You can also find help by clicking on the question mark button. <br/>
+![help screen](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/help_screen.gif) <br/>
 
 #### Start
-After pressing Start you need to Press **SPACE** to start the Run. 
+After pressing the **"START"** button you will came to the game view  with the space ship. Then you need to Press **SPACE** to start the Run. <br/>
+![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif) <br/>
 
-![game start](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_start.gif)
+When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons.
 
-When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with the :arrow_up: or :arrow_down: Buttons. After you collide with an Obstacle you see the Game Over Screen where you can decide between Menu and Restart. Menu gets you back to the Main Screen. Restart restarts the Game.
+![powerup pick up](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_pick_up.gif) <br/>
 
-![powerup pick up](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_pick_up.gif)
+![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_shield.gif) <br/>
 
-![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_shield.gif)
+![powerup_double_coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_double_coins.gif) <br/>
 
-![powerup_double_coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_double_coins.gif)
+![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_pause.gif) <br/>
 
-![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_pause.gif)
-
-![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG)
+* After you collide with an obstacle you see the game over screen, with you score or your new highscore if you have overbeet it in this run. Then you can decide between the next two options:
+  * **"MENU"**: You go back to the main screen
+  * **"RESTART"**: You will start a new run <br/>
+![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG) <br/>
 
 #### Shop
-If you click on the "SHOP" button, you will land here. In the Shop you can buy and manage upgrades or player models.
+If you click on the **"SHOP"** button, you will land here. In the Shop you can buy and manage upgrades or player models.
 * Upgrades
   * 1.5x PowerUp Chance (The chance that PowerUp will appear is increased)
   * Double duration of Coin PowerUp (Increases the duration of Coin PowerUp from 10 to 20 seconds)
 * Player model
   * Ship Skin 1 (red space ship)
-  * Ship Skin 2 (green space ship) <br/> 
+  * Ship Skin 2 (green space ship) <br/>
 ![go to shop](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop.gif) <br/>
 
 * If you have enough coins to buy an item you can click on the "buy" button next to the item. Another small window will appear that ask you asking you if you really want to buy this item. So you can purchase  or cancel the item. It works the same for the upgrades and the playermodel. <br/>
@@ -54,7 +55,7 @@ If you click on the "SHOP" button, you will land here. In the Shop you can buy a
 ![activate player modell](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/shop_player_model_activate.gif) <br/>
 
 #### Settings
-If you click on the "SETTINGS" button, you will land here. In the settings you can set the player name or change the sound and the framerate. <br/>
+If you click on the **"SETTINGS"** button, you will land here. In the settings you can set the player name or change the sound and the framerate. <br/>
 ![go to settings](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/settings.gif) <br/>
 
 * You can change the player name by overwriting it. <br/>
