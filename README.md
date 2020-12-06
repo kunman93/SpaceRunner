@@ -28,6 +28,8 @@ When in Game you can dodge the Obstacles or Collect the Coins / PowerUps with th
 
 ![powerup shield](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_shield.gif)
 
+![powerup_double_coins](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/powerup_double_coins.gif)
+
 ![game pause](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_pause.gif)
 
 ![game over](https://github.zhaw.ch/islermic/PM3-HS20-IT19a_WIN-Team03/blob/master/instruction_resources/game_over.PNG)
